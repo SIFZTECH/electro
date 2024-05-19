@@ -30,7 +30,7 @@ const renderCustomizedLabel = ({
 
 const Chart = ({ startData, title }) => {
   return (
-    <div className="2xl:w-3/5">
+    <div className=" flex items-center justify-center flex-col">
       <h1 className="text-xl font-semibold font-serif">{title}</h1>
       <ResponsiveContainer width="100%" height={350}>
         <PieChart>
@@ -50,7 +50,7 @@ const Chart = ({ startData, title }) => {
           </Pie>
           <Legend
             verticalAlign="top"
-            align="bottom"
+            align="center"
             layout="horizontal"
             iconSize={14}
             iconType="circle"
