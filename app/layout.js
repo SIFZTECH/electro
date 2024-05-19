@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html className={`${inter.variable} ${playfair.variable}`} lang="en">
-      <body className="font-sans flex">
+      <body className="font-sans lg:flex  overflow-x-hidden">
         <Sidebar />
         <main className="flex-1 p-4">{children}</main>
       </body>
