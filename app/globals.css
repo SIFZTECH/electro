@@ -16,15 +16,15 @@
   --color-primary-shade-1: #fefce8;
 }
 
-.sidebar nav svg {
-  stroke: #fff;
+.sidebar nav svg path {
+  /* stroke: #fff; */
 }
 
 .active {
   background-color: var(--color-primary-shade-1);
   color: #333;
 }
-.active svg {
+.active svg path {
   stroke: #ca8a04 !important;
 }
 .recharts-sector {
