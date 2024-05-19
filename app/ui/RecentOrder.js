@@ -85,7 +85,7 @@ const dummyData = [
 
 const RecentOrder = () => {
   return (
-    <table className="mt-10">
+    <table className="mt-10 recentOrders">
       <caption className="heading-h1">Recent clicks and Collect Orders</caption>
       <thead>
         <tr>

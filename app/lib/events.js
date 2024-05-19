@@ -1,13 +1,13 @@
 const now = new Date();
 
 export const events = [
-  {
+  /* {
     id: 0,
-    title: "All Day Event very long title",
+    title: 'All Day Event very long title',
     allDay: true,
-    start: new Date(2024, 6, 0),
+    start: new Date(2015, 3, 0),
     end: new Date(2015, 3, 1),
-  },
+  }, */
   {
     id: 1,
     title: "Long Event",
@@ -33,7 +33,15 @@ export const events = [
     id: 4,
     title: "Some Event",
     start: new Date(2015, 3, 9, 0, 0, 0),
-    end: new Date(2015, 3, 10, 0, 0, 0),
+    end: new Date(2015, 3, 9, 0, 0, 0),
+    allDay: true,
+  },
+
+  {
+    id: 92,
+    title: "Some Other Event",
+    start: new Date(2015, 3, 9, 8, 0, 0),
+    end: new Date(2015, 3, 10, 11, 30, 0),
   },
   {
     id: 5,
@@ -143,7 +151,7 @@ export const events = [
   },
   {
     id: 18,
-    title: "Itaewon Halloween Meeting",
+    title: "Itaewon Meeting",
     start: new Date(2015, 3, 14, 16, 30, 0),
     end: new Date(2015, 3, 14, 17, 30, 0),
   },
@@ -176,5 +184,29 @@ export const events = [
     title: "Go to the gym",
     start: new Date(2015, 3, 14, 18, 30, 0),
     end: new Date(2015, 3, 14, 20, 0, 0),
+  },
+  {
+    id: 24,
+    title: "DST ends on this day (Europe)",
+    start: new Date(2022, 9, 30, 0, 0, 0),
+    end: new Date(2022, 9, 30, 4, 30, 0),
+  },
+  {
+    id: 25,
+    title: "DST ends on this day (America)",
+    start: new Date(2022, 10, 6, 0, 0, 0),
+    end: new Date(2022, 10, 6, 4, 30, 0),
+  },
+  {
+    id: 26,
+    title: "DST starts on this day (America)",
+    start: new Date(2023, 2, 12, 0, 0, 0),
+    end: new Date(2023, 2, 12, 4, 30, 0),
+  },
+  {
+    id: 27,
+    title: "DST starts on this day (Europe)",
+    start: new Date(2023, 2, 26, 0, 0, 0),
+    end: new Date(2023, 2, 26, 4, 30, 0),
   },
 ];
