@@ -31,7 +31,7 @@ const renderCustomizedLabel = ({
 const Chart = ({ startData, title }) => {
   return (
     <div className="2xl:w-3/5">
-      <h1 className="text-xl font-semibold">{title}</h1>
+      <h1 className="text-xl font-semibold font-serif">{title}</h1>
       <ResponsiveContainer width="100%" height={350}>
         <PieChart>
           <Pie

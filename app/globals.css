@@ -4,10 +4,10 @@
 
 @layer components {
   .heading-h1 {
-    @apply text-2xl font-bold;
+    @apply text-2xl font-bold font-serif;
   }
   .btn-primary {
-    @apply bg-yellow-400 text-sm px-2 py-1;
+    @apply bg-yellow-400 text-sm px-2 py-1 font-serif;
   }
 }
 
