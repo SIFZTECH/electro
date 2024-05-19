@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 const Navigation = () => {
   const pathname = usePathname();
   return (
-    <nav className="mt-6">
-      <ul className="flex flex-col text-lg">
+    <nav className="mt-8">
+      <ul className="flex flex-col text-lg ">
         <li>
           <Link
-            className={`flex gap-2 items-center px-3 py-1 rounded-md ${
+            className={`flex gap-2 items-center px-3 py-2 rounded-md ${
               pathname === "/" ? "active" : ""
             }`}
             href={"/"}

@@ -10,7 +10,7 @@ const Stat = ({ title, value, icon, percentage }) => {
         </div>
       </div>
       <div className="flex flex-col">
-        <h2 className="text-2xl font-semibold">{value}</h2>
+        <h2 className="font-serif text-3xl font-semibold">{value}</h2>
         <div className="stat__percentage text-sm">
           <IoMdArrowDropdown />
           {percentage}%

@@ -21,7 +21,7 @@ const Logo = () => {
           fill="#2B2B2B"
         />
       </svg>
-      <div className="flex flex-col gap-1 text-2xl font-semibold leading-6">
+      <div className="flex flex-col gap-1 text-[1.35rem] font-serif font-semibold leading-5">
         <span>Leon Cycle</span>
         <span>Dealer Portal</span>
       </div>
