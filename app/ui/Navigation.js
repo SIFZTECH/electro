@@ -9,16 +9,16 @@ import { useState } from "react";
 const Navigation = () => {
   const pathname = usePathname();
   const [isOpen, setOpen] = useState(false);
-  console.log(isOpen);
+
   return (
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="md:hidden absolute top-4 right-3"
+        className="lg:hidden absolute top-4 right-3"
       >
         {!isOpen ? <HiMenuAlt4 size={30} /> : <IoMdClose size={30} />}
       </button>
-      <nav className={`mt-8 md:block ${!isOpen && "hidden"}`}>
+      <nav className={`mt-8 lg:block ${!isOpen && "hidden"}`}>
         <ul className="flex flex-col gap-1 text-base font-medium">
           <li>
             <Link
