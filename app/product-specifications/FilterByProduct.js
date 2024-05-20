@@ -1,7 +1,8 @@
 import FilterByBrand from "./FilterByBrand";
-import FilterByModal from "./FilterByModal";
+import FilterByCategory from "./FilterByCategory";
+import FilterBySize from "./FilterBySize";
 
-const FilterBy = () => {
+const FilterByProduct = () => {
   return (
     <div className="border border-gray-0 ">
       <div className="border-b flex justify-between gap-2 py-6 px-3 font-serif">
@@ -9,10 +10,11 @@ const FilterBy = () => {
         <button className="text-yellow-400">Clear All</button>
       </div>
 
-      <FilterByModal />
+      <FilterByCategory />
+      <FilterBySize />
       <FilterByBrand />
     </div>
   );
 };
 
-export default FilterBy;
+export default FilterByProduct;
