@@ -7,7 +7,7 @@ const ProductCategories = () => {
   const pathname = usePathname();
 
   return (
-    <div className="font-serif flex gap-4 justify-between py-3 px-2 border-b border-t border-gray-100 text-sm font-medium">
+    <div className="hidden md:flex font-serif  gap-4 justify-between py-3 px-2 border-b border-t border-gray-100 text-sm font-medium">
       <ul className="categories flex gap-4">
         <li className="hover:text-color-primary text-color-primary">
           <Link href="#">All E-Bikes</Link>

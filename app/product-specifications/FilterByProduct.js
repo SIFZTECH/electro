@@ -1,5 +1,6 @@
 import FilterByBrand from "./FilterByBrand";
 import FilterByCategory from "./FilterByCategory";
+import FilterByCondition from "./FilterByCondition";
 import FilterBySize from "./FilterBySize";
 
 const FilterByProduct = () => {
@@ -13,6 +14,7 @@ const FilterByProduct = () => {
       <FilterByCategory />
       <FilterBySize />
       <FilterByBrand />
+      <FilterByCondition />
     </div>
   );
 };

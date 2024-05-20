@@ -1,4 +1,5 @@
 import Search from "../ui/Search";
+import Pagination from "./Pagination";
 import Product from "./Product";
 
 const products = [
@@ -92,7 +93,7 @@ const Products = () => {
   return (
     <div>
       <Search />
-      <div className="grid grid-cols-4 gap-8 pt-8">
+      <div className="grid grid-cols-1 sm:grid-cold-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 pt-8">
         {products.map((data) => (
           <Product
             key={data.id}
@@ -103,6 +104,7 @@ const Products = () => {
           />
         ))}
       </div>
+      <Pagination />
     </div>
   );
 };
