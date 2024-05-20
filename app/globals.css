@@ -16,8 +16,9 @@
   --color-primary-shade-1: #fefce8;
 }
 
-.sidebar nav svg path {
-  /* stroke: #fff; */
+.sidebar nav svg {
+  /* -webkit-text-stroke-color: #fff;
+  stroke: #fff; */
 }
 
 .active {
