@@ -7,7 +7,7 @@
     @apply text-2xl font-bold font-serif;
   }
   .btn-primary {
-    @apply bg-yellow-400 text-sm px-2 py-1 font-serif;
+    @apply bg-color-primary text-sm px-2 py-1 font-serif;
   }
 }
 

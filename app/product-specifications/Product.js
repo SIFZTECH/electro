@@ -17,7 +17,7 @@ const Product = ({ id, image, name, summary }) => {
           <IoMdHeartEmpty size="18" />
         </span>
       </button>
-      <div className="py-2 line-clamp-3 overflow-hidden">{summary}</div>
+      <div className="py-2">{summary}</div>
     </div>
   );
 };

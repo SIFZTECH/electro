@@ -20,70 +20,70 @@ const products = [
     id: 3,
     productName: "NCM T9d",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 4,
     productName: "NCM Sts",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 5,
     productName: "NCM T311s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 6,
     productName: "NCM T38s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 7,
     productName: "NCM T3s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 8,
     productName: "NCM T3s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 9,
     productName: "NCM T3s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 10,
     productName: "NCM T3s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 11,
     productName: "NCM T3s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
   {
     id: 12,
     productName: "NCM T3s",
     productSummary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam impedit quo itaque harum magnam veritatis? Eligendi, unde impedit. Vero reprehenderit placeat iusto temporibus dolorum nisi iste cumque fuga!",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, ipsum numquam",
     productImage: "/Cycle.jpg",
   },
 ];
@@ -98,7 +98,7 @@ const Products = () => {
             key={data.id}
             id={data.id}
             image={data.productImage}
-            name={data.name}
+            name={data.productName}
             summary={data.productSummary}
           />
         ))}

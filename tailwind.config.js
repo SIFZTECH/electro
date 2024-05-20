@@ -11,6 +11,9 @@ module.exports = {
         sans: ["var(--font-inter)"],
         serif: ["var(--font-playfair)"],
       },
+      colors: {
+        "color-primary": "#facc15",
+      },
     },
   },
   plugins: [],
