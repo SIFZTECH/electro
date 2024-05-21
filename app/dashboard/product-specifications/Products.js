@@ -1,4 +1,4 @@
-import Search from "../ui/Search";
+import Search from "@/app/ui/Search";
 import Pagination from "./Pagination";
 import Product from "./Product";
 

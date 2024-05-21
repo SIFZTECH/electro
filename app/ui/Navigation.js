@@ -13,9 +13,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/" ? "active" : ""
+                pathname === "/dashboard" ? "active" : ""
               }`}
-              href={"/"}
+              href={"/dashboard"}
             >
               <svg
                 width="25"
@@ -60,9 +60,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/dealer-resources" ? "active" : ""
+                pathname === "/dashboard/dealer-resources" ? "active" : ""
               }`}
-              href={"/dealer-resources"}
+              href={"/dashboard/dealer-resources"}
             >
               <svg
                 width="25"
@@ -86,9 +86,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/product-specifications" ? "active" : ""
+                pathname === "/dashboard/product-specifications" ? "active" : ""
               }`}
-              href={"/product-specifications"}
+              href={"/dashboard/product-specifications"}
             >
               <svg
                 width="25"
@@ -109,9 +109,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/social-media-assets" ? "active" : ""
+                pathname === "/dashboard/social-media-assets" ? "active" : ""
               }`}
-              href={"/social-media-assets"}
+              href={"/dashboard/social-media-assets"}
             >
               <svg
                 width="25"
@@ -133,9 +133,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/calendar" ? "active" : ""
+                pathname === "/dashboard/calendar" ? "active" : ""
               }`}
-              href={"/calendar"}
+              href={"/dashboard/calendar"}
             >
               <svg
                 width="25"

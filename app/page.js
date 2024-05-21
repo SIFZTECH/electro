@@ -1,17 +1,7 @@
-import { Pie, PieChart, ResponsiveContainer } from "recharts";
-import Stats from "./ui/Stats";
-import PieCharts from "./ui/PieCharts";
-import RecentOrder from "./ui/RecentOrder";
+import { redirect } from "next/navigation";
 
 const page = () => {
-  return (
-    <div>
-      <Stats />
-
-      <PieCharts />
-      <RecentOrder />
-    </div>
-  );
+  redirect("/dashboard");
 };
 
 export default page;

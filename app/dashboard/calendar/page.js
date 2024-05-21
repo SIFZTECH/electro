@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import { events } from "../lib/events";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { events } from "@/app/lib/events";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
