@@ -1,0 +1,42 @@
+name: Deploy Next.js to cPanel
+on:
+  push:
+    branches:
+      - production 
+
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Next.js app
+        run: npm run build
+
+      # Optional - install PM2 (for production)
+      - name: Install PM2
+        uses: wow-actions/setup-pm2@v1
+
+      # --- FTP Deployment with PM2 ---
+      - name: 📂 Sync files with PM2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/electro.sifztech.com # Specify the correct path
+          sync-glob: |
+            **/*
+            !.git/**
+            !node_modules/**
+
+          # PM2 Commands 
+          run-command: |
+             cd public_html
+             cd electro.sifztech.com
+             pm2 startOrRestart ecosystem.config.js
