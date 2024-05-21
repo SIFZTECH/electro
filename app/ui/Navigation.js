@@ -1,24 +1,14 @@
 "use client";
-import { HiMenuAlt4 } from "react-icons/hi";
-import { IoMdClose } from "react-icons/io";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
 
 const Navigation = () => {
   const pathname = usePathname();
-  const [isOpen, setOpen] = useState(false);
 
   return (
     <>
-      <button
-        onClick={() => setOpen((open) => !open)}
-        className="lg:hidden absolute top-4 right-3"
-      >
-        {!isOpen ? <HiMenuAlt4 size={30} /> : <IoMdClose size={30} />}
-      </button>
-      <nav className={`mt-8 lg:block ${!isOpen && "hidden"}`}>
+      <nav className="mt-8 lg:block">
         <ul className="flex flex-col gap-1 text-base font-medium">
           <li>
             <Link

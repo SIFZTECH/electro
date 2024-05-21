@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
     <html className={`${inter.variable} ${playfair.variable}`} lang="en">
       <body className="font-sans lg:flex  overflow-x-hidden">
         <Sidebar />
-        <main className="flex-1 p-4">{children}</main>
+        <main className="flex-1 p-4 mt-24 lg:mt-0">{children}</main>
       </body>
     </html>
   );

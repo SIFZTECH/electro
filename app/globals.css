@@ -16,6 +16,12 @@
   --color-primary-shade-1: #fefce8;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .sidebar nav svg {
   /* -webkit-text-stroke-color: #fff;
   stroke: #fff; */
