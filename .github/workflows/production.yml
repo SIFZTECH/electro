@@ -35,7 +35,7 @@ jobs:
 
       # 4. Install PM2
       - name: Install PM2
-        uses: pm2/action-setup@v2
+        uses: pm2/action-setup
         with:
           version: 'latest' 
 
