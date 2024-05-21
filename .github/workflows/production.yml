@@ -13,16 +13,33 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '20'
+
+      # 1. Install dependencies
       - name: Install dependencies
         run: npm ci
+
+      # 2. Environment Variables (Choose ONE method)
+      # Method A: Set directly in workflow (for simple cases)
+      - name: Set environment variables
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "OTHER_VAR=${{ secrets.OTHER_VAR }}" >> .env
+
+      # Method B: Use a .env.production file (commit to repo)
+      # - name: Prepare environment variables
+      #   run: cp .env.production .env 
+
+      # 3. Build Next.js app
       - name: Build Next.js app
         run: npm run build
 
-      # Optional - install PM2 (for production)
+      # 4. Install PM2
       - name: Install PM2
-        uses: wow-actions/setup-pm2@v1
+        uses: pm2/action-setup@v2
+        with:
+          version: 'latest' 
 
-      # --- FTP Deployment with PM2 ---
+      # 5. Deploy with FTP and PM2
       - name: 📂 Sync files with PM2
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -34,6 +51,7 @@ jobs:
             **/*
             !.git/**
             !node_modules/**
+            !.env
 
           # PM2 Commands 
           run-command: |
