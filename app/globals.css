@@ -7,7 +7,7 @@
     @apply text-2xl font-bold font-serif;
   }
   .btn-primary {
-    @apply bg-color-primary text-sm px-2 py-1 font-serif;
+    @apply bg-color-primary text-sm px-2 py-1 font-serif rounded-sm;
   }
 }
 
@@ -21,6 +21,11 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--color-primary);
+  padding: 0.3rem;
 }
 
 .sidebar nav svg {
@@ -87,7 +92,7 @@ table th {
   text-align: left;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1024px) {
   table {
     border: 0;
   }

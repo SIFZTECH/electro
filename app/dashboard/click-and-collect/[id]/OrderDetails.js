@@ -1,7 +1,7 @@
 const OrderDetails = () => {
   return (
     <div>
-      <div className="order__details grid grid-cols-2 gap-x-2 gap-y-1 font-serif">
+      <div className="order__details grid md:grid-cols-2 gap-x-2 gap-y-1 font-serif">
         <p className="">Order ID: 18dgydnyd74</p>
         <p className="">Order Status: Dispacted</p>
         <p className="">Order Dispacted: 02/20/2021 3.08am</p>
