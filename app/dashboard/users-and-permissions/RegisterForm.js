@@ -73,19 +73,7 @@ export default function RegisterForm() {
                   />
                 </div>
               </div>
-              <div className="text-[13px] font-medium flex items-center gap-1">
-                <input type="checkbox" />
-                <span>
-                  I accept
-                  <a
-                    className="text-color-primary hover:text-color-primary/70"
-                    href="#"
-                  >
-                    {" "}
-                    Terms and conditions
-                  </a>
-                </span>
-              </div>
+
               <div>
                 <button
                   type="submit"
@@ -95,16 +83,6 @@ export default function RegisterForm() {
                 </button>
               </div>
             </form>
-
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Already a member?
-              <a
-                href="/login"
-                className="font-semibold leading-6 text-color-primary hover:text-color-primary/70"
-              >
-                &nbsp; Login
-              </a>
-            </p>
           </div>
         </div>
       </div>

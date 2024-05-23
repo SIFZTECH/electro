@@ -60,7 +60,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/dashboard/dealer-resources" ? "active" : ""
+                pathname.startsWith("/dashboard/dealer") ? "active" : ""
               }`}
               href={"/dashboard/dealer-resources"}
             >
@@ -86,7 +86,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/dashboard/product-specifications" ? "active" : ""
+                pathname.startsWith("/dashboard/product") ? "active" : ""
               }`}
               href={"/dashboard/product-specifications"}
             >
@@ -109,7 +109,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                pathname === "/dashboard/social-media-assets" ? "active" : ""
+                pathname.startsWith("/dashboard/social") ? "active" : ""
               }`}
               href={"/dashboard/social-media-assets"}
             >
@@ -133,7 +133,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/calendar" ? "active" : ""
+                pathname.startsWith("/dashboard/calendar") ? "active" : ""
               }`}
               href={"/dashboard/calendar"}
             >
@@ -155,7 +155,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/click-and-collect" ? "active" : ""
+                pathname.startsWith("/dashboard/click-and-collect")
+                  ? "active"
+                  : ""
               }`}
               href={"/dashboard/click-and-collect"}
             >
@@ -179,7 +181,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/stocks-in-store" ? "active" : ""
+                pathname.startsWith("/dashboard/stocks-in-store")
+                  ? "active"
+                  : ""
               }`}
               href={"/dashboard/stocks-in-store"}
             >
@@ -202,7 +206,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/find-a-dealer" ? "active" : ""
+                pathname.startsWith("/dashboard/find-a-dealer") ? "active" : ""
               }`}
               href={"/dashboard/find-a-dealer"}
             >
@@ -226,7 +230,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/warranty" ? "active" : ""
+                pathname.startsWith("/dashboard/warranty") ? "active" : ""
               }`}
               href={"/dashboard/warranty"}
             >
@@ -249,7 +253,9 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/users-and-permissions" ? "active" : ""
+                pathname.startsWith("/dashboard/users-and-permissions")
+                  ? "active"
+                  : ""
               }`}
               href={"/dashboard/users-and-permissions"}
             >
@@ -284,7 +290,7 @@ const Navigation = () => {
           <li>
             <Link
               className={`flex gap-2 items-center px-3 py-1 rounded-md ${
-                pathname === "/dashboard/settings" ? "active" : ""
+                pathname.startsWith("/dashboard/settings") ? "active" : ""
               }`}
               href={"/dashboard/settings"}
             >
