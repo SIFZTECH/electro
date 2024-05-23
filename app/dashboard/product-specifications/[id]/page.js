@@ -5,10 +5,12 @@ import ProductTop from "./ProductTop";
 const page = () => {
   return (
     <div>
-      <h1 className="heading-h1">Product Specification</h1>
+      <h1 className="heading-h1 my-4 mb-8">Product Specifications</h1>
       <ProductTop />
       <div className="product__details mt-12">
-        <h2>Product Details</h2>
+        <h2 className="heading-h1 my-3 text-2xl mt-6 text-center">
+          Product Details
+        </h2>
         <div className="product__introduction">
           <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
             <BsPatchExclamation />

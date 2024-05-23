@@ -1,4 +1,7 @@
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
+
 import Image from "next/image";
 
 const images = ["/cycle-1.jpg", "/cycle-2.jpg", "/cycle-3.jpg", "/cycle-4.jpg"];
@@ -29,7 +32,7 @@ const ProductImage = () => {
             </TabsContent>
           ))}
         </div>
-        <TabsList className="product__thumbnails flex gap-3">
+        <TabsList className="product__thumbnails flex items-center justify-center gap-3">
           {images.map((img) => (
             <TabsTrigger
               value={img}

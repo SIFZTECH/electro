@@ -141,7 +141,6 @@ table th {
     content: attr(data-label);
     float: left;
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   table td:last-child {
