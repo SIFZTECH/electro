@@ -21,7 +21,7 @@ const Product = ({ id, image, name, summary }) => {
           <IoMdHeartEmpty size="18" />
         </span>
       </button>
-      <div className="py-2 md:line-clamp-3">{summary}</div>
+      <div className="py-2">{summary}</div>
     </Link>
   );
 };

@@ -1,77 +1,12 @@
-import Image from "next/image";
 import { BsPatchExclamation } from "react-icons/bs";
 import ProductSpecifications from "./ProductSpecifications";
+import ProductTop from "./ProductTop";
 
 const page = () => {
   return (
     <div>
       <h1 className="heading-h1">Product Specification</h1>
-      <div className="flex gap-8">
-        <div className="product__image flex flex-col items-center gap-8 flex-wrap">
-          <Image
-            src="/Cycle1.jpg"
-            alt="name"
-            width={600}
-            height={450}
-            className="object-contain"
-          />
-          <div className="product__thumbnails flex gap-3">
-            <Image
-              src="/Cycle1.jpg"
-              alt="name"
-              width={100}
-              className="border border-color-primary"
-              height={70}
-            />
-            <Image
-              src="/Cycle1.jpg"
-              alt="name"
-              width={100}
-              className="border border-color-primary"
-              height={70}
-            />
-            <Image
-              src="/Cycle1.jpg"
-              alt="name"
-              width={100}
-              className="border border-color-primary"
-              height={70}
-            />
-            <Image
-              src="/Cycle1.jpg"
-              alt="name"
-              width={100}
-              className="border border-color-primary"
-              height={70}
-            />
-          </div>
-        </div>
-        <div className="product__summary flex flex-col gap-8">
-          <div className="product__name flex items-center gap-3">
-            <span className="font-serif font-semibold text-xl">NCMs 3</span>
-            <span className="badge bg-color-primary rounded-full px-2 text-[12px]">
-              Best Seller
-            </span>
-          </div>
-          <div className="product__colors ">
-            <h3 className="font-serif mb-1">Colors</h3>
-            <div className="flex gap-2 items-center">
-              <div className="w-6 h-6 rounded-full ring-2 ring-offset-1 ring-color-primary bg-red-600">
-                &nbsp;
-              </div>
-              <div className="w-6 h-6 rounded-full bg-yellow-600">&nbsp;</div>
-              <div className="w-6 h-6 rounded-full bg-gray-600">&nbsp;</div>
-            </div>
-          </div>
-          <div className="product__sizes">
-            <h3 className="font-serif mb-1">Sizes</h3>
-            <div className="flex items-center font-serif">
-              <div className="bg-color-primary px-3 py-1 rounded-sm">42</div>
-              <div className="42 px-3 py-1">34</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProductTop />
       <div className="product__details mt-12">
         <h2>Product Details</h2>
         <div className="product__introduction">
@@ -92,7 +27,7 @@ const page = () => {
             <span>Key Features</span>
           </h2>
           <div className="my-3 shadow-sm pb-3">
-            <ul className="list-disc px-10">
+            <ul className="md:list-disc pl-1 md:pl-10">
               <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
               <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
               <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>

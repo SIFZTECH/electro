@@ -8,12 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Image from "next/image";
 
 const dummyData = [
   {
     id: 1,
     name: "NCM T3S - New",
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-motor-64.png", "Motor"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -23,7 +24,7 @@ const dummyData = [
   {
     id: 2,
     name: "NCM T3S",
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-battery-90.png", "Battary"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -33,7 +34,7 @@ const dummyData = [
   {
     id: 3,
     name: "NCM Milano +",
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-performance-smartphone-50.png", "Display"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -42,7 +43,7 @@ const dummyData = [
   },
   {
     id: 4,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-charger-60.png", "Charger"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -51,7 +52,7 @@ const dummyData = [
   },
   {
     id: 5,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-charger-60.png", "Frome"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -60,7 +61,7 @@ const dummyData = [
   },
   {
     id: 6,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-charger-60.png", "Forks"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -69,7 +70,7 @@ const dummyData = [
   },
   {
     id: 7,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-charger-60.png", "Broking System"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -78,7 +79,7 @@ const dummyData = [
   },
   {
     id: 8,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-charger-60.png", "Gear Selector"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -87,7 +88,7 @@ const dummyData = [
   },
   {
     id: 9,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-derailleur-96.png", "Front Derailleur"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -96,7 +97,25 @@ const dummyData = [
   },
   {
     id: 10,
-    icon: <TbMotorbike size={40} />,
+    icon: ["/icons8-bicycle-rear-derailleur-80.png", "Rear Derailleur"],
+    features: [
+      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+    ],
+  },
+  {
+    id: 11,
+    icon: ["/icons8-saddle-60.png", "Saddle"],
+    features: [
+      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+    ],
+  },
+  {
+    id: 12,
+    icon: ["/icons8-circle-80.png", "Shwalbe"],
     features: [
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
       "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
@@ -125,7 +144,12 @@ const ProductSpecifications = () => {
                 className="font-serif font-semibold flex justify-between items-center  xl:justify-center"
               >
                 <span>&nbsp;</span>
-                {data.icon}
+                <div className="flex-1 flex flex-col items-end  lg:items-center">
+                  <Image src={data.icon[0]} alt="name" width={30} height={30} />
+                  <span className="font-medium text-sm text-gray-700 text-center">
+                    {data.icon[1]}
+                  </span>
+                </div>
               </TableCell>
               <TableCell
                 className="font-serif font-semibold"
