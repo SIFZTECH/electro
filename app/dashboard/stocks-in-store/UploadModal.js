@@ -1,4 +1,4 @@
-import Modal from "@/app/ui/Modal";
+import Modal from "@/app/components/ui/Modal";
 
 const UploadModal = () => {
   return <Modal title="Upload New Stock File" btn="Upload" />;

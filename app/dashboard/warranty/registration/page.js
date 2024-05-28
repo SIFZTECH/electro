@@ -1,3 +1,5 @@
+import { AiOutlineExclamationCircle } from "react-icons/ai";
+
 const page = () => {
   return (
     <>
@@ -213,9 +215,10 @@ const page = () => {
           <div className="">
             <label
               htmlFor="invoiceNumber"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
+              className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900"
             >
-              Invoice Number
+              <span>Invoice Number</span>
+              <AiOutlineExclamationCircle size={18} />
             </label>
             <div className="mt-1">
               <input
@@ -236,109 +239,132 @@ const page = () => {
               Upload your Invoice
             </label>
             <div className="mt-1">
+              <small className="text-sm mb-1">
+                Your photo should be PNG or JPG format
+              </small>
               <input
                 id="invoice"
                 name="invoice"
                 type="file"
                 placeholder="Upload your Invoice"
+                accept=".png,.jpg"
                 required
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:border-0
-                file:text-sm file:font-semibold
-                file:bg-color-primary/20 file:text-color-gray-200
-                hover:file:bg-color-primary/30"
-              />
-            </div>
-          </div>
-          <div className="">
-            <label
-              htmlFor="description"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
-              Description
-            </label>
-            <div className="mt-1">
-              <textarea
-                id="description"
-                name="description"
-                type="text"
-                cols="45"
-                placeholder="Description"
-                required
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="">
-            <label
-              htmlFor="streetAddress"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
-              Street Address
-            </label>
-            <div className="mt-1">
-              <input
-                id="streetAddress"
-                name="streetAddress"
-                type="text"
-                placeholder="Street Address"
-                required
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="">
-            <label
-              htmlFor="postalCode"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
-              Postal Code
-            </label>
-            <div className="mt-1">
-              <input
-                id="postalCode"
-                name="postalCode"
-                type="text"
-                placeholder="Postal Code"
-                required
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="">
-            <label
-              htmlFor="state"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
-              State
-            </label>
-            <div className="mt-1">
-              <input
-                id="state"
-                name="state"
-                type="text"
-                placeholder="State"
-                required
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+                file:rounded file:border-0
+                file:text-sm file:font-semibold file:ring-1
+                file:ring-color-primary file:text-color-primary
+                file:hover:ring-2 file:bg-transparent"
               />
             </div>
           </div>
 
           <div className="">
-            <label
-              htmlFor="stockin"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
-              Stock in Stock feed url
+            <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900">
+              <span>Bike Frame Serial Number</span>
+              <AiOutlineExclamationCircle size={18} />
             </label>
             <div className="mt-1">
               <input
-                id="stockin"
-                name="stockinFeed"
-                type="url"
-                placeholder="State"
+                name="bikeframe"
+                type="text"
+                placeholder="Bike Frame Serial Number"
                 required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Upload your Bike Frame Serial Number
+            </label>
+            <div className="mt-1">
+              <small className="text-sm mb-1">
+                Your photo should be PNG or JPG format
+              </small>
+              <input
+                id="invoice"
+                name="invoice"
+                type="file"
+                accept=".png,.jpg"
+                placeholder="Upload your Invoice"
+                required
+                className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+                file:rounded file:border-0
+                file:text-sm file:font-semibold file:ring-1
+                file:ring-color-primary file:text-color-primary
+                file:hover:ring-2 file:bg-transparent"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900">
+              <span>Bike Battary Serial Number </span>
+              <AiOutlineExclamationCircle size={18} />
+            </label>
+            <div className="mt-1">
+              <input
+                name="bikebattary"
+                type="text"
+                placeholder="Bike Battary Serial Number"
+                required
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Upload your Bike Battary Serial Number
+            </label>
+            <div className="mt-1">
+              <small className="text-sm mb-1">
+                Your photo should be PNG or JPG format
+              </small>
+              <input
+                name="bikebarryS"
+                type="file"
+                accept=".png,.jpg"
+                required
+                className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+                file:rounded file:border-0
+                file:text-sm file:font-semibold file:ring-1
+                file:ring-color-primary file:text-color-primary
+                file:hover:ring-2 file:bg-transparent"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900">
+              <span>Bike Motor Serial Number</span>
+              <AiOutlineExclamationCircle size={18} />
+            </label>
+            <div className="mt-1">
+              <input
+                name="bikemotor"
+                type="url"
+                placeholder="Bike Motor Serial Number"
+                required
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Upload your Bike Motor Serial Number
+            </label>
+            <div className="mt-1">
+              <small className="text-sm mb-1">
+                Your photo should be PNG or JPG format
+              </small>
+              <input
+                name="bikebarryS"
+                type="file"
+                accept=".png,.jpg"
+                required
+                className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+                file:rounded file:border-0
+                file:text-sm file:font-semibold file:ring-1
+                file:ring-color-primary file:text-color-primary
+                file:hover:ring-2 file:bg-transparent"
               />
             </div>
           </div>

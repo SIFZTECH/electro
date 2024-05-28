@@ -1,23 +1,17 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import Logo from "../../components/ui/Logo";
 import { useForm } from "react-hook-form";
-import Logo from "../components/ui/Logo";
-import SpinnerMini from "../components/ui/SpinnerMini";
-import { useLogin } from "../_features/authentication/useLogin";
+import SpinnerMini from "../../components/ui/SpinnerMini";
 
-export default function Login() {
+export default function ForgotPassword() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
-  const { login, isPending: isLoading } = useLogin();
-
-  function onSubmit({ email, password }) {
-    login({ email, password });
-  }
+  function onSubmit(data) {}
 
   return (
     <>
@@ -26,7 +20,7 @@ export default function Login() {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
             <Logo />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
-              Sign in to your account
+              Forgot your password
             </h2>
           </div>
 
@@ -45,10 +39,9 @@ export default function Login() {
                         message: "Please provide a valid email address",
                       },
                     })}
-                    disabled={isLoading}
                     type="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                   {errors?.email && (
                     <span className="text-red-500 text-sm">
@@ -59,50 +52,23 @@ export default function Login() {
               </div>
 
               <div>
-                <div className="flex items-center justify-between">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
-                    Password
-                  </label>
-                </div>
-                <div className="mt-2">
-                  <input
-                    {...register("password", {
-                      required: "Please enter your password",
-                      minLength: {
-                        value: 8,
-                        message: "Password needs a minimum of 8 characters",
-                      },
-                    })}
-                    disabled={isLoading}
-                    type="password"
-                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  />
-                  {errors?.password && (
-                    <span className="text-red-500 text-sm">
-                      {errors.password.message}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <div>
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isSubmitting}
                   className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
                 >
-                  {isLoading ? <SpinnerMini /> : "Sign in"}
+                  {isSubmitting ? <SpinnerMini /> : "Sign in"}
                 </button>
               </div>
             </form>
 
             <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?
+              Log in with password
               <a
-                href="/register"
+                href="/login"
                 className="font-semibold leading-6 text-color-primary hover:text-color-primary/70"
               >
-                &nbsp; Create new account
+                &nbsp; Login
               </a>
             </p>
           </div>

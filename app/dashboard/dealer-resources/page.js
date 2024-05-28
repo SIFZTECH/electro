@@ -1,5 +1,5 @@
-import FilterBy from "@/app/ui/FilterBy";
-import Main from "@/app/ui/Main";
+import FilterBy from "@/app/components/ui/FilterBy";
+import Main from "@/app/components/ui/Main";
 
 const page = () => {
   return (

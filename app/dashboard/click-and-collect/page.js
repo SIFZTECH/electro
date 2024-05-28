@@ -1,4 +1,4 @@
-import Search from "@/app/ui/Search";
+import Search from "@/app/components/ui/Search";
 import Filter from "./Filter";
 import RecentOrder from "./RecentOrder";
 import Orders from "./Orders";

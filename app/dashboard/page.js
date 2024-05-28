@@ -1,6 +1,6 @@
-import PieCharts from "../ui/PieCharts";
-import RecentOrder from "../ui/RecentOrder";
-import Stats from "../ui/Stats";
+import PieCharts from "@/app/components/ui/PieCharts";
+import RecentOrder from "@/app/components/ui/RecentOrder";
+import Stats from "@/app/components/ui/Stats";
 
 const page = () => {
   return (

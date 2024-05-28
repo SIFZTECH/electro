@@ -7,7 +7,7 @@ import {
   DialogTrigger,
   DialogClose,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 
 const Modal = ({ title, btn }) => {
   return (

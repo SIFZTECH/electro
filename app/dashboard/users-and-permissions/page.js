@@ -1,4 +1,4 @@
-import Search from "@/app/ui/Search";
+import Search from "@/app/components/ui/Search";
 import PermissionTabs from "./PermissionTabs";
 import NewUserModal from "./NewUserModal";
 

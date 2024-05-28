@@ -7,7 +7,7 @@ import {
   DialogTrigger,
   DialogClose,
   DialogFooter,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import RegisterForm from "./RegisterForm";
 
 const NewUserModal = ({ title, btn }) => {

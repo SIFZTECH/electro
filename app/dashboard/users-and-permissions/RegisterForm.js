@@ -1,4 +1,4 @@
-import Logo from "@/app/ui/Logo";
+import Logo from "@/app/components/ui/Logo";
 
 export default function RegisterForm() {
   return (

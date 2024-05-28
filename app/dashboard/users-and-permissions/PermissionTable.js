@@ -1,4 +1,4 @@
-import { Switch } from "@/components/ui/switch";
+import { Switch } from "@/app/components/ui/switch";
 
 const dummyData = [
   {
