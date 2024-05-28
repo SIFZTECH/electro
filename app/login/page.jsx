@@ -1,22 +1,59 @@
 "use client";
 
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Logo from "../components/ui/Logo";
 import SpinnerMini from "../components/ui/SpinnerMini";
-import { useLogin } from "../_features/authentication/useLogin";
+import { useToast } from "../_hooks/use-toast";
 
 export default function Login() {
+  const router = useRouter();
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting: isLoading },
   } = useForm();
 
-  const { login, isPending: isLoading } = useLogin();
+  async function onSubmit({ email, password }) {
+    try {
+      const { data } = await axios({
+        url: "https://electro-api.sifztech.com/api/admin/login",
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        data: {
+          email,
+          password,
+        },
+      });
 
-  function onSubmit({ email, password }) {
-    login({ email, password });
+      localStorage.setItem("access-token", data.data.auth);
+      router.replace("/dashboard");
+
+      toast({
+        variant: "success",
+        title: data.message,
+        duration: 1000,
+      });
+    } catch (err) {
+      if (err.response.data) {
+        toast({
+          variant: "destructive",
+          title: "Provided email or password are incorrect",
+          duration: 1000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong!",
+          duration: 1000,
+        });
+      }
+    }
   }
 
   return (

@@ -1,17 +1,54 @@
 "use client";
 
-import Logo from "../../components/ui/Logo";
+import Logo from "@/app/components/ui/Logo";
 import { useForm } from "react-hook-form";
-import SpinnerMini from "../../components/ui/SpinnerMini";
+import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import axios from "axios";
+import { BASE_URL } from "@/app/lib/utils";
+import { useToast } from "@/app/_hooks/use-toast";
 
 export default function ForgotPassword() {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  function onSubmit(data) {}
+  async function onSubmit({ email }) {
+    try {
+      const { data } = await axios.post(`${BASE_URL}/user/forgot-password`, {
+        email,
+      });
+
+      console.log(data);
+      if (data) {
+        toast({
+          variant: "success",
+          title: data.message,
+          duration: 1000,
+        });
+        reset();
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        toast({
+          variant: "destructive",
+          title: err.response.message,
+          duration: 1000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong!",
+          duration: 1000,
+        });
+      }
+    }
+    reset();
+  }
 
   return (
     <>
@@ -57,7 +94,7 @@ export default function ForgotPassword() {
                   disabled={isSubmitting}
                   className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
                 >
-                  {isSubmitting ? <SpinnerMini /> : "Sign in"}
+                  {isSubmitting ? <SpinnerMini /> : "Forgot Password"}
                 </button>
               </div>
             </form>

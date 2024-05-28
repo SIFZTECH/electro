@@ -1,22 +1,17 @@
+import { useCategories } from "@/app/_features/categories/useCategory";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
+import { Skeleton } from "@/app/components/ui/skeleton";
+import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 
-async function getCategory() {
-  const req = await fetch("https://electro-api.sifztech.com/api/categories", {
-    headers: {
-      Authorization: `Bearer 13|lYMGOtqeLhRz9M3fpu0wndP2WgRxYeVLJzSGOK3Pf6bdbd13`,
-    },
-  });
-  const res = await req.json();
-  console.log(res);
-}
+const FilterByCategory = () => {
+  const { categories, isLoading, error } = useCategories();
 
-const FilterByCategory = async () => {
-  const categories = await getCategory();
+  if (isLoading) return <Skeleton />;
 
   return (
     <Accordion type="single" collapsible defaultValue="category">
@@ -25,7 +20,7 @@ const FilterByCategory = async () => {
           By Category
         </AccordionTrigger>
         <AccordionContent>
-          <div className="border-b border-grey-0 px-3 pb-3">
+          {/* <div className="border-b border-grey-0 px-3 pb-3">
             <div className="flex gap-1 items-center">
               <input type="checkbox" id="ct-1" name="ct-1" defaultChecked />
               <label htmlFor="ct-1">E Mountain</label>
@@ -42,7 +37,8 @@ const FilterByCategory = async () => {
               <input type="checkbox" id="ct-4" name="ct-4" />
               <label htmlFor="ct-4">E Mountain</label>
             </div>
-          </div>
+          </div> */}
+          <SkeletonFiler />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

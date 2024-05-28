@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-const Product = ({ id, image, name, summary }) => {
+const Product = ({ id, slug, image, name, summary }) => {
   return (
     <Link
-      href={`product-specifications/${id}`}
+      href={`product-specifications/${slug}`}
       className="product flex flex-col gap-2 border border-gray-200 p-5 pt-3"
     >
       <Image

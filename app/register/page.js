@@ -1,14 +1,17 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-// import { register } from "../actions";
-import Logo from "../../components/ui/Logo";
-import { useToast } from "@/app/components/ui/use-toast";
 import axios from "axios";
-import SpinnerMini from "../../components/ui/SpinnerMini";
+import { useForm } from "react-hook-form";
+import Logo from "@/app/components/ui/Logo";
+import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { BASE_URL } from "../lib/utils";
+import { useToast } from "../_hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -16,9 +19,40 @@ export default function Page() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  async function onSubmit(data) {
-    console.log(data);
-    // axios.post()
+  async function onSubmit({ name, email, password, passwordConfirm }) {
+    try {
+      const { data } = await axios.post(`${BASE_URL}/user/register`, {
+        name,
+        email,
+        password,
+        password_confirmation: passwordConfirm,
+      });
+
+      console.log(data);
+
+      if (data) {
+        toast({
+          variant: "success",
+          title: "Account successfully created",
+          duration: 1000,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response.data.message.email) {
+        toast({
+          variant: "destructive",
+          title: err.response.data.message.email,
+          duration: 1000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong!",
+          duration: 1000,
+        });
+      }
+    }
   }
 
   return (
@@ -33,11 +67,7 @@ export default function Page() {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form
-              className="space-y-6"
-              onSubmit={handleSubmit(onSubmit)}
-              method="POST"
-            >
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Name
@@ -48,6 +78,7 @@ export default function Page() {
                       required: "Please provide your name",
                     })}
                     type="text"
+                    disabled={isSubmitting}
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                   {errors?.name && (
@@ -72,6 +103,7 @@ export default function Page() {
                     })}
                     type="email"
                     autoComplete="email"
+                    disabled={isSubmitting}
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                   {errors?.email && (
@@ -97,7 +129,7 @@ export default function Page() {
                         message: "Password needs a minimum of 8 characters",
                       },
                     })}
-                    name="password"
+                    disable={isSubmitting}
                     type="password"
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
@@ -122,7 +154,7 @@ export default function Page() {
                         value === getValues().password ||
                         "Passwords need to match",
                     })}
-                    name="passwordConfirm"
+                    disabled={isSubmitting}
                     type="password"
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />

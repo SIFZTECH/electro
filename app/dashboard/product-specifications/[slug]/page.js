@@ -1,8 +1,16 @@
+"use client";
+
 import { BsPatchExclamation } from "react-icons/bs";
 import ProductSpecifications from "./ProductSpecifications";
 import ProductTop from "./ProductTop";
+import { useProduct } from "@/app/_features/products/useProduct";
 
-const page = () => {
+const Product = ({ params }) => {
+  const { isLoading, product, error } = useProduct(params.slug);
+  console.log(product);
+
+  if (isLoading) return <h1>Loading...</h1>;
+
   return (
     <div>
       <h1 className="heading-h1 my-4 mb-8">Product Specifications</h1>
@@ -74,4 +82,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Product;
