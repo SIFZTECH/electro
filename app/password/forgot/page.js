@@ -13,7 +13,7 @@ export default function ForgotPassword() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isSubmitted },
   } = useForm();
 
   async function onSubmit({ email }) {
@@ -23,13 +23,12 @@ export default function ForgotPassword() {
       });
 
       console.log(data);
-      if (data) {
+      if (data.status === 200) {
         toast({
           variant: "success",
           title: data.message,
           duration: 1000,
         });
-        reset();
       }
     } catch (err) {
       console.log(err);
@@ -91,7 +90,7 @@ export default function ForgotPassword() {
               <div>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitted}
                   className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
                 >
                   {isSubmitting ? <SpinnerMini /> : "Forgot Password"}

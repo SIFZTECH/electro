@@ -8,10 +8,11 @@ export function useCategories() {
     data: categories,
     isLoading,
     error,
+    isError,
   } = useQuery({
     queryKey: ["categories"],
     queryFn: () => getAllCategories(),
   });
 
-  return { categories, isLoading, error };
+  return { categories, isLoading, error, isError };
 }

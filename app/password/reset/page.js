@@ -3,15 +3,62 @@
 import Logo from "../../components/ui/Logo";
 import { useForm } from "react-hook-form";
 import SpinnerMini from "../../components/ui/SpinnerMini";
+import { useRouter, useSearchParams } from "next/navigation";
+import axios from "axios";
+import { BASE_URL } from "@/app/lib/utils";
+import { useToast } from "@/app/_hooks/use-toast";
 
 export default function ForgotPassword() {
+  const router = useRouter();
+  const { toast } = useToast();
+  const params = useSearchParams();
+  const email = params.get("email");
+  const token = params.get("token");
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    getValues,
+    formState: { errors, isSubmitting, isSubmitted },
   } = useForm();
 
-  function onSubmit(data) {}
+  async function onSubmit({ password, password_confirmation }) {
+    try {
+      const { data } = await axios.post(`${BASE_URL}/user/reset-password`, {
+        token,
+        email,
+        password,
+        password_confirmation,
+      });
+
+      console.log(data);
+
+      if (data.status === 200) {
+        toast({
+          variant: "success",
+          title: data.message,
+          duration: 1000,
+        });
+
+        router.replace("/login");
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        toast({
+          variant: "destructive",
+          title: err.response.data.message,
+          duration: 1000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          duration: 1000,
+        });
+      }
+    }
+  }
 
   return (
     <>
@@ -20,7 +67,7 @@ export default function ForgotPassword() {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
             <Logo />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
-              Forgot your password
+              Reset your password
             </h2>
           </div>
 
@@ -41,7 +88,6 @@ export default function ForgotPassword() {
                         message: "Password needs a minimum of 8 characters",
                       },
                     })}
-                    name="password"
                     type="password"
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
@@ -60,13 +106,12 @@ export default function ForgotPassword() {
                 </div>
                 <div className="mt-2">
                   <input
-                    {...register("passwordConfirm", {
+                    {...register("password_confirmation", {
                       required: "Please confirm your password",
                       validate: (value) =>
                         value === getValues().password ||
                         "Passwords need to match",
                     })}
-                    name="passwordConfirm"
                     type="password"
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
@@ -82,7 +127,7 @@ export default function ForgotPassword() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                  className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary cursor-pointer"
                 >
                   {isSubmitting ? <SpinnerMini /> : "Reset password"}
                 </button>

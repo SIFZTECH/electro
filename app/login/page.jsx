@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Logo from "../components/ui/Logo";
 import SpinnerMini from "../components/ui/SpinnerMini";
 import { useToast } from "../_hooks/use-toast";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -40,6 +41,7 @@ export default function Login() {
         duration: 1000,
       });
     } catch (err) {
+      console.log(err);
       if (err.response.data) {
         toast({
           variant: "destructive",
@@ -100,6 +102,14 @@ export default function Login() {
                   <label className="block text-sm font-medium leading-6 text-gray-900">
                     Password
                   </label>
+                  <div className="text-[13px]">
+                    <Link
+                      href="/password/forgot"
+                      className="font-semibold text-color-primary hover:text-color-primary/60"
+                    >
+                      Forgot password?
+                    </Link>
+                  </div>
                 </div>
                 <div className="mt-2">
                   <input

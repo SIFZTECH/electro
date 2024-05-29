@@ -11,13 +11,10 @@ export async function getAllCategories() {
     },
   });
 
-  console.log(data);
+  if (!data.data)
+    throw new Error(
+      "There is no category at that momment! Please add a new Category"
+    );
 
   return data.data;
 }
-
-// export async function getProduct(slug) {
-//   const { data } = await axios.get(`${BASE_URL}/api/product/${slug}`);
-
-//   return data.data;
-// }
