@@ -36,6 +36,7 @@ export default function Page() {
           title: "Account successfully created",
           duration: 1000,
         });
+        router.replace("/register/confirmation");
       }
     } catch (err) {
       console.log(err);
