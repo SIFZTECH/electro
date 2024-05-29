@@ -31,11 +31,11 @@ const ProtectedRoute = ({ children }) => {
   }
 
   // 4. If there IS a admin user, render the app
-  if ((isAdmin || isDealer) && !isLoading) {
+  if (!isLoading && (isAdmin || isDealer)) {
     return children;
   }
 
-  return <h1>You don't have permission to Access this route</h1>;
+  return <h1> You don't have permission to Access this route</h1>;
 };
 
 export default ProtectedRoute;

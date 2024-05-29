@@ -65,6 +65,7 @@ const SettingsForm = () => {
       });
 
       console.log(data);
+
       if (data) {
         toast({
           variant: "success",
