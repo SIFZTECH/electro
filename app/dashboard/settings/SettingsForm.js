@@ -1,24 +1,97 @@
 "use client";
 
 import { useUser } from "@/app/_features/authentication/useUser";
+import { useToast } from "@/app/_hooks/use-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { BASE_URL } from "@/app/lib/utils";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
 const SettingsForm = () => {
+  const token = localStorage.getItem("access-token");
+  const { toast } = useToast();
   const { user, isLoading } = useUser();
-  console.log(user);
+
   const {
     register,
+    handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      firstName: user ? user.name : "",
+      firstname: user ? user.name : "",
       email: user ? user.email : "",
     },
   });
 
+  async function onSubmit({
+    firstname,
+    lastname,
+    phone,
+    company_name,
+    weburl,
+    abn,
+    purchase_date,
+    invoice_number,
+    description,
+    street_address,
+    city,
+    postal_code,
+    state,
+    logo,
+    stockfeedurl,
+  }) {
+    try {
+      const { data } = await axios.post(`${BASE_URL}/dealer/settings`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          firstname,
+          lastname,
+          phone,
+          company_name,
+          weburl,
+          abn,
+          purchase_date,
+          invoice_number,
+          description,
+          street_address,
+          city,
+          postal_code,
+          state,
+          logo,
+          stockfeedurl,
+        },
+      });
+
+      console.log(data);
+      if (data) {
+        toast({
+          variant: "success",
+          title: data.message,
+          duration: 1000,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        toast({
+          variant: "destructive",
+          title: err.response.data.message,
+          duration: 1000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          duration: 1000,
+        });
+      }
+    }
+  }
+
   return (
-    <form className="md:py-8 p-2 md:px-6 ">
+    <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-wrap flex-col md:flex-row gap-x-9 gap-y-6">
         <div className="md:basis-[45%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
@@ -26,7 +99,7 @@ const SettingsForm = () => {
           </label>
           <div className="mt-1">
             <input
-              {...register("firstName")}
+              {...register("firstname")}
               type="text"
               placeholder="First Name"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -39,7 +112,7 @@ const SettingsForm = () => {
           </label>
           <div className="mt-1">
             <input
-              {...register("lastName")}
+              {...register("lastname")}
               type="text"
               placeholder="Last Name"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -99,15 +172,11 @@ const SettingsForm = () => {
           </div>
         </div>
         <div className="md:basis-[45%]">
-          <label
-            htmlFor="abn-select"
-            className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-          >
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
             ABN
           </label>
           <select
             name="abn"
-            id="abn-select"
             className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
           >
             <option value="">--Please choose an option--</option>
@@ -119,16 +188,13 @@ const SettingsForm = () => {
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
             Purchase Date
           </label>
-          <select
+          <input
             {...register("purchase_date", {
               required: "This field must be filled",
             })}
+            type="date"
             className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-          >
-            <option value="">--Please choose an option--</option>
-            <option value="abn">ABN</option>
-            <option value="abn">TV5</option>
-          </select>
+          />
         </div>
         <div className="md:basis-[45%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
@@ -162,6 +228,18 @@ const SettingsForm = () => {
           <div className="mt-1">
             <input
               {...register("street_address")}
+              type="text"
+              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+          </div>
+        </div>
+        <div className="md:basis-[45%]">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            City
+          </label>
+          <div className="mt-1">
+            <input
+              {...register("city")}
               type="text"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />

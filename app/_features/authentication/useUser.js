@@ -10,7 +10,8 @@ export function useUser() {
   return {
     isLoading,
     user,
-    isAdmin: user?.roles[0]?.name === "admin" || false,
-    isDealer: user?.roles[0]?.name === "dealer" || false,
+    isAdmin: user?.roles[0]?.name === "admin",
+    isDealer: user?.roles[0]?.name === "dealer",
+    isVerified: user?.email_verified_at,
   };
 }

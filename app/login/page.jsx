@@ -42,7 +42,7 @@ export default function Login() {
       });
     } catch (err) {
       console.log(err);
-      if (err.response.data) {
+      if (err.response) {
         toast({
           variant: "destructive",
           title: "Provided email or password are incorrect",

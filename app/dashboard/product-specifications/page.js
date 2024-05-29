@@ -4,11 +4,12 @@ import { useProducts } from "@/app/_features/products/useProducts";
 import FilterByProduct from "./FilterByProduct";
 import ProductCategories from "./ProductCategories";
 import Products from "./Products";
+import Spinner from "@/app/components/ui/Spinner";
 
 const Page = () => {
   const { products, isLoading } = useProducts();
 
-  if (isLoading) return <h1>Loading....</h1>;
+  if (isLoading) return <Spinner />;
 
   return (
     <>

@@ -28,14 +28,14 @@ export default function Page() {
         password_confirmation: passwordConfirm,
       });
 
-      console.log(data);
-
       if (data) {
         toast({
           variant: "success",
           title: "Account successfully created",
           duration: 1000,
         });
+
+        localStorage.setItem("access-token", data.data.auth);
         router.replace("/register/confirmation");
       }
     } catch (err) {
