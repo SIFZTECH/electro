@@ -1,18 +1,32 @@
 "use client";
 
-import { getAllCategories } from "@/app/_services/apiCategories";
-import { useQuery } from "@tanstack/react-query";
+import { getAllCategories, getCategory } from "@/app/_services/apiCategories";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export function useCategories() {
-  const {
-    data: categories,
-    isLoading,
-    error,
-    isError,
-  } = useQuery({
+  const { data, isLoading, error, isError } = useQuery({
     queryKey: ["categories"],
     queryFn: () => getAllCategories(),
   });
 
-  return { categories, isLoading, error, isError };
+  return { data, isLoading, error, isError };
+}
+
+export function useCategory() {
+  const {
+    data: category,
+    isLoading,
+    error,
+    isError,
+  } = useQuery({
+    queryKey: ["categories", categoryId],
+    queryFn: () => getCategory(categoryId),
+  });
+
+  return { category, isLoading, error, isError };
 }

@@ -3,9 +3,9 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
-export async function getAllCategories() {
+export async function getAllSubcategories() {
   const JWT = localStorage.getItem("access-token");
-  const { data } = await axios.get(`${BASE_URL}/categories`, {
+  const { data } = await axios.get(`${BASE_URL}/subcategories`, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
@@ -19,9 +19,9 @@ export async function getAllCategories() {
   return data.data;
 }
 
-export async function getCategory(categoryId) {
+export async function getSubcategory(categoryId) {
   const JWT = localStorage.getItem("access-token");
-  const { data } = await axios.get(`${BASE_URL}/categories/${categoryId}`, {
+  const { data } = await axios.get(`${BASE_URL}/subcategories/${categoryId}`, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
@@ -37,34 +37,55 @@ export async function getCategory(categoryId) {
   return data.data;
 }
 
-export async function updateCategory(categoryId, name) {
+export async function updateSubcategory(id, { name, category_id }) {
   const token = localStorage.getItem("access-token");
 
-  console.log(name);
+  console.log(name, category_id);
+
   const { data } = await axios({
-    url: `${BASE_URL}/categories/${categoryId}`,
+    url: `${BASE_URL}/subcategories/${id}`,
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: name,
+    data: {
+      name,
+      category_id,
+    },
   });
+
+  console.log(data);
 
   return data;
 }
 
-export async function createCategory(name) {
+export async function createSubcategory({ name, category_id }) {
   const token = localStorage.getItem("access-token");
 
-  console.log(name);
-
   const { data } = await axios({
-    url: `${BASE_URL}/categories`,
+    url: `${BASE_URL}/subcategories`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { name },
+    data: { name, category_id },
+  });
+
+  console.log(data);
+
+  return data;
+}
+
+export async function deleteSubcategory(id) {
+  const token = localStorage.getItem("access-token");
+
+  const { data } = await axios({
+    url: `${BASE_URL}/subcategories/${+id}`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { id },
   });
 
   return data;

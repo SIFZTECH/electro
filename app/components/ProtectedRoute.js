@@ -24,8 +24,6 @@ const ProtectedRoute = ({ children }) => {
   // 3. IF LOADING IS TRUE
   if (isLoading) return <Spinner />;
 
-  console.log(isVerified);
-
   if (user && !isVerified) {
     router.replace("/register/confirmation");
   }
