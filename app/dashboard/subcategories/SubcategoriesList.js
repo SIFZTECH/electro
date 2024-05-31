@@ -2,19 +2,25 @@
 
 import { TableCell, TableRow } from "@/app/components/ui/table";
 
-import SubCategoryMenu from "./SubCategoryMenu";
+import EditSubCategory from "./EditSubCategory";
+import DeleteSubCategory from "./DeleteSubCategory";
 
-const SubcategoriesList = ({ subcategory, category }) => {
+const SubCategoriesList = ({ subcategory }) => {
   return (
-    <TableRow>
-      <TableCell>{subcategory.id}</TableCell>
-      <TableCell>{subcategory.name}</TableCell>
-      <TableCell>{category?.name}</TableCell>
-      <TableCell className="w-6">
-        <SubCategoryMenu subcategory={subcategory} category={category} />
-      </TableCell>
-    </TableRow>
+    <>
+      <TableRow>
+        <TableCell>{subcategory.id}</TableCell>
+        <TableCell>{subcategory.name}</TableCell>
+        <TableCell>{subcategory.category.name}</TableCell>
+        <TableCell className="w-6">
+          <div className="flex gap-3">
+            <EditSubCategory subcategory={subcategory} />
+            <DeleteSubCategory subcategory={subcategory} />
+          </div>
+        </TableCell>
+      </TableRow>
+    </>
   );
 };
 
-export default SubcategoriesList;
+export default SubCategoriesList;

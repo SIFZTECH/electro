@@ -1,22 +1,27 @@
 "use client";
 
+import SubCategoryTable from "./SubCategoryTable";
+import Spinner from "@/app/components/ui/Spinner";
+import CreateSubNewCategory from "./CreateNewSubCategory";
 import { useSubcategories } from "@/app/_features/subCategories/useSubcategories";
 
-import Spinner from "@/app/components/ui/Spinner";
-import SubcategoryTable from "./SubcategoryTable";
-
-const SubCategories = () => {
+const Categories = () => {
   const { data, isLoading, isError } = useSubcategories();
+
+  console.log(data);
 
   if (isLoading) return <Spinner />;
 
   return (
     <div>
-      <h1 className="heading-h1 mb-5">All Sub-Categories</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="heading-h1 mb-5">All Categories</h1>
+        <CreateSubNewCategory />
+      </div>
 
-      <SubcategoryTable data={data} />
+      <SubCategoryTable data={data} />
     </div>
   );
 };
 
-export default SubCategories;
+export default Categories;

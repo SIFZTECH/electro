@@ -1,5 +1,4 @@
 import { useToast } from "@/app/_hooks/use-toast";
-import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -10,11 +9,21 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
+import { createSubcategory } from "@/app/_services/apiSubcategories";
+import { useCategories } from "@/app/_features/categories/useCategory";
 
-const CreateNewCategory = () => {
+const CreateNewSubCategory = () => {
   const [open, setOpen] = useState();
+  const { data, isLoading } = useCategories();
+
   const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  let categories = [];
+
+  if (!isLoading) {
+    categories = data.data;
+  }
 
   const {
     register,
@@ -22,9 +31,10 @@ const CreateNewCategory = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  async function onSubmit({ name }) {
+  async function onSubmit({ name, category_id }) {
+    console.log(name, category_id);
     try {
-      const res = await createCategory(name);
+      const res = await createSubcategory({ name, category_id });
 
       if (res) {
         toast({
@@ -33,7 +43,7 @@ const CreateNewCategory = () => {
           duration: 1000,
         });
 
-        queryClient.invalidateQueries("categories");
+        queryClient.invalidateQueries("subcategories");
         setOpen((open) => !open);
       }
     } catch (err) {
@@ -57,12 +67,12 @@ const CreateNewCategory = () => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
       <DialogTrigger>
-        <button className="btn-primary">Add New Category</button>
+        <button className="btn-primary">Add New Sub-Category</button>
       </DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">
-            Create new Category
+            Create new Sub-Category
           </h2>
           <p className="text-sm text-gray-800 mt-3">
             Create new Category. Click create when you're done.
@@ -70,7 +80,7 @@ const CreateNewCategory = () => {
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
-                Category Name
+                Sub-Category Name
               </label>
               <div className="mt-2">
                 <input
@@ -84,6 +94,29 @@ const CreateNewCategory = () => {
                 {errors?.name && (
                   <span className="text-red-500 text-sm">
                     {errors.name.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Select Category
+              </label>
+              <div className="mt-2">
+                <select
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  {...register("category_id")}
+                >
+                  <option value="">--Please choose an option--</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+                {errors?.category_name && (
+                  <span className="text-red-500 text-sm">
+                    {errors.category_name.message}
                   </span>
                 )}
               </div>
@@ -105,4 +138,4 @@ const CreateNewCategory = () => {
   );
 };
 
-export default CreateNewCategory;
+export default CreateNewSubCategory;

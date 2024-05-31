@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useToast } from "@/app/_hooks/use-toast";
+import { updateSubcategory } from "@/app/_services/apiSubcategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
 import {
@@ -8,27 +9,28 @@ import {
   DialogContent,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
-import { useToast } from "@/app/_hooks/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateSubcategory } from "@/app/_services/apiSubcategories";
 
-const EditSubCategory = ({ subcategory, category_id }) => {
+const EditSubCategory = ({ subcategory }) => {
   const [open, setOpen] = useState(false);
-
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm({ defaultValues: { name: subcategory.name ?? "" } });
+  } = useForm({ defaultValues: { name: subcategory.name || "" } });
 
   async function onSubmit({ name }) {
     try {
-      const res = await updateSubcategory(subcategory.id, {
+      const res = await updateSubcategory(
+        subcategory.id,
         name,
-        category_id,
-      });
+        subcategory.category.id
+      );
 
       if (res) {
         toast({
@@ -36,7 +38,8 @@ const EditSubCategory = ({ subcategory, category_id }) => {
           title: res.message,
           duration: 1000,
         });
-        setOpen((prev) => !prev);
+        queryClient.invalidateQueries("subcategories");
+        setOpen((open) => !open);
       }
     } catch (err) {
       console.log(err);
@@ -53,20 +56,20 @@ const EditSubCategory = ({ subcategory, category_id }) => {
           duration: 1000,
         });
       }
-      setOpen((prev) => !prev);
     }
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="hover:bg-gray-100 transition-all py-1">
+    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
+      <DialogTrigger className="btn-primary transition-all py-1 border-color-primary">
         Edit
       </DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg">Edit Sub-Category</h2>
           <p className="text-sm text-gray-800 mt-3">
-            Make changes to your sub-category here. Click save when you're done.
+            Make changes to your subcategory here. Click change when you're
+            done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -96,7 +99,7 @@ const EditSubCategory = ({ subcategory, category_id }) => {
                 disabled={isSubmitting}
                 className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
-                {isSubmitting ? <SpinnerMini /> : "Save"}
+                {isSubmitting ? <SpinnerMini /> : "Update"}
               </button>
             </div>
           </form>

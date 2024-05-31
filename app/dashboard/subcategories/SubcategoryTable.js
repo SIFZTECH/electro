@@ -7,27 +7,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import SubcategoriesList from "./SubcategoriesList";
 
-const SubcategoryTable = ({ data }) => {
+import SubCategoriesList from "./SubCategoriesList";
+import CreateNewSubCategory from "./CreateNewSubCategory";
+
+const SubCategoryTable = ({ data }) => {
+  const subcategories = data.data;
+  console.log(subcategories);
+
   return (
     <>
       <Table className="">
         <TableHeader>
           <TableRow className="font-serif font-bold text-gray-900 text-lg">
-            <TableHead>Sub-Category ID</TableHead>
+            <TableHead>ID</TableHead>
             <TableHead>Sub-Category Name</TableHead>
             <TableHead>Category Name</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className="">
-          {data.data.map((subcategory) => (
-            <SubcategoriesList
-              key={subcategory.id}
-              subcategory={subcategory}
-              category={subcategory.category}
-            />
+          {subcategories.map((subcategory) => (
+            <SubCategoriesList key={subcategory.id} subcategory={subcategory} />
           ))}
         </TableBody>
       </Table>
@@ -35,4 +36,4 @@ const SubcategoryTable = ({ data }) => {
   );
 };
 
-export default SubcategoryTable;
+export default SubCategoryTable;

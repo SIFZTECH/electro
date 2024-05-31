@@ -37,10 +37,8 @@ export async function getSubcategory(categoryId) {
   return data.data;
 }
 
-export async function updateSubcategory(id, { name, category_id }) {
+export async function updateSubcategory(id, name, category_id) {
   const token = localStorage.getItem("access-token");
-
-  console.log(name, category_id);
 
   const { data } = await axios({
     url: `${BASE_URL}/subcategories/${id}`,
@@ -68,7 +66,7 @@ export async function createSubcategory({ name, category_id }) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { name, category_id },
+    data: { name, category_id: +category_id },
   });
 
   console.log(data);
