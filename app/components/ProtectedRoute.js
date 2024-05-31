@@ -15,7 +15,9 @@ const ProtectedRoute = ({ children }) => {
   // 2. If there is NO authenticated user, redirect to the /login
   useEffect(
     function () {
-      if (!isLoading && !user && !token) {
+      if (!isLoading && !user) {
+        router.replace("/login");
+      } else if (!token) {
         router.replace("/login");
       }
     },

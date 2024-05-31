@@ -17,7 +17,7 @@ const FilterByCategory = () => {
           By Category
         </AccordionTrigger>
         <AccordionContent>
-          <div className="border-b border-grey-0 px-3 pb-3">
+          {/* <div className="border-b border-grey-0 px-3 pb-3">
             {isLoading && !isError ? (
               <SkeletonFiler />
             ) : (
@@ -35,7 +35,7 @@ const FilterByCategory = () => {
                 </div>
               ))
             )}
-          </div>
+          </div> */}
         </AccordionContent>
       </AccordionItem>
     </Accordion>

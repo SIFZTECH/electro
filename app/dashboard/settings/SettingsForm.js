@@ -4,15 +4,10 @@ import { useUser } from "@/app/_features/authentication/useUser";
 import { useToast } from "@/app/_hooks/use-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { Switch } from "@/app/components/ui/switch";
-import { BASE_URL } from "@/app/lib/utils";
-import axios from "axios";
 import { useForm } from "react-hook-form";
-import EnableTFAForm from "./EnableTFAForm";
-import { useState } from "react";
 import { logout, profileSettings } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
 import Logout from "./Logout";
-import ChangePasswordForm from "./ChangePasswordForm";
 
 const SettingsForm = () => {
   const router = useRouter();
@@ -25,23 +20,23 @@ const SettingsForm = () => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      firstname: user ? user.name : "",
+      firstname: user ? user.dealer.name : "",
       email: user ? user.email : "",
-      lastname: user ? user.lastname : "",
-      phone: user ? user.phone : "",
-      company_name: user ? user.company_name : "",
-      weburl: user ? user.weburl : "",
-      abn: user ? user.abn : "",
-      purchase_date: user ? user.purchase_date : "",
-      invoice_number: user ? user.invoice_number : "",
-      description: user ? user.description : "",
-      street_address: user ? user.street_address : "",
-      description: user ? user.description : "",
-      city: user ? user.city : "",
-      postal_code: user ? user.postal_code : "",
-      state: user ? user.state : "",
-      logo: user ? user.logo : "",
-      stockfeedurl: user ? user.stockfeedurl : "",
+      lastname: user ? user.dealer.lastname : "",
+      phone: user ? user.dealer.phone : "",
+      company_name: user ? user.dealer.company_name : "",
+      weburl: user ? user.dealer.weburl : "",
+      abn: user ? user.dealer.abn : "",
+      purchase_date: user ? user.dealer.purchase_date : "",
+      invoice_number: user ? user.dealer.invoice_number : "",
+      description: user ? user.dealer.description : "",
+      street_address: user ? user.dealer.street_address : "",
+      description: user ? user.dealer.description : "",
+      city: user ? user.dealer.city : "",
+      postal_code: user ? user.dealer.postal_code : "",
+      state: user ? user.dealer.state : "",
+      logo: user ? user.dealer.logo : "",
+      stockfeedurl: user ? user.dealer.stockfeedurl : "",
     },
   });
 
@@ -64,7 +59,6 @@ const SettingsForm = () => {
   }) {
     try {
       const res = await profileSettings({
-        user_id: user.id,
         firstname,
         lastname,
         phone,
@@ -82,9 +76,7 @@ const SettingsForm = () => {
         stockfeedurl,
       });
 
-      console.log(data);
-
-      if (data) {
+      if (res) {
         toast({
           variant: "success",
           title: data.message,

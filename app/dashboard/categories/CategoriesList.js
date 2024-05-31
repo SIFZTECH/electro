@@ -12,10 +12,7 @@ const CategoriesList = ({ category, subCategories }) => {
       <TableCell>{category.name}</TableCell>
       <TableCell>
         {subCategories.map((item) => (
-          <button
-            key={item.id}
-            className="btn-primary bg-transparent underline"
-          >
+          <button key={item.id} className="btn-primary mr-3 bg-green-200">
             {item.name}
           </button>
         ))}

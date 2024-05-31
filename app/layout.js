@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html className={`${inter.variable} ${playfair.variable}`} lang="en">
-      <body className="font-sans lg:flex  overflow-x-hidden">
+      <body className="font-sans lg:flex overflow-x-hidden">
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <Toaster />
       </body>

@@ -94,7 +94,6 @@ export async function profileSettings({
       Authorization: `Bearer ${token}`,
     },
     data: {
-      user_id: 1,
       firstname,
       lastname,
       phone,

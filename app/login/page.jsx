@@ -49,7 +49,7 @@ export default function Login() {
       } else {
         toast({
           variant: "destructive",
-          title: "Something went wrong!",
+          title: err.message,
           duration: 1000,
         });
       }

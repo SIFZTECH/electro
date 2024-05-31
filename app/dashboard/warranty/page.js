@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import WarrantyProducts from "./WarrantyProducts";
 import Stats from "./WarrantyStats";
+import { useWarranties } from "@/app/_features/warranties/useWarranty";
 
-const page = () => {
+const WarrantyPage = () => {
+  const { data, isLoading } = useWarranties();
+
   return (
     <div>
       <h1 className="heading-h1 my-6">SEB Customer Warranty Registration</h1>
@@ -22,4 +27,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WarrantyPage;
