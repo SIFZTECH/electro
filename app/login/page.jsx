@@ -7,6 +7,7 @@ import Logo from "../components/ui/Logo";
 import SpinnerMini from "../components/ui/SpinnerMini";
 import { useToast } from "../_hooks/use-toast";
 import Link from "next/link";
+import { login } from "../_services/apiAuth";
 
 export default function Login() {
   const router = useRouter();
@@ -19,25 +20,22 @@ export default function Login() {
 
   async function onSubmit({ email, password }) {
     try {
-      const { data } = await axios({
-        url: "https://electro-api.sifztech.com/api/admin/login",
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-        data: {
-          email,
-          password,
-        },
-      });
+      const res = await login({ email, password });
 
-      localStorage.setItem("access-token", data.data.auth);
-      router.replace("/dashboard");
+      console.log(res);
+
+      if (res.message) {
+        router.replace("/otp/verify");
+      }
+
+      if (res.data) {
+        router.replace("/dashboard");
+        localStorage.setItem("access-token", res.auth);
+      }
 
       toast({
         variant: "success",
-        title: data.message,
+        title: res.message,
         duration: 1000,
       });
     } catch (err) {
