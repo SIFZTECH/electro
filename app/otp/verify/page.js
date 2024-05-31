@@ -83,8 +83,10 @@ import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { verifyOtp } from "@/app/_services/apiAuth";
 import { useToast } from "@/app/_hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 function InputOTPForm() {
+  const router = useRouter();
   const { toast } = useToast();
   const form = useForm({
     defaultValues: {
@@ -100,12 +102,12 @@ function InputOTPForm() {
       console.log(res);
 
       if (res.data) {
-        localStorage.setItem("access-token", res.auth);
+        localStorage.setItem("access-token", res.data.auth);
         router.replace("/dashboard");
 
         toast({
           variant: "success",
-          title: res.message,
+          title: "Successfull",
           duration: 1000,
         });
       }
@@ -169,6 +171,15 @@ function InputOTPForm() {
               <button type="submit" className="btn-primary">
                 {form.formState.isSubmitting ? <SpinnerMini /> : "Submit"}
               </button>
+              {/* <p className="text-sm font-serif">
+                Don't recive the verification OTP?{" "}
+                <button
+                  onClick={handleResendOTP}
+                  className="underline text-[#e1b813] font-semibold"
+                >
+                  Resend OTP
+                </button>
+              </p> */}
             </form>
           </Form>
         </div>

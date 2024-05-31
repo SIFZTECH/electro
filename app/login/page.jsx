@@ -30,7 +30,7 @@ export default function Login() {
 
       if (res.data) {
         router.replace("/dashboard");
-        localStorage.setItem("access-token", res.auth);
+        localStorage.setItem("access-token", res.data.auth);
       }
 
       toast({

@@ -1,7 +1,5 @@
 "use client";
 
-import { GrLogout } from "react-icons/gr";
-
 import { useUser } from "@/app/_features/authentication/useUser";
 import { useToast } from "@/app/_hooks/use-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
@@ -11,11 +9,14 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import EnableTFAForm from "./EnableTFAForm";
 import { useState } from "react";
-import { logout } from "@/app/_services/apiAuth";
+import { logout, profileSettings } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
+import Logout from "./Logout";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 const SettingsForm = () => {
   const [open, setOpen] = useState(false);
+  const [openP, setOpenP] = useState(false);
   const router = useRouter();
   const token = localStorage.getItem("access-token");
   const { toast } = useToast();
@@ -29,6 +30,21 @@ const SettingsForm = () => {
     defaultValues: {
       firstname: user ? user.name : "",
       email: user ? user.email : "",
+      lastname: user ? user.lastname : "",
+      phone: user ? user.phone : "",
+      company_name: user ? user.company_name : "",
+      weburl: user ? user.weburl : "",
+      abn: user ? user.abn : "",
+      purchase_date: user ? user.purchase_date : "",
+      invoice_number: user ? user.invoice_number : "",
+      description: user ? user.description : "",
+      street_address: user ? user.street_address : "",
+      description: user ? user.description : "",
+      city: user ? user.city : "",
+      postal_code: user ? user.postal_code : "",
+      state: user ? user.state : "",
+      logo: user ? user.logo : "",
+      stockfeedurl: user ? user.stockfeedurl : "",
     },
   });
 
@@ -50,27 +66,23 @@ const SettingsForm = () => {
     stockfeedurl,
   }) {
     try {
-      const { data } = await axios.post(`${BASE_URL}/dealer/settings`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        data: {
-          firstname,
-          lastname,
-          phone,
-          company_name,
-          weburl,
-          abn,
-          purchase_date,
-          invoice_number,
-          description,
-          street_address,
-          city,
-          postal_code,
-          state,
-          logo,
-          stockfeedurl,
-        },
+      const res = await profileSettings({
+        user_id: user.id,
+        firstname,
+        lastname,
+        phone,
+        company_name,
+        weburl,
+        abn,
+        purchase_date,
+        invoice_number,
+        description,
+        street_address,
+        city,
+        postal_code,
+        state,
+        logo,
+        stockfeedurl,
       });
 
       console.log(data);
@@ -111,6 +123,7 @@ const SettingsForm = () => {
           duration: 1000,
         });
 
+        localStorage.removeItem("access-token");
         router.refresh();
       }
     } catch (err) {
@@ -118,13 +131,11 @@ const SettingsForm = () => {
         toast({
           variant: "destructive",
           title: err.response.data.message,
-          duration: 1000,
         });
       } else {
         toast({
           variant: "destructive",
           title: "Something went wrong",
-          duration: 1000,
         });
       }
     }
@@ -230,9 +241,7 @@ const SettingsForm = () => {
               Purchase Date
             </label>
             <input
-              {...register("purchase_date", {
-                required: "This field must be filled",
-              })}
+              {...register("purchase_date")}
               type="date"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
@@ -244,7 +253,6 @@ const SettingsForm = () => {
             <div className="mt-1">
               <input
                 {...register("invoice_number")}
-                type="number"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
@@ -340,21 +348,32 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%] flex gap-3 items-center">
-            <div className="mt-1">
-              <Switch
-                id="tfa"
-                checked={user?.isTwoFactorEnable === 1 ? true : false}
-                onClick={() => setOpen((open) => !open)}
-              />
+          <div className="md:basis-[45%] ">
+            <div className="flex gap-3 items-center">
+              <div className="mt-1">
+                <Switch
+                  id="tfa"
+                  checked={user?.isTwoFactorEnable === 1 ? true : false}
+                  onClick={() => setOpen((open) => !open)}
+                />
+              </div>
+              <label
+                htmlFor="tfa"
+                className="block text-sm font-semibold font-serif leading-6 text-gray-900"
+              >
+                Enable Two-Factor Authentication
+              </label>
+              <EnableTFAForm open={open} setOpen={setOpen} />
             </div>
-            <label
-              htmlFor="tfa"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
-              Enable Two-Factor Authentication
-            </label>
-            <EnableTFAForm open={open} setOpen={setOpen} />
+            <div className="mt-4">
+              <label
+                className="block text-sm font-semibold font-serif leading-6 text-gray-900 border border-color-primary px-3 py-1 rounded-sm bg-[#fde68a]"
+                onClick={() => setOpenP((open) => !open)}
+              >
+                Change your password
+              </label>
+              <ChangePasswordForm open={openP} setOpen={setOpenP} />
+            </div>
           </div>
         </div>
         <button
@@ -367,15 +386,7 @@ const SettingsForm = () => {
       </form>
 
       <div className="px-5">
-        <div className="flex items-center mt-1 w-full">
-          <button
-            onClick={handleLogout}
-            className="btn-primary flex items-center gap-2 text-lg py-2 px-4"
-          >
-            <GrLogout />
-            <span>Logout</span>
-          </button>
-        </div>
+        <Logout handleLogout={handleLogout} />
       </div>
     </>
   );
