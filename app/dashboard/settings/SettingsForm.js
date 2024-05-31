@@ -15,10 +15,7 @@ import Logout from "./Logout";
 import ChangePasswordForm from "./ChangePasswordForm";
 
 const SettingsForm = () => {
-  const [open, setOpen] = useState(false);
-  const [openP, setOpenP] = useState(false);
   const router = useRouter();
-  const token = localStorage.getItem("access-token");
   const { toast } = useToast();
   const { user, isLoading } = useUser();
 
@@ -354,7 +351,9 @@ const SettingsForm = () => {
                 <Switch
                   id="tfa"
                   checked={user?.isTwoFactorEnable === 1 ? true : false}
-                  onClick={() => setOpen((open) => !open)}
+                  onClick={() => {
+                    router.push("/dashboard/settings/enable-2FA");
+                  }}
                 />
               </div>
               <label
@@ -363,16 +362,16 @@ const SettingsForm = () => {
               >
                 Enable Two-Factor Authentication
               </label>
-              <EnableTFAForm open={open} setOpen={setOpen} />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex">
               <label
                 className="block text-sm font-semibold font-serif leading-6 text-gray-900 border border-color-primary px-3 py-1 rounded-sm bg-[#fde68a]"
-                onClick={() => setOpenP((open) => !open)}
+                onClick={() =>
+                  router.push("/dashboard/settings/change-password")
+                }
               >
                 Change your password
               </label>
-              <ChangePasswordForm open={openP} setOpen={setOpenP} />
             </div>
           </div>
         </div>

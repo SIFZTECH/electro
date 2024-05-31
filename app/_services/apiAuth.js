@@ -41,11 +41,16 @@ export async function changePassword({
   new_password,
   new_password_confirmation,
 }) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
   const { data } = await axios({
     url: "https://electro-api.sifztech.com/api/admin/change-password",
     method: "post",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
 
     data: {

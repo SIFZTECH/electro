@@ -158,32 +158,7 @@ const Navigation = () => {
 
                     <span>All Categories</span>
                   </Link>
-                  <Link
-                    className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                      pathname === "/dashboard/categories/create-category"
-                        ? "active"
-                        : ""
-                    }`}
-                    href={"/dashboard/categories/create-category"}
-                  >
-                    <svg
-                      width="25"
-                      height="25"
-                      viewBox="0 0 25 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M20.204 21.3118L4.77544 21.3118C4.32079 21.3118 3.88475 21.1312 3.56326 20.8097C3.24177 20.4882 3.06116 20.0522 3.06116 19.5975L3.06116 4.16895L9.9183 4.16895L12.4897 7.59752L21.9183 7.59752L21.9183 19.5975C21.9183 20.0522 21.7377 20.4882 21.4162 20.8097C21.0947 21.1312 20.6587 21.3118 20.204 21.3118Z"
-                        stroke="#DEE1E6"
-                        strokeWidth="2.05714"
-                        strokeMiterlimit="10"
-                        strokeLinecap="square"
-                      />
-                    </svg>
 
-                    <span>Create Category</span>
-                  </Link>
                   <Link
                     className={`flex gap-2 items-center px-3 py-2 rounded-md ${
                       pathname === "/dashboard/subcategories" ? "active" : ""
@@ -207,32 +182,6 @@ const Navigation = () => {
                     </svg>
 
                     <span>All Sub-Categories</span>
-                  </Link>
-                  <Link
-                    className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                      pathname === "/dashboard/subcategories/create-subcategory"
-                        ? "active"
-                        : ""
-                    }`}
-                    href={"/dashboard/subcategories/create-subcategory"}
-                  >
-                    <svg
-                      width="25"
-                      height="25"
-                      viewBox="0 0 25 25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M20.204 21.3118L4.77544 21.3118C4.32079 21.3118 3.88475 21.1312 3.56326 20.8097C3.24177 20.4882 3.06116 20.0522 3.06116 19.5975L3.06116 4.16895L9.9183 4.16895L12.4897 7.59752L21.9183 7.59752L21.9183 19.5975C21.9183 20.0522 21.7377 20.4882 21.4162 20.8097C21.0947 21.1312 20.6587 21.3118 20.204 21.3118Z"
-                        stroke="#DEE1E6"
-                        strokeWidth="2.05714"
-                        strokeMiterlimit="10"
-                        strokeLinecap="square"
-                      />
-                    </svg>
-
-                    <span>Create Sub-Category</span>
                   </Link>
                 </AccordionContent>
               </AccordionItem>

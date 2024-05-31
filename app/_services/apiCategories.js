@@ -40,7 +40,6 @@ export async function getCategory(categoryId) {
 export async function updateCategory(categoryId, name) {
   const token = localStorage.getItem("access-token");
 
-  console.log(name);
   const { data } = await axios({
     url: `${BASE_URL}/categories/${categoryId}`,
     method: "put",
@@ -48,6 +47,21 @@ export async function updateCategory(categoryId, name) {
       Authorization: `Bearer ${token}`,
     },
     data: name,
+  });
+
+  return data;
+}
+
+export async function deleteCategory(id) {
+  const token = localStorage.getItem("access-token");
+
+  const { data } = await axios({
+    url: `${BASE_URL}/categories/${id}`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { id },
   });
 
   return data;
