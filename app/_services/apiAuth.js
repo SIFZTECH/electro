@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { BASE_URL } from "../lib/utils";
 
 export async function getCurrentUser() {
   const token = localStorage.getItem("access-token");
