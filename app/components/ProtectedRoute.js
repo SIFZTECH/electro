@@ -6,7 +6,12 @@ import { useUser } from "../_features/authentication/useUser";
 import Spinner from "./ui/Spinner";
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("access-token");
+  let token;
+  if (typeof window !== "undefined") {
+    token = localStorage?.getItem("access-token");
+  }
+
+  // const token = localStorage?.getItem("access-token");
   const router = useRouter();
 
   // 1. Get currentUser and check user is admin or dealer

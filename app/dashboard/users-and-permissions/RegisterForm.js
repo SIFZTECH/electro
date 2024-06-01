@@ -7,6 +7,7 @@ import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import axios from "axios";
 import { useToast } from "@/app/_hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/app/lib/utils";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -21,15 +22,12 @@ export default function RegisterForm() {
 
   async function onSubmit({ name, email, password, passwordConfirm }) {
     try {
-      const { data } = await axios.post(
-        "https://electro-api.sifztech.com/api/user/register",
-        {
-          name,
-          email,
-          password,
-          password_confirmation: passwordConfirm,
-        }
-      );
+      const { data } = await axios.post(`${BASE_URL}/user/register`, {
+        name,
+        email,
+        password,
+        password_confirmation: passwordConfirm,
+      });
 
       if (data) {
         toast({

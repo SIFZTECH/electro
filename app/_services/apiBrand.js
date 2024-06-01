@@ -3,10 +3,10 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
-export async function getAllCategories() {
+export async function getAllBrands() {
   const JWT = localStorage.getItem("access-token");
 
-  const { data } = await axios.get(`${BASE_URL}/categories`, {
+  const { data } = await axios.get(`${BASE_URL}/brands`, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
@@ -14,15 +14,15 @@ export async function getAllCategories() {
 
   if (!data.data)
     throw new Error(
-      "There is no category at that momment! Please add a new Category"
+      "There is no brand at that momment! Please add a new Brand"
     );
 
   return data.data;
 }
 
-export async function getCategory(categoryId) {
+export async function getBrand(id) {
   const JWT = localStorage.getItem("access-token");
-  const { data } = await axios.get(`${BASE_URL}/categories/${categoryId}`, {
+  const { data } = await axios.get(`${BASE_URL}/brands/${id}`, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
@@ -30,7 +30,7 @@ export async function getCategory(categoryId) {
 
   if (!data.data)
     throw new Error(
-      "There is no category at that momment! Please add a new Category"
+      "There is no Brand at that momment! Please add a new Brand"
     );
 
   console.log(data);
@@ -38,11 +38,11 @@ export async function getCategory(categoryId) {
   return data.data;
 }
 
-export async function updateCategory(categoryId, name) {
+export async function updateBrand(id, name) {
   const token = localStorage.getItem("access-token");
 
   const { data } = await axios({
-    url: `${BASE_URL}/categories/${categoryId}`,
+    url: `${BASE_URL}/brands/${id}`,
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -53,11 +53,11 @@ export async function updateCategory(categoryId, name) {
   return data;
 }
 
-export async function deleteCategory(id) {
+export async function deleteBrand(id) {
   const token = localStorage.getItem("access-token");
 
   const { data } = await axios({
-    url: `${BASE_URL}/categories/${id}`,
+    url: `${BASE_URL}/brands/${id}`,
     method: "delete",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -68,13 +68,13 @@ export async function deleteCategory(id) {
   return data;
 }
 
-export async function createCategory(name) {
+export async function createBrand(name) {
   const token = localStorage.getItem("access-token");
 
-  console.log(name);
+  if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/categories`,
+    url: `${BASE_URL}/brands`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,

@@ -7,21 +7,18 @@ export async function getCurrentUser() {
 
   if (!token) return null;
 
-  const { data } = await axios(
-    "https://electro-api.sifztech.com/api/admin/me",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const { data } = await axios(`${BASE_URL}/admin/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data.data;
 }
 
 export async function login({ email, password }) {
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/login",
+    url: `${BASE_URL}/admin/login`,
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -46,7 +43,7 @@ export async function changePassword({
   if (!token) return null;
 
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/change-password",
+    url: `${BASE_URL}/admin/change-password`,
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +85,7 @@ export async function profileSettings({
   if (!token) return null;
 
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/dealer/settings",
+    url: `${BASE_URL}/dealer/settings`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -121,7 +118,7 @@ export async function enableTwoFactorAuth(password) {
   if (!token) return null;
 
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/enable-2fa",
+    url: `${BASE_URL}/admin/enable-2fa`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -140,7 +137,7 @@ export async function disbleTwoFactorAuth(password) {
   if (!token) return null;
 
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/disable-2fa",
+    url: `${BASE_URL}/admin/disable-2fa`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -155,7 +152,7 @@ export async function disbleTwoFactorAuth(password) {
 
 export async function verifyOtp(otp) {
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/verify-otp",
+    url: `${BASE_URL}/admin/verify-otp`,
     method: "post",
     data: {
       otp: otp,
@@ -166,7 +163,7 @@ export async function verifyOtp(otp) {
 }
 export async function resendOtp(otp) {
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/verify-otp",
+    url: `${BASE_URL}/admin/verify-otp`,
     method: "post",
     data: {
       otp: otp,
@@ -182,7 +179,7 @@ export async function logout() {
   if (!token) return null;
 
   const { data } = await axios({
-    url: "https://electro-api.sifztech.com/api/admin/logout",
+    url: `${BASE_URL}/admin/logout`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,

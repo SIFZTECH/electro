@@ -8,7 +8,7 @@ import {
 import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 
 const FilterByCategory = () => {
-  const { categories, isLoading, isError } = useCategories();
+  const { data, isLoading, isError, error } = useCategories();
 
   return (
     <Accordion type="single" collapsible defaultValue="category">
@@ -17,11 +17,11 @@ const FilterByCategory = () => {
           By Category
         </AccordionTrigger>
         <AccordionContent>
-          {/* <div className="border-b border-grey-0 px-3 pb-3">
+          <div className="border-b border-grey-0 px-3 pb-3">
             {isLoading && !isError ? (
               <SkeletonFiler />
             ) : (
-              categories.data.map((category) => (
+              data.data.map((category) => (
                 <div
                   key={category.id}
                   className="flex gap-1 items-center cursor-pointer"
@@ -30,12 +30,15 @@ const FilterByCategory = () => {
                     type="checkbox"
                     id={category.name}
                     name={category.name}
+                    className="cursor-pointer"
                   />
-                  <label htmlFor={category.name}>{category.name}</label>
+                  <label className="cursor-pointer" htmlFor={category.name}>
+                    {category.name}
+                  </label>
                 </div>
               ))
             )}
-          </div> */}
+          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

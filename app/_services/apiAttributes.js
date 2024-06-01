@@ -3,10 +3,9 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
-export async function getAllCategories() {
+export async function getAllAttributes() {
   const JWT = localStorage.getItem("access-token");
-
-  const { data } = await axios.get(`${BASE_URL}/categories`, {
+  const { data } = await axios.get(`${BASE_URL}/data-attributes`, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
@@ -20,9 +19,9 @@ export async function getAllCategories() {
   return data.data;
 }
 
-export async function getCategory(categoryId) {
+export async function getAttribute(categoryId) {
   const JWT = localStorage.getItem("access-token");
-  const { data } = await axios.get(`${BASE_URL}/categories/${categoryId}`, {
+  const { data } = await axios.get(`${BASE_URL}/attributes/${categoryId}`, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
@@ -38,48 +37,50 @@ export async function getCategory(categoryId) {
   return data.data;
 }
 
-export async function updateCategory(categoryId, name) {
+export async function updateAttribute(id, name) {
   const token = localStorage.getItem("access-token");
 
   const { data } = await axios({
-    url: `${BASE_URL}/categories/${categoryId}`,
+    url: `${BASE_URL}/attributes/${id}`,
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: name,
-  });
-
-  return data;
-}
-
-export async function deleteCategory(id) {
-  const token = localStorage.getItem("access-token");
-
-  const { data } = await axios({
-    url: `${BASE_URL}/categories/${id}`,
-    method: "delete",
-    headers: {
-      Authorization: `Bearer ${token}`,
+    data: {
+      name,
     },
-    data: { id },
   });
 
   return data;
 }
 
-export async function createCategory(name) {
+export async function createAttribute({ name, category_id }) {
   const token = localStorage.getItem("access-token");
 
-  console.log(name);
-
   const { data } = await axios({
-    url: `${BASE_URL}/categories`,
+    url: `${BASE_URL}/attributes`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
     data: { name },
+  });
+
+  console.log(data);
+
+  return data;
+}
+
+export async function deleteAttribute(id) {
+  const token = localStorage.getItem("access-token");
+
+  const { data } = await axios({
+    url: `${BASE_URL}/attributes/${+id}`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { id },
   });
 
   return data;

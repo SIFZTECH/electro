@@ -1,6 +1,14 @@
+"use client";
+
+import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
-const page = () => {
+const WarrantyRegistrationPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm();
   return (
     <>
       <h1 className="heading-h1">Warranty Registration</h1>
@@ -77,11 +85,12 @@ const page = () => {
             </label>
             <div className="mt-1">
               <input
+                {...register("firstname", {
+                  required: "This field is required",
+                })}
                 id="firstName"
-                name="firstName"
                 type="text"
                 placeholder="First Name"
-                required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
@@ -95,8 +104,10 @@ const page = () => {
             </label>
             <div className="mt-1">
               <input
+                {...register("lastname", {
+                  required: "This field is required",
+                })}
                 id="lastName"
-                name="lastName"
                 type="text"
                 placeholder="Last Name"
                 required
@@ -105,34 +116,30 @@ const page = () => {
             </div>
           </div>
           <div className="">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Email
             </label>
             <div className="mt-1">
               <input
-                id="firstName"
-                name="text"
+                {...register("email", {
+                  required: "This field is required",
+                })}
                 type="email"
-                placeholder="Your Email"
+                placeholder="Your Email Address"
                 required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="">
-            <label
-              htmlFor="phoneNumber"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Phone Number
             </label>
             <div className="mt-1">
               <input
-                id="phoneNumber"
-                name="phoneNumber"
+                {...register("phone", {
+                  required: "This field is required",
+                })}
                 type="tel"
                 placeholder="Phone Number"
                 required
@@ -142,16 +149,14 @@ const page = () => {
           </div>
 
           <div className="">
-            <label
-              htmlFor="companyName"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Company Name
             </label>
             <div className="mt-1">
               <input
-                id="companyName"
-                name="companyName"
+                {...register("company_name", {
+                  required: "This field is required",
+                })}
                 type="text"
                 placeholder="Company Name"
                 required
@@ -160,82 +165,65 @@ const page = () => {
             </div>
           </div>
           <div className="">
-            <label
-              htmlFor="streetAddress"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Address
             </label>
             <div className="mt-1">
               <input
-                id="streetAddress"
-                name="streetAddress"
+                {...register("address", {
+                  required: "This field is required",
+                })}
                 type="text"
                 placeholder="Street Address"
-                required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
 
           <div className="">
-            <label
-              htmlFor="date-select"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Purchase From
             </label>
-            <select
-              name="purchaseDate"
-              id="date-select"
+            <input
+              {...register("purchase_from", {
+                required: "This field is required",
+              })}
+              type="date"
+              placeholder="Purchase from"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            >
-              <option value="">--Please choose an option--</option>
-              <option value="abn">ABN</option>
-              <option value="abn">TV5</option>
-            </select>
+            />
           </div>
           <div className="">
-            <label
-              htmlFor="date-select"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Purchase Date
             </label>
-            <select
-              name="purchaseDate"
-              id="date-select"
+            <input
+              {...register("purchase_date", {
+                required: "This field is required",
+              })}
+              type="text"
+              placeholder="Purchase Date"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            >
-              <option value="">--Please choose an option--</option>
-              <option value="abn">ABN</option>
-              <option value="abn">TV5</option>
-            </select>
+            />
           </div>
           <div className="">
-            <label
-              htmlFor="invoiceNumber"
-              className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900">
               <span>Invoice Number</span>
               <AiOutlineExclamationCircle size={18} />
             </label>
             <div className="mt-1">
               <input
-                id="invoiceNumber"
-                name="invoiceNumber"
+                {...register("invoice_number", {
+                  required: "This field is required",
+                })}
                 type="number"
                 placeholder="Invoice Number"
-                required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="">
-            <label
-              htmlFor="invoice"
-              className="block text-sm font-semibold font-serif leading-6 text-gray-900"
-            >
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Upload your Invoice
             </label>
             <div className="mt-1">
@@ -243,12 +231,12 @@ const page = () => {
                 Your photo should be PNG or JPG format
               </small>
               <input
-                id="invoice"
-                name="invoice"
+                {...register("invoice_image", {
+                  required: "This field is required",
+                })}
                 type="file"
                 placeholder="Upload your Invoice"
                 accept=".png,.jpg"
-                required
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
@@ -265,7 +253,9 @@ const page = () => {
             </label>
             <div className="mt-1">
               <input
-                name="bikeframe"
+                {...register("bike_frame_serial_no ", {
+                  required: "This field is required",
+                })}
                 type="text"
                 placeholder="Bike Frame Serial Number"
                 required
@@ -282,12 +272,12 @@ const page = () => {
                 Your photo should be PNG or JPG format
               </small>
               <input
-                id="invoice"
-                name="invoice"
+                {...register("frame_serial_no_image", {
+                  required: "This field is required",
+                })}
                 type="file"
                 accept=".png,.jpg"
                 placeholder="Upload your Invoice"
-                required
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
@@ -303,10 +293,11 @@ const page = () => {
             </label>
             <div className="mt-1">
               <input
-                name="bikebattary"
+                {...register("bike_battery_serial_no", {
+                  required: "This field is required",
+                })}
                 type="text"
                 placeholder="Bike Battary Serial Number"
-                required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
@@ -320,10 +311,11 @@ const page = () => {
                 Your photo should be PNG or JPG format
               </small>
               <input
-                name="bikebarryS"
+                {...register("battery_serial_no_image", {
+                  required: "This field is required",
+                })}
                 type="file"
                 accept=".png,.jpg"
-                required
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
@@ -339,10 +331,11 @@ const page = () => {
             </label>
             <div className="mt-1">
               <input
-                name="bikemotor"
-                type="url"
+                type="text"
+                {...register("bike_motor_serial_no ", {
+                  required: "This field is required",
+                })}
                 placeholder="Bike Motor Serial Number"
-                required
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
@@ -356,10 +349,11 @@ const page = () => {
                 Your photo should be PNG or JPG format
               </small>
               <input
-                name="bikebarryS"
+                {...register("motor_serial_no_image", {
+                  required: "This field is required",
+                })}
                 type="file"
                 accept=".png,.jpg"
-                required
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
@@ -380,4 +374,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WarrantyRegistrationPage;

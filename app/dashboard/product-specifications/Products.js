@@ -5,6 +5,7 @@ import Product from "./Product";
 const Products = ({ products }) => {
   const data = products.data;
 
+
   return (
     <div>
       <Search />
@@ -20,7 +21,7 @@ const Products = ({ products }) => {
           />
         ))}
       </div>
-      <Pagination />
+      {data.length > 9 && <Pagination />}
     </div>
   );
 };

@@ -1,8 +1,10 @@
 "use client";
 
+import { useCategories } from "@/app/_features/categories/useCategory";
 import { useForm } from "react-hook-form";
 
 const ProductForm = () => {
+  const { isLoading, data, isError } = useCategories();
   const {
     register,
     formState: { isSubmitting, errors },
@@ -11,7 +13,7 @@ const ProductForm = () => {
   return (
     <form className="md:py-8 p-2 md:px-6 ">
       <div className="flex flex-wrap flex-col md:flex-row gap-x-9 gap-y-6">
-        <div className="md:basis-[45%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Product Name
           </label>
@@ -31,7 +33,7 @@ const ProductForm = () => {
             )}
           </div>
         </div>
-        <div className="md:basis-[45%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
             Introduction
           </label>
@@ -49,7 +51,7 @@ const ProductForm = () => {
             )}
           </div>
         </div>
-        <div className="md:basis-[92%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
             Key Features
           </label>
@@ -62,7 +64,7 @@ const ProductForm = () => {
             />
           </div>
         </div>
-        <div className="md:basis-[45%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Price
           </label>
@@ -82,7 +84,7 @@ const ProductForm = () => {
           </div>
         </div>
 
-        <div className="md:basis-[45%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Stock
           </label>
@@ -102,46 +104,58 @@ const ProductForm = () => {
             )}
           </div>
         </div>
-        <div className="md:basis-[45%]">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-            Category Id
-          </label>
-          <div className="mt-1">
-            <input
-              {...register("category_id", {
-                required: "This field must be filled",
-              })}
-              type="number"
-              placeholder="Category Id"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-            {errors?.category_id && (
+        <div className="flex items-center gap-8 md:basis-[100%]">
+          <div className="flex-1">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Category
+            </label>
+            <div className="mt-1">
+              <select
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                {...register("category_id")}
+              >
+                <option value="">--Please choose an option--</option>
+                {!isLoading &&
+                  data.data.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+              </select>
+              {errors?.category_id && (
+                <span className="text-red-500 text-sm">
+                  {errors.category_id.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="flex-1">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Sub-Category
+            </label>
+            <select
+              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              {...register("category_id")}
+            >
+              <option value="">--Please choose an option--</option>
+              {!isLoading &&
+                data.data.map((category) => {
+                  return category.subcategories.map((subcategory) => (
+                    <option key={subcategory.id} value={subcategory.id}>
+                      {subcategory.name}
+                    </option>
+                  ));
+                })}
+            </select>
+            {errors?.subcategory_id && (
               <span className="text-red-500 text-sm">
-                {errors.category_id.message}
+                {errors.subcategory_id.message}
               </span>
             )}
           </div>
         </div>
-        <div className="md:basis-[45%]">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-            Sub-Category Id
-          </label>
-          <input
-            {...register("subcategory_id", {
-              required: "This field must be filled",
-            })}
-            type="number"
-            placeholder="Sub-Category Id"
-            className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-          />
-          {errors?.subcategory_id && (
-            <span className="text-red-500 text-sm">
-              {errors.subcategory_id.message}
-            </span>
-          )}
-        </div>
 
-        <div className="md:basis-[45%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
             Variants
           </label>
@@ -155,7 +169,7 @@ const ProductForm = () => {
             />
           </div>
         </div>
-        <div className="md:basis-[45%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Images
           </label>
@@ -175,7 +189,7 @@ const ProductForm = () => {
             )}
           </div>
         </div>
-        <div className="md:basis-[92%]">
+        <div className="md:basis-[100%]">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
             Specification
           </label>
