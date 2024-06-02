@@ -177,8 +177,6 @@ export async function resendOtp(otp) {
 export async function logout() {
   const token = localStorage.getItem("access-token");
 
-  if (!token) return null;
-
   const { data } = await axios({
     url: `${BASE_URL}/admin/logout`,
     method: "post",

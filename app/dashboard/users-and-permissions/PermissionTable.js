@@ -1,4 +1,12 @@
 import { Switch } from "@/app/components/ui/switch";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/app/components/ui/table";
 
 const dummyData = [
   {
@@ -21,96 +29,96 @@ const dummyData = [
 
 const PermissionTable = () => {
   return (
-    <table className="mt-10 recentOrders">
-      <thead>
-        <tr className="text-center">
-          <th scope="col" className="2xl:w-[18rem]">
+    <Table className="mt-10 recentOrders">
+      <TableHeader>
+        <TableRow className="text-center">
+          <TableHead scope="col" className="2xl:w-[18rem]">
             Dealer Name
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Click and Collect
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Stock in Store
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Social Media Assets
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Dealer Resources
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Warranty
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Product Specifications
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Promotional Calendar
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Promotional Calendar
-          </th>
-          <th scope="col" className="text-center">
+          </TableHead>
+          <TableHead scope="col" className="text-center">
             Active
-          </th>
-        </tr>
-      </thead>
-      <tbody>
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody className="font-sans">
         {dummyData.map((data, i) => {
           return (
-            <tr key={i + 1}>
-              <td data-label="Dealer Name">{data.dealerName}</td>
-              <td data-label="Click and Collect">
+            <TableRow key={i + 1}>
+              <TableCell data-label="Dealer Name">{data.dealerName}</TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <input type="checkbox" className="" />
                 </div>
-              </td>
-              <td data-label="Click and Collect">
+              </TableCell>
+              <TableCell data-label="Click and Collect">
                 <div className="flex items-center justify-end lg:justify-center">
                   <Switch />
                 </div>
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 export default PermissionTable;

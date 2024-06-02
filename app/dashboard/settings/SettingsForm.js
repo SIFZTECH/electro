@@ -22,25 +22,27 @@ const SettingsForm = () => {
     defaultValues: {
       firstname: user?.dealer?.firstname ? user?.dealer?.firstname : "",
       email: user ? user.email : "",
-      lastname: user.dealer.lastname ? user.dealer.lastname : "",
-      phone: user.dealer.phone ? user.dealer.phone : "",
-      company_name: user.dealer.company_name ? user.dealer.company_name : "",
-      weburl: user.dealer.weburl ? user.dealer.weburl : "",
-      abn: user.dealer.abn ? user.dealer.abn : "",
-      purchase_date: user.dealer.purchase_date ? user.dealer.purchase_date : "",
-      invoice_number: user.dealer.invoice_number
-        ? user.dealer.invoice_number
+      lastname: user.dealer?.lastname ? user.dealer?.lastname : "",
+      phone: user.dealer?.phone ? user.dealer?.phone : "",
+      company_name: user.dealer?.company_name ? user.dealer?.company_name : "",
+      weburl: user.dealer?.weburl ? user.dealer?.weburl : "",
+      abn: user.dealer?.abn ? user.dealer?.abn : "",
+      purchase_date: user.dealer?.purchase_date
+        ? user.dealer?.purchase_date
         : "",
-      description: user.dealer.description ? user.dealer.description : "",
-      street_address: user.dealer.street_address
-        ? user.dealer.street_address
+      invoice_number: user.dealer?.invoice_number
+        ? user.dealer?.invoice_number
         : "",
-      description: user.dealer.description ? user.dealer.description : "",
-      city: user.dealer.city ? user.dealer.city : "",
-      postal_code: user.dealer.postal_code ? user.dealer.postal_code : "",
-      state: user.dealer.state ? user.dealer.state : "",
-      logo: user.dealer.logo ? user.dealer.logo : "",
-      stockfeedurl: user.dealer.stockfeedurl ? user.dealer.stockfeedurl : "",
+      description: user.dealer?.description ? user.dealer?.description : "",
+      street_address: user.dealer?.street_address
+        ? user.dealer?.street_address
+        : "",
+      description: user.dealer?.description ? user.dealer?.description : "",
+      city: user.dealer?.city ? user.dealer?.city : "",
+      postal_code: user.dealer?.postal_code ? user.dealer?.postal_code : "",
+      state: user.dealer?.state ? user.dealer?.state : "",
+      logo: user.dealer?.logo ? user.dealer?.logo : "",
+      stockfeedurl: user.dealer?.stockfeedurl ? user.dealer?.stockfeedurl : "",
     },
   });
 
@@ -100,35 +102,6 @@ const SettingsForm = () => {
           variant: "destructive",
           title: "Something went wrong",
           duration: 1000,
-        });
-      }
-    }
-  }
-
-  async function handleLogout() {
-    try {
-      const res = await logout();
-
-      if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
-
-        localStorage.removeItem("access-token");
-        router.refresh();
-      }
-    } catch (err) {
-      if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
         });
       }
     }
@@ -413,10 +386,6 @@ const SettingsForm = () => {
           {isSubmitting ? <SpinnerMini /> : "Save"}
         </button>
       </form>
-
-      <div className="px-5">
-        <Logout handleLogout={handleLogout} />
-      </div>
     </>
   );
 };

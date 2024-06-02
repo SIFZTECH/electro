@@ -1,5 +1,6 @@
 "use client";
 
+import Logout from "@/app/dashboard/settings/Logout";
 import Logo from "./Logo";
 import Navigation from "./Navigation";
 import User from "./User";
@@ -40,8 +41,10 @@ const Sidebar = () => {
           <Logo />
           <Navigation />
         </div>
-
-        <User />
+        <div className="space-y-3">
+          <Logout />
+          <User />
+        </div>
       </aside>
     </>
   );
