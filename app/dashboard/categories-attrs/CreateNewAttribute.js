@@ -11,7 +11,7 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 
-const CreateNewCategory = () => {
+const CreateNewAttribute = () => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -103,4 +103,4 @@ const CreateNewCategory = () => {
   );
 };
 
-export default CreateNewCategory;
+export default CreateNewAttribute;

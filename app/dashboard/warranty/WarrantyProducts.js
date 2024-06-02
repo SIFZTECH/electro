@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const dummyData = [
   {
     id: "dyyds735363",
@@ -21,7 +23,9 @@ const dummyData = [
   },
 ];
 
-const WarrantyProducts = () => {
+const WarrantyProducts = ({ data }) => {
+  const warranties = data.data;
+
   return (
     <table className="mt-10 recentOrders">
       <thead>
@@ -34,17 +38,22 @@ const WarrantyProducts = () => {
         </tr>
       </thead>
       <tbody>
-        {dummyData.map((data, i) => {
+        {warranties.map((data, i) => {
           return (
             <tr key={i + 1}>
               <td data-label="Order ID">{data.id}</td>
-              <td data-label="Dealer Name">{data.dealerName}</td>
-              <td data-label="Customer Name">{data.customerName}</td>
+              <td data-label="Dealer Name">
+                {data.firstname} {data.lastname}
+              </td>
+              <td data-label="Customer Name">{data.company_name}</td>
               <td data-label="Status">{data.status}</td>
               <td data-label="View Details" className="text-center">
-                <a href="#" className="btn-primary">
+                <Link
+                  href={`/dashboard/warranty/${data.id}`}
+                  className="btn-primary"
+                >
                   View
-                </a>
+                </Link>
               </td>
             </tr>
           );

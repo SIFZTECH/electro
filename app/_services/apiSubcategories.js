@@ -39,6 +39,7 @@ export async function getSubcategory(categoryId) {
 
 export async function updateSubcategory(id, name, category_id) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/subcategories/${id}`,
@@ -59,6 +60,7 @@ export async function updateSubcategory(id, name, category_id) {
 
 export async function createSubcategory({ name, category_id }) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/subcategories`,
@@ -76,6 +78,7 @@ export async function createSubcategory({ name, category_id }) {
 
 export async function deleteSubcategory(id) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/subcategories/${+id}`,

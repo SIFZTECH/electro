@@ -4,11 +4,12 @@ import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
 export async function getAllCategories() {
-  const JWT = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios.get(`${BASE_URL}/categories`, {
     headers: {
-      Authorization: `Bearer ${JWT}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -21,25 +22,23 @@ export async function getAllCategories() {
 }
 
 export async function getCategory(categoryId) {
-  const JWT = localStorage.getItem("access-token");
-  const { data } = await axios.get(`${BASE_URL}/categories/${categoryId}`, {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  if (!categoryId) return;
+
+  const { data } = await axios.get(`${BASE_URL}/categories/${+categoryId}`, {
     headers: {
-      Authorization: `Bearer ${JWT}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!data.data)
-    throw new Error(
-      "There is no category at that momment! Please add a new Category"
-    );
-
-  console.log(data);
-
-  return data.data;
+  return data;
 }
 
 export async function updateCategory(categoryId, name) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/categories/${categoryId}`,
@@ -55,6 +54,7 @@ export async function updateCategory(categoryId, name) {
 
 export async function deleteCategory(id) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/categories/${id}`,
@@ -70,8 +70,7 @@ export async function deleteCategory(id) {
 
 export async function createCategory(name) {
   const token = localStorage.getItem("access-token");
-
-  console.log(name);
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/categories`,

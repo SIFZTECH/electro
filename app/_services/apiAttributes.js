@@ -4,10 +4,12 @@ import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
 export async function getAllAttributes() {
-  const JWT = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access-token");
+  if(!token) return null;
+
   const { data } = await axios.get(`${BASE_URL}/data-attributes`, {
     headers: {
-      Authorization: `Bearer ${JWT}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -20,10 +22,12 @@ export async function getAllAttributes() {
 }
 
 export async function getAttribute(categoryId) {
-  const JWT = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access-token");
+  if(!token) return null;
+
   const { data } = await axios.get(`${BASE_URL}/attributes/${categoryId}`, {
     headers: {
-      Authorization: `Bearer ${JWT}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -39,6 +43,8 @@ export async function getAttribute(categoryId) {
 
 export async function updateAttribute(id, name) {
   const token = localStorage.getItem("access-token");
+  if(!token) return null;
+
 
   const { data } = await axios({
     url: `${BASE_URL}/attributes/${id}`,
@@ -56,6 +62,8 @@ export async function updateAttribute(id, name) {
 
 export async function createAttribute({ name, category_id }) {
   const token = localStorage.getItem("access-token");
+  if(!token) return null;
+
 
   const { data } = await axios({
     url: `${BASE_URL}/attributes`,
@@ -73,6 +81,8 @@ export async function createAttribute({ name, category_id }) {
 
 export async function deleteAttribute(id) {
   const token = localStorage.getItem("access-token");
+  if(!token) return null;
+
 
   const { data } = await axios({
     url: `${BASE_URL}/attributes/${+id}`,

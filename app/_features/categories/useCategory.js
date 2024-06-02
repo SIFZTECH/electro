@@ -17,16 +17,11 @@ export function useCategories() {
   return { data, isLoading, error, isError };
 }
 
-export function useCategory() {
-  const {
-    data: category,
-    isLoading,
-    error,
-    isError,
-  } = useQuery({
-    queryKey: ["categories", categoryId],
+export function useCategory(categoryId = "0") {
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ["category", categoryId],
     queryFn: () => getCategory(categoryId),
   });
 
-  return { category, isLoading, error, isError };
+  return { data, isLoading, error, isError };
 }

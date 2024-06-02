@@ -4,11 +4,12 @@ import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
 export async function getAllBrands() {
-  const JWT = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios.get(`${BASE_URL}/brands`, {
     headers: {
-      Authorization: `Bearer ${JWT}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -21,10 +22,13 @@ export async function getAllBrands() {
 }
 
 export async function getBrand(id) {
-  const JWT = localStorage.getItem("access-token");
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
   const { data } = await axios.get(`${BASE_URL}/brands/${id}`, {
     headers: {
-      Authorization: `Bearer ${JWT}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -40,6 +44,7 @@ export async function getBrand(id) {
 
 export async function updateBrand(id, name) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/brands/${id}`,
@@ -55,6 +60,7 @@ export async function updateBrand(id, name) {
 
 export async function deleteBrand(id) {
   const token = localStorage.getItem("access-token");
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/brands/${id}`,

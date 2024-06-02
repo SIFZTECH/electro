@@ -22,8 +22,6 @@ export default function Login() {
     try {
       const res = await login({ email, password });
 
-      console.log(res);
-
       if (res.message) {
         router.replace("/otp/verify");
       }

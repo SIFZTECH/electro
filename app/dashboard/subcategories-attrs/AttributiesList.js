@@ -10,8 +10,8 @@ const AttributesList = ({ attribute }) => {
     <>
       <TableRow>
         <TableCell>{attribute.id}</TableCell>
-        <TableCell>{attribute.attribute}</TableCell>
-        <TableCell>{attribute.value}</TableCell>
+        <TableCell>{attribute.color}</TableCell>
+        <TableCell>{attribute.size}</TableCell>
 
         <TableCell className="w-6">
           <div className="flex gap-3">

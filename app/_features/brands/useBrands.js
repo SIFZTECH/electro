@@ -11,17 +11,3 @@ export function useBrands() {
 
   return { data, isLoading, error, isError };
 }
-
-export function useCategory() {
-  const {
-    data: category,
-    isLoading,
-    error,
-    isError,
-  } = useQuery({
-    queryKey: ["categories", categoryId],
-    queryFn: () => getCategory(categoryId),
-  });
-
-  return { category, isLoading, error, isError };
-}

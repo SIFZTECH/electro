@@ -20,23 +20,27 @@ const SettingsForm = () => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      firstname: user ? user.dealer.name : "",
+      firstname: user?.dealer?.firstname ? user?.dealer?.firstname : "",
       email: user ? user.email : "",
-      lastname: user ? user.dealer.lastname : "",
-      phone: user ? user.dealer.phone : "",
-      company_name: user ? user.dealer.company_name : "",
-      weburl: user ? user.dealer.weburl : "",
-      abn: user ? user.dealer.abn : "",
-      purchase_date: user ? user.dealer.purchase_date : "",
-      invoice_number: user ? user.dealer.invoice_number : "",
-      description: user ? user.dealer.description : "",
-      street_address: user ? user.dealer.street_address : "",
-      description: user ? user.dealer.description : "",
-      city: user ? user.dealer.city : "",
-      postal_code: user ? user.dealer.postal_code : "",
-      state: user ? user.dealer.state : "",
-      logo: user ? user.dealer.logo : "",
-      stockfeedurl: user ? user.dealer.stockfeedurl : "",
+      lastname: user.dealer.lastname ? user.dealer.lastname : "",
+      phone: user.dealer.phone ? user.dealer.phone : "",
+      company_name: user.dealer.company_name ? user.dealer.company_name : "",
+      weburl: user.dealer.weburl ? user.dealer.weburl : "",
+      abn: user.dealer.abn ? user.dealer.abn : "",
+      purchase_date: user.dealer.purchase_date ? user.dealer.purchase_date : "",
+      invoice_number: user.dealer.invoice_number
+        ? user.dealer.invoice_number
+        : "",
+      description: user.dealer.description ? user.dealer.description : "",
+      street_address: user.dealer.street_address
+        ? user.dealer.street_address
+        : "",
+      description: user.dealer.description ? user.dealer.description : "",
+      city: user.dealer.city ? user.dealer.city : "",
+      postal_code: user.dealer.postal_code ? user.dealer.postal_code : "",
+      state: user.dealer.state ? user.dealer.state : "",
+      logo: user.dealer.logo ? user.dealer.logo : "",
+      stockfeedurl: user.dealer.stockfeedurl ? user.dealer.stockfeedurl : "",
     },
   });
 
@@ -79,7 +83,7 @@ const SettingsForm = () => {
       if (res) {
         toast({
           variant: "success",
-          title: data.message,
+          title: res.message,
           duration: 1000,
         });
       }
@@ -135,29 +139,43 @@ const SettingsForm = () => {
       <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-wrap flex-col md:flex-row gap-x-9 gap-y-6">
           <div className="md:basis-[45%]">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               First Name
             </label>
             <div className="mt-1">
               <input
-                {...register("firstname")}
+                {...register("firstname", {
+                  required: "This is required field",
+                })}
                 type="text"
                 placeholder="First Name"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.firstname && (
+                <span className="text-red-500 text-sm">
+                  {errors.firstname.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="md:basis-[45%]">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Last Name
             </label>
             <div className="mt-1">
               <input
-                {...register("lastname")}
+                {...register("lastname", {
+                  required: "This is required field",
+                })}
                 type="text"
                 placeholder="Last Name"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.lastname && (
+                <span className="text-red-500 text-sm">
+                  {errors.lastname.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="md:basis-[45%]">
@@ -175,29 +193,43 @@ const SettingsForm = () => {
             </div>
           </div>
           <div className="md:basis-[45%]">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Phone Number
             </label>
             <div className="mt-1">
               <input
-                {...register("phone")}
+                {...register("phone", {
+                  required: "This is required field",
+                })}
                 type="tel"
                 placeholder="Phone Number"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.phone && (
+                <span className="text-red-500 text-sm">
+                  {errors.phone.message}
+                </span>
+              )}
             </div>
           </div>
 
           <div className="md:basis-[45%]">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Company Name
             </label>
             <div className="mt-1">
               <input
-                {...register("company_name")}
+                {...register("company_name", {
+                  required: "This is required field",
+                })}
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.company_name && (
+                <span className="text-red-500 text-sm">
+                  {errors.company_name.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="md:basis-[45%]">
@@ -207,7 +239,6 @@ const SettingsForm = () => {
             <div className="mt-1">
               <input
                 {...register("weburl")}
-                type="url"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
@@ -226,14 +257,21 @@ const SettingsForm = () => {
             </select>
           </div>
           <div className="md:basis-[45%]">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date
             </label>
             <input
-              {...register("purchase_date")}
+              {...register("purchase_date", {
+                required: "Please pick your purchase date",
+              })}
               type="date"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
+            {errors?.purchase_date && (
+              <span className="text-red-500 text-sm">
+                {errors.purchase_date.message}
+              </span>
+            )}
           </div>
           <div className="md:basis-[45%]">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">

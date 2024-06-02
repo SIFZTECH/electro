@@ -7,13 +7,12 @@ import { useWarranties } from "@/app/_features/warranties/useWarranty";
 import Spinner from "@/app/components/ui/Spinner";
 
 const WarrantyPage = () => {
-  const { data, isLoading, error } = useWarranties();
+  const { data, isLoading, error, isError } = useWarranties();
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  console.log(error);
   console.log(data);
 
   return (
@@ -30,7 +29,10 @@ const WarrantyPage = () => {
         </Link>
       </div>
 
-      <WarrantyProducts />
+      {!isLoading && isError && (
+        <p className="text-lg font-semibold text-center">{error.message}</p>
+      )}
+      {!isLoading && !isError && <WarrantyProducts data={data} />}
     </div>
   );
 };

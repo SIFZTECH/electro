@@ -1,30 +1,32 @@
+"use client";
+
 import { useToast } from "@/app/_hooks/use-toast";
-import { createCategory } from "@/app/_services/apiCategories";
+import { updateCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-const CreateNewCategory = () => {
-  const [open, setOpen] = useState();
+const EditCategory = ({ category }) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { toast } = useToast();
-
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({ defaultValues: { name: category.name || "" } });
 
-  async function onSubmit({ name }) {
+  async function onSubmit(data) {
     try {
-      const res = await createCategory(name);
+      const res = await updateCategory(category.id, data);
 
       if (res) {
         toast({
@@ -32,9 +34,7 @@ const CreateNewCategory = () => {
           title: res.message,
           duration: 1000,
         });
-
         queryClient.invalidateQueries("categories");
-        setOpen((open) => !open);
       }
     } catch (err) {
       console.log(err);
@@ -55,15 +55,21 @@ const CreateNewCategory = () => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary">Add New Category</DialogTrigger>
+    <Dialog>
+      <DialogTrigger className="btn-primary transition-all py-1 border-color-primary">
+        <span
+          onClick={() =>
+            router.push(`/dashboard/categories/?id=${category.id}`)
+          }
+        >
+          Edit
+        </span>
+      </DialogTrigger>
       <DialogContent>
         <div>
-          <h2 className="font-serif text-lg font-semibold">
-            Create new Category
-          </h2>
+          <h2 className="font-serif text-lg">Edit Category</h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Category. Click create when you're done.
+            Make changes to your category here. Click save when you're done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -93,7 +99,7 @@ const CreateNewCategory = () => {
                 disabled={isSubmitting}
                 className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
-                {isSubmitting ? <SpinnerMini /> : "Create"}
+                {isSubmitting ? <SpinnerMini /> : "Update"}
               </button>
             </div>
           </form>
@@ -103,4 +109,4 @@ const CreateNewCategory = () => {
   );
 };
 
-export default CreateNewCategory;
+export default EditCategory;

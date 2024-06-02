@@ -14,7 +14,18 @@ import CreateNewSubCategory from "./CreateNewAttribute";
 const AttributesTable = ({ data }) => {
   const attributes = data.attributes;
 
-  console.log(attributes);
+  const transformedData = attributes.reduce((acc, item) => {
+    const attributeKey = item.attribute.toLowerCase();
+    if (!acc[attributeKey]) {
+      acc[attributeKey] = [];
+    }
+    acc[attributeKey].push(item.value.toLowerCase());
+    return acc;
+  }, {});
+
+  const formattedData = Object.keys(transformedData).map((key) => ({
+    [key]: transformedData[key],
+  }));
 
   return (
     <>
@@ -28,9 +39,10 @@ const AttributesTable = ({ data }) => {
           </TableRow>
         </TableHeader>
         <TableBody className="">
-          {attributes.map((attribute) => (
-            <AttributesList key={attribute.id} attribute={attribute} />
-          ))}
+          {formattedData.map((attribute) => {
+            console.log(attribute);
+            <AttributesList key={attribute.id} attribute={attribute} />;
+          })}
         </TableBody>
       </Table>
     </>

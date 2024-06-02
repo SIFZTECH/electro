@@ -21,7 +21,7 @@ const FilterByCategory = () => {
             {isLoading && !isError ? (
               <SkeletonFiler />
             ) : (
-              data.data.map((category) => (
+              data?.data?.map((category) => (
                 <div
                   key={category.id}
                   className="flex gap-1 items-center cursor-pointer"
