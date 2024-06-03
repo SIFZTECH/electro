@@ -9,7 +9,9 @@ const Categories = () => {
   const { data, isLoading, isError } = useAttributes();
 
   if (isLoading) return <Spinner />;
-  console.log(data);
+
+  const attributes = [{ ...data.attributes }];
+  console.log(attributes);
 
   return (
     <div>

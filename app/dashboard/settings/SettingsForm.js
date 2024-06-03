@@ -350,18 +350,12 @@ const SettingsForm = () => {
           </div>
           <div className="md:basis-[45%] ">
             <div className="flex gap-3 items-center">
-              <div className="mt-1">
-                <Switch
-                  id="tfa"
-                  checked={user?.isTwoFactorEnable === 1 ? true : false}
-                  onClick={() => {
-                    router.push("/dashboard/settings/enable-2FA");
-                  }}
-                />
-              </div>
               <label
                 htmlFor="tfa"
-                className="block text-sm font-semibold font-serif leading-6 text-gray-900"
+                className="btn-primary cursor-pointer text-sm font-semibold font-serif leading-6 text-gray-900"
+                onClick={() => {
+                  router.push("/dashboard/settings/enable-2FA");
+                }}
               >
                 Enable Two-Factor Authentication
               </label>

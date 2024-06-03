@@ -11,6 +11,8 @@ import {
 import AttributesList from "./AttributesList";
 
 const AttributeTable = ({ attributes }) => {
+  console.log(attributes);
+
   return (
     <>
       {attributes.length === 0 ? (
@@ -19,13 +21,14 @@ const AttributeTable = ({ attributes }) => {
         <Table className="">
           <TableHeader>
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
-              <TableHead>ID</TableHead>
               <TableHead>Attribute Name</TableHead>
               <TableHead>Attribute Value</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className=""></TableBody>
+          <TableBody className="">
+            <AttributesList attributes={attributes} />
+          </TableBody>
         </Table>
       )}
     </>
