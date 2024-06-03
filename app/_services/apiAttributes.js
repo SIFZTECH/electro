@@ -5,7 +5,7 @@ import { BASE_URL } from "../lib/utils";
 
 export async function getAllAttributes() {
   const token = localStorage.getItem("access-token");
-  if(!token) return null;
+  if (!token) return null;
 
   const { data } = await axios.get(`${BASE_URL}/data-attributes`, {
     headers: {
@@ -23,7 +23,7 @@ export async function getAllAttributes() {
 
 export async function getAttribute(categoryId) {
   const token = localStorage.getItem("access-token");
-  if(!token) return null;
+  if (!token) return null;
 
   const { data } = await axios.get(`${BASE_URL}/attributes/${categoryId}`, {
     headers: {
@@ -43,8 +43,7 @@ export async function getAttribute(categoryId) {
 
 export async function updateAttribute(id, name) {
   const token = localStorage.getItem("access-token");
-  if(!token) return null;
-
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/attributes/${id}`,
@@ -60,18 +59,17 @@ export async function updateAttribute(id, name) {
   return data;
 }
 
-export async function createAttribute({ name, category_id }) {
+export async function createAttribute({ name, value }) {
   const token = localStorage.getItem("access-token");
-  if(!token) return null;
-
+  if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/attributes`,
+    url: `${BASE_URL}/create-attribute`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { name },
+    data: { name, value },
   });
 
   console.log(data);
@@ -81,8 +79,7 @@ export async function createAttribute({ name, category_id }) {
 
 export async function deleteAttribute(id) {
   const token = localStorage.getItem("access-token");
-  if(!token) return null;
-
+  if (!token) return null;
 
   const { data } = await axios({
     url: `${BASE_URL}/attributes/${+id}`,

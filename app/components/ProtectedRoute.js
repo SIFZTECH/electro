@@ -11,8 +11,6 @@ const ProtectedRoute = ({ children }) => {
     token = localStorage?.getItem("access-token");
   }
 
-  console.log(token);
-
   // const token = localStorage?.getItem("access-token");
   const router = useRouter();
 

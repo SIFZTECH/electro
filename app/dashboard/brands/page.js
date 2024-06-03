@@ -6,10 +6,9 @@ import CreateNewBrand from "./CreateNewBrand";
 import { useBrands } from "@/app/_features/brands/useBrands";
 
 const Categories = () => {
-  const { data, isLoading, isError } = useBrands();
+  const { data, isLoading, isError, error } = useBrands();
 
   if (isLoading) return <Spinner />;
-  console.log(data);
 
   return (
     <div>
@@ -18,7 +17,14 @@ const Categories = () => {
         <CreateNewBrand />
       </div>
 
-      <BrandTable data={data} />
+      {!isLoading && !isError && !error && <BrandTable data={data} />}
+      {!isLoading && isError && error && (
+        <h1>
+          {error?.response.data.message
+            ? error.response.data.message
+            : error.message}
+        </h1>
+      )}
     </div>
   );
 };

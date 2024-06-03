@@ -66,8 +66,8 @@ const CreateNewSubCategory = () => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger>
-        <button className="btn-primary">Add New Sub-Category</button>
+      <DialogTrigger className="btn-primary">
+        Add New Sub-Category
       </DialogTrigger>
       <DialogContent>
         <div>

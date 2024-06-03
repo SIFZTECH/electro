@@ -1,12 +1,12 @@
 "use client";
 
-import { getWarranty } from "@/app/_services/apiWarranties";
+import { getAllWarranties } from "@/app/_services/apiWarranties";
 import { useQuery } from "@tanstack/react-query";
 
-export function useWarranty(id) {
+export function useWarranties() {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["warranty", id],
-    queryFn: () => getWarranty(id),
+    queryKey: ["warranties"],
+    queryFn: () => getAllWarranties(),
   });
 
   return { data, isLoading, error, isError };

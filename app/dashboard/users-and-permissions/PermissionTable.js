@@ -8,6 +8,9 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
+import EditPermission from "./EditPermission";
+import DeletePermission from "./DeletePermission";
+
 const dummyData = [
   {
     id: "dyyds735363",
@@ -32,35 +35,20 @@ const PermissionTable = () => {
     <Table className="mt-10 recentOrders">
       <TableHeader>
         <TableRow className="text-center">
-          <TableHead scope="col" className="2xl:w-[18rem]">
-            Dealer Name
+          <TableHead scope="col" className="w-fit">
+            SN
           </TableHead>
-          <TableHead scope="col" className="text-center">
-            Click and Collect
+          <TableHead scope="col" className="w-fit">
+            Role Name
           </TableHead>
-          <TableHead scope="col" className="text-center">
-            Stock in Store
+          <TableHead scope="col" className="w-2/4">
+            Perimission
           </TableHead>
-          <TableHead scope="col" className="text-center">
-            Social Media Assets
+          <TableHead scope="col" className="w-fit">
+            Guard Name
           </TableHead>
-          <TableHead scope="col" className="text-center">
-            Dealer Resources
-          </TableHead>
-          <TableHead scope="col" className="text-center">
-            Warranty
-          </TableHead>
-          <TableHead scope="col" className="text-center">
-            Product Specifications
-          </TableHead>
-          <TableHead scope="col" className="text-center">
-            Promotional Calendar
-          </TableHead>
-          <TableHead scope="col" className="text-center">
-            Promotional Calendar
-          </TableHead>
-          <TableHead scope="col" className="text-center">
-            Active
+          <TableHead scope="col" className="w-fit">
+            Actions
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -68,50 +56,16 @@ const PermissionTable = () => {
         {dummyData.map((data, i) => {
           return (
             <TableRow key={i + 1}>
-              <TableCell data-label="Dealer Name">{data.dealerName}</TableCell>
+              <TableCell data-label="Id">{i + 1}</TableCell>
+              <TableCell data-label="Click and Collect">Admin</TableCell>
               <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
+                user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list
               </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </TableCell>
-              <TableCell data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <Switch />
+              <TableCell data-label="Click and Collect">web</TableCell>
+              <TableCell data-label="Actions">
+                <div className="flex gap-1">
+                  <EditPermission />
+                  <DeletePermission />
                 </div>
               </TableCell>
             </TableRow>

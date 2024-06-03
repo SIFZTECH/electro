@@ -57,9 +57,7 @@ const CreateNewBrand = () => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger>
-        <button className="btn-primary">Add New Brand</button>
-      </DialogTrigger>
+      <DialogTrigger className="btn-primary">Add New Brand</DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">Create new Brand</h2>

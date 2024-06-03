@@ -66,7 +66,9 @@ const UsersTable = () => {
           <TableHead scope="col">Date</TableHead>
 
           <TableHead scope="col">Status</TableHead>
-          <TableHead scope="col">Actions</TableHead>
+          <TableHead scope="col" className="w-1/6">
+            Actions
+          </TableHead>
         </TableRow>
       </TableHeader>
       <tbody>
@@ -91,7 +93,7 @@ const UsersTable = () => {
               >
                 {data.status}
               </TableCell>
-              <TableCell data-label="Click and Collect" className="w-fit">
+              <TableCell data-label="Click and Collect">
                 <div className="flex gap-1">
                   <EditUser />
                   <DeleteUser />

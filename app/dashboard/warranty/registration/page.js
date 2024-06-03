@@ -3,11 +3,16 @@
 import { useToast } from "@/app/_hooks/use-toast";
 import { createWarranty } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const WarrantyRegistrationPage = () => {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -24,6 +29,9 @@ const WarrantyRegistrationPage = () => {
           title: res.message,
           duration: 1000,
         });
+
+        queryClient.invalidateQueries("warranties");
+        router.replace("/dashboard/warranty");
       }
     } catch (err) {
       console.error(err);

@@ -13,11 +13,6 @@ export async function getAllCategories() {
     },
   });
 
-  if (!data.data)
-    throw new Error(
-      "There is no category at that momment! Please add a new Category"
-    );
-
   return data.data;
 }
 

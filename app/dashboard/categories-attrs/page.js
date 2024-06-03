@@ -9,12 +9,12 @@ const Categories = () => {
   const { data, isLoading, isError } = useAttributes();
 
   if (isLoading) return <Spinner />;
-  // console.log(data);
+  console.log(data);
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="heading-h1 mb-5">All Categories</h1>
+        <h1 className="heading-h1 mb-5">All Attributes</h1>
         <CreateNewAttribute />
       </div>
 

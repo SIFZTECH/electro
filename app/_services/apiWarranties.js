@@ -14,15 +14,21 @@ export async function getAllWarranties() {
     },
   });
 
-  const warranties = data.data;
-
-  if (warranties.data.length <= 0) {
-    throw new Error(
-      "There is no warranties at that momment! Please add new Warranty"
-    );
-  }
-
   return data.data;
+}
+
+export async function getWarranty(id) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token && !id) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/warranty/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
 }
 
 export async function createWarranty(formData) {

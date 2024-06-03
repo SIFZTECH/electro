@@ -15,21 +15,25 @@ const BrandTable = ({ data }) => {
 
   return (
     <>
-      <Table className="">
-        <TableHeader>
-          <TableRow className="font-serif font-bold text-gray-900 text-lg">
-            <TableHead>ID</TableHead>
-            <TableHead>Brand Name</TableHead>
-            <TableHead>-</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody className="">
-          {brands.map((brand) => (
-            <BrandsList key={brand.id} brand={brand} />
-          ))}
-        </TableBody>
-      </Table>
+      {brands.length === 0 ? (
+        "There is no brand. Please add new sub-category!"
+      ) : (
+        <Table className="">
+          <TableHeader>
+            <TableRow className="font-serif font-bold text-gray-900 text-lg">
+              <TableHead>ID</TableHead>
+              <TableHead>Brand Name</TableHead>
+              <TableHead>-</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="">
+            {brands.map((brand) => (
+              <BrandsList key={brand.id} brand={brand} />
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </>
   );
 };

@@ -44,6 +44,91 @@ const AssignUserRole = () => {
                 )}
               </div>
             </div>
+
+            <div>
+              <h1 className="mt-4 font-semibold text-lg font-serif">
+                Perimissions
+              </h1>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+              <div className="mt-2 flex gap-2 items-center">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  Click and Collect
+                </label>
+                <input type="checkbox" {...register("click")} />
+              </div>
+            </div>
             <div>
               <button
                 type="submit"
@@ -54,90 +139,6 @@ const AssignUserRole = () => {
               </button>
             </div>
           </form>
-          <div>
-            <h1 className="mt-4 font-semibold text-lg font-serif">
-              Perimissions
-            </h1>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-            <div className="mt-2 flex gap-2 items-center">
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Click and Collect
-              </label>
-              <input type="checkbox" {...register("click")} />
-            </div>
-          </div>
         </div>
       </DialogContent>
     </Dialog>

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import WarrantyProducts from "./WarrantyProducts";
 import Stats from "./WarrantyStats";
-import { useWarranties } from "@/app/_features/warranties/useWarranty";
 import Spinner from "@/app/components/ui/Spinner";
+import { useWarranties } from "@/app/_features/warranties/useWarranties";
 
 const WarrantyPage = () => {
   const { data, isLoading, error, isError } = useWarranties();
@@ -12,8 +12,6 @@ const WarrantyPage = () => {
   if (isLoading) {
     return <Spinner />;
   }
-
-  console.log(data);
 
   return (
     <div>
@@ -29,10 +27,14 @@ const WarrantyPage = () => {
         </Link>
       </div>
 
-      {!isLoading && isError && (
-        <p className="text-lg font-semibold text-center">{error.message}</p>
+      {!isError && !error && <WarrantyProducts data={data} />}
+      {isError && error && (
+        <h1>
+          {error?.response.data.message
+            ? error.response.data.message
+            : error.message}
+        </h1>
       )}
-      {!isLoading && !isError && <WarrantyProducts data={data} />}
     </div>
   );
 };

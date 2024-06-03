@@ -6,7 +6,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import CreateNewCategory from "./CreateNewCategory";
 
 const Categories = () => {
-  const { data, isLoading, isError } = useCategories();
+  const { data, isLoading, isError, error } = useCategories();
 
   if (isLoading) return <Spinner />;
 
@@ -17,7 +17,14 @@ const Categories = () => {
         <CreateNewCategory />
       </div>
 
-      <CategoryTable data={data} />
+      {!isError && !error && <CategoryTable data={data} />}
+      {isError && error && (
+        <h1>
+          {error?.response.data.message
+            ? error.response.data.message
+            : error.message}
+        </h1>
+      )}
     </div>
   );
 };
