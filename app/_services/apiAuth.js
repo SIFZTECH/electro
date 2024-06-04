@@ -113,10 +113,25 @@ export async function profileSettings({
   return data;
 }
 
-export async function enableTwoFactorAuth(password) {
+export async function enableTwoFactorAuth({ two_fa_email, channel, phone }) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+
+  let bodyData;
+
+  if (channel === "email") {
+    bodyData = {
+      two_fa_email,
+      channel,
+    };
+  }
+  if (channel === "number") {
+    bodyData = {
+      phone,
+      channel,
+    };
+  }
 
   const { data } = await axios({
     url: `${BASE_URL}/admin/enable-2fa`,
@@ -124,9 +139,7 @@ export async function enableTwoFactorAuth(password) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: {
-      password,
-    },
+    data: bodyData,
   });
 
   return data;
@@ -151,7 +164,7 @@ export async function disbleTwoFactorAuth(password) {
   return data;
 }
 
-export async function verifyOtp(otp) {
+export async function verifyOtpForLogin(otp) {
   const { data } = await axios({
     url: `${BASE_URL}/admin/verify-otp`,
     method: "post",
@@ -162,6 +175,26 @@ export async function verifyOtp(otp) {
 
   return data;
 }
+
+export async function verifyOtpForEnable(otp) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/verify-2fa-otp`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      otp: otp,
+    },
+  });
+
+  return data;
+}
+
 export async function resendOtp(otp) {
   const { data } = await axios({
     url: `${BASE_URL}/admin/verify-otp`,

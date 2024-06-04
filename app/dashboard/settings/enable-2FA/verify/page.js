@@ -18,13 +18,15 @@ import {
 } from "@/app/components/ui/input-otp";
 import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { verifyOtp } from "@/app/_services/apiAuth";
+import { verifyOtp, verifyOtpForEnable } from "@/app/_services/apiAuth";
 import { useToast } from "@/app/_hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
+import { useQueryClient } from "@tanstack/react-query";
 
 function InputOTPForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
   const { currentTime } = useTimer(60, {
     autoStart: true,
@@ -37,19 +39,18 @@ function InputOTPForm() {
   });
 
   async function onSubmit({ otp }) {
-    console.log(otp);
     try {
-      const res = await verifyOtp(otp);
+      const res = await verifyOtpForEnable(otp);
 
       console.log(res);
 
-      if (res.data) {
-        localStorage.setItem("access-token", res.data.auth);
-        router.replace("/dashboard");
+      if (res) {
+        router.replace("/dashboard/settings");
+        queryClient.invalidateQueries("user");
 
         toast({
           variant: "success",
-          title: "Successfull",
+          title: res.message,
           duration: 1000,
         });
       }
