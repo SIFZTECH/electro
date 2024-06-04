@@ -3,6 +3,7 @@ import SettingsForm from "./SettingsForm";
 
 const page = () => {
   // const {isDealer} = useUser();
+  console.log("hello");
   return <SettingsForm />;
 };
 
