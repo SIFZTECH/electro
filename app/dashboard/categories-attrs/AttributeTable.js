@@ -11,7 +11,7 @@ import {
 import AttributesList from "./AttributesList";
 
 const AttributeTable = ({ attributes }) => {
-  console.log(attributes);
+  const attribute_keys = Object.keys(attributes);
 
   return (
     <>
@@ -27,7 +27,13 @@ const AttributeTable = ({ attributes }) => {
             </TableRow>
           </TableHeader>
           <TableBody className="">
-            <AttributesList attributes={attributes} />
+            {attribute_keys.map((attr, index) => (
+              <AttributesList
+                key={index}
+                attribute={attr}
+                attribute_value={attributes[attr]}
+              ></AttributesList>
+            ))}
           </TableBody>
         </Table>
       )}

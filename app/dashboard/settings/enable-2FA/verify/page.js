@@ -42,8 +42,6 @@ function InputOTPForm() {
     try {
       const res = await verifyOtpForEnable(otp);
 
-      console.log(res);
-
       if (res) {
         router.replace("/dashboard/settings");
         queryClient.invalidateQueries("user");

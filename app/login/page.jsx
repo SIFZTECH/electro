@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Logo from "../components/ui/Logo";
@@ -22,11 +21,11 @@ export default function Login() {
     try {
       const res = await login({ email, password });
 
-      if (res.message) {
-        router.replace("/otp/verify");
-      }
+      console.log(res);
 
-      if (res.data) {
+      if (res.message && res.data?.available_otp_channel) {
+        router.replace("/otp/verify");
+      } else {
         router.replace("/dashboard");
         localStorage.setItem("access-token", res.data.auth);
       }

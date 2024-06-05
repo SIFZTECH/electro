@@ -37,7 +37,6 @@ function InputOTPForm() {
   });
 
   async function onSubmit({ otp }) {
-    console.log(otp);
     try {
       const res = await verifyOtpForLogin(otp);
 

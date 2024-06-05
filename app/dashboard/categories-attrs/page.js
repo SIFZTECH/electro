@@ -10,9 +10,6 @@ const Categories = () => {
 
   if (isLoading) return <Spinner />;
 
-  const attributes = [{ ...data.attributes }];
-  console.log(attributes);
-
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
