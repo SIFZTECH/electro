@@ -24,15 +24,13 @@ import { useRouter } from "next/navigation";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/app/_features/authentication/useUser";
+import ResendOTP from "./ResendOTP";
 
 function InputOTPForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const { toast } = useToast();
-  const { currentTime, isRunning } = useTimer(120, {
-    autoStart: true,
-  });
 
   const form = useForm({
     defaultValues: {
@@ -114,21 +112,9 @@ function InputOTPForm() {
               <button type="submit" className="btn-primary">
                 {form.formState.isSubmitting ? <SpinnerMini /> : "Submit"}
               </button>
-              <p className="text-sm font-serif">
-                {isRunning && (
-                  <>
-                    Resend Otp in <span>{currentTime}s</span>
-                  </>
-                )}
-                <br />
-                {!isRunning && (
-                  <label className="underline text-[#e1b813] font-semibold">
-                    Resend
-                  </label>
-                )}
-              </p>
             </form>
           </Form>
+          <ResendOTP />
         </div>
       </div>
     </div>

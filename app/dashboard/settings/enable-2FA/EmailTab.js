@@ -34,7 +34,7 @@ const EmailTab = () => {
 
       const res = await enableTwoFactorAuth({ two_fa_email, channel });
 
-      console.log(res);
+ 
 
       if (res) {
         toast({
@@ -43,6 +43,8 @@ const EmailTab = () => {
           duration: 1000,
         });
 
+        localStorage.setItem("channel", channel);
+        
         queryClient.invalidateQueries("user");
         router.replace("/dashboard/settings/enable-2FA/verify");
       }
