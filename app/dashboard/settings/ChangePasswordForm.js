@@ -1,24 +1,12 @@
 "use client";
 
-import { useUser } from "@/app/_features/authentication/useUser";
 import { useToast } from "@/app/_hooks/use-toast";
-import {
-  changePassword,
-  disbleTwoFactorAuth,
-  enableTwoFactorAuth,
-} from "@/app/_services/apiAuth";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-} from "@/app/components/ui/dialog";
+import { changePassword } from "@/app/_services/apiAuth";
+import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { useQueryClient } from "@tanstack/react-query";
-import { duration } from "moment";
 import { useForm } from "react-hook-form";
 
 const ChangePasswordForm = ({ open, setOpen }) => {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
   const {
     register,

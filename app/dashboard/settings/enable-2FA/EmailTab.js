@@ -66,10 +66,15 @@ const EmailTab = () => {
 
   return (
     <>
-      {isTwoAuthEnable && user?.two_fa_email ? (
+      {isTwoAuthEnable && user?.channel === "email" ? (
         <div className="flex items-center justify-between">
           <span>{user.two_fa_email}</span>
-          <span className="btn-primary cursor-pointer bg-gray-200">Remove</span>
+          <span
+            className="btn-primary cursor-pointer bg-gray-200"
+            onClick={() => router.push("/dashboard/settings/disable-2FA")}
+          >
+            Remove
+          </span>
         </div>
       ) : (
         <>

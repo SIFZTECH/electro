@@ -12,6 +12,7 @@ import AttributesList from "./AttributesList";
 
 const AttributeTable = ({ attributes }) => {
   const attribute_keys = Object.keys(attributes);
+  console.log(attribute_keys);
 
   return (
     <>

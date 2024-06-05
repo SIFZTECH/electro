@@ -23,12 +23,14 @@ import { useToast } from "@/app/_hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUser } from "@/app/_features/authentication/useUser";
 
 function InputOTPForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
+
   const { toast } = useToast();
-  const { currentTime } = useTimer(60, {
+  const { currentTime, isRunning } = useTimer(120, {
     autoStart: true,
   });
 
@@ -102,7 +104,7 @@ function InputOTPForm() {
                       </InputOTP>
                     </FormControl>
                     <FormDescription>
-                      Please enter the one-time password sent to your Email.
+                      Please enter the one-time password sent to your device.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -113,10 +115,17 @@ function InputOTPForm() {
                 {form.formState.isSubmitting ? <SpinnerMini /> : "Submit"}
               </button>
               <p className="text-sm font-serif">
-                Resend OTP in <span>{currentTime}</span> <br />
-                <button className="underline text-[#e1b813] font-semibold">
-                  Resend
-                </button>
+                {isRunning && (
+                  <>
+                    Resend Otp in <span>{currentTime}s</span>
+                  </>
+                )}
+                <br />
+                {!isRunning && (
+                  <label className="underline text-[#e1b813] font-semibold">
+                    Resend
+                  </label>
+                )}
               </p>
             </form>
           </Form>

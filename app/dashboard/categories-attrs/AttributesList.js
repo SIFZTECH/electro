@@ -6,15 +6,13 @@ import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
 
 const AttributesList = ({ attribute, attribute_value }) => {
-  console.log(attribute_value);
-  const attributeValues = Object.values(attribute_value);
-  console.log(attributeValues);
+  console.log(attribute, attribute_value);
   return (
     <TableRow>
       <TableCell>{attribute}</TableCell>
-      <TableCell>
-        {attributeValues.map((value, index) => (
-          <small className="mx-1 border p-1 border-cyan-600" key={index}>
+      <TableCell className="space-x-2">
+        {attribute_value?.map((value, index) => (
+          <small className="btn-primary bg-green-200" key={index}>
             {value.value}
           </small>
         ))}

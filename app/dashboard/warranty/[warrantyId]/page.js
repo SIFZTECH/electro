@@ -11,8 +11,6 @@ const WarrantyPageInfo = ({ params }) => {
 
   const warranty = data.data;
 
-  console.log(warranty);
-
   return (
     <>
       {isError && error && "There is no warranty with that id"}
@@ -30,12 +28,12 @@ const WarrantyPageInfo = ({ params }) => {
           </p>
           <p>
             Created At:
-            <span className="font-medium">{warranty.created_at}</span>
+            <span className="font-medium"> {warranty.created_at}</span>
           </p>
           <h1>
             Company Name:
-            <span className="font-medium font-serif">
-              {warranty.company_name}
+            <span className="font-semibold font-serif">
+              &nbsp;{warranty.company_name}
             </span>
           </h1>
           <p>
@@ -56,8 +54,8 @@ const WarrantyPageInfo = ({ params }) => {
             <span className="font-medium"> {warranty.purchase_date}</span>
           </p>
           <p>
-            Updated at
-            <span className="font-medium">{warranty.updated_at}</span>
+            Updated at:
+            <span className="font-medium"> {warranty.updated_at}</span>
           </p>
 
           <div className="!mt-6 border border-gray-100 shadow-sm rounded-sm w-fit p-3">
@@ -73,7 +71,7 @@ const WarrantyPageInfo = ({ params }) => {
             <p>
               Bike Frame serial no:
               <span className="font-medium">
-                {warranty.bike_frame_serial_no}
+                &nbsp;{warranty.bike_frame_serial_no}
               </span>
             </p>
             <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />
@@ -82,7 +80,7 @@ const WarrantyPageInfo = ({ params }) => {
             <p>
               Bike Motor serial no:
               <span className="font-medium">
-                {warranty.bike_motor_serial_no}
+                &nbsp;{warranty.bike_motor_serial_no}
               </span>
             </p>
             <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />
@@ -91,7 +89,7 @@ const WarrantyPageInfo = ({ params }) => {
             <p>
               Invoice no:
               <span className="font-medium">
-                {warranty.bike_battery_serial_no}
+                &nbsp;{warranty.invoice_number}
               </span>
             </p>
             <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />

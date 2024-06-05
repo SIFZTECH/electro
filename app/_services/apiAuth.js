@@ -176,7 +176,7 @@ export async function verifyOtpForEnable(otp) {
   return data;
 }
 
-export async function disbleTwoFactorAuth(password) {
+export async function disbleTwoFactorAuth() {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
@@ -186,9 +186,6 @@ export async function disbleTwoFactorAuth(password) {
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
-    },
-    data: {
-      password,
     },
   });
 

@@ -25,16 +25,7 @@ const PhoneTab = () => {
 
   async function onSubmit({ phone, channel }) {
     try {
-      // let res;
-      // if (isTwoAuthEnable) {
-      //   res = await disbleTwoFactorAuth(password);
-      // } else if (user?.isTwoFactorEnable === 0) {
-      //   res = await enableTwoFactorAuth({ two_fa_email, channel });
-      // }
-
       const res = await enableTwoFactorAuth({ phone, channel });
-
-      console.log(res);
 
       if (res) {
         toast({
@@ -66,10 +57,15 @@ const PhoneTab = () => {
 
   return (
     <>
-      {isTwoAuthEnable && user.channel === "number" ? (
+      {isTwoAuthEnable && user?.channel === "number" ? (
         <div className="flex items-center justify-between">
           <span>{user?.phone_number}</span>
-          <span className="btn-primary cursor-pointer bg-gray-200">Remove</span>
+          <span
+            onClick={() => router.push("/dashboard/settings/disable-2FA")}
+            className="btn-primary cursor-pointer bg-gray-200"
+          >
+            Remove
+          </span>
         </div>
       ) : (
         <>
