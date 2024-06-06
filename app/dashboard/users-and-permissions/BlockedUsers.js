@@ -15,13 +15,12 @@ import { useBlockedUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
 
 const BlockedUsers = () => {
-  const { data, isLoading, isError, error, total_num } = useBlockedUsers();
+  const { data, isLoading, isError, error } = useBlockedUsers();
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  console.log(data);
 
   return (
     <>

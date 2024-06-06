@@ -3,6 +3,7 @@
 import { Switch } from "@/app/components/ui/switch";
 import {
   Table,
+  TableBody,
   TableCell,
   TableHead,
   TableHeader,
@@ -13,13 +14,19 @@ import BlockUser from "./BlockUser";
 import AssignUserRole from "./AssignUserRole";
 import { useUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
+import PaginationUI from "./Pagination";
+import { useSearchParams } from "next/navigation";
 
 const UsersTable = () => {
-  const { data, isLoading, isError, error, total_num } = useUsers();
+  const params = useSearchParams();
+  const page = params.get("page") ? params.get("page") : 1;
+  const { data, isLoading, isError, error } = useUsers(page, 3);
 
   if (isLoading) {
     return <Spinner />;
   }
+
+  console.log(data);
 
   return (
     <>
@@ -53,7 +60,7 @@ const UsersTable = () => {
               </TableHead>
             </TableRow>
           </TableHeader>
-          <tbody>
+          <TableBody>
             {data.data.data?.map((data, i) => {
               return (
                 <TableRow key={i + 1} className="font-sans">
@@ -86,9 +93,10 @@ const UsersTable = () => {
                 </TableRow>
               );
             })}
-          </tbody>
+          </TableBody>
         </Table>
       )}
+      <PaginationUI data={data.data} page={page} />
     </>
   );
 };

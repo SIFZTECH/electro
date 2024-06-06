@@ -60,12 +60,7 @@ const PermissionTable = () => {
               <TableCell data-label="Click and Collect">Admin</TableCell>
               <TableCell data-label="Click and Collect"></TableCell>
               <TableCell data-label="Click and Collect">web</TableCell>
-              <TableCell data-label="Actions">
-                <div className="flex gap-1">
-                  <EditPermission />
-                  <DeletePermission />
-                </div>
-              </TableCell>
+              <TableCell data-label="Actions">Action</TableCell>
             </TableRow>
           );
         })}

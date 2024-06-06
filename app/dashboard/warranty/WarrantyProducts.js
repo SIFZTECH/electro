@@ -1,27 +1,5 @@
 import Link from "next/link";
 
-const dummyData = [
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 1",
-    customerName: "Jane Smith",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 2",
-    customerName: "Jane Smith",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 3",
-    customerName: "Jane Smith 2",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 4",
-    customerName: "Jane Smith",
-  },
-];
 
 const WarrantyProducts = ({ data }) => {
   const warranties = data.data;
@@ -29,7 +7,9 @@ const WarrantyProducts = ({ data }) => {
   return (
     <>
       {warranties.length === 0 ? (
-        "There is no warranties at that momment! Please add new Warranty"
+        <h1 className="font-serif text-center text-xl">
+          There is no warranties at that momment! Please add new Warranty
+        </h1>
       ) : (
         <table className="mt-10 table_modify">
           <thead>

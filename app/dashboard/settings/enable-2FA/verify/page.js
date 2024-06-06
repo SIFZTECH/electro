@@ -18,13 +18,10 @@ import {
 } from "@/app/components/ui/input-otp";
 import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { verifyOtp, verifyOtpForEnable } from "@/app/_services/apiAuth";
+import { verifyOtpForEnable } from "@/app/_services/apiAuth";
 import { useToast } from "@/app/_hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { useTimer } from "@gabrielyotoo/react-use-timer";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@/app/_features/authentication/useUser";
-import ResendOTP from "./ResendOTP";
 
 function InputOTPForm() {
   const router = useRouter();

@@ -27,9 +27,9 @@ const WarrantyPage = () => {
         </Link>
       </div>
 
-      {!isError && !error && <WarrantyProducts data={data} />}
-      {isError && error && (
-        <h1>
+      {!isLoading && !isError && !error && <WarrantyProducts data={data} />}
+      {!isLoading && isError && error && (
+        <h1 className="font-serif text-center text-xl">
           {error?.response.data.message
             ? error.response.data.message
             : error.message}

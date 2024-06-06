@@ -218,19 +218,34 @@ export async function logout() {
   return data;
 }
 
-export async function getAllUsers(query) {
+export async function getAllUsers(page) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
-  if (query) {
-    var url = `${BASE_URL}/admin/users-and-admin?${query}`;
-  } else {
-    var url = `${BASE_URL}/admin/users-and-admin`;
+  let url = `${BASE_URL}/admin/users-and-admin?per_page=3`;
+
+  if (page) {
+    url = `${BASE_URL}/admin/users-and-admin?per_page=3&page=${page}`;
   }
 
   const { data } = await axios({
     url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
+export async function getAllAdminUsers() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users-and-admin?role=admin`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

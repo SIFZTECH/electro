@@ -40,6 +40,7 @@ const BlockUser = ({ user }) => {
         });
         queryClient.invalidateQueries("users");
         queryClient.invalidateQueries("blockedUsers");
+
         setOpen((open) => !open);
       }
     } catch (err) {

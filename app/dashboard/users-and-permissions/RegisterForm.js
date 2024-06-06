@@ -8,8 +8,10 @@ import axios from "axios";
 import { useToast } from "@/app/_hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/app/lib/utils";
+import { useRoles } from "@/app/_features/roles/useRoles";
 
 export default function RegisterForm() {
+  const { isLoading: isFetching, data } = useRoles();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -57,7 +59,6 @@ export default function RegisterForm() {
       <div className="flex items-center flex-1 flex-col justify-center lg:px-8 ">
         <div className="sm:py-8 w-full mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-            <Logo />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
               Create new account
             </h2>
@@ -98,7 +99,6 @@ export default function RegisterForm() {
                         message: "Please provide a valid email address",
                       },
                     })}
-                    disabled={false}
                     type="email"
                     autoComplete="email"
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -109,6 +109,24 @@ export default function RegisterForm() {
                     </span>
                   )}
                 </div>
+              </div>
+              <div className="mt-2">
+                <select
+                  {...register("role_name")}
+                  type="text"
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                >
+                  {!isFetching &&
+                    data?.data.map((role) => (
+                      <option
+                        className="capitalize"
+                        key={role.id}
+                        value={role.name}
+                      >
+                        {role.name}
+                      </option>
+                    ))}
+                </select>
               </div>
 
               <div>

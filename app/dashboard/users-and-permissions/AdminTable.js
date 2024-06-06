@@ -11,11 +11,11 @@ import {
 import EditUser from "./EditUser";
 import BlockUser from "./BlockUser";
 import AssignUserRole from "./AssignUserRole";
-import { useUsers } from "@/app/_features/users/useUsers";
+import { useAdminUsers, useUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
 
 const AdminTable = () => {
-  const { data, isLoading, isError, error } = useUsers("role=admin");
+  const { data, isLoading, isError, error } = useAdminUsers();
 
   if (isLoading) {
     return <Spinner />;

@@ -13,10 +13,14 @@ const WarrantyPageInfo = ({ params }) => {
 
   return (
     <>
-      {isError && error && "There is no warranty with that id"}
+      {isError && error && (
+        <h1 className="font-serif text-center text-xl">
+          There is no warranty with that id
+        </h1>
+      )}
       {!isLoading && !isError && !error && (
         <div className="space-y-2">
-          <p className="btn-primary inline-block bg-green-400">
+          <p className="btn-primary inline-block bg-color-primary">
             {warranty.status}
           </p>
           <h1 className="font-semibold font-serif">
@@ -65,7 +69,7 @@ const WarrantyPageInfo = ({ params }) => {
                 {warranty.bike_battery_serial_no}
               </span>
             </p>
-            <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />
+            <Image src="/serial-1.jpeg" width={400} height={320} alt="test" />
           </div>
           <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
             <p>
@@ -74,7 +78,7 @@ const WarrantyPageInfo = ({ params }) => {
                 &nbsp;{warranty.bike_frame_serial_no}
               </span>
             </p>
-            <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />
+            <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
           </div>
           <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
             <p>
@@ -83,7 +87,7 @@ const WarrantyPageInfo = ({ params }) => {
                 &nbsp;{warranty.bike_motor_serial_no}
               </span>
             </p>
-            <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />
+            <Image src="/serial-3.jpeg" width={400} height={320} alt="test" />
           </div>
           <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
             <p>
@@ -92,7 +96,7 @@ const WarrantyPageInfo = ({ params }) => {
                 &nbsp;{warranty.invoice_number}
               </span>
             </p>
-            <Image src="/cycle-1.jpg" width={400} height={320} alt="test" />
+            <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
           </div>
         </div>
       )}

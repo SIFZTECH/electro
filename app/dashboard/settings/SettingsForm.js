@@ -110,8 +110,8 @@ const SettingsForm = () => {
   return (
     <>
       <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-wrap flex-col md:flex-row gap-x-9 gap-y-6">
-          <div className="md:basis-[45%]">
+        <div className="grid grid-cols-2 md:flex-row gap-x-9 gap-y-6">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               First Name
             </label>
@@ -131,7 +131,7 @@ const SettingsForm = () => {
               )}
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Last Name
             </label>
@@ -151,7 +151,7 @@ const SettingsForm = () => {
               )}
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Email
             </label>
@@ -165,7 +165,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Phone Number
             </label>
@@ -186,7 +186,7 @@ const SettingsForm = () => {
             </div>
           </div>
 
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Company Name
             </label>
@@ -205,7 +205,7 @@ const SettingsForm = () => {
               )}
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Web Url
             </label>
@@ -216,7 +216,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               ABN
             </label>
@@ -229,7 +229,7 @@ const SettingsForm = () => {
               <option value="abn">TV5</option>
             </select>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date
             </label>
@@ -246,7 +246,7 @@ const SettingsForm = () => {
               </span>
             )}
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Invoice Number
             </label>
@@ -257,7 +257,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Description
             </label>
@@ -270,7 +270,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Street Address
             </label>
@@ -282,7 +282,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               City
             </label>
@@ -294,7 +294,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Postal Code
             </label>
@@ -306,7 +306,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               State
             </label>
@@ -318,7 +318,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Upload your logo
             </label>
@@ -336,7 +336,7 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%]">
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Stock in Stock feed url
             </label>
@@ -348,29 +348,6 @@ const SettingsForm = () => {
               />
             </div>
           </div>
-          <div className="md:basis-[45%] ">
-            <div className="flex gap-3 items-center">
-              <label
-                htmlFor="tfa"
-                className="btn-primary cursor-pointer text-sm font-semibold font-serif leading-6 text-gray-900"
-                onClick={() => {
-                  router.push("/dashboard/settings/enable-2FA");
-                }}
-              >
-                Enable Two-Factor Authentication
-              </label>
-            </div>
-            <div className="mt-4 flex">
-              <label
-                className="block text-sm font-semibold font-serif leading-6 text-gray-900 border border-color-primary px-3 py-1 rounded-sm bg-[#fde68a]"
-                onClick={() =>
-                  router.push("/dashboard/settings/change-password")
-                }
-              >
-                Change your password
-              </label>
-            </div>
-          </div>
         </div>
         <button
           type="submit"
@@ -380,6 +357,27 @@ const SettingsForm = () => {
           {isSubmitting ? <SpinnerMini /> : "Save"}
         </button>
       </form>
+      <div className="md:py-8 p-2 md:px-6">
+        <div className="flex gap-3 items-center">
+          <label
+            htmlFor="tfa"
+            className="btn-primary cursor-pointer text-sm font-semibold font-serif leading-6 text-gray-900"
+            onClick={() => {
+              router.push("/dashboard/settings/enable-2FA");
+            }}
+          >
+            Enable Two-Factor Authentication
+          </label>
+        </div>
+        <div className="mt-4 flex">
+          <label
+            className="block text-sm font-semibold font-serif leading-6 text-gray-900 border border-color-primary px-3 py-1 rounded-sm bg-[#fde68a]"
+            onClick={() => router.push("/dashboard/settings/change-password")}
+          >
+            Change your password
+          </label>
+        </div>
+      </div>
     </>
   );
 };

@@ -6,9 +6,8 @@ import { useUser } from "../_features/authentication/useUser";
 import Spinner from "./ui/Spinner";
 
 const ProtectedRoute = ({ children }) => {
-  let token;
   if (typeof window !== "undefined") {
-    token = localStorage?.getItem("access-token");
+    var token = localStorage?.getItem("access-token");
   }
 
   // const token = localStorage?.getItem("access-token");
@@ -23,11 +22,9 @@ const ProtectedRoute = ({ children }) => {
     function () {
       if (!isLoading && !user) {
         router.replace("/login");
-      } else if (!token) {
-        router.replace("/login");
       }
     },
-    [user, isLoading, router, token]
+    [user, isLoading, router]
   );
 
   // 3. IF LOADING IS TRUE
