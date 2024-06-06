@@ -15,7 +15,8 @@ const ProtectedRoute = ({ children }) => {
   const router = useRouter();
 
   // 1. Get currentUser and check user is admin or dealer
-  const { isLoading, user, isVerified, isAdmin, isDealer } = useUser();
+  const { isLoading, user, isVerified, isAdmin, isDealer, isBlocked } =
+    useUser();
 
   // 2. If there is NO authenticated user, redirect to the /login
   useEffect(
@@ -34,12 +35,14 @@ const ProtectedRoute = ({ children }) => {
 
   // If there is user and not verified
   if (!isLoading && user && !isVerified) {
-    router.replace("/register/confirmation");
     return <h1> You don't have permission to Access this route</h1>;
   }
 
+  if (!isLoading && isBlocked) {
+    return <h1>You are blocked!</h1>;
+  }
   // 4. If there IS a admin user, render the app
-  if (!isLoading && (isAdmin || isDealer)) {
+  if (!isLoading && !isBlocked && (isAdmin || isDealer)) {
     return children;
   }
 };

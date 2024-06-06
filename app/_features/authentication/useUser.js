@@ -14,5 +14,6 @@ export function useUser() {
     isDealer: user?.roles[0]?.name === "dealer",
     isVerified: user?.email_verified_at,
     isTwoAuthEnable: user?.isTwoFactorEnable === 1,
+    isBlocked: user?.is_blocked === 1,
   };
 }

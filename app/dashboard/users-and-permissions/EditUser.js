@@ -1,5 +1,6 @@
 "use client";
 
+import { useRoles } from "@/app/_features/roles/useRoles";
 import {
   Dialog,
   DialogContent,
@@ -8,12 +9,57 @@ import {
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useForm } from "react-hook-form";
 
-const EditUser = () => {
+const EditUser = ({ user }) => {
+  const { data, isLoading, isError } = useRoles();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      firstname: user.name,
+      lastname: user.name,
+      email: user.email,
+      phone: user.phone_number,
+      user_role: user.roles[0]?.name,
+    },
+  });
+
+  async function onSubmit() {
+    // try {
+    //   let res;
+    //   if (user.is_blocked === 0) {
+    //     res = await userBlock(user.id, true);
+    //   } else {
+    //     res = await userBlock(user.id, false);
+    //   }
+    //   if (res) {
+    //     toast({
+    //       variant: "success",
+    //       title: res.message,
+    //       duration: 1000,
+    //     });
+    //     queryClient.invalidateQueries("users");
+    //     setOpen((open) => !open);
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    //   if (err.response) {
+    //     toast({
+    //       variant: "destructive",
+    //       title: err.response.data.message,
+    //       duration: 1000,
+    //     });
+    //   } else {
+    //     toast({
+    //       variant: "destructive",
+    //       title: "Something went wrong",
+    //       duration: 1000,
+    //     });
+    //   }
+    // }
+  }
+
   return (
     <Dialog>
       <DialogTrigger className="btn-primary transition-all py-1 border-color-primary">
@@ -25,7 +71,7 @@ const EditUser = () => {
           <p className="text-sm text-gray-800 mt-3">
             Make changes to your user here. Click save when you're done.
           </p>
-          <form className="space-y-3 mt-4">
+          <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 First Name
@@ -87,23 +133,16 @@ const EditUser = () => {
                   className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   {...register("user_role")}
                 >
-                  <option value="0">Admin</option>
-                  <option value="0">Dealer</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Status
-              </label>
-              <div className="mt-2">
-                <select
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  {...register("user_role")}
-                >
-                  <option value="0">Active</option>
-                  <option value="0">InActive</option>
+                  {!isLoading &&
+                    data?.data.map((role) => (
+                      <option
+                        className="capitalize"
+                        key={role.id}
+                        value={role.name}
+                      >
+                        {role.name}
+                      </option>
+                    ))}
                 </select>
               </div>
             </div>

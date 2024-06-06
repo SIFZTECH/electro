@@ -114,7 +114,7 @@ function InputOTPForm() {
               </button>
             </form>
           </Form>
-          <ResendOTP />
+          {/* <ResendOTP /> */}
         </div>
       </div>
     </div>

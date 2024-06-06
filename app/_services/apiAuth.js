@@ -224,3 +224,84 @@ export async function logout() {
 
   return data;
 }
+
+export async function getAllUsers(query) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  let url = `${BASE_URL}/admin/users-and-admin`;
+
+  if (query === "customer") {
+    url = `${BASE_URL}/admin/users-and-admin?role=${query}`;
+  } else if (query === "admin") {
+    url = `${BASE_URL}/admin/users-and-admin?role=${query}`;
+  } else if (query === "dealer") {
+    url = `${BASE_URL}/admin/users-and-admin?role=${query}`;
+  }
+
+  const { data } = await axios({
+    url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
+export async function userBlock(user_id, option) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/user-block`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      user_id,
+      block: option,
+    },
+  });
+
+  return data;
+}
+
+export async function getAllRoles() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/all-roles`,
+
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
+export async function assignRole(user_id, role) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/create-user-permission`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      user_id,
+      role,
+    },
+  });
+
+  return data;
+}

@@ -21,8 +21,6 @@ export default function Login() {
     try {
       const res = await login({ email, password });
 
-      console.log(res);
-
       if (res.message && res.data?.available_otp_channel) {
         router.replace("/otp/verify");
       } else {
@@ -40,7 +38,7 @@ export default function Login() {
       if (err.response) {
         toast({
           variant: "destructive",
-          title: "Provided email or password are incorrect",
+          title: err.response.data.message,
           duration: 1000,
         });
       } else {
