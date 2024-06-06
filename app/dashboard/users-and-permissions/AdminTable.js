@@ -15,13 +15,11 @@ import { useUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
 
 const AdminTable = () => {
-  const { data, isLoading, isError, error } = useUsers("admin");
+  const { data, isLoading, isError, error } = useUsers("role=admin");
 
   if (isLoading) {
     return <Spinner />;
   }
-
-  console.log(data);
 
   return (
     <Table className="mt-10 recentOrders">
@@ -60,9 +58,9 @@ const AdminTable = () => {
               </TableCell>
               <TableCell data-label="">
                 <div className="flex gap-1">
-                  <EditUser />
-                  <BlockUser />
-                  <AssignUserRole />
+                  <EditUser user={data} />
+                  <BlockUser user={data} />
+                  <AssignUserRole user={data} />
                 </div>
               </TableCell>
             </TableRow>

@@ -230,18 +230,29 @@ export async function getAllUsers(query) {
 
   if (!token) return null;
 
-  let url = `${BASE_URL}/admin/users-and-admin`;
-
-  if (query === "customer") {
-    url = `${BASE_URL}/admin/users-and-admin?role=${query}`;
-  } else if (query === "admin") {
-    url = `${BASE_URL}/admin/users-and-admin?role=${query}`;
-  } else if (query === "dealer") {
-    url = `${BASE_URL}/admin/users-and-admin?role=${query}`;
+  if (query) {
+    var url = `${BASE_URL}/admin/users-and-admin?${query}`;
+  } else {
+    var url = `${BASE_URL}/admin/users-and-admin`;
   }
 
   const { data } = await axios({
     url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
+export async function getAllBlockedUsers() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users-and-admin?block=true`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

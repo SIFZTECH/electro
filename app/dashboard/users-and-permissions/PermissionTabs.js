@@ -10,26 +10,32 @@ import UsersTable from "./UsersTable";
 import PermissionTable from "./PermissionTable";
 
 import AdminTable from "./AdminTable";
-import { useUsers } from "@/app/_features/users/useUsers";
+import { useBlockedUsers, useUsers } from "@/app/_features/users/useUsers";
+import BlockedUsers from "./BlockedUsers";
+import { useRouter } from "next/navigation";
 
 const PermissionTabs = () => {
+  const router = useRouter();
   const { total_num, isLoading } = useUsers();
+  const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
   return (
     <>
       <Tabs defaultValue="allUsers" className="font-serif">
         <TabsList>
-          <TabsTrigger value="allUsers" className="">
+          <TabsTrigger value="allUsers">
             All Users
             <p className="ml-2 bg-red-500 rounded-full text-white  w-[1.42rem] h-[1.40rem] flex items-center justify-center">
-              <span className="p-1 text-[10px] leading-3">
-                {!isLoading && total_num}
-              </span>
+              {!isLoading && (
+                <span className="p-1 text-[10px] leading-3">{total_num}</span>
+              )}
             </p>
           </TabsTrigger>
           <TabsTrigger value="blocked_users">
             Blocked Users
             <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
-              <span className=" text-[10px] leading-3">4</span>
+              {!isLoading2 && (
+                <span className="p-1 text-[10px] leading-3">{total_num2}</span>
+              )}
             </p>
           </TabsTrigger>
           <TabsTrigger value="roles_and_permissions">
@@ -40,7 +46,9 @@ const PermissionTabs = () => {
         <TabsContent value="allUsers">
           <UsersTable />
         </TabsContent>
-        <TabsContent value="blocked_users">{/* <UsersTable /> */}</TabsContent>
+        <TabsContent value="blocked_users">
+          <BlockedUsers />
+        </TabsContent>
         <TabsContent value="roles_and_permissions">
           <PermissionTable />
         </TabsContent>

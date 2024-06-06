@@ -39,6 +39,7 @@ const BlockUser = ({ user }) => {
           duration: 1000,
         });
         queryClient.invalidateQueries("users");
+        queryClient.invalidateQueries("blockedUsers");
         setOpen((open) => !open);
       }
     } catch (err) {
@@ -62,7 +63,7 @@ const BlockUser = ({ user }) => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
       <DialogTrigger className="btn-primary text-white transition-all py-1 bg-red-500 hover:bg-red-400">
-        {user.is_blocked === 1 ? "Unblock" : "Block"}
+        {user?.is_blocked === 1 ? "Unblock" : "Block"}
       </DialogTrigger>
       <DialogContent>
         <div>
@@ -85,7 +86,7 @@ const BlockUser = ({ user }) => {
               >
                 {isSubmitting ? (
                   <SpinnerMini />
-                ) : user.is_blocked === 1 ? (
+                ) : user?.is_blocked === 1 ? (
                   "Unblock"
                 ) : (
                   "Block"

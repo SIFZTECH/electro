@@ -17,11 +17,11 @@ const EditUser = ({ user }) => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      firstname: user.name,
-      lastname: user.name,
-      email: user.email,
-      phone: user.phone_number,
-      user_role: user.roles[0]?.name,
+      firstname: user?.name,
+      lastname: user?.name,
+      email: user?.email,
+      phone: user?.phone_number,
+      user_role: user?.roles[0]?.name,
     },
   });
 
