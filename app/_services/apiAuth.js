@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, PAGE_SIZE } from "../lib/utils";
 
 export async function getCurrentUser() {
   const token = localStorage.getItem("access-token");
@@ -223,10 +223,10 @@ export async function getAllUsers(page) {
 
   if (!token) return null;
 
-  let url = `${BASE_URL}/admin/users-and-admin?per_page=3`;
+  let url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}`;
 
   if (page) {
-    url = `${BASE_URL}/admin/users-and-admin?per_page=3&page=${page}`;
+    url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}`;
   }
 
   const { data } = await axios({

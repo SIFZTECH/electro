@@ -13,14 +13,17 @@ import BlockUser from "./BlockUser";
 import AssignUserRole from "./AssignUserRole";
 import { useBlockedUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
+import PaginationUI from "./Pagination";
+import { useSearchParams } from "next/navigation";
 
 const BlockedUsers = () => {
+  const params = useSearchParams();
+  const page = params.get("page") ? params.get("page") : 1;
   const { data, isLoading, isError, error } = useBlockedUsers();
 
   if (isLoading) {
     return <Spinner />;
   }
-
 
   return (
     <>
@@ -28,7 +31,7 @@ const BlockedUsers = () => {
       {!isLoading && !isError && data.data.data.length === 0 ? (
         "There is no blocked user"
       ) : (
-        <Table className="mt-10 table_modify">
+        <Table className=" !mb-4 *:table_modify">
           <TableHeader>
             <TableRow>
               <TableHead className="font-medium" scope="col">
@@ -47,9 +50,6 @@ const BlockedUsers = () => {
                 Date
               </TableHead>
 
-              <TableHead className="font-medium" scope="col">
-                Status
-              </TableHead>
               <TableHead className="font-medium w-1/6" scope="col">
                 Actions
               </TableHead>
@@ -66,18 +66,9 @@ const BlockedUsers = () => {
                   <TableCell data-label="Phone">{data.phone_number}</TableCell>
                   <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
                   <TableCell data-label="Created At">
-                    {data.created_at}
+                    {new Date(data.created_at).toDateString()}
                   </TableCell>
 
-                  <TableCell data-label="Status">
-                    {data?.is_blocked === 0 ? (
-                      <span className="btn-primary bg-green-300">Active</span>
-                    ) : (
-                      <span className="btn-primary bg-yellow-300">
-                        Inactive
-                      </span>
-                    )}
-                  </TableCell>
                   <TableCell data-label="">
                     <div className="flex gap-1">
                       <EditUser user={data} />
@@ -91,6 +82,7 @@ const BlockedUsers = () => {
           </tbody>
         </Table>
       )}
+      <PaginationUI data={data.data} page={+page} />
     </>
   );
 };

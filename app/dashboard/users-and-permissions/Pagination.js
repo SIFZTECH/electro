@@ -7,28 +7,43 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/app/components/ui/pagination";
+import { PAGE_SIZE } from "@/app/lib/utils";
 
 function PaginationUI({ data, page }) {
   return (
-    <Pagination className="mt-6 flex justify-end w-full">
-      <PaginationContent>
-        <PaginationItem>
-          {1 < page && (
-            <PaginationPrevious
-              href={`/dashboard/users-and-permissions?page=${+page - 1}`}
-            />
-          )}
-        </PaginationItem>
+    <div className="flex items-center justify-between">
+      <p className="w-full">
+        Showing
+        <span className="font-semibold"> {(page - 1) * PAGE_SIZE + 1}</span> to
+        <span className="font-semibold">
+          {" "}
+          {page === data.last_page ? data.total : page * PAGE_SIZE}
+        </span>{" "}
+        of
+        <span className="font-semibold"> {data.total}</span> results
+      </p>
+      <Pagination className="mt-6 flex justify-end w-full">
+        <PaginationContent>
+          <PaginationItem>
+            {1 < page && (
+              <PaginationPrevious
+                className="bg-gray-100 hover:bg-gray-200"
+                href={`/dashboard/users-and-permissions?page=${page - 1}`}
+              />
+            )}
+          </PaginationItem>
 
-        <PaginationItem>
-          {!(+page === data?.last_page) && (
-            <PaginationNext
-              href={`/dashboard/users-and-permissions?page=${+page + 1}`}
-            />
-          )}
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+          <PaginationItem>
+            {!(page === data?.last_page) && (
+              <PaginationNext
+                className="bg-gray-100 hover:bg-gray-200"
+                href={`/dashboard/users-and-permissions?page=${page + 1}`}
+              />
+            )}
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 }
 

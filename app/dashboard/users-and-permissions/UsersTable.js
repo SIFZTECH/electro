@@ -26,14 +26,12 @@ const UsersTable = () => {
     return <Spinner />;
   }
 
-  console.log(data);
-
   return (
     <>
       {isError && error && error.message}
 
       {!isError && !error && (
-        <Table className="mt-10 table_modify">
+        <Table className="mt-10 !mb-4 table_modify">
           <TableHeader>
             <TableRow>
               <TableHead className="font-medium" scope="col">
@@ -53,9 +51,6 @@ const UsersTable = () => {
               </TableHead>
 
               <TableHead className="font-medium" scope="col">
-                Status
-              </TableHead>
-              <TableHead className="font-medium" scope="col">
                 Actions
               </TableHead>
             </TableRow>
@@ -74,15 +69,6 @@ const UsersTable = () => {
                     {new Date(data.created_at).toDateString()}
                   </TableCell>
 
-                  <TableCell data-label="Status">
-                    {data.is_blocked === 0 ? (
-                      <span className="btn-primary bg-green-300">Active</span>
-                    ) : (
-                      <span className="btn-primary bg-yellow-300">
-                        Inactive
-                      </span>
-                    )}
-                  </TableCell>
                   <TableCell data-label="">
                     <div className="flex gap-1 flex-wrap">
                       <EditUser user={data} />
@@ -96,7 +82,7 @@ const UsersTable = () => {
           </TableBody>
         </Table>
       )}
-      <PaginationUI data={data.data} page={page} />
+      <PaginationUI data={data.data} page={+page} />
     </>
   );
 };

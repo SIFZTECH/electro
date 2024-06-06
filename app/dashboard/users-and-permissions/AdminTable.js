@@ -31,7 +31,6 @@ const AdminTable = () => {
           <TableHead scope="col">Role</TableHead>
           <TableHead scope="col">Date</TableHead>
 
-          <TableHead scope="col">Status</TableHead>
           <TableHead scope="col" className="w-1/6">
             Actions
           </TableHead>
@@ -49,13 +48,6 @@ const AdminTable = () => {
               <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
               <TableCell data-label="Created At">{data.created_at}</TableCell>
 
-              <TableCell data-label="Status">
-                {data.email_verified_at ? (
-                  <span className="btn-primary bg-green-300">Verified</span>
-                ) : (
-                  <span className="btn-primary bg-yellow-300">Unverified</span>
-                )}
-              </TableCell>
               <TableCell data-label="">
                 <div className="flex gap-1">
                   <EditUser user={data} />
