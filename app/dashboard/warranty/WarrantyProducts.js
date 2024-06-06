@@ -31,7 +31,7 @@ const WarrantyProducts = ({ data }) => {
       {warranties.length === 0 ? (
         "There is no warranties at that momment! Please add new Warranty"
       ) : (
-        <table className="mt-10 recentOrders">
+        <table className="mt-10 table_modify">
           <thead>
             <tr>
               <th scope="col">Order ID</th>

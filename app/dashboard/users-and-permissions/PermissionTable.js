@@ -32,7 +32,7 @@ const dummyData = [
 
 const PermissionTable = () => {
   return (
-    <Table className="mt-10 recentOrders">
+    <Table className="mt-10 table_modify">
       <TableHeader>
         <TableRow className="text-center">
           <TableHead scope="col" className="w-fit">
@@ -58,9 +58,7 @@ const PermissionTable = () => {
             <TableRow key={i + 1}>
               <TableCell data-label="Id">{i + 1}</TableCell>
               <TableCell data-label="Click and Collect">Admin</TableCell>
-              <TableCell data-label="Click and Collect">
-                user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list,user-list
-              </TableCell>
+              <TableCell data-label="Click and Collect"></TableCell>
               <TableCell data-label="Click and Collect">web</TableCell>
               <TableCell data-label="Actions">
                 <div className="flex gap-1">

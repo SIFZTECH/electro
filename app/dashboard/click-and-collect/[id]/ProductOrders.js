@@ -19,7 +19,7 @@ const ProductOrders = () => {
   return (
     <div className="mt-12">
       <h1 className="heading-h1 mb-2 text-lg mt-4">Product On Order</h1>
-      <table className="mt-10 recentOrders">
+      <table className="mt-10 table_modify">
         <thead>
           <tr className="font-serif">
             <th scope="col">SKU</th>

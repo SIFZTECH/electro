@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const DeleteCategory = ({ category }) => {
+const DeleteAttribute = ({ attribute }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -92,4 +92,4 @@ const DeleteCategory = ({ category }) => {
   );
 };
 
-export default DeleteCategory;
+export default DeleteAttribute;

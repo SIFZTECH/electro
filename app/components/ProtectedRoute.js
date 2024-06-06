@@ -38,12 +38,11 @@ const ProtectedRoute = ({ children }) => {
     return <h1> You don't have permission to Access this route</h1>;
   }
 
-  if (!isLoading && isBlocked) {
-    return <h1>You are blocked!</h1>;
-  }
   // 4. If there IS a admin user, render the app
   if (!isLoading && !isBlocked && (isAdmin || isDealer)) {
     return children;
+  } else {
+    return <h1>This is customer page</h1>;
   }
 };
 

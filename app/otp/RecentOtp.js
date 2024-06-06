@@ -9,17 +9,17 @@ import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const ResendOtp = () => {
-  const channel =
-    localStorage.getItem("channel") &&
-    JSON.parse(localStorage.getItem("channel"));
-
-  console.log(channel);
+  if (typeof window !== "undefined") {
+    var channel =
+      localStorage.getItem("channel") &&
+      JSON.parse(localStorage.getItem("channel"));
+  }
 
   const params = useSearchParams();
   const { toast } = useToast();
   const { user, isTwoAuthEnable, isLoading } = useUser();
 
-  const { currentTime, isRunning } = useTimer(5, {
+  const { currentTime, isRunning, start } = useTimer(120, {
     autoStart: true,
   });
 
@@ -45,6 +45,7 @@ const ResendOtp = () => {
           title: res.message,
           duration: 1000,
         });
+        start();
       }
     } catch (err) {
       console.log(err);

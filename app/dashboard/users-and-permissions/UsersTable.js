@@ -26,7 +26,7 @@ const UsersTable = () => {
       {isError && error && error.message}
 
       {!isError && !error && (
-        <Table className="mt-10 recentOrders">
+        <Table className="mt-10 table_modify">
           <TableHeader>
             <TableRow>
               <TableHead className="font-medium" scope="col">
@@ -48,7 +48,7 @@ const UsersTable = () => {
               <TableHead className="font-medium" scope="col">
                 Status
               </TableHead>
-              <TableHead className="font-medium w-1/6" scope="col">
+              <TableHead className="font-medium" scope="col">
                 Actions
               </TableHead>
             </TableRow>
@@ -64,7 +64,7 @@ const UsersTable = () => {
                   <TableCell data-label="Phone">{data.phone_number}</TableCell>
                   <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
                   <TableCell data-label="Created At">
-                    {data.created_at}
+                    {new Date(data.created_at).toDateString()}
                   </TableCell>
 
                   <TableCell data-label="Status">
@@ -77,7 +77,7 @@ const UsersTable = () => {
                     )}
                   </TableCell>
                   <TableCell data-label="">
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 flex-wrap">
                       <EditUser user={data} />
                       <BlockUser user={data} />
                       <AssignUserRole user={data} />

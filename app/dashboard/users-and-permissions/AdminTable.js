@@ -22,7 +22,7 @@ const AdminTable = () => {
   }
 
   return (
-    <Table className="mt-10 recentOrders">
+    <Table className="mt-10 table_modify">
       <TableHeader className="font-semibold">
         <TableRow>
           <TableHead scope="col">User Name</TableHead>

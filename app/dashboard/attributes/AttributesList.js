@@ -2,8 +2,8 @@
 
 import { TableCell, TableRow } from "@/app/components/ui/table";
 
-import EditCategory from "./EditCategory";
-import DeleteCategory from "./DeleteCategory";
+import EditCategory from "./EditAttribute";
+import DeleteCategory from "./DeleteAttribute";
 
 const AttributesList = ({ attribute, attribute_value }) => {
   console.log(attribute, attribute_value);

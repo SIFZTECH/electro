@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const EditCategory = ({ category }) => {
+const EditAttribute = ({ category }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { toast } = useToast();
@@ -109,4 +109,4 @@ const EditCategory = ({ category }) => {
   );
 };
 
-export default EditCategory;
+export default EditAttribute;
