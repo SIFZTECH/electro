@@ -29,7 +29,7 @@ const ResendOtp = () => {
   } = useForm({
     defaultValues: {
       email: params.get("email"),
-      channel: channel.number ? "number" : "email",
+      channel: channel?.number ? "number" : "email",
     },
   });
 

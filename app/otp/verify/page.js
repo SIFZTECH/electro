@@ -41,15 +41,13 @@ function InputOTPForm() {
     try {
       const res = await verifyOtpForLogin(otp);
 
-      console.log(res);
-
       if (res.data) {
         localStorage.setItem("access-token", res.data.auth);
         router.replace("/dashboard");
 
         toast({
           variant: "success",
-          title: "Verified",
+          title: "Verified successfully",
           duration: 1000,
         });
       }

@@ -28,8 +28,8 @@ export default function Login() {
           JSON.stringify(res.data?.available_otp_channel)
         );
       } else {
-        router.replace("/dashboard");
         localStorage.setItem("access-token", res.data.auth);
+        router.replace("/dashboard");
       }
 
       toast({
