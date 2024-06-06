@@ -193,17 +193,10 @@ export async function disbleTwoFactorAuth() {
 }
 
 export async function resendOtp(formData) {
-  console.log(formData);
-  const token = localStorage.getItem("access-token");
-  if (!token) return null;
-
   const { data } = await axios({
     url: `${BASE_URL}/admin/resend-otp`,
     method: "post",
     data: formData,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   });
 
   console.log(data);

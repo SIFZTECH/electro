@@ -22,7 +22,11 @@ export default function Login() {
       const res = await login({ email, password });
 
       if (res.message && res.data?.available_otp_channel) {
-        router.replace("/otp/verify");
+        router.replace(`/otp/verify?email=${email}`);
+        localStorage.setItem(
+          "channel",
+          JSON.stringify(res.data?.available_otp_channel)
+        );
       } else {
         router.replace("/dashboard");
         localStorage.setItem("access-token", res.data.auth);

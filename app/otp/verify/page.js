@@ -22,6 +22,7 @@ import { verifyOtpForLogin } from "@/app/_services/apiAuth";
 import { useToast } from "@/app/_hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
+import ResendOtp from "../RecentOtp";
 
 function InputOTPForm() {
   const router = useRouter();
@@ -112,21 +113,9 @@ function InputOTPForm() {
               <button type="submit" className="btn-primary">
                 {form.formState.isSubmitting ? <SpinnerMini /> : "Submit"}
               </button>
-              <p className="text-sm font-serif">
-                {isRunning && (
-                  <>
-                    Resend Otp in <span>{currentTime}s</span>
-                  </>
-                )}
-                <br />
-                {!isRunning && (
-                  <label className="underline text-[#e1b813] font-semibold">
-                    Resend
-                  </label>
-                )}
-              </p>
             </form>
           </Form>
+          <ResendOtp />
         </div>
       </div>
     </div>
