@@ -15,7 +15,25 @@ export async function getAllAttributes() {
 
   if (!data.data)
     throw new Error(
-      "There is no category at that momment! Please add a new Category"
+      "There is no Attribute at that momment! Please add a new Attribute"
+    );
+
+  return data.data;
+}
+
+export async function getAllAttributeNames() {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/all-attributes`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!data.data)
+    throw new Error(
+      "There is no Attribute at that momment! Please add a new Attribute"
     );
 
   return data.data;
@@ -33,7 +51,7 @@ export async function getAttribute(categoryId) {
 
   if (!data.data)
     throw new Error(
-      "There is no category at that momment! Please add a new Category"
+      "There is no Attribute at that momment! Please add a new Attribute"
     );
 
   console.log(data);
@@ -70,6 +88,23 @@ export async function createAttribute({ name, value }) {
       Authorization: `Bearer ${token}`,
     },
     data: { name, value },
+  });
+
+  console.log(data);
+
+  return data;
+}
+export async function createAttributeValue(value, attribute_id) {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/create-attribute-value`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { value, attribute_id },
   });
 
   console.log(data);

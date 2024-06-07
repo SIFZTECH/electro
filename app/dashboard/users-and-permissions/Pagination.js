@@ -17,10 +17,10 @@ function PaginationUI({ data, page }) {
         <span className="font-semibold"> {(page - 1) * PAGE_SIZE + 1}</span> to
         <span className="font-semibold">
           {" "}
-          {page === data.last_page ? data.total : page * PAGE_SIZE}
+          {page === data?.last_page ? data.total : page * PAGE_SIZE}
         </span>{" "}
         of
-        <span className="font-semibold"> {data.total}</span> results
+        <span className="font-semibold"> {data?.total}</span> results
       </p>
       <Pagination className="mt-6 flex justify-end w-full">
         <PaginationContent>

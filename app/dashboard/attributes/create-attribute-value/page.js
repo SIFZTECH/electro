@@ -1,5 +1,6 @@
+"use client";
+
 import { useToast } from "@/app/_hooks/use-toast";
-import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -10,13 +11,15 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
-import { createAttribute } from "@/app/_services/apiAttributes";
+import { createAttributeValue } from "@/app/_services/apiAttributes";
+import { useAttributeNames } from "@/app/_features/attributes/useAttributes";
 import { useRouter } from "next/navigation";
 
-const CreateNewAttribute = () => {
+const CreateNewAttributeValue = () => {
   const [open, setOpen] = useState();
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const { data, isLoading, isError } = useAttributeNames();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const {
@@ -25,9 +28,9 @@ const CreateNewAttribute = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  async function onSubmit({ name, value }) {
+  async function onSubmit({ value, attribute_id }) {
     try {
-      const res = await createAttribute({ name, value });
+      const res = await createAttributeValue(value, attribute_id);
 
       if (res) {
         toast({
@@ -36,10 +39,8 @@ const CreateNewAttribute = () => {
           duration: 1000,
         });
 
-        router.replace("/dashboard/attributes/create-attribute-value");
         queryClient.invalidateQueries("attributes");
-
-        setOpen((open) => !open);
+        router.back(-1);
       }
     } catch (err) {
       console.log(err);
@@ -60,35 +61,59 @@ const CreateNewAttribute = () => {
   }
 
   return (
-    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
+    <Dialog defaultOpen onOpenChange={() => router.back(-1)}>
       <DialogTrigger className="btn-primary">Add New Attribute</DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">
-            Create new Attribute
+            Create new Attribute Value
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Attribute. Click create when you're done.
+            Create new Attribute Value. Click create when you're done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
-                Attribute Name
+                Attribute Value
               </label>
               <div className="mt-2">
                 <input
-                  {...register("name", {
+                  {...register("value", {
                     required: "This filed is required",
                   })}
                   disabled={isSubmitting}
                   type="text"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.name && (
+                {errors?.value && (
                   <span className="text-red-500 text-sm">
-                    {errors.name.message}
+                    {errors.value.message}
                   </span>
                 )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Attribute Name
+              </label>
+              <div className="mt-2">
+                <select
+                  {...register("attribute_id")}
+                  disabled={isSubmitting}
+                  type="text"
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                >
+                  {!isLoading &&
+                    data?.data.map((attribute) => (
+                      <option
+                        className="capitalize"
+                        key={attribute.id}
+                        value={attribute.id}
+                      >
+                        {attribute.name}
+                      </option>
+                    ))}
+                </select>
               </div>
             </div>
 
@@ -108,4 +133,4 @@ const CreateNewAttribute = () => {
   );
 };
 
-export default CreateNewAttribute;
+export default CreateNewAttributeValue;

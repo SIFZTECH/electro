@@ -20,9 +20,10 @@ export async function getCategory(categoryId) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
+  console.log(categoryId);
   if (!categoryId) return;
 
-  const { data } = await axios.get(`${BASE_URL}/categories/${+categoryId}`, {
+  const { data } = await axios.get(`${BASE_URL}/categories/${categoryId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

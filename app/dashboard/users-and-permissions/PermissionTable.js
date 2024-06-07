@@ -10,6 +10,12 @@ import {
 
 import EditPermission from "./EditPermission";
 import DeletePermission from "./DeletePermission";
+import Link from "next/link";
+import CreateRolesAndPermissions from "./CreateRolesAndPermissions";
+import { useRoles } from "@/app/_features/roles/useRoles";
+import Spinner from "@/app/components/ui/Spinner";
+import CreatePermission from "./CreatePermission";
+import CreateNewRole from "./CreateNewRole";
 
 const dummyData = [
   {
@@ -31,41 +37,58 @@ const dummyData = [
 ];
 
 const PermissionTable = () => {
+  const { isLoading, data, isError, error } = useRoles();
+  if (isLoading) return <Spinner />;
+
   return (
-    <Table className="mt-10 table_modify">
-      <TableHeader>
-        <TableRow className="text-center">
-          <TableHead scope="col" className="w-fit">
-            SN
-          </TableHead>
-          <TableHead scope="col" className="w-fit">
-            Role Name
-          </TableHead>
-          <TableHead scope="col" className="w-2/4">
-            Perimission
-          </TableHead>
-          <TableHead scope="col" className="w-fit">
-            Guard Name
-          </TableHead>
-          <TableHead scope="col" className="w-fit">
-            Actions
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody className="font-sans">
-        {dummyData.map((data, i) => {
-          return (
-            <TableRow key={i + 1}>
-              <TableCell data-label="Id">{i + 1}</TableCell>
-              <TableCell data-label="Click and Collect">Admin</TableCell>
-              <TableCell data-label="Click and Collect"></TableCell>
-              <TableCell data-label="Click and Collect">web</TableCell>
-              <TableCell data-label="Actions">Action</TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+    <>
+      <div className="flex gap-3 justify-end">
+        <CreateNewRole />
+        <CreatePermission />
+        <CreateRolesAndPermissions />
+      </div>
+
+      <Table className="mt-10 table_modify">
+        <TableHeader>
+          <TableRow className="text-center">
+            <TableHead scope="col" className="w-fit">
+              SN
+            </TableHead>
+            <TableHead scope="col" className="w-fit">
+              Role Name
+            </TableHead>
+            <TableHead scope="col" className="w-2/4">
+              Perimission
+            </TableHead>
+            <TableHead scope="col" className="w-fit">
+              Guard Name
+            </TableHead>
+            <TableHead scope="col" className="w-fit">
+              Actions
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="font-sans">
+          {data.data.rolesWithPermissions.map((data, i) => {
+            return (
+              <TableRow key={i + 1}>
+                <TableCell data-label="Id">{i + 1}</TableCell>
+                <TableCell data-label="Role Name">{data.name}</TableCell>
+                <TableCell className="space-x-2" data-label="Permissions">
+                  {data.permissions.map((permission) => (
+                    <span className="btn-primary bg-green-200" key={permission}>
+                      {permission}
+                    </span>
+                  ))}
+                </TableCell>
+                <TableCell data-label="Click and Collect">web</TableCell>
+                <TableCell data-label="Actions">Action</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 export default PermissionTable;

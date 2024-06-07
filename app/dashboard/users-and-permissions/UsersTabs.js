@@ -18,7 +18,7 @@ import {
 import BlockedUsers from "./BlockedUsers";
 import { useRouter } from "next/navigation";
 
-const PermissionTabs = () => {
+const UsersTabs = () => {
   const router = useRouter();
   const { total_num, isLoading } = useUsers();
   const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
@@ -73,4 +73,4 @@ const PermissionTabs = () => {
   );
 };
 
-export default PermissionTabs;
+export default UsersTabs;

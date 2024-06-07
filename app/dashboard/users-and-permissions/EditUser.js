@@ -1,15 +1,22 @@
 "use client";
 
 import { useRoles } from "@/app/_features/roles/useRoles";
+import { useToast } from "@/app/_hooks/use-toast";
+import { updateUser, userBlock } from "@/app/_services/apiAuth";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const EditUser = ({ user }) => {
+  const [open, setOpen] = useState();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useRoles();
   const {
     register,
@@ -17,51 +24,51 @@ const EditUser = ({ user }) => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      firstname: user?.name,
-      lastname: user?.name,
+      name: user?.name,
       email: user?.email,
       phone: user?.phone_number,
       user_role: user?.roles[0]?.name,
     },
   });
 
-  async function onSubmit() {
-    // try {
-    //   let res;
-    //   if (user.is_blocked === 0) {
-    //     res = await userBlock(user.id, true);
-    //   } else {
-    //     res = await userBlock(user.id, false);
-    //   }
-    //   if (res) {
-    //     toast({
-    //       variant: "success",
-    //       title: res.message,
-    //       duration: 1000,
-    //     });
-    //     queryClient.invalidateQueries("users");
-    //     setOpen((open) => !open);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    //   if (err.response) {
-    //     toast({
-    //       variant: "destructive",
-    //       title: err.response.data.message,
-    //       duration: 1000,
-    //     });
-    //   } else {
-    //     toast({
-    //       variant: "destructive",
-    //       title: "Something went wrong",
-    //       duration: 1000,
-    //     });
-    //   }
-    // }
+  async function onSubmit({ name, email, phone, user_role }) {
+    try {
+      const res = await updateUser(user.id, {
+        name,
+        email,
+        phone,
+        user_role,
+      });
+
+      if (res) {
+        toast({
+          variant: "success",
+          title: res.message,
+          duration: 1000,
+        });
+        queryClient.invalidateQueries("users");
+        setOpen((open) => !open);
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        toast({
+          variant: "destructive",
+          title: err.response.data.message,
+          duration: 1000,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          duration: 1000,
+        });
+      }
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
       <DialogTrigger className="btn-primary transition-all py-1 border-color-primary">
         Edit
       </DialogTrigger>
@@ -72,7 +79,7 @@ const EditUser = ({ user }) => {
             Make changes to your user here. Click save when you're done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
-            <div>
+            {/* <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 First Name
               </label>
@@ -84,14 +91,14 @@ const EditUser = ({ user }) => {
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
               </div>
-            </div>
+            </div> */}
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
-                Last Name
+                User Name
               </label>
               <div className="mt-2">
                 <input
-                  {...register("lastname")}
+                  {...register("name")}
                   disabled={isSubmitting}
                   type="text"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -129,21 +136,22 @@ const EditUser = ({ user }) => {
                 User Role
               </label>
               <div className="mt-1">
-                <select
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  {...register("user_role")}
-                >
-                  {!isLoading &&
-                    data?.data.map((role) => (
+                {!isLoading && (
+                  <select
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    {...register("user_role")}
+                  >
+                    {data?.data?.rolesWithPermissions.map((role) => (
                       <option
                         className="capitalize"
-                        key={role.id}
+                        key={role.name}
                         value={role.name}
                       >
                         {role.name}
                       </option>
                     ))}
-                </select>
+                  </select>
+                )}
               </div>
             </div>
 

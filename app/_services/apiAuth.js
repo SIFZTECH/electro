@@ -218,27 +218,6 @@ export async function logout() {
   return data;
 }
 
-export async function getAllUsers(page) {
-  const token = localStorage.getItem("access-token");
-
-  if (!token) return null;
-
-  let url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}`;
-
-  if (page) {
-    url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}`;
-  }
-
-  const { data } = await axios({
-    url,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return data;
-}
-
 export async function getAllAdminUsers() {
   const token = localStorage.getItem("access-token");
 
@@ -284,6 +263,22 @@ export async function userBlock(user_id, option) {
       user_id,
       block: option,
     },
+  });
+
+  return data;
+}
+export async function updateUser(user_id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/update-user/${user_id}`,
+    method: "put",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
   });
 
   return data;

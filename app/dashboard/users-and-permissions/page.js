@@ -1,6 +1,6 @@
-import Search from "@/app/components/ui/Search";
-import PermissionTabs from "./PermissionTabs";
+import UsersTabs from "./UsersTabs";
 import NewUserModal from "./NewUserModal";
+import Search from "./Search";
 
 const page = () => {
   return (
@@ -10,7 +10,7 @@ const page = () => {
         <NewUserModal title="Create New User" btn="New User" />
       </div>
       <Search />
-      <PermissionTabs />
+      <UsersTabs />
     </div>
   );
 };

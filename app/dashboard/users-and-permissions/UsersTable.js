@@ -19,8 +19,8 @@ import { useSearchParams } from "next/navigation";
 
 const UsersTable = () => {
   const params = useSearchParams();
-  const page = params.get("page") ? params.get("page") : 1;
-  const { data, isLoading, isError, error } = useUsers(page, 3);
+  const page = params.get("page") ? +params.get("page") : 1;
+  const { data, isLoading, isError, error } = useUsers(page);
 
   if (isLoading) {
     return <Spinner />;
@@ -56,7 +56,7 @@ const UsersTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.data.data?.map((data, i) => {
+            {data?.data?.data?.map((data, i) => {
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">{data.name}</TableCell>
@@ -82,7 +82,7 @@ const UsersTable = () => {
           </TableBody>
         </Table>
       )}
-      <PaginationUI data={data.data} page={+page} />
+      <PaginationUI data={data?.data} page={+page} />
     </>
   );
 };

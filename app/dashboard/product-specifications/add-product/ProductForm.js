@@ -10,6 +10,7 @@ import { useBrands } from "@/app/_features/brands/useBrands";
 
 import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
 import "@tonz/react-draft-wysiwyg-input/style.css";
+import Spinner from "@/app/components/ui/Spinner";
 
 const ProductForm = () => {
   const { isLoading, data, isError } = useCategories();
@@ -32,19 +33,13 @@ const ProductForm = () => {
     ],
   });
 
-  const watchCategoryId = watch("category_id");
-
-  const {
-    data: data2,
-    isLoading: isLoading2,
-    isError: isError2,
-    error: error2,
-  } = useCategory(watchCategoryId);
-
   const { fields, append, remove } = useFieldArray({
     name: "variants",
     control,
   });
+
+  const watchCategoryId = watch("category_id");
+  const { data: data2, isLoading: isLoading2 } = useCategory(watchCategoryId);
 
   function onSubmit(data) {
     console.log(data);
@@ -115,19 +110,6 @@ const ProductForm = () => {
             Key Features
           </label>
           <div className="mt-1">
-            {/* <textarea
-              {...register("keyFeatures")}
-              type="text"
-              placeholder="Key Features"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            /> */}
-            {/* <Editor
-              wrapperClassName="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              toolbarClassName="bg-gray-100"
-              toolbar={{
-                options: ["list", "textAlign"],
-              }}
-            /> */}
             <RichTextInput
               toolbar={{
                 options: ["list", "textAlign"],
@@ -193,18 +175,19 @@ const ProductForm = () => {
               Category
             </label>
             <div className="mt-1">
-              <select
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                {...register("category_id")}
-              >
-                <option value="0">--Please choose an option--</option>
-                {!isLoading &&
-                  data.data.map((category) => (
+              {!isLoading && (
+                <select
+                  onChange={(e) => console.log(e)}
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  {...register("category_id")}
+                >
+                  {data.data.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.name}
                     </option>
                   ))}
-              </select>
+                </select>
+              )}
               {errors?.category_id && (
                 <span className="text-red-500 text-sm">
                   {errors.category_id.message}
@@ -236,7 +219,7 @@ const ProductForm = () => {
           </div>
         </div>
 
-        <SelectAttribute register={register} control={control} />
+        {/* <SelectAttribute register={register} control={control} /> */}
 
         <div className="col-span-2">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">

@@ -77,23 +77,24 @@ const AssignUserRole = ({ user }) => {
                 Role Name
               </label>
               <div className="mt-2">
-                <select
-                  {...register("role_name")}
-                  disabled={isSubmitting}
-                  type="text"
-                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                >
-                  {!isLoading &&
-                    data?.data.map((role) => (
+                {!isLoading && (
+                  <select
+                    {...register("role_name")}
+                    disabled={isSubmitting}
+                    type="text"
+                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  >
+                    {data?.data?.rolesWithPermissions.map((role) => (
                       <option
                         className="capitalize"
-                        key={role.id}
+                        key={role.name}
                         value={role.name}
                       >
                         {role.name}
                       </option>
                     ))}
-                </select>
+                  </select>
+                )}
               </div>
             </div>
 

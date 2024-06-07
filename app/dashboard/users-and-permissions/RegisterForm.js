@@ -111,13 +111,16 @@ export default function RegisterForm() {
                 </div>
               </div>
               <div className="mt-2">
+                <label className="block text-sm font-medium leading-6 text-gray-900">
+                  User Role
+                </label>
                 <select
                   {...register("role_name")}
                   type="text"
-                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  className="mt-2 block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 >
                   {!isFetching &&
-                    data?.data.map((role) => (
+                    data?.data?.rolesWithPermissions.map((role) => (
                       <option
                         className="capitalize"
                         key={role.id}

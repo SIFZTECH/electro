@@ -1,13 +1,10 @@
 "use client";
 
-import {
-  getAllAdminUsers,
-  getAllBlockedUsers,
-  getAllUsers,
-} from "@/app/_services/apiAuth";
+import { getAllAdminUsers, getAllBlockedUsers } from "@/app/_services/apiAuth";
+import { getAllUsers } from "@/app/_services/apiUsers";
 import { useQuery } from "@tanstack/react-query";
 
-export function useUsers(page) {
+export function useUsers(page = 1) {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["users", page],
     queryFn: () => getAllUsers(page),
@@ -15,6 +12,7 @@ export function useUsers(page) {
 
   return { data, isLoading, error, isError, total_num: data?.data?.total };
 }
+
 export function useAdminUsers() {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["admin-users"],
