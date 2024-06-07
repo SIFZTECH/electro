@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { userBlock } from "@/app/_services/apiAuth";
 import {
   Dialog,
@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 const BlockUser = ({ user }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const {
     handleSubmit,
@@ -33,11 +32,7 @@ const BlockUser = ({ user }) => {
       }
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         queryClient.invalidateQueries("users");
         queryClient.invalidateQueries("blockedUsers");
 
@@ -46,17 +41,9 @@ const BlockUser = ({ user }) => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

@@ -1,17 +1,14 @@
 "use client";
 
 import { useUser } from "@/app/_features/authentication/useUser";
-import { useToast } from "@/app/_hooks/use-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { Switch } from "@/app/components/ui/switch";
 import { useForm } from "react-hook-form";
-import { logout, profileSettings } from "@/app/_services/apiAuth";
+import { profileSettings } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
-import Logout from "./Logout";
+import toast from "react-hot-toast";
 
 const SettingsForm = () => {
   const router = useRouter();
-  const { toast } = useToast();
   const { user, isLoading } = useUser();
 
   const {
@@ -83,26 +80,14 @@ const SettingsForm = () => {
       });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

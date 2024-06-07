@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { deleteRole } from "@/app/_services/apiUsers";
 import {
   Dialog,
@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 const DeleteRole = ({ roleName }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const {
     handleSubmit,
@@ -28,11 +27,7 @@ const DeleteRole = ({ roleName }) => {
       const res = await deleteRole(roleName);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         queryClient.invalidateQueries("roles");
 
         setOpen((open) => !open);
@@ -40,17 +35,9 @@ const DeleteRole = ({ roleName }) => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

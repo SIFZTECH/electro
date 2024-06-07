@@ -5,10 +5,8 @@ import { useForm } from "react-hook-form";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import axios from "axios";
 import { BASE_URL } from "@/app/lib/utils";
-import { useToast } from "@/app/_hooks/use-toast";
-
+import toast from "react-hot-toast";
 export default function ForgotPassword() {
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,

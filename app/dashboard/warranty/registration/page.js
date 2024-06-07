@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { createWarranty } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const WarrantyRegistrationPage = () => {
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -24,11 +23,7 @@ const WarrantyRegistrationPage = () => {
       const res = await createWarranty(data);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         queryClient.invalidateQueries("warranties");
         router.replace("/dashboard/warranty");
@@ -36,11 +31,7 @@ const WarrantyRegistrationPage = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       }
       toast({
         variant: "destructive",

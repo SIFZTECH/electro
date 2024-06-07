@@ -71,9 +71,7 @@ const BlockedUsers = () => {
 
                   <TableCell data-label="">
                     <div className="flex gap-1">
-                      <EditUser user={data} />
                       <BlockUser user={data} />
-                      <AssignUserRole user={data} />
                     </div>
                   </TableCell>
                 </TableRow>
@@ -82,7 +80,9 @@ const BlockedUsers = () => {
           </tbody>
         </Table>
       )}
-      <PaginationUI data={data.data} page={+page} />
+      {data?.data?.length >= 10 && (
+        <PaginationUI data={data?.data} page={+page} />
+      )}
     </>
   );
 };

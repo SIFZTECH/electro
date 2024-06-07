@@ -1,4 +1,3 @@
-import { useToast } from "@/app/_hooks/use-toast";
 import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,11 +9,11 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const CreateNewCategory = () => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const {
     register,
@@ -27,11 +26,7 @@ const CreateNewCategory = () => {
       const res = await createCategory(name);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         queryClient.invalidateQueries("categories");
         setOpen((open) => !open);
@@ -39,17 +34,9 @@ const CreateNewCategory = () => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

@@ -1,4 +1,3 @@
-import { useToast } from "@/app/_hooks/use-toast";
 import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,11 +10,11 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import { createBrand } from "@/app/_services/apiBrand";
+import toast from "react-hot-toast";
 
 const CreateNewBrand = () => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const {
     register,
@@ -28,11 +27,7 @@ const CreateNewBrand = () => {
       const res = await createBrand(name);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         queryClient.invalidateQueries("brands");
         setOpen((open) => !open);
@@ -40,17 +35,9 @@ const CreateNewBrand = () => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

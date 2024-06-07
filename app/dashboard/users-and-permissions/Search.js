@@ -1,5 +1,5 @@
 "use client";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { getAllUsers } from "@/app/_services/apiAuth";
 import { searchUsers } from "@/app/_services/apiUsers";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";

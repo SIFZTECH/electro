@@ -1,7 +1,7 @@
 "use client";
 
 import { useRoles } from "@/app/_features/roles/useRoles";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { updateUser, userBlock } from "@/app/_services/apiAuth";
 import {
   Dialog,
@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 
 const EditUser = ({ user }) => {
   const [open, setOpen] = useState();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const { data, isLoading, isError } = useRoles();
   const {
@@ -41,35 +40,23 @@ const EditUser = ({ user }) => {
       });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         queryClient.invalidateQueries("users");
         setOpen((open) => !open);
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1 border-color-primary">
+      <DialogTrigger className="btn-primary transition-all py-1 bg-amber-200">
         Edit
       </DialogTrigger>
       <DialogContent>

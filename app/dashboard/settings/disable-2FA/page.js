@@ -1,19 +1,17 @@
 "use client";
 
 import { useUser } from "@/app/_features/authentication/useUser";
-import { useToast } from "@/app/_hooks/use-toast";
 import { disbleTwoFactorAuth } from "@/app/_services/apiAuth";
 import { Dialog, DialogClose, DialogContent } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const DisableTwoFa = () => {
-  const { user, isLoading, isTwoAuthEnable } = useUser();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { toast } = useToast();
   const {
     handleSubmit,
 
@@ -25,28 +23,16 @@ const DisableTwoFa = () => {
       const res = await disbleTwoFactorAuth();
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
       }
       router.replace("/dashboard/settings");
       queryClient.invalidateQueries("user");
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

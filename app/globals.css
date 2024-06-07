@@ -84,6 +84,11 @@ body {
   overflow-x: hidden;
 }
 
+/* .focus-visible\:ring-offset-2:focus-visible {
+  offset-distance: 1px !important;
+  color: var(var(--color-primary)) !important;
+} */
+
 input[type="checkbox"] {
   accent-color: var(--color-primary);
   padding: 0.3rem;

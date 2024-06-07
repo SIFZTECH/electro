@@ -1,13 +1,12 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
 import { changePassword } from "@/app/_services/apiAuth";
 import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const ChangePasswordForm = ({ open, setOpen }) => {
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -24,27 +23,15 @@ const ChangePasswordForm = ({ open, setOpen }) => {
       });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
       }
       setOpen((open) => !open);
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

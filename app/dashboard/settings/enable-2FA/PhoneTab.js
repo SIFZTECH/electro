@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@/app/_features/authentication/useUser";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { enableTwoFactorAuth } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,7 +12,6 @@ const PhoneTab = () => {
   const router = useRouter();
   const { isTwoAuthEnable, user } = useUser();
   const queryClient = useQueryClient();
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -28,11 +27,7 @@ const PhoneTab = () => {
       const res = await enableTwoFactorAuth({ phone, channel });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         localStorage.setItem("channel", channel);
         queryClient.invalidateQueries("user");
@@ -41,17 +36,9 @@ const PhoneTab = () => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

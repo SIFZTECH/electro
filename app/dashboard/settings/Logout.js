@@ -1,15 +1,14 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
 import { logout } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { GrLogout } from "react-icons/gr";
 
 const Logout = () => {
   const router = useRouter();
-  const { toast } = useToast();
 
   const {
     handleSubmit,
@@ -20,26 +19,16 @@ const Logout = () => {
     try {
       const res = await logout();
       if (res.data === "SUCCESS") {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         localStorage.removeItem("access-token");
         router.replace("/login");
       }
     } catch (err) {
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

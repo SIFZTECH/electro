@@ -2,11 +2,9 @@
 
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useToast } from "@/app/_hooks/use-toast";
-
+import toast from "react-hot-toast";
 const VerifyEmail = () => {
   const router = useRouter();
-  const { toast } = useToast();
   const params = useSearchParams();
   const url = params.get("url");
 
@@ -29,11 +27,7 @@ const VerifyEmail = () => {
 
       if (err.response) {
         router.replace("/login");
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       }
     }
   })();

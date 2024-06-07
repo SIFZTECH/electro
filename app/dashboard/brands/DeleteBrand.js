@@ -1,6 +1,5 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
 import { deleteBrand } from "@/app/_services/apiBrand";
 import { deleteCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
@@ -20,7 +19,6 @@ const DeleteBrand = ({ brand }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { toast } = useToast();
 
   const {
     register,
@@ -33,28 +31,16 @@ const DeleteBrand = ({ brand }) => {
       const res = await deleteBrand(brand.id);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         queryClient.invalidateQueries("brands");
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

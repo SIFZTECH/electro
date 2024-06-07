@@ -19,14 +19,13 @@ import {
 import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { verifyOtpForLogin } from "@/app/_services/apiAuth";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
 import ResendOtp from "../RecentOtp";
 
 function InputOTPForm() {
   const router = useRouter();
-  const { toast } = useToast();
   const { currentTime, isRunning } = useTimer(120, {
     autoStart: true,
   });
@@ -54,11 +53,7 @@ function InputOTPForm() {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
         toast({
           variant: "destructive",

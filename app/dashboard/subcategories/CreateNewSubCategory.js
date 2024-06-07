@@ -1,4 +1,4 @@
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,6 @@ const CreateNewSubCategory = () => {
   const { data, isLoading } = useCategories();
 
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   let categories = [];
 
@@ -37,11 +36,7 @@ const CreateNewSubCategory = () => {
       const res = await createSubcategory({ name, category_id });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         queryClient.invalidateQueries("subcategories");
         setOpen((open) => !open);
@@ -49,17 +44,9 @@ const CreateNewSubCategory = () => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

@@ -1,8 +1,6 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
 import { updateBrand } from "@/app/_services/apiBrand";
-import { updateCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
 import {
@@ -12,13 +10,11 @@ import {
 } from "@/app/components/ui/dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const EditBrand = ({ brand }) => {
   const queryClient = useQueryClient();
-  const router = useRouter();
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -30,27 +26,15 @@ const EditBrand = ({ brand }) => {
       const res = await updateBrand(brand.id, data);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         queryClient.invalidateQueries("brands");
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

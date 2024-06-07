@@ -1,7 +1,6 @@
 "use client";
 
 import { useUser } from "@/app/_features/authentication/useUser";
-import { useToast } from "@/app/_hooks/use-toast";
 import { changePassword } from "@/app/_services/apiAuth";
 import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
@@ -9,10 +8,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const ChangePasswordForm = () => {
   const router = useRouter();
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -29,27 +28,15 @@ const ChangePasswordForm = () => {
       });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         router.back();
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@/app/_features/authentication/useUser";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { resendOtp } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
@@ -16,7 +16,6 @@ const ResendOtp = () => {
   }
 
   const params = useSearchParams();
-  const { toast } = useToast();
   const { user, isTwoAuthEnable, isLoading } = useUser();
 
   const { currentTime, isRunning, start } = useTimer(120, {
@@ -40,21 +39,13 @@ const ResendOtp = () => {
         email,
       });
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         start();
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
         toast({
           variant: "destructive",

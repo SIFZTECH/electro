@@ -1,7 +1,7 @@
 "use client";
 
 import { useRoles } from "@/app/_features/roles/useRoles";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { createPermission } from "@/app/_services/apiUsers";
 import {
   Dialog,
@@ -17,7 +17,6 @@ import { useForm } from "react-hook-form";
 const CreatePermission = () => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -29,28 +28,16 @@ const CreatePermission = () => {
       const res = await createPermission(name);
       console.log(res);
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
         queryClient.invalidateQueries("roles");
         setOpen((open) => !open);
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

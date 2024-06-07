@@ -6,11 +6,9 @@ import SpinnerMini from "../../components/ui/SpinnerMini";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { BASE_URL } from "@/app/lib/utils";
-import { useToast } from "@/app/_hooks/use-toast";
-
+import toast from "react-hot-toast";
 export default function ForgotPassword() {
   const router = useRouter();
-  const { toast } = useToast();
   const params = useSearchParams();
   const email = params.get("email");
   const token = params.get("token");
@@ -45,17 +43,9 @@ export default function ForgotPassword() {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

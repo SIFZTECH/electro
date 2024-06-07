@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { deleteSubcategory } from "@/app/_services/apiSubcategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
@@ -17,7 +17,6 @@ import { useForm } from "react-hook-form";
 const DeleteSubCategory = ({ subcategory }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const {
     handleSubmit,
@@ -29,11 +28,7 @@ const DeleteSubCategory = ({ subcategory }) => {
       const res = await deleteSubcategory(subcategory.id);
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
 
         queryClient.invalidateQueries("subcategories");
         setOpen((open) => !open);
@@ -41,17 +36,9 @@ const DeleteSubCategory = ({ subcategory }) => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

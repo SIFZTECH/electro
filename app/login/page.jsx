@@ -10,7 +10,6 @@ import { login } from "../_services/apiAuth";
 
 export default function Login() {
   const router = useRouter();
-  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -40,11 +39,7 @@ export default function Login() {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
         toast({
           variant: "destructive",

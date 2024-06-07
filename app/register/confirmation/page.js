@@ -2,13 +2,11 @@
 
 import Logo from "@/app/components/ui/Logo";
 import { BASE_URL } from "@/app/lib/utils";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import axios from "axios";
 
 const Confirmation = () => {
   const accessToken = localStorage.getItem("access-token");
-
-  const { toast } = useToast();
 
   // async function handleClick() {
   //   try {

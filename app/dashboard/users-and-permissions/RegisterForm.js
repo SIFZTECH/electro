@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { register as createUser } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import axios from "axios";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/app/lib/utils";
 import { useRoles } from "@/app/_features/roles/useRoles";
@@ -13,7 +13,6 @@ import { useRoles } from "@/app/_features/roles/useRoles";
 export default function RegisterForm() {
   const { isLoading: isFetching, data } = useRoles();
   const router = useRouter();
-  const { toast } = useToast();
 
   const {
     register,

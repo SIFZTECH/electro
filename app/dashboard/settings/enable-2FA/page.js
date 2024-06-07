@@ -20,10 +20,15 @@ const EnableTFAForm = () => {
       <DialogContent>
         <Tabs
           defaultValue="email"
-          className="font-serif shadow-none focus-visible:outline-none"
+          className="font-serif shadow-none appearance-none "
         >
           <TabsList>
-            <TabsTrigger value="email">Email</TabsTrigger>
+            <TabsTrigger
+              value="email"
+              className="focus-visible:ring-1 focus-visible:ring-color-primary"
+            >
+              Email
+            </TabsTrigger>
             <TabsTrigger value="phone">Phone</TabsTrigger>
           </TabsList>
           <TabsContent value="email">

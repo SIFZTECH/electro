@@ -1,4 +1,3 @@
-import { useToast } from "@/app/_hooks/use-toast";
 import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,12 +11,12 @@ import {
 import { useState } from "react";
 import { createAttribute } from "@/app/_services/apiAttributes";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const CreateNewAttribute = () => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { toast } = useToast();
 
   const {
     register,
@@ -30,11 +29,7 @@ const CreateNewAttribute = () => {
       const res = await createAttribute({ name, value });
 
       if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+       
 
         router.replace("/dashboard/attributes/create-attribute-value");
         queryClient.invalidateQueries("attributes");
@@ -44,17 +39,9 @@ const CreateNewAttribute = () => {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

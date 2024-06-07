@@ -1,6 +1,5 @@
 "use client";
 
-import { useToast } from "@/app/_hooks/use-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -14,13 +13,13 @@ import { useState } from "react";
 import { createAttributeValue } from "@/app/_services/apiAttributes";
 import { useAttributeNames } from "@/app/_features/attributes/useAttributes";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const CreateNewAttributeValue = () => {
   const [open, setOpen] = useState();
   const router = useRouter();
   const { data, isLoading, isError } = useAttributeNames();
   const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   const {
     register,
@@ -32,30 +31,16 @@ const CreateNewAttributeValue = () => {
     try {
       const res = await createAttributeValue(value, attribute_id);
 
-      if (res) {
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+      toast.success(res.data);
 
-        queryClient.invalidateQueries("attributes");
-        router.back(-1);
-      }
+      queryClient.invalidateQueries("attributes");
+      router.back(-1);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

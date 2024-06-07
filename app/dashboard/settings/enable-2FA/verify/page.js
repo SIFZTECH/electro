@@ -19,15 +19,13 @@ import {
 import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { verifyOtpForEnable } from "@/app/_services/apiAuth";
-import { useToast } from "@/app/_hooks/use-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 
 function InputOTPForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
-
-  const { toast } = useToast();
 
   const form = useForm({
     defaultValues: {
@@ -43,20 +41,12 @@ function InputOTPForm() {
         router.replace("/dashboard/settings");
         queryClient.invalidateQueries("user");
 
-        toast({
-          variant: "success",
-          title: res.message,
-          duration: 1000,
-        });
+        toast.success(res.message);
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message);
       } else {
         toast({
           variant: "destructive",
