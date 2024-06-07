@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 
 const UsersTabs = () => {
   const router = useRouter();
-  const { total_num, isLoading } = useUsers();
+  const { data, total_num, isLoading } = useUsers();
   const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
   const { total_num: total_num3, isLoading: isLoading3 } = useAdminUsers();
 
@@ -32,7 +32,9 @@ const UsersTabs = () => {
             All Users
             {!isLoading && (
               <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
-                <span className="p-1 text-[10px] leading-3">{total_num}</span>
+                <span className="p-1 text-[10px] leading-3">
+                  {total_num ? total_num : data?.data.length}
+                </span>
               </p>
             )}
           </TabsTrigger>
@@ -57,7 +59,13 @@ const UsersTabs = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="allUsers">
-          <UsersTable />
+          {!isLoading && data?.data.length === 0 ? (
+            <h1 className="font-serif text-center font-semibold">
+              There is no user with that name
+            </h1>
+          ) : (
+            <UsersTable />
+          )}
         </TabsContent>
         <TabsContent value="blocked_users">
           <BlockedUsers />
