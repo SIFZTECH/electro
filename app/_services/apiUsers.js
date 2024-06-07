@@ -19,7 +19,7 @@ export async function getAllUsers(page) {
     },
   });
 
-  return data;
+  return data.data;
 }
 
 export async function searchUsers(query) {

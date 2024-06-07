@@ -2,24 +2,33 @@
 import { useToast } from "@/app/_hooks/use-toast";
 import { getAllUsers } from "@/app/_services/apiAuth";
 import { searchUsers } from "@/app/_services/apiUsers";
+import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const Search = () => {
-  const router = useRouter();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
   const params = useSearchParams();
+  const page = params.get("page") ? +params.get("page") : 1;
 
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { isSubmitting, errors },
   } = useForm();
 
-  function onSubmit({ query }) {
-    router.push(`/dashboard/users-and-permissions?query=${query}`);
+  async function onSubmit({ query }) {
+    try {
+      const res = await searchUsers(query);
+      if (res.data) {
+        queryClient.setQueryData(["users", page], res);
+        resetField("query");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -71,7 +80,7 @@ const Search = () => {
             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
           />
         </svg>
-        Search
+        {isSubmitting ? <SpinnerMini /> : "Search"}
       </button>
     </form>
   );

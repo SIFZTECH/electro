@@ -26,11 +26,13 @@ const UsersTable = () => {
     return <Spinner />;
   }
 
+  console.log(data);
+
   return (
     <>
       {isError && error && error.message}
 
-      {!isError && !error && (
+      {!isLoading && !isError && !error && (
         <Table className="mt-10 !mb-4 table_modify">
           <TableHeader>
             <TableRow>
@@ -56,7 +58,7 @@ const UsersTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.data?.data?.map((data, i) => {
+            {data.data?.map((data, i) => {
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">{data.name}</TableCell>
@@ -64,7 +66,9 @@ const UsersTable = () => {
                     {data.email}
                   </TableCell>
                   <TableCell data-label="Phone">{data.phone_number}</TableCell>
-                  <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
+                  <TableCell data-label="Role">
+                    {data?.roles[0]?.name}
+                  </TableCell>
                   <TableCell data-label="Created At">
                     {new Date(data.created_at).toDateString()}
                   </TableCell>

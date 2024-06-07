@@ -10,7 +10,7 @@ export function useUsers(page = 1) {
     queryFn: () => getAllUsers(page),
   });
 
-  return { data, isLoading, error, isError, total_num: data?.data?.total };
+  return { data, isLoading, error, isError, total_num: data?.total };
 }
 
 export function useAdminUsers() {

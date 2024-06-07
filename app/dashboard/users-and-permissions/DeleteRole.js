@@ -26,7 +26,6 @@ const DeleteRole = ({ roleName }) => {
   async function onSubmit() {
     try {
       const res = await deleteRole(roleName);
-      console.log(res);
 
       if (res) {
         toast({
