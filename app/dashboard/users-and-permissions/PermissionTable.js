@@ -9,35 +9,18 @@ import {
 } from "@/app/components/ui/table";
 
 import EditPermission from "./EditPermission";
-import DeletePermission from "./DeletePermission";
+import DeleteRole from "./DeleteRole";
 import Link from "next/link";
 import CreateRolesAndPermissions from "./CreateRolesAndPermissions";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import Spinner from "@/app/components/ui/Spinner";
 import CreatePermission from "./CreatePermission";
 import CreateNewRole from "./CreateNewRole";
-
-const dummyData = [
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 1",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 2",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 3",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 4",
-  },
-];
+import DeletePermission from "./DeletePermission";
 
 const PermissionTable = () => {
   const { isLoading, data, isError, error } = useRoles();
+
   if (isLoading) return <Spinner />;
 
   return (
@@ -82,7 +65,12 @@ const PermissionTable = () => {
                   ))}
                 </TableCell>
                 <TableCell data-label="Click and Collect">web</TableCell>
-                <TableCell data-label="Actions">Action</TableCell>
+                <TableCell data-label="Actions">
+                  <div className="flex flex-wrap gap-3">
+                    <DeleteRole roleName={data.name} />
+                    <DeletePermission />
+                  </div>
+                </TableCell>
               </TableRow>
             );
           })}

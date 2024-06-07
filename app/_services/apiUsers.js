@@ -55,6 +55,7 @@ export async function createPermission(name) {
 
   return data;
 }
+
 export async function createNewRole(name) {
   const token = localStorage.getItem("access-token");
 
@@ -67,6 +68,40 @@ export async function createNewRole(name) {
       Authorization: `Bearer ${token}`,
     },
     data: { name },
+  });
+
+  return data;
+}
+
+export async function deleteRole(role_name) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/roles/delete`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { role_name },
+  });
+
+  return data;
+}
+
+export async function deletePermission(permission_name) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/permissions/delete`,
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { permission_name },
   });
 
   return data;
