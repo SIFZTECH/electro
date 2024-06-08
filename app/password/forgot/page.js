@@ -22,26 +22,13 @@ export default function ForgotPassword() {
 
       console.log(data);
       if (data.status === 200) {
-        toast({
-          variant: "success",
-          title: data.message,
-          duration: 1000,
-        });
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast({
-          variant: "destructive",
-          title: err.response.message,
-          duration: 1000,
-        });
+        toast.error(err.response.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong!",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
     reset();

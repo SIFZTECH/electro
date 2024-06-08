@@ -31,24 +31,15 @@ export default function RegisterForm() {
       });
 
       if (data) {
-        toast({
-          variant: "success",
-          title: data.message,
-        });
+        toast.success(data.message);
         router.refresh();
       }
     } catch (err) {
       console.error(err);
-      if (err.response.data.message.email) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message.email,
-        });
+      if (err.response.data.message) {
+        toast.error(err.response.data.message.email[0]);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong!",
-        });
+        toast.error(err.message);
       }
     }
   }

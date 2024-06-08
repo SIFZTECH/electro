@@ -44,22 +44,14 @@ function InputOTPForm() {
         localStorage.setItem("access-token", res.data.auth);
         router.replace("/dashboard");
 
-        toast({
-          variant: "success",
-          title: "Verified successfully",
-          duration: 1000,
-        });
+        toast.success("Verified Successfully");
       }
     } catch (err) {
       console.log(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong!",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

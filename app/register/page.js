@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { BASE_URL } from "../lib/utils";
-import { useToast } from "../_hooks/use-toast";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Page() {
   const router = useRouter();
@@ -28,11 +28,7 @@ export default function Page() {
       });
 
       if (data) {
-        toast({
-          variant: "success",
-          title: "Account successfully created",
-          duration: 1000,
-        });
+        toast.success(data.message);
 
         localStorage.setItem("access-token", data.data.auth);
         router.replace("/register/confirmation");
@@ -40,17 +36,9 @@ export default function Page() {
     } catch (err) {
       console.log(err);
       if (err.response.data.message.email) {
-        toast({
-          variant: "destructive",
-          title: err.response.data.message.email,
-          duration: 1000,
-        });
+        toast.error(err.response.data.message.email);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong!",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

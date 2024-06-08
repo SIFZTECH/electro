@@ -1,4 +1,5 @@
 import FolderFiles from "@/app/components/ui/FolderFiles";
+import NotFoundData from "@/app/components/ui/NotFoundData";
 import Search from "@/app/components/ui/Search";
 
 const AllResources = ({ data }) => {
@@ -6,7 +7,7 @@ const AllResources = ({ data }) => {
     <div>
       <Search />
       {data.length === 0 ? (
-        <h1 className="my-4">There is no resources available</h1>
+        <NotFoundData message="There is no resources available" />
       ) : (
         <FolderFiles data={data} />
       )}

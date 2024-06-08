@@ -32,12 +32,9 @@ const WarrantyRegistrationPage = () => {
       console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
+      } else {
+        toast.error("Something went wrong");
       }
-      toast({
-        variant: "destructive",
-        title: "Something went wrong!",
-        duration: 1000,
-      });
     }
   }
 

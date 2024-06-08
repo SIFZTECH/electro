@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+
 const VerifyEmail = () => {
   const router = useRouter();
   const params = useSearchParams();
@@ -14,11 +15,7 @@ const VerifyEmail = () => {
 
       if (data.status === 200) {
         router.replace("/login");
-        toast({
-          variant: "success",
-          title: data.message,
-          duration: 1000,
-        });
+        toast.success(data.message);
       }
 
       console.log(data);

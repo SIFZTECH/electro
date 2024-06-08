@@ -48,11 +48,7 @@ function InputOTPForm() {
       if (err.response) {
         toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong!",
-          duration: 1000,
-        });
+        toast.error("Something went wrong!");
       }
     }
   }

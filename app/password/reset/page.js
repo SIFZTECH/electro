@@ -32,11 +32,7 @@ export default function ForgotPassword() {
       console.log(data);
 
       if (data.status === 200) {
-        toast({
-          variant: "success",
-          title: data.message,
-          duration: 1000,
-        });
+        toast.success(data.message);
 
         router.replace("/login");
       }
