@@ -30,7 +30,7 @@ const UsersTabs = () => {
         <TabsList className="my-4">
           <TabsTrigger value="allUsers">
             All Users
-            {!isLoading && (
+            {!isLoading && total_num && (
               <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
                 <span className="p-1 text-[10px] leading-3">
                   {total_num ? total_num : data?.data.length}
@@ -40,7 +40,7 @@ const UsersTabs = () => {
           </TabsTrigger>
           <TabsTrigger value="blocked_users">
             Blocked Users
-            {!isLoading2 && (
+            {!isLoading2 && total_num2 && (
               <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
                 <span className="p-1 text-[10px] leading-3">{total_num2}</span>
               </p>
@@ -51,7 +51,7 @@ const UsersTabs = () => {
           </TabsTrigger>
           <TabsTrigger value="admin">
             Admin
-            {!isLoading3 && (
+            {!isLoading3 && total_num3 && (
               <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
                 <span className="p-1 text-[10px] leading-3">{total_num3}</span>
               </p>

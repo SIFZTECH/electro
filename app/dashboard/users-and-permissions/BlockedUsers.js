@@ -13,6 +13,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import PaginationUI from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import Search from "./SearchForBlockUsers";
+import NotFoundData from "@/app/components/ui/NotFoundData";
 
 const BlockedUsers = () => {
   const params = useSearchParams();
@@ -23,12 +24,14 @@ const BlockedUsers = () => {
     return <Spinner />;
   }
 
+  console.log(data);
+
   return (
     <>
       <Search />
       {isError && error && error.message}
-      {!isLoading && !isError && !error && data.data.data.length === 0 ? (
-        "There is no blocked user"
+      {!isLoading && !isError && !error && data?.data?.length === 0 ? (
+        <NotFoundData message="There is no blocked user with that name" />
       ) : (
         <Table className="!mt-4 *:table_modify">
           <TableHeader>
@@ -55,7 +58,8 @@ const BlockedUsers = () => {
             </TableRow>
           </TableHeader>
           <tbody>
-            {data.data.data?.map((data, i) => {
+            {data.data?.map((data, i) => {
+              console.log(data);
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">{data.name}</TableCell>

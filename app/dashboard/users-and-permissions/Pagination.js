@@ -12,7 +12,7 @@ import { PAGE_SIZE } from "@/app/lib/utils";
 function PaginationUI({ data, page }) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between">
-      {data.total > PAGE_SIZE && (
+      {data?.total > PAGE_SIZE && (
         <p className="w-full">
           Showing
           <span className="font-semibold">
@@ -28,7 +28,7 @@ function PaginationUI({ data, page }) {
           <span className="font-semibold"> {data?.total}</span> results
         </p>
       )}
-      {data.total > PAGE_SIZE && (
+      {data?.total > PAGE_SIZE && (
         <Pagination className="mt-6 flex justify-end w-full">
           <PaginationContent>
             <PaginationItem>

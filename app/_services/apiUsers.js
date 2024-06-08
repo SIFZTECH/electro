@@ -22,6 +22,21 @@ export async function getAllUsers(page) {
   return data.data;
 }
 
+export async function getAllBlockedUsers() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users-and-admin?block=true`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data.data;
+}
+
 export async function searchUsers(query) {
   const token = localStorage.getItem("access-token");
 
@@ -33,7 +48,24 @@ export async function searchUsers(query) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { query },
+    data: { query, block: false },
+  });
+
+  return data;
+}
+
+export async function searchBlockedUsers(query) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users/search`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { query, block: true },
   });
 
   return data;

@@ -1,10 +1,9 @@
 "use client";
 import toast from "react-hot-toast";
-import { getAllUsers } from "@/app/_services/apiAuth";
-import { searchUsers } from "@/app/_services/apiUsers";
+import { searchBlockedUsers } from "@/app/_services/apiUsers";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 const Search = () => {
@@ -19,19 +18,20 @@ const Search = () => {
     formState: { isSubmitting, errors },
   } = useForm();
 
-  //   async function onSubmit({ query }) {
-  //     try {
-  //       const res = await searchUsers(query);
-  //       if (res.data) {
-  //         queryClient.setQueryData(["users", page], res);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
+  async function onSubmit({ query }) {
+    try {
+      const res = await searchBlockedUsers(query);
+      console.log(res);
+      if (res.data) {
+        queryClient.setQueryData(["blockedUsers"], res);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
-    <form className="flex items-center gap-4" onSubmit={handleSubmit()}>
+    <form className="flex items-center gap-4" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="search" className="sr-only">
         Search
       </label>

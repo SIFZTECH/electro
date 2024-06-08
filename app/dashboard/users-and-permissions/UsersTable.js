@@ -17,6 +17,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import PaginationUI from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import Search from "./Search";
+import NotFoundData from "@/app/components/ui/NotFoundData";
 
 const UsersTable = () => {
   const params = useSearchParams();
@@ -31,8 +32,9 @@ const UsersTable = () => {
     <>
       <Search />
       {isError && error && error.message}
-
-      {!isLoading && !isError && !error && (
+      {!isLoading && !isError && !error && data?.data?.length === 0 ? (
+        <NotFoundData message="There is no user with that name" />
+      ) : (
         <Table className="!mt-4 !mb-4 table_modify">
           <TableHeader>
             <TableRow>

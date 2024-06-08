@@ -233,20 +233,7 @@ export async function getAllAdminUsers() {
   return data;
 }
 
-export async function getAllBlockedUsers() {
-  const token = localStorage.getItem("access-token");
 
-  if (!token) return null;
-
-  const { data } = await axios({
-    url: `${BASE_URL}/admin/users-and-admin?block=true`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  return data;
-}
 
 export async function userBlock(user_id, option) {
   const token = localStorage.getItem("access-token");

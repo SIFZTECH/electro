@@ -1,7 +1,7 @@
 "use client";
 
-import { getAllAdminUsers, getAllBlockedUsers } from "@/app/_services/apiAuth";
-import { getAllUsers } from "@/app/_services/apiUsers";
+import { getAllAdminUsers } from "@/app/_services/apiAuth";
+import { getAllBlockedUsers, getAllUsers } from "@/app/_services/apiUsers";
 import { useQuery } from "@tanstack/react-query";
 
 export function useUsers(page = 1) {
@@ -28,5 +28,5 @@ export function useBlockedUsers() {
     queryFn: () => getAllBlockedUsers(),
   });
 
-  return { data, isLoading, error, isError, total_num: data?.data?.total };
+  return { data, isLoading, error, isError, total_num: data?.total };
 }
