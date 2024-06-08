@@ -54,7 +54,7 @@ const UpdateRole = ({ roleName, id, permissions }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1 bg-green-400 hover:bg-green-300">
+      <DialogTrigger className="btn-primary transition-all py-1 bg-emerald-200">
         Edit
       </DialogTrigger>
       <DialogContent className="max-h-dvh">
