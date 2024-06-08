@@ -79,6 +79,29 @@ export async function createNewRole(formData) {
   return data;
 }
 
+export async function updateRole(id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const name = formData.name;
+
+  const permission_name = Object.entries(formData)
+    .filter(([key, value]) => key !== "name" && value !== false)
+    .map((val) => val[0]);
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/update-role/${id}`,
+    method: "put",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { name, permission_name },
+  });
+
+  return data;
+}
+
 export async function deleteRole(role_name) {
   const token = localStorage.getItem("access-token");
 

@@ -17,12 +17,14 @@ import Spinner from "@/app/components/ui/Spinner";
 import CreatePermission from "./CreatePermission";
 import CreateNewRole from "./CreateNewRole";
 import DeletePermission from "./DeletePermission";
+import UpdateRole from "./UpdateRole";
 
 const PermissionTable = () => {
   const { isLoading, data, isError, error } = useRoles();
 
   if (isLoading) return <Spinner />;
 
+  console.log(data);
   return (
     <>
       <div className="flex gap-3 justify-end">
@@ -66,8 +68,12 @@ const PermissionTable = () => {
                 </TableCell>
                 <TableCell data-label="Click and Collect">web</TableCell>
                 <TableCell data-label="Actions">
-                  <div className="flex flex-wrap gap-3">
-                    
+                  <div className="flex flex-wrap items-center gap-3">
+                    <UpdateRole
+                      roleName={data.name}
+                      id={data.id}
+                      permissions={data.permissions}
+                    />
                     <DeleteRole roleName={data.name} />
                   </div>
                 </TableCell>
