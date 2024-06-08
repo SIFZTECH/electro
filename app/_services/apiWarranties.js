@@ -16,6 +16,19 @@ export async function getAllWarranties() {
 
   return data.data;
 }
+export async function getAllWarrantiesForAdmin() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/warranties`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data.data;
+}
 
 export async function getWarranty(id) {
   const token = localStorage.getItem("access-token");
@@ -26,6 +39,34 @@ export async function getWarranty(id) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  });
+
+  return data;
+}
+export async function deleteWarranty(id) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token && !id) return null;
+
+  const { data } = await axios(`${BASE_URL}/warranty/delete/${id}`, {
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+export async function updateWarranty(id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token && !id) return null;
+
+  const { data } = await axios.post(`${BASE_URL}/warranty/update/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
   });
 
   return data;

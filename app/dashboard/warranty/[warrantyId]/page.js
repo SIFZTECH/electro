@@ -2,6 +2,8 @@
 import { useWarranty } from "@/app/_features/warranties/useWarranty";
 import Spinner from "@/app/components/ui/Spinner";
 import Image from "next/image";
+import DeleteWarranty from "../DeleteWarranty";
+import EditWarranty from "../EditWarranty";
 
 const WarrantyPageInfo = ({ params }) => {
   const { warrantyId } = params;
@@ -23,6 +25,12 @@ const WarrantyPageInfo = ({ params }) => {
           <p className="btn-primary inline-block bg-color-primary">
             {warranty.status}
           </p>
+          <h1>
+            Company Name:
+            <span className="font-semibold font-serif">
+              &nbsp;{warranty.company_name}
+            </span>
+          </h1>
           <h1 className="font-semibold font-serif">
             {warranty.firstname} {warranty.lastname}
           </h1>
@@ -34,12 +42,7 @@ const WarrantyPageInfo = ({ params }) => {
             Created At:
             <span className="font-medium"> {warranty.created_at}</span>
           </p>
-          <h1>
-            Company Name:
-            <span className="font-semibold font-serif">
-              &nbsp;{warranty.company_name}
-            </span>
-          </h1>
+
           <p>
             Address: <span className="font-medium">{warranty.address}</span>
           </p>
@@ -62,41 +65,43 @@ const WarrantyPageInfo = ({ params }) => {
             <span className="font-medium"> {warranty.updated_at}</span>
           </p>
 
-          <div className="!mt-6 border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-            <p>
-              Bike Battary serial no:
-              <span className="font-medium">
-                {warranty.bike_battery_serial_no}
-              </span>
-            </p>
-            <Image src="/serial-1.jpeg" width={400} height={320} alt="test" />
-          </div>
-          <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-            <p>
-              Bike Frame serial no:
-              <span className="font-medium">
-                &nbsp;{warranty.bike_frame_serial_no}
-              </span>
-            </p>
-            <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
-          </div>
-          <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-            <p>
-              Bike Motor serial no:
-              <span className="font-medium">
-                &nbsp;{warranty.bike_motor_serial_no}
-              </span>
-            </p>
-            <Image src="/serial-3.jpeg" width={400} height={320} alt="test" />
-          </div>
-          <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-            <p>
-              Invoice no:
-              <span className="font-medium">
-                &nbsp;{warranty.invoice_number}
-              </span>
-            </p>
-            <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
+          <div className="flex gap-4 flex-wrap items-center !mt-6">
+            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+              <p>
+                Bike Battary serial no:
+                <span className="font-medium">
+                  {warranty.bike_battery_serial_no}
+                </span>
+              </p>
+              <Image src="/serial-1.jpeg" width={400} height={320} alt="test" />
+            </div>
+            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+              <p>
+                Bike Frame serial no:
+                <span className="font-medium">
+                  &nbsp;{warranty.bike_frame_serial_no}
+                </span>
+              </p>
+              <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
+            </div>
+            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+              <p>
+                Bike Motor serial no:
+                <span className="font-medium">
+                  &nbsp;{warranty.bike_motor_serial_no}
+                </span>
+              </p>
+              <Image src="/serial-3.jpeg" width={400} height={320} alt="test" />
+            </div>
+            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+              <p>
+                Invoice no:
+                <span className="font-medium">
+                  &nbsp;{warranty.invoice_number}
+                </span>
+              </p>
+              <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
+            </div>
           </div>
         </div>
       )}
