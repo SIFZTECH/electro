@@ -66,7 +66,7 @@ const PermissionTable = () => {
                     </span>
                   ))}
                 </TableCell>
-                <TableCell data-label="Click and Collect">web</TableCell>
+                <TableCell data-label="Click and Collect">Web</TableCell>
                 <TableCell data-label="Actions">
                   <div className="flex flex-wrap items-center gap-3">
                     <UpdateRole

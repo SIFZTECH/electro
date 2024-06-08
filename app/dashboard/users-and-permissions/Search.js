@@ -24,7 +24,6 @@ const Search = () => {
       const res = await searchUsers(query);
       if (res.data) {
         queryClient.setQueryData(["users", page], res);
-        resetField("query");
       }
     } catch (err) {
       console.log(err);
