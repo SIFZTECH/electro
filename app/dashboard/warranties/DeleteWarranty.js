@@ -10,10 +10,12 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const DeleteWarranty = ({ warrantyId }) => {
+  const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const {
@@ -29,6 +31,7 @@ const DeleteWarranty = ({ warrantyId }) => {
         toast.success(res.message);
 
         queryClient.invalidateQueries("warranties");
+        setOpen((open) => !open);
       }
     } catch (err) {
       console.log(err);
@@ -41,13 +44,13 @@ const DeleteWarranty = ({ warrantyId }) => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
       <DialogTrigger className="btn-primary text-white transition-all py-1 bg-red-500 hover:bg-red-400">
         Delete
       </DialogTrigger>
       <DialogContent>
         <div>
-          <h2 className="font-serif text-xl">Delete</h2>
+          <h2 className="font-serif text-xl">Delete This Warranty</h2>
           <div>
             <p className="mt-3">
               Are you sure you want to delete this warranty

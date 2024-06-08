@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 const WarrantyProducts = ({ data }) => {
   const warranties = data.data;
 
@@ -12,7 +11,7 @@ const WarrantyProducts = ({ data }) => {
         </h1>
       ) : (
         <table className="mt-10 table_modify">
-          <thead>
+          <thead className="font-serif">
             <tr>
               <th scope="col">Order ID</th>
               <th scope="col">Dealer Name</th>
@@ -30,7 +29,17 @@ const WarrantyProducts = ({ data }) => {
                     {data.firstname} {data.lastname}
                   </td>
                   <td data-label="Customer Name">{data.company_name}</td>
-                  <td data-label="Status">{data.status}</td>
+                  <td data-label="Status">
+                    {data.status === "active" ? (
+                      <span className="btn-primary bg-emerald-200">
+                        {data.status}
+                      </span>
+                    ) : (
+                      <span className="btn-primary bg-yellow-200">
+                        {data.status}
+                      </span>
+                    )}
+                  </td>
                   <td data-label="View Details" className="text-center">
                     <Link
                       href={`/dashboard/warranty/${data.id}`}

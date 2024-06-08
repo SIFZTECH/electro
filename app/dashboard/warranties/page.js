@@ -21,11 +21,6 @@ const WarrantyPage = () => {
         value={452}
         percentage={0.03}
       />
-      <div className="w-full flex justify-end">
-        <Link href="warranties/registration" className="btn-primary my-6 mb-14">
-          Add New Warranty
-        </Link>
-      </div>
 
       {!isLoading && !isError && !error && <WarrantyProducts data={data} />}
       {!isLoading && isError && error && (

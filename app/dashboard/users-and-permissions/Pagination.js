@@ -28,7 +28,7 @@ function PaginationUI({ data, page }) {
           <span className="font-semibold"> {data?.total}</span> results
         </p>
       )}
-      {data.total && (
+      {data.total > PAGE_SIZE && (
         <Pagination className="mt-6 flex justify-end w-full">
           <PaginationContent>
             <PaginationItem>
