@@ -16,14 +16,15 @@ import { useForm } from "react-hook-form";
 const AssignUserRole = ({ user }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { data, isLoading } = useRoles();
+  const { isLoading, data } = useRoles();
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      role_name: user?.roles[0].name,
+      name: user?.roles[0]?.name,
     },
   });
 
@@ -84,91 +85,33 @@ const AssignUserRole = ({ user }) => {
                 )}
               </div>
             </div>
-
-            {/* <div>
-              <h1 className="mt-4 font-semibold text-lg font-serif">
-                Perimissions
-              </h1>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
+            <div className="flex flex-wrap flex-col gap-2">
+              <h1 className="mt-4 font-semibold font-serif">Permissions</h1>
+              <div className="mb-2 flex flex-wrap gap-y-3 gap-x-4 items-center">
+                {!isLoading &&
+                  data?.data.permissions.map((permission) => {
+                    // console.log(permission);
+                    return (
+                      <div
+                        className="flex gap-2 items-center"
+                        key={permission.id}
+                      >
+                        <input
+                          type="checkbox"
+                          {...register(permission.name)}
+                          value={permission.name}
+                        />
+                        <label
+                          key="permission"
+                          className="block text-sm font-medium leading-6 text-gray-900"
+                        >
+                          {permission.name}
+                        </label>
+                      </div>
+                    );
+                  })}
               </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-              <div className="mt-2 flex gap-2 items-center">
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Click and Collect
-                </label>
-                <input type="checkbox" {...register("click")} />
-              </div>
-            </div> */}
+            </div>
             <div>
               <button
                 type="submit"

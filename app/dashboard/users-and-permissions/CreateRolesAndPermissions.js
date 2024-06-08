@@ -86,9 +86,7 @@ const CreateRolesAndPermissions = () => {
                 </select>
               )}
             </div>
-            <h1 className="mt-4 font-semibold text-lg font-serif">
-              Perimissions
-            </h1>
+            <h1 className="mt-4 font-semibold font-serif">Perimissions</h1>
             <div className="flex flex-wrap gap-2">
               {data.data.permissions.map((permission) => (
                 <div

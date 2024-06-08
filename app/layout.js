@@ -24,7 +24,11 @@ export default function RootLayout({ children }) {
             },
             error: { style: { backgroundColor: "#ef4444", color: "#fff" } },
             icon: false,
-            style: { textAlign: "center", fontSize: "14px" },
+            style: {
+              textAlign: "center",
+              fontSize: "16px",
+              borderRadius: "5px",
+            },
             duration: 3000,
           }}
         />

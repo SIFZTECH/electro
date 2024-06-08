@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Logo from "../components/ui/Logo";
 import SpinnerMini from "../components/ui/SpinnerMini";
-import { useToast } from "../_hooks/use-toast";
 import Link from "next/link";
 import { login } from "../_services/apiAuth";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const router = useRouter();
@@ -30,22 +30,13 @@ export default function Login() {
         localStorage.setItem("access-token", res.data.auth);
         router.replace("/dashboard");
       }
-
-      toast({
-        variant: "success",
-        title: res.message,
-        duration: 1000,
-      });
+      toast.success(res.message);
     } catch (err) {
       console.log(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {
-        toast({
-          variant: "destructive",
-          title: err.message,
-          duration: 1000,
-        });
+        toast.error(err.message);
       }
     }
   }

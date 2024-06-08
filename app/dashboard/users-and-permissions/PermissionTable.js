@@ -27,8 +27,8 @@ const PermissionTable = () => {
     <>
       <div className="flex gap-3 justify-end">
         <CreateNewRole />
-        <CreatePermission />
-        <CreateRolesAndPermissions />
+        {/* <CreatePermission />
+        <CreateRolesAndPermissions /> */}
       </div>
 
       <Table className="mt-10 table_modify">
@@ -67,8 +67,8 @@ const PermissionTable = () => {
                 <TableCell data-label="Click and Collect">web</TableCell>
                 <TableCell data-label="Actions">
                   <div className="flex flex-wrap gap-3">
+                    
                     <DeleteRole roleName={data.name} />
-                    <DeletePermission />
                   </div>
                 </TableCell>
               </TableRow>

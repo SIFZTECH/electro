@@ -56,10 +56,16 @@ export async function createPermission(name) {
   return data;
 }
 
-export async function createNewRole(name) {
+export async function createNewRole(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+
+  const name = formData.name;
+
+  const permission_name = Object.entries(formData)
+    .filter(([key, value]) => key !== "name" && value !== false)
+    .map((val) => val[0]);
 
   const { data } = await axios({
     url: `${BASE_URL}/admin/create-role`,
@@ -67,7 +73,7 @@ export async function createNewRole(name) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { name },
+    data: { name, permission_name },
   });
 
   return data;

@@ -26,8 +26,6 @@ const UsersTable = () => {
     return <Spinner />;
   }
 
-  console.log(data);
-
   return (
     <>
       {isError && error && error.message}
