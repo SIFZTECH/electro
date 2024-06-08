@@ -9,7 +9,6 @@ const page = () => {
         <h1 className="heading-h1">User and Permission</h1>
         <NewUserModal title="Create New User" btn="New User" />
       </div>
-      <Search />
       <UsersTabs />
     </div>
   );

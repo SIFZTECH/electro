@@ -28,7 +28,7 @@ const BlockedUsers = () => {
   return (
     <>
       {isError && error && error.message}
-      {!isLoading && !isError && data.data.data.length === 0 ? (
+      {!isLoading && !isError && !error && data.data.data.length === 0 ? (
         "There is no blocked user"
       ) : (
         <Table className=" !mb-4 *:table_modify">
@@ -80,9 +80,8 @@ const BlockedUsers = () => {
           </tbody>
         </Table>
       )}
-      {data?.data?.length >= 10 && (
-        <PaginationUI data={data?.data} page={+page} />
-      )}
+
+      <PaginationUI data={data?.data} page={+page} />
     </>
   );
 };

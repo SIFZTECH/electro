@@ -59,13 +59,7 @@ const UsersTabs = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="allUsers">
-          {!isLoading && data?.data.length === 0 ? (
-            <h1 className="font-serif text-center font-semibold">
-              There is no user with that name
-            </h1>
-          ) : (
-            <UsersTable />
-          )}
+          <UsersTable />
         </TabsContent>
         <TabsContent value="blocked_users">
           <BlockedUsers />

@@ -30,11 +30,6 @@ const ProtectedRoute = ({ children }) => {
   // 3. IF LOADING IS TRUE
   if (isLoading) return <Spinner />;
 
-  // If there is user and not verified
-  if (!isLoading && user && !isVerified) {
-    return <h1> You don't have permission to Access this route</h1>;
-  }
-
   // 4. If there IS a admin user, render the app
   if (!isLoading && !isBlocked && (isAdmin || isDealer)) {
     return children;
