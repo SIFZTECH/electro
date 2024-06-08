@@ -41,15 +41,13 @@ const AdminTable = () => {
           return (
             <TableRow key={i + 1} className="font-sans">
               <TableCell data-label="User Name">{data.name}</TableCell>
-              <TableCell className="w-fit" data-label="Email">
-                {data.email}
-              </TableCell>
+              <TableCell data-label="Email">{data.email}</TableCell>
               <TableCell data-label="Phone">{data.phone_number}</TableCell>
               <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
               <TableCell data-label="Created At">{data.created_at}</TableCell>
 
-              <TableCell data-label="">
-                <div className="flex gap-1">
+              <TableCell data-label="Actions">
+                <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
                   <EditUser user={data} />
                   <BlockUser user={data} />
                   <AssignUserRole user={data} />

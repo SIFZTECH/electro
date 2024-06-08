@@ -8,11 +8,11 @@ import DeleteCategory from "./DeleteBrand";
 const BrandsList = ({ brand }) => {
   return (
     <TableRow>
-      <TableCell>{brand.id}</TableCell>
-      <TableCell>{brand.name}</TableCell>
+      <TableCell data-label="Brand Id">{brand.id}</TableCell>
+      <TableCell data-label="Brand Name">{brand.name}</TableCell>
       <TableCell>-</TableCell>
-      <TableCell className="w-6">
-        <div className="flex gap-3">
+      <TableCell data-label="Actions">
+        <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
           <EditBrand brand={brand} />
           <DeleteCategory brand={brand} />
         </div>

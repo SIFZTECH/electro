@@ -27,7 +27,7 @@ const UsersTabs = () => {
   return (
     <>
       <Tabs defaultValue="allUsers" className="font-serif">
-        <TabsList>
+        <TabsList className="my-4">
           <TabsTrigger value="allUsers">
             All Users
             {!isLoading && (

@@ -21,10 +21,12 @@ const CategoryTable = ({ data }) => {
         <Table className="">
           <TableHeader>
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
-              <TableHead>ID</TableHead>
-              <TableHead>Category Name</TableHead>
-              <TableHead>Sub-Categories Name</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead data-label="ID">ID</TableHead>
+              <TableHead data-label="Category Name">Category Name</TableHead>
+              <TableHead data-label="Sub-Category Name">
+                Sub-Categories Name
+              </TableHead>
+              <TableHead data-label="Actions">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="">

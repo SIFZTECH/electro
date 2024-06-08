@@ -43,7 +43,7 @@ const WarrantyProducts = ({ data }) => {
                     )}
                   </td>
                   <td data-label="Actions">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
                       <EditWarranty warranty={data} />
                       <DeleteWarranty warrantyId={data.id} />
                     </div>

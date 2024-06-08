@@ -8,17 +8,17 @@ import DeleteCategory from "./DeleteCategory";
 const CategoriesList = ({ category, subCategories }) => {
   return (
     <TableRow>
-      <TableCell>{category.id}</TableCell>
-      <TableCell>{category.name}</TableCell>
-      <TableCell>
+      <TableCell data-label="Category ID">{category.id}</TableCell>
+      <TableCell data-label="Category Name">{category.name}</TableCell>
+      <TableCell data-label="Sub-Categories">
         {subCategories.map((item) => (
           <button key={item.id} className="btn-primary mr-3 bg-green-200">
             {item.name}
           </button>
         ))}
       </TableCell>
-      <TableCell className="w-6">
-        <div className="flex gap-3">
+      <TableCell data-label="Actions">
+        <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
           <EditCategory category={category} />
           <DeleteCategory category={category} />
         </div>

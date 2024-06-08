@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form";
 import { profileSettings } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 const SettingsForm = () => {
   const router = useRouter();
-  const { user, isLoading } = useUser();
+  const { user, isLoading, isTwoAuthEnable } = useUser();
 
   const {
     register,
@@ -94,8 +95,11 @@ const SettingsForm = () => {
 
   return (
     <>
+      <h1 className="font-serif text-center text-2xl font-semibold">
+        Dealer Profile Settings
+      </h1>
       <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-2 md:flex-row gap-x-9 gap-y-6">
+        <div className="grid md:grid-cols-2 gap-x-9 gap-y-6">
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               First Name
@@ -344,23 +348,30 @@ const SettingsForm = () => {
       </form>
       <div className="md:py-8 p-2 md:px-6">
         <div className="flex gap-3 items-center">
-          <label
-            htmlFor="tfa"
-            className="btn-primary cursor-pointer text-sm font-semibold font-serif leading-6 text-gray-900"
-            onClick={() => {
-              router.push("/dashboard/settings/enable-2FA");
-            }}
-          >
-            Enable Two-Factor Authentication
-          </label>
+          {isTwoAuthEnable ? (
+            <label
+              htmlFor="tfa"
+              className="btn-primary bg-zinc-300 cursor-pointer text-sm font-semibold font-serif leading-6 text-gray-900"
+              onClick={() => {
+                router.push("/dashboard/settings/enable-2FA");
+              }}
+            >
+              Disable Two-Factor Authentication
+            </label>
+          ) : (
+            <label
+              htmlFor="tfa"
+              className="btn-primary bg-emerald-200 cursor-pointer text-sm font-semibold font-serif leading-6 text-gray-900"
+              onClick={() => {
+                router.push("/dashboard/settings/enable-2FA");
+              }}
+            >
+              Enable Two-Factor Authentication
+            </label>
+          )}
         </div>
         <div className="mt-4 flex">
-          <label
-            className="block text-sm font-semibold font-serif leading-6 text-gray-900 border border-color-primary px-3 py-1 rounded-sm bg-[#fde68a]"
-            onClick={() => router.push("/dashboard/settings/change-password")}
-          >
-            Change your password
-          </label>
+          <ChangePasswordForm />
         </div>
       </div>
     </>

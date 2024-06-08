@@ -15,9 +15,11 @@ const ResourcesPage = () => {
 
   return (
     <div className="dealer-resources">
-      <h1 className="heading-h1 mb-10">Dealer Resources</h1>
-      <CreateNewResources />
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6 2xl:w-[95%]">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="heading-h1">Dealer Resources</h1>
+        <CreateNewResources />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6">
         {!isLoading && !isError && !error && (
           <>
             <FilterBy />

@@ -62,9 +62,7 @@ const UsersTable = () => {
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">{data.name}</TableCell>
-                  <TableCell className="w-fit" data-label="Email">
-                    {data.email}
-                  </TableCell>
+                  <TableCell data-label="Email">{data.email}</TableCell>
                   <TableCell data-label="Phone">{data.phone_number}</TableCell>
                   <TableCell data-label="Role">
                     {data?.roles[0]?.name}
@@ -73,8 +71,8 @@ const UsersTable = () => {
                     {new Date(data.created_at).toDateString()}
                   </TableCell>
 
-                  <TableCell data-label="">
-                    <div className="flex gap-1 flex-wrap">
+                  <TableCell data-label="Actions">
+                    <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
                       <AssignUserRole user={data} />
                       <EditUser user={data} />
                       <BlockUser user={data} />

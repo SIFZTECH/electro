@@ -1,6 +1,5 @@
 "use client";
 
-import { Switch } from "@/app/components/ui/switch";
 import {
   Table,
   TableCell,
@@ -8,13 +7,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import EditUser from "./EditUser";
 import BlockUser from "./BlockUser";
-import AssignUserRole from "./AssignUserRole";
 import { useBlockedUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
 import PaginationUI from "./Pagination";
 import { useSearchParams } from "next/navigation";
+import Search from "./SearchForBlockUsers";
 
 const BlockedUsers = () => {
   const params = useSearchParams();
@@ -27,11 +25,12 @@ const BlockedUsers = () => {
 
   return (
     <>
+      <Search />
       {isError && error && error.message}
       {!isLoading && !isError && !error && data.data.data.length === 0 ? (
         "There is no blocked user"
       ) : (
-        <Table className=" !mb-4 *:table_modify">
+        <Table className="!mt-4 *:table_modify">
           <TableHeader>
             <TableRow>
               <TableHead className="font-medium" scope="col">
@@ -60,9 +59,7 @@ const BlockedUsers = () => {
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">{data.name}</TableCell>
-                  <TableCell className="w-fit" data-label="Email">
-                    {data.email}
-                  </TableCell>
+                  <TableCell data-label="Email">{data.email}</TableCell>
                   <TableCell data-label="Phone">{data.phone_number}</TableCell>
                   <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
                   <TableCell data-label="Created At">
