@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useUser } from "../_features/authentication/useUser";
 import Spinner from "./ui/Spinner";
+import Confirmation from "../register/confirmation/page";
 
 const ProtectedRoute = ({ children }) => {
   if (typeof window !== "undefined") {
@@ -36,6 +37,11 @@ const ProtectedRoute = ({ children }) => {
 
   // 3. IF LOADING IS TRUE
   if (isLoading) return <Spinner />;
+
+  // If there is user and not verified
+  // if (user && !isVerified) {
+  //   return <Confirmation />;
+  // }
 
   // 4. If there IS a admin user, render the app
   if (!isLoading && !isBlocked && (isAdmin || isDealer || isCustomer)) {

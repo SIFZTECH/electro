@@ -2,17 +2,21 @@
 
 import Logo from "@/app/components/ui/Logo";
 import { useForm } from "react-hook-form";
-import { register as createUser } from "@/app/_services/apiAuth";
+import { addUser, register as createUser } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { BASE_URL } from "@/app/lib/utils";
 import { useRoles } from "@/app/_features/roles/useRoles";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function RegisterForm() {
   const { isLoading: isFetching, data } = useRoles();
-  const router = useRouter();
+  const params = useSearchParams();
+
+  const queryClient = useQueryClient();
+  const page = params.get("page") ? +params.get("page") : 1;
 
   const {
     register,
@@ -25,26 +29,30 @@ export default function RegisterForm() {
     firstname,
     lastname,
     email,
+    role,
     password,
     passwordConfirm,
   }) {
     try {
-      const { data } = await axios.post(`${BASE_URL}/user/register`, {
+      const res = await addUser({
         firstname,
         lastname,
         email,
+        role,
         password,
         password_confirmation: passwordConfirm,
       });
 
-      if (data) {
-        toast.success(data.message);
-        router.refresh();
+      if (res) {
+        toast.success(res.message);
+        queryClient.invalidateQueries(["allUsers", page]);
       }
     } catch (err) {
       console.error(err);
-      if (err.response.data.message) {
-        toast.error(err.response.data.message.email[0]);
+      if (err.response) {
+        err.response.data.data
+          ? toast.error(err.response.data.data)
+          : toast.error(err.response.data.message);
       } else {
         toast.error(err.message);
       }
@@ -130,7 +138,7 @@ export default function RegisterForm() {
                   User Role
                 </label>
                 <select
-                  {...register("role_name")}
+                  {...register("role")}
                   type="text"
                   className="mt-2 block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 >

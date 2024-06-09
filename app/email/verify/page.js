@@ -9,7 +9,7 @@ const VerifyEmail = () => {
   const params = useSearchParams();
   const url = params.get("url");
 
-  async function verification() {
+  (async function verification() {
     try {
       const { data } = await axios.get(url);
 
@@ -26,7 +26,7 @@ const VerifyEmail = () => {
         toast.error(err.response.data.message);
       }
     }
-  }
+  })();
 };
 
 export default VerifyEmail;

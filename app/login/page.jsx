@@ -34,7 +34,9 @@ export default function Login() {
     } catch (err) {
       console.log(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response.data.data
+          ? toast.error(err.response.data.data.email)
+          : toast.error(err.response.data.message);
       } else {
         toast.error(err.message);
       }

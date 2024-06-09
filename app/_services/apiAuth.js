@@ -233,8 +233,6 @@ export async function getAllAdminUsers() {
   return data;
 }
 
-
-
 export async function userBlock(user_id, option) {
   const token = localStorage.getItem("access-token");
 
@@ -254,6 +252,24 @@ export async function userBlock(user_id, option) {
 
   return data;
 }
+
+export async function addUser(formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/add-user`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  });
+
+  return data;
+}
+
 export async function updateUser(user_id, formData) {
   const token = localStorage.getItem("access-token");
 

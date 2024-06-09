@@ -6,11 +6,14 @@ import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import axios from "axios";
 import { BASE_URL } from "@/app/lib/utils";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 export default function ForgotPassword() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
-    reset,
+    resetField,
     formState: { errors, isSubmitting, isSubmitted },
   } = useForm();
 
@@ -20,8 +23,8 @@ export default function ForgotPassword() {
         email,
       });
 
-      console.log(data);
       if (data.status === 200) {
+        toast.success(data.message);
       }
     } catch (err) {
       console.log(err);
@@ -31,7 +34,6 @@ export default function ForgotPassword() {
         toast.error("Something went wrong!");
       }
     }
-    reset();
   }
 
   return (
@@ -76,7 +78,7 @@ export default function ForgotPassword() {
                 <button
                   type="submit"
                   disabled={isSubmitted}
-                  className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                  className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? <SpinnerMini /> : "Forgot Password"}
                 </button>
