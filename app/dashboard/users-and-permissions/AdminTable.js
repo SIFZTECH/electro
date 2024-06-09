@@ -20,6 +20,7 @@ const AdminTable = () => {
   if (isLoading) {
     return <Spinner />;
   }
+  console.log(data, error);
 
   return (
     <Table className="mt-10 table_modify">
@@ -37,25 +38,29 @@ const AdminTable = () => {
         </TableRow>
       </TableHeader>
       <tbody>
-        {data.data.data?.map((data, i) => {
-          return (
-            <TableRow key={i + 1} className="font-sans">
-              <TableCell data-label="User Name">{data.name}</TableCell>
-              <TableCell data-label="Email">{data.email}</TableCell>
-              <TableCell data-label="Phone">{data.phone_number}</TableCell>
-              <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
-              <TableCell data-label="Created At">{data.created_at}</TableCell>
+        {!isError &&
+          !error &&
+          data.data.data?.map((data, i) => {
+            return (
+              <TableRow key={i + 1} className="font-sans">
+                <TableCell data-label="User Name">
+                  {data.firstname} {data.lastname}
+                </TableCell>
+                <TableCell data-label="Email">{data.email}</TableCell>
+                <TableCell data-label="Phone">{data.phone_number}</TableCell>
+                <TableCell data-label="Role">{data.roles[0]?.name}</TableCell>
+                <TableCell data-label="Created At">{data.created_at}</TableCell>
 
-              <TableCell data-label="Actions">
-                <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
-                  <EditUser user={data} />
-                  <BlockUser user={data} />
-                  <AssignUserRole user={data} />
-                </div>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+                <TableCell data-label="Actions">
+                  <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
+                    <EditUser user={data} />
+                    <BlockUser user={data} />
+                    <AssignUserRole user={data} />
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })}
       </tbody>
     </Table>
   );

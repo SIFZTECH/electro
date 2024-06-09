@@ -28,6 +28,8 @@ const UsersTable = () => {
     return <Spinner />;
   }
 
+  console.log(data, error);
+
   return (
     <>
       <Search />
@@ -63,7 +65,9 @@ const UsersTable = () => {
             {data.data?.map((data, i) => {
               return (
                 <TableRow key={i + 1} className="font-sans">
-                  <TableCell data-label="User Name">{data.name}</TableCell>
+                  <TableCell data-label="User Name">
+                    {data.firstname} {data.lastname}
+                  </TableCell>
                   <TableCell data-label="Email">{data.email}</TableCell>
                   <TableCell data-label="Phone">{data.phone_number}</TableCell>
                   <TableCell data-label="Role">

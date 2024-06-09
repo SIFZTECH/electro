@@ -18,10 +18,17 @@ export default function Page() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  async function onSubmit({ name, email, password, passwordConfirm }) {
+  async function onSubmit({
+    firstname,
+    lastname,
+    email,
+    password,
+    passwordConfirm,
+  }) {
     try {
       const { data } = await axios.post(`${BASE_URL}/user/register`, {
-        name,
+        firstname,
+        lastname,
         email,
         password,
         password_confirmation: passwordConfirm,
@@ -35,7 +42,7 @@ export default function Page() {
       }
     } catch (err) {
       console.log(err);
-      if (err.response.data.message.email) {
+      if (err.response?.data?.message.email) {
         toast.error(err.response.data.message.email);
       } else {
         toast.error("Something went wrong!");
@@ -57,27 +64,47 @@ export default function Page() {
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
-                <label className="block text-sm font-medium leading-6 text-gray-900">
-                  Name
+                <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                  First Name
                 </label>
                 <div className="mt-2">
                   <input
-                    {...register("name", {
+                    {...register("firstname", {
                       required: "Please provide your name",
                     })}
                     type="text"
                     disabled={isSubmitting}
                     className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
-                  {errors?.name && (
+                  {errors?.firstname && (
                     <span className="text-red-500 text-sm">
-                      {errors.name.message}
+                      {errors.firstname.message}
                     </span>
                   )}
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium leading-6 text-gray-900">
+                <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                  Last Name
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register("lastname", {
+                      required: "Please provide your last name",
+                    })}
+                    type="text"
+                    disabled={isSubmitting}
+                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                  {errors?.lastname && (
+                    <span className="text-red-500 text-sm">
+                      {errors.lastname.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                   Email address
                 </label>
                 <div className="mt-2">
@@ -104,7 +131,7 @@ export default function Page() {
 
               <div>
                 <div className="flex items-center justify-between">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                     Password
                   </label>
                 </div>
@@ -130,7 +157,7 @@ export default function Page() {
               </div>
               <div>
                 <div className="flex items-center justify-between">
-                  <label className="block text-sm font-medium leading-6 text-gray-900">
+                  <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                     Password Confirm
                   </label>
                 </div>

@@ -36,7 +36,7 @@ const ChangePasswordForm = () => {
   }
 
   return (
-    <form className="space-y-3 mt-4 w-full" onSubmit={handleSubmit(onSubmit)}>
+    <form className="space-y-3 mt-4 w-2/4" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label className="block text-sm font-medium leading-6 text-gray-900">
           Enter your current password

@@ -24,6 +24,8 @@ const UsersTabs = () => {
   const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
   const { total_num: total_num3, isLoading: isLoading3 } = useAdminUsers();
 
+  console.log(isLoading2 && total_num2);
+
   return (
     <>
       <Tabs defaultValue="allUsers" className="font-serif">
@@ -40,10 +42,12 @@ const UsersTabs = () => {
           </TabsTrigger>
           <TabsTrigger value="blocked_users">
             Blocked Users
-            {!isLoading2 && total_num2 && (
+            {!isLoading2 && total_num2 ? (
               <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
                 <span className="p-1 text-[10px] leading-3">{total_num2}</span>
               </p>
+            ) : (
+              ""
             )}
           </TabsTrigger>
           <TabsTrigger value="roles_and_permissions">

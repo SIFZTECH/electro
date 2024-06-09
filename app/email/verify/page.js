@@ -9,13 +9,12 @@ const VerifyEmail = () => {
   const params = useSearchParams();
   const url = params.get("url");
 
-  (async function verification() {
+  async function verification() {
     try {
       const { data } = await axios.get(url);
 
       if (data.status === 200) {
         router.replace("/login");
-        toast.success(data.message);
       }
 
       console.log(data);
@@ -27,7 +26,7 @@ const VerifyEmail = () => {
         toast.error(err.response.data.message);
       }
     }
-  })();
+  }
 };
 
 export default VerifyEmail;

@@ -15,7 +15,9 @@ const User = () => {
       />
 
       <div className="flex flex-col leading-5 text-black">
-        <span className="name font-bold">{user.name}</span>
+        <span className="name font-bold">
+          {user.firstname} {user.lastname}
+        </span>
         <span className="email">{user.email}</span>
       </div>
     </div>
