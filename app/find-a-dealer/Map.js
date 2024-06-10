@@ -1,12 +1,18 @@
 "use client";
 
-const cities = [
+const stores = [
   {
-    cityName: "Lisbon",
-    country: "Portugal",
+    storeLogo: "",
+    storeName: "Leon Cycle Melbourne - Head Office",
+    distance: "0.01 km away",
+    country: "Australia",
+    address1: "45 Leaks Road",
+    address1: "LAVERTON NORTH VIC. 3026, AU",
+    phone: "0123384383",
+    email: "support.au@leoncycle.com",
+    openAndCloseStore: "Open Monday to Friday 9am-5pm",
     emoji: "🇵🇹",
     date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
     position: {
       lat: 38.727881642324164,
       lng: -9.140900099907554,
@@ -14,11 +20,18 @@ const cities = [
     id: 73930385,
   },
   {
-    cityName: "Madrid",
-    country: "Spain",
-    emoji: "🇪🇸",
-    date: "2027-07-15T08:22:53.976Z",
-    notes: "",
+    storeLogo: "",
+    storeName: "Leon Cycle Melbourne - Head Office 2",
+    distance: "0.01 km away",
+    country: "Australia",
+    address1: "45 Leaks Road",
+    address1: "LAVERTON NORTH VIC. 3026, AU",
+    phone: "0123384383",
+    email: "support.au@leoncycle.com",
+    openAndCloseStore: "Open Monday to Friday 9am-5pm",
+    emoji: "🇵🇹",
+    date: "2027-10-31T15:59:59.138Z",
+
     position: {
       lat: 40.46635901755316,
       lng: -3.7133789062500004,
@@ -26,11 +39,17 @@ const cities = [
     id: 17806751,
   },
   {
-    cityName: "Berlin",
-    country: "Germany",
-    emoji: "🇩🇪",
-    date: "2027-02-12T09:24:11.863Z",
-    notes: "Amazing 😃",
+    storeLogo: "",
+    storeName: "Leon Cycle Melbourne - Head Office 3",
+    distance: "0.01 km away",
+    country: "Australia",
+    address1: "45 Leaks Road",
+    address1: "LAVERTON NORTH VIC. 3026, AU",
+    phone: "0123384383",
+    email: "support.au@leoncycle.com",
+    openAndCloseStore: "Open Monday to Friday 9am-5pm",
+    emoji: "🇵🇹",
+    date: "2027-10-31T15:59:59.138Z",
     position: {
       lat: 52.53586782505711,
       lng: 13.376933665713324,
@@ -38,14 +57,20 @@ const cities = [
     id: 98443197,
   },
   {
-    cityName: "Nijar",
-    country: "Spain",
-    emoji: "🇪🇸",
-    date: "2023-04-03T07:47:59.202Z",
-    notes: "",
+    storeLogo: "",
+    storeName: "Leon Cycle Melbourne - Head Office 4",
+    distance: "0.01 km away",
+    country: "Australia",
+    address1: "45 Leaks Road",
+    address1: "LAVERTON NORTH VIC. 3026, AU",
+    phone: "0123384383",
+    email: "support.au@leoncycle.com",
+    openAndCloseStore: "Open Monday to Friday 9am-5pm",
+    emoji: "🇵🇹",
+    date: "2027-10-31T15:59:59.138Z",
     position: {
-      lat: "36.967508314568164",
-      lng: "-2.13128394200588",
+      lat: 36.967508314568164,
+      lng: -2.13128394200588,
     },
     id: 98443198,
   },
@@ -73,22 +98,26 @@ import { MdEmail, MdOutlineLocalPhone, MdWebStories } from "react-icons/md";
 import { RiDirectionLine } from "react-icons/ri";
 
 import { AiOutlineGlobal, AiOutlineMail } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 export default function MyMap() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
+  const router = useRouter();
+
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
   } = useGeolocation();
-  //   const [mapLat, mapLng] = useUrlPosition();
 
-  //   useEffect(
-  //     function () {
-  //       if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
-  //     },
-  //     [mapLat, mapLng]
-  //   );
+  const [mapLat, mapLng] = useUrlPosition();
+
+  useEffect(
+    function () {
+      if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
+    },
+    [mapLat, mapLng]
+  );
 
   useEffect(function () {
     getPosition();
@@ -113,120 +142,54 @@ export default function MyMap() {
               <h1 className="font-serif font-semibold mb-3">
                 Your closest store
               </h1>
-              <div className="store flex items-start gap-1 border-b border-gray-200 pt-3">
-                <Image
-                  src="/cycle-4.jpg"
-                  width={60}
-                  height={60}
-                  className="rounded-full object-contain"
-                  alt="name"
-                />
-                <div>
-                  <h1 className="font-serif font-semibold">
-                    Leon Cycle Melbourne - Head Office
-                  </h1>
-                  <p className="text-sm ">0.01 km away</p>
-                  <p className="my-2">Open Monday to Friday 9am-5pm</p>
-                  <p>45 Leaks Road</p>
-                  <p>LAVERTON NORTH VIC. 3026, AU</p>
-                  <div className="my-2 text-sm">
-                    <p className="flex items-center gap-2">
-                      <MdOutlineLocalPhone />
-                      0123384383
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <AiOutlineMail />
-                      support.au@leoncycle.com
-                    </p>
-                  </div>
-                  <div className="flex gap-4 my-4 text-[15px]">
-                    <button className="flex items-center gap-1 font-serif">
-                      <RiDirectionLine />
-                      DIRECTIONS
-                    </button>
-                    <button className="flex items-center gap-1 font-serif">
-                      <AiOutlineGlobal />
-                      VIEW WEBSITE
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="store flex items-start gap-1 border-b border-gray-200 pt-3">
-                <Image
-                  src="/cycle-4.jpg"
-                  width={60}
-                  height={60}
-                  className="rounded-full object-contain"
-                  alt="name"
-                />
-                <div>
-                  <h1 className="font-serif font-semibold">
-                    Leon Cycle Melbourne - Head Office
-                  </h1>
-                  <p className="text-sm ">0.01 km away</p>
-                  <p className="my-2">Open Monday to Friday 9am-5pm</p>
-                  <p>45 Leaks Road</p>
-                  <p>LAVERTON NORTH VIC. 3026, AU</p>
-                  <div className="my-2 text-sm">
-                    <p className="flex items-center gap-2">
-                      <MdOutlineLocalPhone />
-                      0123384383
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <AiOutlineMail />
-                      support.au@leoncycle.com
-                    </p>
-                  </div>
-                  <div className="flex gap-4 my-4 text-[15px]">
-                    <button className="flex items-center gap-1 font-serif">
-                      <RiDirectionLine />
-                      DIRECTIONS
-                    </button>
-                    <button className="flex items-center gap-1 font-serif">
-                      <AiOutlineGlobal />
-                      VIEW WEBSITE
-                    </button>
+              {stores.map((store) => (
+                <div
+                  key={store.id}
+                  className="store flex items-start gap-1 border-b border-gray-200 pt-3"
+                  onClick={() =>
+                    router.push(
+                      `/find-a-dealer?lat=${store.position.lat}&lng=${store.position.lng}`
+                    )
+                  }
+                >
+                  <Image
+                    src="/cycle-4.jpg"
+                    width={60}
+                    height={60}
+                    className="rounded-full object-contain"
+                    alt="name"
+                  />
+                  <div>
+                    <h1 className="font-serif font-semibold">
+                      {store.storeName}
+                    </h1>
+                    <p className="text-sm ">{store.distance}</p>
+                    <p className="my-2">{store.openAndCloseStore}</p>
+                    <p>{store.address2}</p>
+                    <p>LAVERTON NORTH VIC. 3026, AU</p>
+                    <div className="my-2 text-sm">
+                      <p className="flex items-center gap-2">
+                        <MdOutlineLocalPhone />
+                        {store.phone}
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <AiOutlineMail />
+                        {store.email}
+                      </p>
+                    </div>
+                    <div className="flex gap-4 my-4 text-[15px]">
+                      <button className="flex items-center gap-1 font-serif">
+                        <RiDirectionLine />
+                        DIRECTIONS
+                      </button>
+                      <button className="flex items-center gap-1 font-serif">
+                        <AiOutlineGlobal />
+                        VIEW WEBSITE
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="store flex items-start gap-1 border-b border-gray-200 pt-3">
-                <Image
-                  src="/cycle-4.jpg"
-                  width={60}
-                  height={60}
-                  className="rounded-full object-contain"
-                  alt="name"
-                />
-                <div>
-                  <h1 className="font-serif font-semibold">
-                    Leon Cycle Melbourne - Head Office
-                  </h1>
-                  <p className="text-sm ">0.01 km away</p>
-                  <p className="my-2">Open Monday to Friday 9am-5pm</p>
-                  <p>45 Leaks Road</p>
-                  <p>LAVERTON NORTH VIC. 3026, AU</p>
-                  <div className="my-2 text-sm">
-                    <p className="flex items-center gap-2">
-                      <MdOutlineLocalPhone />
-                      0123384383
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <AiOutlineMail />
-                      support.au@leoncycle.com
-                    </p>
-                  </div>
-                  <div className="flex gap-4 my-4 text-[15px]">
-                    <button className="flex items-center gap-1 font-serif">
-                      <RiDirectionLine />
-                      DIRECTIONS
-                    </button>
-                    <button className="flex items-center gap-1 font-serif">
-                      <AiOutlineGlobal />
-                      VIEW WEBSITE
-                    </button>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -240,13 +203,13 @@ export default function MyMap() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           />
-          {cities.map((city) => (
+          {stores.map((store) => (
             <Marker
-              key={city.id}
-              position={[city.position.lat, city.position.lng]}
+              key={store.id}
+              position={[store.position.lat, store.position.lng]}
             >
               <Popup>
-                {city.cityName} {city.country}
+                {store.storeName} {store.country}
               </Popup>
             </Marker>
           ))}

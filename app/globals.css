@@ -150,6 +150,9 @@ input[type="checkbox"] {
   /* table-layout: fixed; */
 }
 
+.stores > div {
+  cursor: pointer;
+}
 .icon-heart {
 }
 

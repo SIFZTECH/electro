@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
       <body className="font-sans lg:flex overflow-x-hidden">
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <Toaster
-          position="top-center"
+          position="top-right"
           toastOptions={{
             success: {
               style: { backgroundColor: "#22c55e", color: "#fff" },
