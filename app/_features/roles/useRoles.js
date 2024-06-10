@@ -9,5 +9,5 @@ export function useRoles() {
     queryFn: () => getAllRoles(),
   });
 
-  return { data, isLoading, error, isError, total_num: data?.data?.total };
+  return { data, isLoading, error, isError, permissions: data?.data.permissions, total_num: data?.data?.total };
 }

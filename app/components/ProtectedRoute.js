@@ -44,7 +44,7 @@ const ProtectedRoute = ({ children }) => {
   // }
 
   // 4. If there IS a admin user, render the app
-  if (!isLoading && !isBlocked && (isAdmin || isDealer || isCustomer)) {
+  if (!isLoading && !isBlocked && isVerified) {
     return children;
   }
 };

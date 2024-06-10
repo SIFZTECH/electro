@@ -6,12 +6,14 @@ import Spinner from "@/app/components/ui/Spinner";
 import AllResources from "./AllResources";
 import Link from "next/link";
 import CreateNewResources from "./CreateNewResources";
+import { useRoles } from "@/app/_features/roles/useRoles";
 
 const ResourcesPage = () => {
-  const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
-  if (isLoading) return <Spinner />;
+  const { isLoading: isLoading2, permissions } = useRoles();
 
-  console.log(data, error);
+  const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="dealer-resources">

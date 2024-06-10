@@ -23,17 +23,19 @@ const EditUser = ({ user }) => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      name: user?.name,
+      firstname: user?.firstname,
+      lastname: user?.lastname,
       email: user?.email,
       phone: user?.phone_number,
       user_role: user?.roles[0]?.name,
     },
   });
 
-  async function onSubmit({ name, email, phone, user_role }) {
+  async function onSubmit({ firstname, lastname, email, phone, user_role }) {
     try {
       const res = await updateUser(user.id, {
-        name,
+        firstname,
+        lastname,
         email,
         phone,
         user_role,
@@ -66,7 +68,7 @@ const EditUser = ({ user }) => {
             Make changes to your user here. Click save when you're done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
-            {/* <div>
+            <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 First Name
               </label>
@@ -78,14 +80,14 @@ const EditUser = ({ user }) => {
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
               </div>
-            </div> */}
+            </div>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
-                User Name
+                Last Name
               </label>
               <div className="mt-2">
                 <input
-                  {...register("name")}
+                  {...register("lastname")}
                   disabled={isSubmitting}
                   type="text"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"

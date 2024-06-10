@@ -4,9 +4,14 @@ import { useCategories } from "@/app/_features/categories/useCategory";
 import CategoryTable from "./CategoryTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateNewCategory from "./CreateNewCategory";
+import { useRoles } from "@/app/_features/roles/useRoles";
 
 const Categories = () => {
   const { data, isLoading, isError, error } = useCategories();
+  const { isLoading: isLoading2, permissions } = useRoles();
+  const isAddCategotyPermission = permissions?.some(
+    (test) => test.name === "category_add"
+  );
 
   if (isLoading) return <Spinner />;
 
@@ -14,7 +19,7 @@ const Categories = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="heading-h1 mb-5">All Categories</h1>
-        <CreateNewCategory />
+        {isAddCategotyPermission && <CreateNewCategory />}
       </div>
 
       {!isError && !error && <CategoryTable data={data} />}
