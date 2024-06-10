@@ -3,23 +3,14 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
-  DialogClose,
-  DialogFooter,
 } from "@/app/components/ui/dialog";
-import RegisterForm from "./RegisterForm";
 
-import Logo from "@/app/components/ui/Logo";
 import { useForm } from "react-hook-form";
-import { addUser, register as createUser } from "@/app/_services/apiAuth";
+import { addUser } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useSearchParams } from "next/navigation";
-import { BASE_URL } from "@/app/lib/utils";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -37,8 +28,12 @@ const NewUserModal = ({ btn }) => {
     register,
     handleSubmit,
     getValues,
+    watch,
     formState: { errors, isSubmitting: isLoading },
   } = useForm();
+
+  const watchRole = watch("role");
+  console.log(watchRole);
 
   async function onSubmit({
     firstname,
@@ -46,6 +41,7 @@ const NewUserModal = ({ btn }) => {
     email,
     role,
     password,
+    location,
     passwordConfirm,
   }) {
     try {
@@ -55,6 +51,7 @@ const NewUserModal = ({ btn }) => {
         email,
         role,
         password,
+        location,
         password_confirmation: passwordConfirm,
       });
 
@@ -77,7 +74,7 @@ const NewUserModal = ({ btn }) => {
 
   return (
     <Dialog
-      className="bg-white w-[36rem]"
+      className="bg-white"
       open={open}
       onOpenChange={() => setOpen((open) => !open)}
     >
@@ -93,7 +90,7 @@ const NewUserModal = ({ btn }) => {
               </h2>
             </div>
 
-            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[30rem]">
               <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div>
                   <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
@@ -178,6 +175,29 @@ const NewUserModal = ({ btn }) => {
                       ))}
                   </select>
                 </div>
+                {watchRole === "dealer" && (
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                        Location
+                      </label>
+                    </div>
+                    <div className="mt-2">
+                      <input
+                        {...register("location", {
+                          required: "Please enter your location",
+                        })}
+                        type="text"
+                        className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                      />
+                      {errors?.location && (
+                        <span className="text-red-500 text-sm">
+                          {errors?.location.message}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <div className="flex items-center justify-between">
@@ -194,7 +214,6 @@ const NewUserModal = ({ btn }) => {
                           message: "Password needs a minimum of 8 characters",
                         },
                       })}
-                      disabled={false}
                       type="password"
                       className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
