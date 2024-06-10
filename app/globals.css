@@ -153,6 +153,11 @@ input[type="checkbox"] {
 .icon-heart {
 }
 
+.leaflet-control-container {
+  position: absolute;
+  right: 56px;
+}
+
 .product__thumbnails img {
   height: 70px;
 }
