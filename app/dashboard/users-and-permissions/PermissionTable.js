@@ -60,11 +60,16 @@ const PermissionTable = () => {
                 <TableCell data-label="Id">{i + 1}</TableCell>
                 <TableCell data-label="Role Name">{data.name}</TableCell>
                 <TableCell className="space-x-2" data-label="Permissions">
-                  {data.permissions.map((permission) => (
-                    <span className="btn-primary bg-green-200" key={permission}>
-                      {permission}
-                    </span>
-                  ))}
+                  <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
+                    {data.permissions.map((permission) => (
+                      <span
+                        className="btn-primary bg-green-200"
+                        key={permission}
+                      >
+                        {permission}
+                      </span>
+                    ))}
+                  </div>
                 </TableCell>
                 <TableCell data-label="Click and Collect">Web</TableCell>
                 <TableCell data-label="Actions">
