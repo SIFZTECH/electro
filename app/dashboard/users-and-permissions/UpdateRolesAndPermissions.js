@@ -12,8 +12,6 @@ import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRoles } from "@/app/_features/roles/useRoles";
-import PermissionList from "./PermissionList";
 import UpdateList from "./UpdateListPermissions";
 
 const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
@@ -325,6 +323,10 @@ const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
     social: [],
     brand: [],
     dealer: [],
+    clickAndCollect: [],
+    findDealer: [],
+    warranty: [],
+    calendar: [],
     stock: [],
     user: [],
     other: [],
@@ -348,7 +350,21 @@ const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
       groupedPermissions.dealer.push(permission);
     } else if (permission.name.startsWith("social")) {
       groupedPermissions.social.push(permission);
+    } else if (permission.name.startsWith("calendar")) {
+      groupedPermissions.calendar.push(permission);
+    } else if (permission.name.startsWith("create")) {
+      groupedPermissions.calendar.push(permission);
     } else if (permission.name.startsWith("stock")) {
+      groupedPermissions.stock.push(permission);
+    } else if (permission.name.startsWith("click")) {
+      groupedPermissions.clickAndCollect.push(permission);
+    } else if (permission.name.startsWith("upload_stock")) {
+      groupedPermissions.stock.push(permission);
+    } else if (permission.name.startsWith("warranty")) {
+      groupedPermissions.warranty.push(permission);
+    } else if (permission.name.startsWith("find")) {
+      groupedPermissions.findDealer.push(permission);
+    } else if (permission.name.startsWith("edit_stock")) {
       groupedPermissions.stock.push(permission);
     } else if (
       permission.name.startsWith("user") ||
@@ -476,6 +492,30 @@ const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
               <UpdateList
                 title="Social Media Management"
                 permissions={groupedPermissions.social}
+                permissionsName={permissionsName}
+                register={register}
+              />
+              <UpdateList
+                title="Calendar Management"
+                permissions={groupedPermissions.calendar}
+                permissionsName={permissionsName}
+                register={register}
+              />
+              <UpdateList
+                title="Warranty Management"
+                permissions={groupedPermissions.warranty}
+                permissionsName={permissionsName}
+                register={register}
+              />
+              <UpdateList
+                title="Click-and-Collect Management"
+                permissions={groupedPermissions.clickAndCollect}
+                permissionsName={permissionsName}
+                register={register}
+              />
+              <UpdateList
+                title="Find Dealer Management"
+                permissions={groupedPermissions.findDealer}
                 permissionsName={permissionsName}
                 register={register}
               />

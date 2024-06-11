@@ -324,6 +324,10 @@ const CreateNewRole = () => {
     social: [],
     brand: [],
     dealer: [],
+    clickAndCollect: [],
+    findDealer: [],
+    warranty: [],
+    calendar: [],
     stock: [],
     user: [],
     other: [],
@@ -347,7 +351,21 @@ const CreateNewRole = () => {
       groupedPermissions.dealer.push(permission);
     } else if (permission.name.startsWith("social")) {
       groupedPermissions.social.push(permission);
+    } else if (permission.name.startsWith("calendar")) {
+      groupedPermissions.calendar.push(permission);
+    } else if (permission.name.startsWith("create")) {
+      groupedPermissions.calendar.push(permission);
     } else if (permission.name.startsWith("stock")) {
+      groupedPermissions.stock.push(permission);
+    } else if (permission.name.startsWith("click")) {
+      groupedPermissions.clickAndCollect.push(permission);
+    } else if (permission.name.startsWith("upload_stock")) {
+      groupedPermissions.stock.push(permission);
+    } else if (permission.name.startsWith("warranty")) {
+      groupedPermissions.warranty.push(permission);
+    } else if (permission.name.startsWith("find")) {
+      groupedPermissions.findDealer.push(permission);
+    } else if (permission.name.startsWith("edit_stock")) {
       groupedPermissions.stock.push(permission);
     } else if (
       permission.name.startsWith("user") ||
@@ -464,9 +482,30 @@ const CreateNewRole = () => {
                 permissions={groupedPermissions.stock}
                 register={register}
               />
+
               <PermissionList
                 title="Social Media Management"
                 permissions={groupedPermissions.social}
+                register={register}
+              />
+              <PermissionList
+                title="Calendar Management"
+                permissions={groupedPermissions.calendar}
+                register={register}
+              />
+              <PermissionList
+                title="Warranty Management"
+                permissions={groupedPermissions.warranty}
+                register={register}
+              />
+              <PermissionList
+                title="Click-and-Collect Management"
+                permissions={groupedPermissions.clickAndCollect}
+                register={register}
+              />
+              <PermissionList
+                title="Find Dealer Management"
+                permissions={groupedPermissions.findDealer}
                 register={register}
               />
               <PermissionList
