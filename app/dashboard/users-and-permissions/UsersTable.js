@@ -18,11 +18,15 @@ import PaginationUI from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import Search from "./Search";
 import NotFoundData from "@/app/components/ui/NotFoundData";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const UsersTable = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
   const { data, isLoading, isError, error } = useUsers(page);
+
+  const isAssignRolePermission = useCheckPermission("assign_role");
+  const isEditUserPermission = useCheckPermission("edit_user");
 
   if (isLoading) {
     return <Spinner />;
@@ -84,8 +88,10 @@ const UsersTable = () => {
 
                         <TableCell data-label="Actions">
                           <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
-                            <AssignUserRole user={data} />
-                            <EditUser user={data} />
+                            {isAssignRolePermission && (
+                              <AssignUserRole user={data} />
+                            )}
+                            {isEditUserPermission && <EditUser user={data} />}
                             <BlockUser user={data} />
                           </div>
                         </TableCell>

@@ -78,6 +78,7 @@ const PermissionTable = () => {
                       id={data.id}
                       permissions={data.permissions}
                     />
+
                     <DeleteRole roleName={data.name} />
                   </div>
                 </TableCell>

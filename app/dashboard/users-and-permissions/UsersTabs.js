@@ -17,6 +17,7 @@ import {
 } from "@/app/_features/users/useUsers";
 import BlockedUsers from "./BlockedUsers";
 import { useRouter } from "next/navigation";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const UsersTabs = () => {
   const router = useRouter();
@@ -24,35 +25,48 @@ const UsersTabs = () => {
   const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
   const { total_num: total_num3, isLoading: isLoading3 } = useAdminUsers();
 
-  console.log(isLoading2 && total_num2);
+  const isGetAllUsersPermission = useCheckPermission("all_users");
+  const isGetBlockedUsersPermission = useCheckPermission("block_list");
+  const isGetAdminUsersPermission = useCheckPermission("all_users");
+  const isGetRolesAndPermissions = useCheckPermission("roles_and_permissions");
 
   return (
     <>
       <Tabs defaultValue="allUsers" className="font-serif">
         <TabsList className="my-4">
-          <TabsTrigger value="allUsers">
-            All Users
-            {!isLoading && total_num && (
-              <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
-                <span className="p-1 text-[10px] leading-3">
-                  {total_num ? total_num : data?.data.length}
-                </span>
-              </p>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="blocked_users">
-            Blocked Users
-            {!isLoading2 && total_num2 ? (
-              <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
-                <span className="p-1 text-[10px] leading-3">{total_num2}</span>
-              </p>
-            ) : (
-              ""
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="roles_and_permissions">
-            Roles and Perimission
-          </TabsTrigger>
+          {isGetAllUsersPermission && (
+            <TabsTrigger value="allUsers">
+              All Users
+              {!isLoading && total_num && (
+                <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
+                  <span className="p-1 text-[10px] leading-3">
+                    {total_num ? total_num : data?.data.length}
+                  </span>
+                </p>
+              )}
+            </TabsTrigger>
+          )}
+          {isGetBlockedUsersPermission && (
+            <TabsTrigger value="blocked_users">
+              Blocked Users
+              {!isLoading2 && total_num2 ? (
+                <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
+                  <span className="p-1 text-[10px] leading-3">
+                    {total_num2}
+                  </span>
+                </p>
+              ) : (
+                ""
+              )}
+            </TabsTrigger>
+          )}
+
+          {isGetRolesAndPermissions && (
+            <TabsTrigger value="roles_and_permissions">
+              Roles and Perimission
+            </TabsTrigger>
+          )}
+
           <TabsTrigger value="admin">
             Admin
             {!isLoading3 && total_num3 && (

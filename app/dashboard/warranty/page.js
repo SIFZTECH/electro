@@ -5,9 +5,11 @@ import WarrantyProducts from "./WarrantyProducts";
 import Stats from "./WarrantyStats";
 import Spinner from "@/app/components/ui/Spinner";
 import { useWarranties } from "@/app/_features/warranties/useWarranties";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const WarrantyPage = () => {
   const { data, isLoading, error, isError } = useWarranties();
+  const isCreateWarrantyPermission = useCheckPermission("create_warranty");
 
   if (isLoading) {
     return <Spinner />;
@@ -22,9 +24,11 @@ const WarrantyPage = () => {
         percentage={0.03}
       />
       <div className="w-full flex justify-end">
-        <Link href="warranty/registration" className="btn-primary my-6 mb-14">
-          Add New Warranty
-        </Link>
+        {isCreateWarrantyPermission && (
+          <Link href="warranty/registration" className="btn-primary my-6 mb-14">
+            Add New Warranty
+          </Link>
+        )}
       </div>
 
       {!isLoading && !isError && !error && <WarrantyProducts data={data} />}

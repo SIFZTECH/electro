@@ -12,7 +12,7 @@ import useCheckPermission from "@/app/_hooks/usePermission";
 
 const ResourcesPage = () => {
   const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
-  // const isPermission = useCheckPermission("");
+  const isDealerAddPermission = useCheckPermission("dealer_add");
 
   if (isLoading) return <Spinner />;
 
@@ -20,7 +20,7 @@ const ResourcesPage = () => {
     <div className="dealer-resources">
       <div className="flex justify-between items-center mb-10">
         <h1 className="heading-h1">Dealer Resources</h1>
-        <CreateNewResources />
+        {isDealerAddPermission && <CreateNewResources />}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6">
         {!isLoading && !isError && !error && (
