@@ -94,7 +94,7 @@ export async function createAttribute({ name, value }) {
 
   return data;
 }
-export async function createAttributeValue(value, attribute_id) {
+export async function createAttributeValue({ value, attribute_id }) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 

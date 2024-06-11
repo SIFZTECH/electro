@@ -4,8 +4,12 @@ import { TableCell, TableRow } from "@/app/components/ui/table";
 
 import EditBrand from "./EditBrand";
 import DeleteCategory from "./DeleteBrand";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const BrandsList = ({ brand }) => {
+  const isUpdateBrandPermission = useCheckPermission("brand_update");
+  const isDeleteBrandPermission = useCheckPermission("brand_delete");
+
   return (
     <TableRow>
       <TableCell data-label="Brand Id">{brand.id}</TableCell>
@@ -13,8 +17,8 @@ const BrandsList = ({ brand }) => {
       <TableCell>-</TableCell>
       <TableCell data-label="Actions">
         <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
-          <EditBrand brand={brand} />
-          <DeleteCategory brand={brand} />
+          {isUpdateBrandPermission && <EditBrand brand={brand} />}
+          {isDeleteBrandPermission && <DeleteCategory brand={brand} />}
         </div>
       </TableCell>
     </TableRow>

@@ -30,7 +30,7 @@ const DeleteAttribute = ({ attribute }) => {
       const res = await deleteCategory(category.id);
 
       if (res) {
-        toast.success(res.data);
+        toast.success(res.message);
 
         queryClient.invalidateQueries("categories");
       }

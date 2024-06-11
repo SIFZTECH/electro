@@ -26,7 +26,7 @@ const EditAttribute = ({ category }) => {
       const res = await updateCategory(category.id, data);
 
       if (res) {
-        toast.success(res.data);
+        toast.success(res.message);
         queryClient.invalidateQueries("categories");
       }
     } catch (err) {

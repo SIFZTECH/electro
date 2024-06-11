@@ -15,18 +15,35 @@ const ProtectedRoute = ({ children }) => {
   const router = useRouter();
 
   // 1. Get currentUser and check user is admin or dealer
-  const { isLoading, user, isVerified, isBlocked } = useUser();
+  const { isLoading, isError, error, user, isVerified, isBlocked } = useUser();
+
+  useEffect(
+    function () {
+      if (!token) {
+        router.replace("/login");
+      }
+    },
+    [token, router]
+  );
 
   // 2. If there is NO authenticated user, redirect to the /login
   useEffect(
     function () {
-      if (!isLoading && !user) {
+      if (!isLoading && isError && error && !user) {
         router.replace("/login");
       }
     },
-    [user, isLoading, router]
+    [user, isLoading, isError, error, router]
   );
 
+  // useEffect(
+  //   function () {
+  //     if (!token) {
+  //       router.replace("/login");
+  //     }
+  //   },
+  //   [token, router]
+  // );
   // 3. IF LOADING IS TRUE
   if (isLoading) return <Spinner />;
 
@@ -36,7 +53,7 @@ const ProtectedRoute = ({ children }) => {
   // }
 
   // 4. If there IS a admin user, render the app
-  if (!isLoading && !isBlocked && isVerified) {
+  if (!isLoading && user && !isBlocked && isVerified) {
     return children;
   }
 };

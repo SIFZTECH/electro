@@ -30,9 +30,9 @@ const CreateNewAttributeValue = () => {
   async function onSubmit({ value, attribute_id }) {
     console.log(attribute_id);
     try {
-      const res = await createAttributeValue(value, attribute_id);
+      const res = await createAttributeValue({ value, attribute_id });
 
-      toast.success(res.data);
+      toast.success(res.message);
 
       queryClient.invalidateQueries("attributes");
       router.back(-1);
