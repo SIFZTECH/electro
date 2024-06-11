@@ -245,13 +245,6 @@ const CreateNewRole = () => {
       updated_at: "2024-06-10T12:32:08.000000Z",
     },
     {
-      id: 20,
-      name: "social_media_assets",
-      guard_name: "sanctum",
-      created_at: "2024-06-10T12:36:42.000000Z",
-      updated_at: "2024-06-10T12:36:42.000000Z",
-    },
-    {
       id: 33,
       name: "create_warranty",
       guard_name: "sanctum",

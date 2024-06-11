@@ -35,7 +35,7 @@ const Sidebar = () => {
           <User />
         </div>
       </div>
-      <aside className="hidden lg:flex xl:fixed xl:h-dvh xl:overflow-y-auto sidebar flex-initial xl:min-h-dvh text-white bg-slate-900 py-6 px-4 flex-col justify-between ">
+      <aside className="hidden lg:flex xl:fixed xl:h-dvh xl:overflow-y-auto sidebar flex-initial xl:min-h-dvh text-white bg-slate-900 py-6 px-4 flex-col justify-between lg:min-w-80">
         <div>
           <Logo />
           <Navigation />

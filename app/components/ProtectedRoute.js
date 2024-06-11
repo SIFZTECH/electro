@@ -15,15 +15,7 @@ const ProtectedRoute = ({ children }) => {
   const router = useRouter();
 
   // 1. Get currentUser and check user is admin or dealer
-  const {
-    isLoading,
-    user,
-    isVerified,
-    isAdmin,
-    isDealer,
-    isCustomer,
-    isBlocked,
-  } = useUser();
+  const { isLoading, user, isVerified, isBlocked } = useUser();
 
   // 2. If there is NO authenticated user, redirect to the /login
   useEffect(
