@@ -8,9 +8,11 @@ import Link from "next/link";
 import CreateNewResources from "./CreateNewResources";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import { useUser } from "@/app/_features/authentication/useUser";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const ResourcesPage = () => {
   const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
+  // const isPermission = useCheckPermission("");
 
   if (isLoading) return <Spinner />;
 

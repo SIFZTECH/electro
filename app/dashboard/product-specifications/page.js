@@ -5,15 +5,12 @@ import FilterByProduct from "./FilterByProduct";
 import ProductCategories from "./ProductCategories";
 import Products from "./Products";
 import Spinner from "@/app/components/ui/Spinner";
-import { useUser } from "@/app/_features/authentication/useUser";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const Page = () => {
-  const { isLoading: isLoading2, permissions } = useUser();
-
   const { products, isLoading } = useProducts();
-
+  const isPermission = useCheckPermission("product_add");
   if (isLoading) return <Spinner />;
-  const isPermission = permissions.some((per) => per.name === "product_add");
 
   return (
     <>

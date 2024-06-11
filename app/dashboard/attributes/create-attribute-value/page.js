@@ -28,6 +28,7 @@ const CreateNewAttributeValue = () => {
   } = useForm();
 
   async function onSubmit({ value, attribute_id }) {
+    console.log(attribute_id);
     try {
       const res = await createAttributeValue(value, attribute_id);
 
@@ -83,22 +84,30 @@ const CreateNewAttributeValue = () => {
               </label>
               <div className="mt-2">
                 <select
-                  {...register("attribute_id")}
+                  {...register("attribute_id", {
+                    required: "This is required field",
+                  })}
                   disabled={isSubmitting}
                   type="text"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 >
                   {!isLoading &&
-                    data?.data.map((attribute) => (
+                    data?.data?.map((attribute) => (
                       <option
                         className="capitalize"
-                        key={attribute.id}
-                        value={attribute.id}
+                        key={attribute?.id}
+                        defaultValue={attribute?.id}
+                        value={attribute?.id}
                       >
                         {attribute.name}
                       </option>
                     ))}
                 </select>
+                {errors?.attribute_id && (
+                  <span className="text-red-500 text-sm">
+                    {errors.attribute_id.message}
+                  </span>
+                )}
               </div>
             </div>
 

@@ -4,9 +4,11 @@ import SubCategoryTable from "./SubCategoryTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateSubNewCategory from "./CreateNewSubCategory";
 import { useSubcategories } from "@/app/_features/subCategories/useSubcategories";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const Categories = () => {
   const { data, isLoading, isError, error } = useSubcategories();
+  const isSubcategoryCreatePermission = useCheckPermission("subcategory_add");
 
   if (isLoading) return <Spinner />;
 
@@ -14,7 +16,7 @@ const Categories = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="heading-h1 mb-5">All Sub-Categories</h1>
-        <CreateSubNewCategory />
+        {isSubcategoryCreatePermission && <CreateSubNewCategory />}
       </div>
 
       {!isError && !error && <SubCategoryTable data={data} />}

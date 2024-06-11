@@ -6,6 +6,11 @@ import EditSubCategory from "./EditSubCategory";
 import DeleteSubCategory from "./DeleteSubCategory";
 
 const SubCategoriesList = ({ subcategory }) => {
+  const isSubcategoryUpdatePermission =
+    useCheckPermission("subcategory_update");
+  const isSubcategoryDeletePermission =
+    useCheckPermission("subcategory_delete");
+
   return (
     <>
       <TableRow>
@@ -18,8 +23,12 @@ const SubCategoriesList = ({ subcategory }) => {
         </TableCell>
         <TableCell data-label="Actions">
           <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
-            <EditSubCategory subcategory={subcategory} />
-            <DeleteSubCategory subcategory={subcategory} />
+            {isSubcategoryUpdatePermission && (
+              <EditSubCategory subcategory={subcategory} />
+            )}
+            {isSubcategoryDeletePermission && (
+              <DeleteSubCategory subcategory={subcategory} />
+            )}
           </div>
         </TableCell>
       </TableRow>

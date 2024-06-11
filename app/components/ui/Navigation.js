@@ -16,7 +16,6 @@ const Navigation = () => {
   const { isLoading, user } = useUser();
 
   const pathname = usePathname();
-  console.log(user);
 
   return (
     <>
