@@ -351,22 +351,26 @@ const CreateNewRole = () => {
       groupedPermissions.dealer.push(permission);
     } else if (permission.name.startsWith("social")) {
       groupedPermissions.social.push(permission);
-    } else if (permission.name.startsWith("calendar")) {
+    } else if (
+      permission.name.startsWith("calendar") ||
+      permission.name.startsWith("create_event")
+    ) {
       groupedPermissions.calendar.push(permission);
-    } else if (permission.name.startsWith("create")) {
-      groupedPermissions.calendar.push(permission);
-    } else if (permission.name.startsWith("stock")) {
+    } else if (
+      permission.name.startsWith("stock") ||
+      permission.name.startsWith("upload_stock") ||
+      permission.name.startsWith("edit_stock")
+    ) {
       groupedPermissions.stock.push(permission);
     } else if (permission.name.startsWith("click")) {
       groupedPermissions.clickAndCollect.push(permission);
-    } else if (permission.name.startsWith("upload_stock")) {
-      groupedPermissions.stock.push(permission);
-    } else if (permission.name.startsWith("warranty")) {
+    } else if (
+      permission.name.startsWith("warranty") ||
+      permission.name.startsWith("create_warranty")
+    ) {
       groupedPermissions.warranty.push(permission);
     } else if (permission.name.startsWith("find")) {
       groupedPermissions.findDealer.push(permission);
-    } else if (permission.name.startsWith("edit_stock")) {
-      groupedPermissions.stock.push(permission);
     } else if (
       permission.name.startsWith("user") ||
       permission.name.startsWith("assign_role") ||
@@ -381,6 +385,8 @@ const CreateNewRole = () => {
       groupedPermissions.other.push(permission);
     }
   });
+
+  console.log(groupedPermissions);
 
   const {
     register,
