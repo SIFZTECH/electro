@@ -12,6 +12,7 @@ export function useUser() {
   return {
     isLoading,
     user,
+    permissions: user?.roles ? user.roles[0].permissions : [],
     isVerified: user?.email_verified_at,
     isTwoAuthEnable: user?.isTwoFactorEnable === 1,
     isBlocked: user?.is_blocked === 1,

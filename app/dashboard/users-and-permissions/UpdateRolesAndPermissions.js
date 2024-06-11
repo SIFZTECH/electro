@@ -14,8 +14,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import PermissionList from "./PermissionList";
+import UpdateList from "./UpdateListPermissions";
 
-const UpdateRole = ({ roleName, id }) => {
+const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -245,13 +246,6 @@ const UpdateRole = ({ roleName, id }) => {
       updated_at: "2024-06-10T12:32:08.000000Z",
     },
     {
-      id: 20,
-      name: "social_media_assets",
-      guard_name: "sanctum",
-      created_at: "2024-06-10T12:36:42.000000Z",
-      updated_at: "2024-06-10T12:36:42.000000Z",
-    },
-    {
       id: 33,
       name: "create_warranty",
       guard_name: "sanctum",
@@ -431,54 +425,64 @@ const UpdateRole = ({ roleName, id }) => {
               )}
             </div>
             <div className="">
-              <PermissionList
+              <UpdateList
                 title="User Management"
                 permissions={groupedPermissions.user}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Product Management"
                 permissions={groupedPermissions.product}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Category Management"
                 permissions={groupedPermissions.category}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Sub-Category Management"
                 permissions={groupedPermissions.subcategory}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Attribute Management"
                 permissions={groupedPermissions.attribute}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Brand Management"
                 permissions={groupedPermissions.brand}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Dealer Management"
                 permissions={groupedPermissions.dealer}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Stock Management"
                 permissions={groupedPermissions.stock}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Social Media Management"
                 permissions={groupedPermissions.social}
+                permissionsName={permissionsName}
                 register={register}
               />
-              <PermissionList
+              <UpdateList
                 title="Other"
                 permissions={groupedPermissions.other}
+                permissionsName={permissionsName}
                 register={register}
               />
             </div>
@@ -488,7 +492,7 @@ const UpdateRole = ({ roleName, id }) => {
                 disabled={isSubmitting}
                 className="mt-4 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
-                {isSubmitting ? <SpinnerMini /> : "Create"}
+                {isSubmitting ? <SpinnerMini /> : "Update"}
               </button>
             </div>
           </form>

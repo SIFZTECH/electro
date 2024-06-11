@@ -7,10 +7,9 @@ import AllResources from "./AllResources";
 import Link from "next/link";
 import CreateNewResources from "./CreateNewResources";
 import { useRoles } from "@/app/_features/roles/useRoles";
+import { useUser } from "@/app/_features/authentication/useUser";
 
 const ResourcesPage = () => {
-  const { isLoading: isLoading2, permissions } = useRoles();
-
   const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
 
   if (isLoading) return <Spinner />;

@@ -5,7 +5,7 @@ const User = () => {
   const { user } = useUser();
 
   return (
-    <div className="bg-gray-50 mt-6 md:mt-0 flex gap-3 items-center rounded-xl font-sans py-4 px-3">
+    <div className="bg-gray-50 mt-6 md:mt-0 flex gap-3 items-center rounded-xl font-sans py-4 px-3 flex-wrap max-w-full">
       <Image
         width={40}
         height={40}
@@ -15,10 +15,10 @@ const User = () => {
       />
 
       <div className="flex flex-col leading-5 text-black">
-        <span className="name font-bold">
+        <span className="name font-bold text-wrap">
           {user.firstname} {user.lastname}
         </span>
-        <span className="email">{user.email}</span>
+        <span className="email text-wrap">{user.email}</span>
       </div>
     </div>
   );

@@ -17,55 +17,12 @@ import Spinner from "@/app/components/ui/Spinner";
 import CreatePermission from "./CreatePermission";
 import CreateNewRole from "./CreateNewRole";
 import DeletePermission from "./DeletePermission";
-import UpdateRole from "./UpdateRole";
+import UpdateRole from "./UpdateRolesAndPermissions";
 
 const PermissionTable = () => {
   const { isLoading, data, isError, error } = useRoles();
 
   if (isLoading) return <Spinner />;
-
-  // dashboard;
-  // product_add;
-  // product_update;
-  // product_delete;
-  // product_list;
-  // category_add;
-  // category_update;
-  // category_delete;
-  // category_list;
-  // subcategory_add;
-  // subcategory_update;
-  // subcategory_delete;
-  // subcategory_list;
-  // add_attribute;
-  // add_attribute_value;
-  // attribute_list;
-  // brand_add;
-  // brand_update;
-  // brand_delete;
-  // social_media_assets;
-  // dealer_edit;
-  // dealer_delete;
-  // dealer_block;
-  // dealer_list;
-  // create_event;
-  // calendar_view;
-  // click_and_collect;
-  // stock;
-  // upload_stock;
-  // edit_stock;
-  // find_dealer;
-  // warranty;
-  // create_warranty;
-  // users_and_permissions;
-  // all_users;
-  // block_user;
-  // roles_and_permissions;
-  // admin;
-  // edit_user;
-  // assign_role;
-  // block_list;
-  // settings;
 
   return (
     <>
@@ -116,7 +73,11 @@ const PermissionTable = () => {
                 <TableCell data-label="Click and Collect">Web</TableCell>
                 <TableCell data-label="Actions">
                   <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
-                    <UpdateRole roleName={data.name} id={data.id} />
+                    <UpdateRole
+                      roleName={data.name}
+                      id={data.id}
+                      permissions={data.permissions}
+                    />
                     <DeleteRole roleName={data.name} />
                   </div>
                 </TableCell>
