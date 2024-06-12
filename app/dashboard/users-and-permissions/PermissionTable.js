@@ -62,7 +62,7 @@ const PermissionTable = () => {
                   <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
                     {data.permissions.map((permission) => (
                       <span
-                        className="btn-primary bg-green-200"
+                        className="btn-primary bg-amber-200"
                         key={permission}
                       >
                         {permission}

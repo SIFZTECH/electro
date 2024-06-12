@@ -28,11 +28,14 @@ const Sidebar = () => {
         <div
           className={`flex flex-col justify-between fixed z-[9999] transition-all  ${
             isOpen ? "left-0" : "left-[-100%]"
-          }  bg-slate-900 w-full h-[94.5%] pb-6`}
+          }  bg-slate-900 w-full h-[95%] pb-6 overflow-y-auto`}
         >
           <Navigation />
 
-          <User />
+          <div className="mt-4 space-y-3">
+            <Logout />
+            <User />
+          </div>
         </div>
       </div>
       <aside className="hidden lg:flex xl:fixed xl:h-dvh xl:overflow-y-auto sidebar flex-initial xl:min-h-dvh text-white bg-slate-900 py-6 px-4 flex-col justify-between lg:min-w-80 lg:max-w-80">

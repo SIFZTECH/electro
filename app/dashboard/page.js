@@ -1,16 +1,28 @@
+"use client";
+
 import PieCharts from "@/app/components/ui/PieCharts";
 import RecentOrder from "@/app/components/ui/RecentOrder";
 import Stats from "@/app/components/ui/Stats";
+import useCheckPermission from "../_hooks/usePermission";
+import NotFoundData from "../components/ui/NotFoundData";
 
-const page = () => {
-  return (
-    <div>
-      <Stats />
+const Dashboard = () => {
+  const isPermission = useCheckPermission("dashboard");
 
-      <PieCharts />
-      <RecentOrder />
-    </div>
-  );
+  if (isPermission) {
+    return (
+      <div>
+        <Stats />
+
+        <PieCharts />
+        <RecentOrder />
+      </div>
+    );
+  } else {
+    return (
+      <NotFoundData message="You don't have permission to access that route!" />
+    );
+  }
 };
 
-export default page;
+export default Dashboard;

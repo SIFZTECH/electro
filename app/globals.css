@@ -93,7 +93,8 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 5px;
+
+  border-radius: 2px 2px 5px 5px;
 }
 
 /* Handle on hover */
@@ -165,6 +166,21 @@ input[type="checkbox"] {
 .product__thumbnails img {
   height: 70px;
 }
+
+.rbc-today {
+  background-color: #fde68a !important;
+}
+.rbc-day-bg + .rbc-day-bg {
+  cursor: pointer;
+}
+.rbc-off-range-bg {
+  background-color: #fafaf9 !important;
+}
+
+table th {
+  font-weight: 600 !important;
+}
+
 @media (max-width: 600px) {
   .product__thumbnails img {
     height: 50px;

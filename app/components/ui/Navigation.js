@@ -25,7 +25,7 @@ const Navigation = () => {
   const isFindDealerPermission = useCheckPermission("find_dealer");
   const isClickAndCollectPermission = useCheckPermission("click_and_collect");
   const isCalendarViewPermission = useCheckPermission("calendar_view");
-  const isManageUsersPermission = useCheckPermission("calendar_view");
+  const isManageUsersPermission = useCheckPermission("users_and_permissions");
 
   const pathname = usePathname();
 
