@@ -11,15 +11,10 @@ import { useBrands } from "@/app/_features/brands/useBrands";
 import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
 import "@tonz/react-draft-wysiwyg-input/style.css";
 import Spinner from "@/app/components/ui/Spinner";
+import SelectCategoryFormComponent from "./SelectCategory&SubCategory";
 
 const ProductForm = () => {
-  const { isLoading, data, isError } = useCategories();
-
-  // const {
-  //   data: brands,
-  //   isLoading: isLoading3,
-  //   isError: isError3,
-  // } = useBrands();
+  const { data: brands, isLoading, isError } = useBrands();
 
   const {
     register,
@@ -33,9 +28,6 @@ const ProductForm = () => {
       { attributeName: "", attributeValue: "" },
     ],
   });
-
-  const watchCategoryId = watch("category_id");
-  const { data: data2, isLoading: isLoading2 } = useCategory(watchCategoryId);
 
   function onSubmit(data) {
     console.log(data);
@@ -150,12 +142,12 @@ const ProductForm = () => {
                 {...register("brand_id")}
               >
                 <option value="">--Please choose an option--</option>
-                {/* {!isLoading3 &&
+                {!isLoading &&
                   brands.data.map((brand) => (
                     <option key={brand.id} value={brand.id}>
                       {brand.name}
                     </option>
-                  ))} */}
+                  ))}
               </select>
               {errors?.brand && (
                 <span className="text-red-500 text-sm">
@@ -165,55 +157,7 @@ const ProductForm = () => {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-8 col-span-2">
-          <div className="flex-1">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Category
-            </label>
-            <div className="mt-1">
-              <select
-                onChange={(e) => console.log(e)}
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                {...register("category_id")}
-              >
-                {!isLoading &&
-                  data.data.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-              </select>
-
-              {errors?.category_id && (
-                <span className="text-red-500 text-sm">
-                  {errors.category_id.message}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="flex-1">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Sub-Category
-            </label>
-            <select
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              {...register("subcategory_id")}
-            >
-              <option value="">--Please choose an option--</option>
-              {!isLoading2 &&
-                data2?.data?.subcategories.map((subcategory) => (
-                  <option key={subcategory.id} value={subcategory.id}>
-                    {subcategory.name}
-                  </option>
-                ))}
-            </select>
-            {errors?.subcategory_id && (
-              <span className="text-red-500 text-sm">
-                {errors.subcategory_id.message}
-              </span>
-            )}
-          </div>
-        </div>
+        <SelectCategoryFormComponent control={control} watch={watch} />
 
         <SelectAttribute register={register} control={control} />
 

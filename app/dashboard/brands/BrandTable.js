@@ -16,7 +16,7 @@ const BrandTable = ({ data }) => {
   return (
     <>
       {brands?.length === 0 ? (
-        "There is no brand. Please add new sub-category!"
+        "There is no brand. Please add new brand!"
       ) : (
         <Table className="">
           <TableHeader>

@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 export function useAttributes() {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["attributes"],
-    queryFn: () => getAllAttributes(),
+    queryFn: getAllAttributes,
   });
 
   return { data, isLoading, error, isError };

@@ -10,16 +10,7 @@ const SelectAttribute = ({ register, control }) => {
     name: "variants",
     control,
   });
-  // const { isLoading, data } = useAttributes();
-  // console.log(data);
-
-  <button
-    type="button"
-    className="btn-primary"
-    onClick={() => append({ attributeName: "", attributeValue: "" })}
-  >
-    Add Variants
-  </button>;
+  const { isLoading, data } = useAttributes();
 
   return (
     <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">

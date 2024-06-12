@@ -1,40 +1,37 @@
 "use client";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useCategories } from "../_features/categories/useCategory";
 
 const FormComponent = () => {
+  const { isLoading, isError, data } = useCategories();
   const { handleSubmit, control, watch } = useForm();
   const [subcategories, setSubcategories] = useState([]);
 
-  const categories = [
-    { id: "1", name: "Fruits" },
-    { id: "2", name: "Vegetables" },
-    // Add more categories here
-  ];
-
-  const subcategoriesData = {
-    1: [
-      { id: "1-1", name: "Apple" },
-      { id: "1-2", name: "Banana" },
-      // Add more subcategories for Fruits here
-    ],
-    2: [
-      { id: "2-1", name: "Carrot" },
-      { id: "2-2", name: "Broccoli" },
-      // Add more subcategories for Vegetables here
-    ],
-    // Add more category mappings here
-  };
+  const categories = data?.data;
 
   const selectedCategory = watch("category");
 
+  // Function to get subcategories by category ID
+  function getSubcategoriesByCategoryId(categoryId) {
+    // Find the category with the specified ID
+    const category = categories.find((category) => category.id === +categoryId);
+
+    // If the category exists, return its subcategories; otherwise, return an empty array
+    return category ? category.subcategories : [];
+  }
+
+  const subcategoriess = getSubcategoriesByCategoryId(selectedCategory);
+
   React.useEffect(() => {
     if (selectedCategory) {
-      setSubcategories(subcategoriesData[selectedCategory] || []);
+      setSubcategories(subcategoriess || []);
     } else {
       setSubcategories([]);
     }
   }, [selectedCategory]);
+
+  console.log(subcategories);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -50,11 +47,12 @@ const FormComponent = () => {
           render={({ field }) => (
             <select {...field}>
               <option value="">Select Category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
+              {!isLoading &&
+                categories?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
             </select>
           )}
         />
@@ -69,7 +67,7 @@ const FormComponent = () => {
             <select {...field} disabled={!selectedCategory}>
               <option value="">Select Subcategory</option>
               {subcategories.map((subcategory) => (
-                <option key={subcategory.id} value={subcategory.id}>
+                <option key={subcategory.id} value={subcategory.name}>
                   {subcategory.name}
                 </option>
               ))}
