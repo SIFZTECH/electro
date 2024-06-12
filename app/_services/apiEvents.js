@@ -3,28 +3,39 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
-export async function getAllEvents() {
+export async function getAllEventsForAdmin() {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/events`, {
+  const { data } = await axios.get(`${BASE_URL}/promotional/calendar/get-all`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  if (!data.data)
-    throw new Error(
-      "There is no Event at that momment! Please add a new Brand"
-    );
+  console.log(data);
 
-  return data.data;
+  return data;
+}
+export async function getAllEvents() {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/promotional/calendar/get`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  console.log(data);
+
+  return data;
 }
 
 export async function getEvent(id) {
   const token = localStorage.getItem("access-token");
 
-  if (!token) return null;
+  if (!token || !id) return null;
 
   const { data } = await axios.get(
     `${BASE_URL}/promotional/calendar/get/${id}`,
@@ -45,17 +56,17 @@ export async function getEvent(id) {
   return data.data;
 }
 
-export async function updateEvent(id, name) {
+export async function updateEvent(id, formData) {
   const token = localStorage.getItem("access-token");
-  if (!token) return null;
+  if (!token || !id) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/Events/${id}`,
+    url: `${BASE_URL}/promotional/calendar/update/${id}`,
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: name,
+    data: formData,
   });
 
   return data;
@@ -66,12 +77,11 @@ export async function deleteEvent(id) {
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/Events/${id}`,
+    url: `${BASE_URL}/promotional/calendar/delete/${id}`,
     method: "delete",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { id },
   });
 
   return data;

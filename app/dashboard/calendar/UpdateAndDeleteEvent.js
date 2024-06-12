@@ -8,7 +8,7 @@ import {
 import UpdateEventTab from "./UpdateEventTab";
 import DeleteEventTab from "./DeleteEventTab";
 
-const UpdateAndDeleteEvent = () => {
+const UpdateAndDeleteEvent = ({ id, date, title, visible, setOpen }) => {
   return (
     <DialogContent>
       <Tabs
@@ -25,10 +25,16 @@ const UpdateAndDeleteEvent = () => {
           <TabsTrigger value="deleteEvent">Delete Event</TabsTrigger>
         </TabsList>
         <TabsContent value="updateEvent">
-          <UpdateEventTab />
+          <UpdateEventTab
+            id={id}
+            date={date}
+            title={title}
+            visible={visible}
+            setOpen={setOpen}
+          />
         </TabsContent>
         <TabsContent value="deleteEvent">
-          <DeleteEventTab />
+          <DeleteEventTab id={id} setOpen={setOpen} />
         </TabsContent>
       </Tabs>
     </DialogContent>

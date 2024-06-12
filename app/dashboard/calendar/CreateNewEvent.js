@@ -3,17 +3,19 @@
 import { useRoles } from "@/app/_features/roles/useRoles";
 import { createEvent } from "@/app/_services/apiEvents";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const CreateNewEvent = ({ date }) => {
+const CreateNewEvent = ({ setOpen }) => {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      date: date,
+      date: Date.now(),
     },
   });
   const { isLoading, data } = useRoles();
@@ -31,9 +33,11 @@ const CreateNewEvent = ({ date }) => {
 
     try {
       const res = await createEvent({ date: formattedDate, title, visible_to });
-      console.log(res);
+
       if (res) {
         toast.success("New Event Created Successfully");
+        queryClient.invalidateQueries("events");
+        setOpen((open) => !open);
       }
     } catch (err) {
       console.log(err);
