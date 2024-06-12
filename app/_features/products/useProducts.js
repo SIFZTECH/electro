@@ -7,11 +7,12 @@ export function useProducts() {
   const {
     data: products,
     isLoading,
+    isError,
     error,
   } = useQuery({
     queryKey: ["products"],
     queryFn: getAllProducts,
   });
 
-  return { products, isLoading, error };
+  return { products, isError, isLoading, error };
 }

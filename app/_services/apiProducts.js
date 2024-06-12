@@ -6,7 +6,8 @@ import { BASE_URL } from "../lib/utils";
 export async function getAllProducts() {
   const { data } = await axios.get(`${BASE_URL}/products`);
 
-  return data.data;
+  console.log(data);
+  return data;
 }
 
 export async function getProduct(slug) {

@@ -9,5 +9,7 @@ export function useBrands() {
     queryFn: () => getAllBrands(),
   });
 
+  console.log(error, data);
+
   return { data, isLoading, error, isError };
 }

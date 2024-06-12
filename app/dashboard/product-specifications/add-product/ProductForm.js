@@ -14,6 +14,7 @@ import Spinner from "@/app/components/ui/Spinner";
 
 const ProductForm = () => {
   const { isLoading, data, isError } = useCategories();
+
   const {
     data: brands,
     isLoading: isLoading3,
@@ -154,12 +155,12 @@ const ProductForm = () => {
                 {...register("brand_id")}
               >
                 <option value="">--Please choose an option--</option>
-                {!isLoading3 &&
+                {/* {!isLoading3 &&
                   brands.data.map((brand) => (
                     <option key={brand.id} value={brand.id}>
                       {brand.name}
                     </option>
-                  ))}
+                  ))} */}
               </select>
               {errors?.brand && (
                 <span className="text-red-500 text-sm">
@@ -219,7 +220,7 @@ const ProductForm = () => {
           </div>
         </div>
 
-        {/* <SelectAttribute register={register} control={control} /> */}
+        <SelectAttribute register={register} control={control} />
 
         <div className="col-span-2">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">

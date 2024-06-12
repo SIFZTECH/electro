@@ -13,6 +13,8 @@ export async function getAllBrands() {
     },
   });
 
+  console.log(data);
+
   if (!data.data)
     throw new Error(
       "There is no brand at that momment! Please add a new Brand"

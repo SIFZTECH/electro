@@ -11,11 +11,11 @@ import {
 import BrandsList from "./BrandsList";
 
 const BrandTable = ({ data }) => {
-  const brands = data.data;
+  const brands = data?.data;
 
   return (
     <>
-      {brands.length === 0 ? (
+      {brands?.length === 0 ? (
         "There is no brand. Please add new sub-category!"
       ) : (
         <Table className="">
