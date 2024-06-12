@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 export function useBrands() {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["brands"],
-    queryFn: () => getAllBrands(),
+    queryFn: getAllBrands,
   });
 
   console.log(error, data);

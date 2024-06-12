@@ -15,11 +15,11 @@ import Spinner from "@/app/components/ui/Spinner";
 const ProductForm = () => {
   const { isLoading, data, isError } = useCategories();
 
-  const {
-    data: brands,
-    isLoading: isLoading3,
-    isError: isError3,
-  } = useBrands();
+  // const {
+  //   data: brands,
+  //   isLoading: isLoading3,
+  //   isError: isError3,
+  // } = useBrands();
 
   const {
     register,
@@ -32,11 +32,6 @@ const ProductForm = () => {
       { attributeName: "", attributeValue: "" },
       { attributeName: "", attributeValue: "" },
     ],
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    name: "variants",
-    control,
   });
 
   const watchCategoryId = watch("category_id");
@@ -176,19 +171,19 @@ const ProductForm = () => {
               Category
             </label>
             <div className="mt-1">
-              {!isLoading && (
-                <select
-                  onChange={(e) => console.log(e)}
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  {...register("category_id")}
-                >
-                  {data.data.map((category) => (
+              <select
+                onChange={(e) => console.log(e)}
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                {...register("category_id")}
+              >
+                {!isLoading &&
+                  data.data.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.name}
                     </option>
                   ))}
-                </select>
-              )}
+              </select>
+
               {errors?.category_id && (
                 <span className="text-red-500 text-sm">
                   {errors.category_id.message}

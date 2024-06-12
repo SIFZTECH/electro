@@ -4,6 +4,7 @@ import { TableCell, TableRow } from "@/app/components/ui/table";
 
 import EditSubCategory from "./EditSubCategory";
 import DeleteSubCategory from "./DeleteSubCategory";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const SubCategoriesList = ({ subcategory }) => {
   const isSubcategoryUpdatePermission =

@@ -52,8 +52,10 @@ const ProtectedRoute = ({ children }) => {
   //   return <Confirmation />;
   // }
 
+  console.log(user);
+
   // 4. If there IS a admin user, render the app
-  if (!isLoading && user && !isBlocked && isVerified) {
+  if (!isLoading && user && !isBlocked) {
     return children;
   }
 };

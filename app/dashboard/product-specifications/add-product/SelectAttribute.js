@@ -22,7 +22,7 @@ const SelectAttribute = ({ register, control }) => {
   </button>;
 
   return (
-    <div className="flex flex-col items-start gap-4 md:basis-[100%] flex-wrap">
+    <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
       {fields.map((field, index) => (
         <div className="flex w-full items-end gap-8" key={field.id}>
           <div className="flex-1">

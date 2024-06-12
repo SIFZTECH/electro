@@ -13,11 +13,13 @@ import CreateNewEvent from "./CreateNewEvent";
 import UpdateAndDeleteEvent from "./UpdateAndDeleteEvent";
 import { useEvents } from "@/app/_features/events/useEvents";
 import Spinner from "@/app/components/ui/Spinner";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
 export default function ReactBigCalendar() {
+  const isCreateEventPermission = useCheckPermission("create_event");
   const { isLoading, isError, error, data } = useEvents();
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -55,12 +57,14 @@ export default function ReactBigCalendar() {
     <div className="py-3">
       <div className="flex items-center justify-between mb-3">
         <h1 className="heading-h1 mb-6">Promotional Calendar</h1>
-        <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-          <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
-          <DialogContent>
-            <CreateNewEvent date={date} setOpen={setOpen} />
-          </DialogContent>
-        </Dialog>
+        {isCreateEventPermission && (
+          <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
+            <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
+            <DialogContent>
+              <CreateNewEvent date={date} setOpen={setOpen} />
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
       <Calendar
         views={["day", "agenda", "work_week", "month"]}

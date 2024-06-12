@@ -7,9 +7,7 @@ export function useUser() {
     queryFn: getCurrentUser,
   });
 
-  if (!isLoading && !isError && !error) {
-    var user = data && data[0];
-  }
+  const user = !isLoading && data;
 
   return {
     isLoading,
