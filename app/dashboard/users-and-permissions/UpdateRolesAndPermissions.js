@@ -101,7 +101,6 @@ const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
   });
 
   async function onSubmit(data) {
-    console.log(data);
     try {
       const res = await updateRole(id, data);
 
@@ -112,7 +111,7 @@ const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
         reset();
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

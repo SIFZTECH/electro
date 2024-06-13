@@ -54,8 +54,6 @@ export async function getAttribute(categoryId) {
       "There is no Attribute at that momment! Please add a new Attribute"
     );
 
-  console.log(data);
-
   return data.data;
 }
 
@@ -90,8 +88,6 @@ export async function createAttribute({ name, value }) {
     data: { name, value },
   });
 
-  console.log(data);
-
   return data;
 }
 export async function createAttributeValue({ value, attribute_id }) {
@@ -106,8 +102,6 @@ export async function createAttributeValue({ value, attribute_id }) {
     },
     data: { value, attribute_id },
   });
-
-  console.log(data);
 
   return data;
 }

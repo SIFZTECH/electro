@@ -26,7 +26,6 @@ const DeletePermission = ({ roleName }) => {
   async function onSubmit({ permission_name }) {
     try {
       const res = await deletePermission(permission_name);
-      console.log(res);
 
       if (res) {
         toast.success(res.message);
@@ -35,7 +34,7 @@ const DeletePermission = ({ roleName }) => {
         setOpen((open) => !open);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

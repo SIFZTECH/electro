@@ -41,7 +41,7 @@ export default function Page() {
         router.replace("/register/confirmation");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response?.data?.message.email) {
         toast.error(err.response.data.message.email);
       } else {

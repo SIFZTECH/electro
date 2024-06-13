@@ -21,12 +21,11 @@ const Search = () => {
   async function onSubmit({ query }) {
     try {
       const res = await searchBlockedUsers(query);
-      console.log(res);
       if (res.data) {
         queryClient.setQueryData(["blockedUsers"], res);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 

@@ -35,7 +35,7 @@ const EmailTab = () => {
         router.replace("/dashboard/settings/enable-2FA/verify");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

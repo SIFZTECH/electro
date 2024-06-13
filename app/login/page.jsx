@@ -32,7 +32,7 @@ export default function Login() {
       }
       toast.success(res.message);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         err.response.data.data
           ? toast.error(err.response.data.data.email)

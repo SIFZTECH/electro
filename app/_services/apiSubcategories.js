@@ -32,8 +32,6 @@ export async function getSubcategory(categoryId) {
       "There is no category at that momment! Please add a new Category"
     );
 
-  console.log(data);
-
   return data.data;
 }
 
@@ -53,8 +51,6 @@ export async function updateSubcategory(id, name, category_id) {
     },
   });
 
-  console.log(data);
-
   return data;
 }
 
@@ -70,8 +66,6 @@ export async function createSubcategory({ name, category_id }) {
     },
     data: { name, category_id: +category_id },
   });
-
-  console.log(data);
 
   return data;
 }

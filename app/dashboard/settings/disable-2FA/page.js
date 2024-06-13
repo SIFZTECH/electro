@@ -28,7 +28,7 @@ const DisableTwoFa = () => {
       router.replace("/dashboard/settings");
       queryClient.invalidateQueries("user");
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

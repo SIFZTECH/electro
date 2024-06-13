@@ -23,10 +23,9 @@ const ProductForm = () => {
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
-    variants: [
-      { attributeName: "", attributeValue: "" },
-      { attributeName: "", attributeValue: "" },
-    ],
+    defaultValues: {
+      variants: [{ attribute_value_id: "", price: 0 }], // Default values
+    },
   });
 
   function onSubmit(data) {
@@ -159,7 +158,7 @@ const ProductForm = () => {
         </div>
         <SelectCategoryFormComponent control={control} watch={watch} />
 
-        <SelectAttribute register={register} control={control} />
+        <SelectAttribute watch={watch} control={control} />
 
         <div className="col-span-2">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">

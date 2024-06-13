@@ -29,15 +29,13 @@ const CreateNewAttribute = () => {
       const res = await createAttribute({ name, value });
 
       if (res) {
-       
-
         router.replace("/dashboard/attributes/create-attribute-value");
         queryClient.invalidateQueries("attributes");
 
         setOpen((open) => !open);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

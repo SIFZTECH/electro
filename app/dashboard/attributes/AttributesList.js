@@ -6,7 +6,6 @@ import EditCategory from "./EditAttribute";
 import DeleteCategory from "./DeleteAttribute";
 
 const AttributesList = ({ attribute, attribute_value }) => {
-  console.log(attribute, attribute_value);
   return (
     <TableRow>
       <TableCell>{attribute}</TableCell>

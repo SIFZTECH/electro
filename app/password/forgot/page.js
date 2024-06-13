@@ -27,7 +27,7 @@ export default function ForgotPassword() {
         toast.success(data.message);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.message);
       } else {

@@ -13,8 +13,6 @@ export async function getAllEventsForAdmin() {
     },
   });
 
-  console.log(data);
-
   return data;
 }
 export async function getAllEvents() {
@@ -26,8 +24,6 @@ export async function getAllEvents() {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  console.log(data);
 
   return data;
 }
@@ -50,8 +46,6 @@ export async function getEvent(id) {
     throw new Error(
       "There is no Event at that momment! Please add a new Event"
     );
-
-  console.log(data);
 
   return data.data;
 }

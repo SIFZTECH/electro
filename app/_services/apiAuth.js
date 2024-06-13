@@ -58,8 +58,6 @@ export async function changePassword({
     },
   });
 
-  console.log(data);
-
   return data;
 }
 
@@ -198,8 +196,6 @@ export async function resendOtp(formData) {
     method: "post",
     data: formData,
   });
-
-  console.log(data);
 
   return data;
 }

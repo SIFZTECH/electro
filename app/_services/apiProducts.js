@@ -14,7 +14,6 @@ export async function getAllProducts() {
     },
   });
 
-  console.log(data);
   return data;
 }
 

@@ -36,7 +36,7 @@ const DeleteBrand = ({ brand }) => {
         queryClient.invalidateQueries("brands");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

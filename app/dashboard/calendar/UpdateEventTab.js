@@ -40,14 +40,13 @@ const UpdateEventTab = ({ id, date, title, visible, setOpen }) => {
         visible_to,
         date: formattedDate,
       });
-      console.log(res);
       if (res) {
         toast.success("Event updated");
         queryClient.invalidateQueries("events");
         setOpen((open) => !open);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {
