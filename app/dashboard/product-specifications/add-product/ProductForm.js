@@ -18,6 +18,10 @@ import { createProduct } from "@/app/_services/apiProducts";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Image from "next/image";
+import { BiCloset } from "react-icons/bi";
+import ImageUploader from "./SelectImages";
 
 const ProductForm = () => {
   const queryClient = useQueryClient();
@@ -209,29 +213,8 @@ const ProductForm = () => {
         <SelectCategoryFormComponent control={control} watch={watch} />
 
         <SelectAttribute watch={watch} control={control} />
-
-        <div className="col-span-2">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-            Images
-          </label>
-          <div className="mt-1">
-            <input
-              {...register("images", {
-                required: "This field must be filled",
-              })}
-              type="file"
-              multiple
-              placeholder="Select your Images"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-            {errors?.images && (
-              <span className="text-red-500 text-sm">
-                {errors.images.message}
-              </span>
-            )}
-          </div>
-          <SpecificationForm control={control} />
-        </div>
+        <ImageUploader register={register} errors={errors} />
+        <SpecificationForm control={control} />
       </div>
       <button
         type="submit"
