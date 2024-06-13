@@ -12,9 +12,9 @@ const FilterByProduct = () => {
       </div>
 
       <FilterByCategory />
-      <FilterBySize />
+      {/* <FilterBySize /> */}
       <FilterByBrand />
-      <FilterByCondition />
+      {/* <FilterByCondition /> */}
     </div>
   );
 };

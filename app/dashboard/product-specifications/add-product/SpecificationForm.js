@@ -62,7 +62,7 @@ const SpecificationForm = ({ control }) => {
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
                     {...field}
                   >
-                    <option value="">Please choose an icon</option>
+                    <option value="">--Please choose an Icon--</option>
                     {icons.map((icon) => (
                       <option key={icon} value={icon}>
                         {icon}

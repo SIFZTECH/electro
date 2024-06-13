@@ -1,37 +1,15 @@
-// const FilterByCategory = () => {
-//   return (
-//     <div className="border-b border-grey-0 py-6 px-3">
-//       <legend className="font-bold mb-2 font-serif">By Category</legend>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-1" name="ct-1" defaultChecked />
-//         <label htmlFor="ct-1">E Mountain</label>
-//       </div>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-2" name="ct-2" />
-//         <label htmlFor="ct-2">E Tekking</label>
-//       </div>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-3" name="ct-3" />
-//         <label htmlFor="ct-3">E Mountain</label>
-//       </div>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-4" name="ct-4" />
-//         <label htmlFor="ct-4">E Mountain</label>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FilterByCategory;
-
+import { useBrands } from "@/app/_features/brands/useBrands";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
+import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 
-const FilterByCategory = () => {
+const FilterByBrand = () => {
+  const { data, isLoading, isError, error } = useBrands();
+
   return (
     <Accordion type="single" collapsible defaultValue="brand">
       <AccordionItem value="brand">
@@ -40,22 +18,26 @@ const FilterByCategory = () => {
         </AccordionTrigger>
         <AccordionContent>
           <div className="border-b border-grey-0 px-3 pb-3">
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-1" name="ct-1" defaultChecked />
-              <label htmlFor="ct-1">E Mountain</label>
-            </div>
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-2" name="ct-2" />
-              <label htmlFor="ct-2">E Tekking</label>
-            </div>
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-3" name="ct-3" />
-              <label htmlFor="ct-3">E Mountain</label>
-            </div>
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-4" name="ct-4" />
-              <label htmlFor="ct-4">E Mountain</label>
-            </div>
+            {isLoading && !isError ? (
+              <SkeletonFiler />
+            ) : (
+              data?.data?.map((brand) => (
+                <div
+                  key={brand.id}
+                  className="flex gap-1 items-center cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    id={brand.name}
+                    name={brand.name}
+                    className="cursor-pointer"
+                  />
+                  <label className="cursor-pointer" htmlFor={brand.name}>
+                    {brand.name}
+                  </label>
+                </div>
+              ))
+            )}
           </div>
         </AccordionContent>
       </AccordionItem>
@@ -63,4 +45,4 @@ const FilterByCategory = () => {
   );
 };
 
-export default FilterByCategory;
+export default FilterByBrand;

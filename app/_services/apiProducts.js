@@ -68,7 +68,37 @@ export async function getProduct(slug) {
     },
   });
 
+  return data.data;
+}
+export async function updateProduct(id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(`${BASE_URL}/update-product/${slug}`, {
+    method: "put",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  });
+
+  return data;
+}
+
+export async function deleteProduct(id) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(`${BASE_URL}/delete-product/${id}`, {
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   console.log(data);
 
-  return data.data;
+  return data;
 }
