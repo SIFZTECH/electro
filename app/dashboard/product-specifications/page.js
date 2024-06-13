@@ -11,6 +11,7 @@ import NotFoundData from "@/app/components/ui/NotFoundData";
 const Page = () => {
   const isPermission = useCheckPermission("product_add");
   const { products, isLoading, isError, error } = useProducts();
+
   if (isLoading) return <Spinner />;
 
   return (
@@ -22,7 +23,7 @@ const Page = () => {
           <FilterByProduct />
 
           {/* {!isLoading && !isError && !error && <Products products={products} />} */}
-          {isLoading && !isError && products.data.length > 0 ? (
+          {!isLoading && !isError && products.data.data.length > 0 ? (
             <Products products={products} />
           ) : (
             <NotFoundData message="There is no products at that moment!" />

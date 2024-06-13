@@ -3,8 +3,8 @@ import Pagination from "./Pagination";
 import Product from "./Product";
 
 const Products = ({ products }) => {
-  const data = products.data;
-
+  const data = products.data.data;
+  console.log(data);
 
   return (
     <div>

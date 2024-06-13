@@ -2,13 +2,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import ProductImage from "./ProductImage";
 
-const ProductTop = () => {
+const ProductTop = ({ product }) => {
   return (
     <div className="flex gap-8 flex-col lg:flex-row">
       <ProductImage />
       <div className="product__summary flex flex-col gap-8">
         <div className="product__name flex items-center gap-3">
-          <span className="font-serif font-semibold text-xl">NCMs 3</span>
+          <span className="font-serif font-semibold text-xl">
+            {product.name}
+          </span>
           <span className="badge bg-color-primary rounded-full px-2 text-[12px]">
             Best Seller
           </span>

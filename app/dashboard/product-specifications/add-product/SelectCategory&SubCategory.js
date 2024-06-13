@@ -62,7 +62,7 @@ const SelectCategoryFormComponent = ({ control, watch }) => {
           Sub-Category
         </label>
         <Controller
-          name="subcategory"
+          name="subcategory_id"
           control={control}
           render={({ field }) => (
             <select

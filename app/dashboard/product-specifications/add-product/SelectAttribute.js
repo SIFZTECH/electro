@@ -19,8 +19,6 @@ function SelectAttribute({ watch, control }) {
   const { data, isLoading } = useAttributeNames();
   const { data: data2, isLoading: isLoading2 } = useAttributes();
 
-  console.log(data2);
-
   const selectedAttribute = watch("attribute_name");
 
   const attributes = data?.data;
@@ -36,7 +34,7 @@ function SelectAttribute({ watch, control }) {
   return (
     <>
       <div className="col-span-2">
-        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600 mb-1">
+        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
           Attribute Name
         </label>
         <Controller
@@ -63,7 +61,7 @@ function SelectAttribute({ watch, control }) {
           <>
             <div className="flex gap-8 items-center w-full" key={index + 1}>
               <div className="flex-1">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600 mb-1">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
                   Attribute Value
                 </label>
                 <Controller
@@ -84,11 +82,11 @@ function SelectAttribute({ watch, control }) {
                   )}
                   name={`variants[${index}].attribute_value_id`}
                   control={control}
-                  defaultValue={item.attribute_value_id} // Make sure to set up defaultValue
+                  defaultValue={item.attribute_value_id} // Make sure to set up
                 />
               </div>
               <div className="flex-1">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600 mb-1">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
                   Price
                 </label>
                 <Controller
@@ -105,14 +103,14 @@ function SelectAttribute({ watch, control }) {
                   defaultValue={item.price} // Make sure to set up defaultValue
                 />
               </div>
+              <button
+                type="button"
+                className="btn-primary texl-sm bg-gray-200 py-[9px] self-end"
+                onClick={() => remove(index)}
+              >
+                Remove
+              </button>
             </div>
-            <button
-              type="button"
-              className="btn-primary texl-sm bg-gray-200"
-              onClick={() => remove(index)}
-            >
-              Remove
-            </button>
           </>
         ))}
         <button

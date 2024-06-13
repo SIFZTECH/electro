@@ -12,8 +12,16 @@ import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
 import "@tonz/react-draft-wysiwyg-input/style.css";
 import Spinner from "@/app/components/ui/Spinner";
 import SelectCategoryFormComponent from "./SelectCategory&SubCategory";
+import SpecificationForm from "./SpecificationForm";
+import toast from "react-hot-toast";
+import { createProduct } from "@/app/_services/apiProducts";
+import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const ProductForm = () => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const { data: brands, isLoading, isError } = useBrands();
 
   const {
@@ -25,11 +33,52 @@ const ProductForm = () => {
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
+      specifications: [{ key: "", value: "", icon_path_value: "" }],
     },
   });
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit({
+    name,
+    price,
+    introduction,
+    stock,
+    category_id,
+    subcategory_id,
+    brand_id,
+    key_features,
+    variants,
+    specifications,
+    images,
+  }) {
+    const keyFeatures = key_features.blocks.map((text) => text.text).join(",");
+    try {
+      const res = await createProduct({
+        name,
+        price,
+        introduction,
+        stock,
+        category_id,
+        subcategory_id,
+        brand_id,
+        key_features: keyFeatures,
+        variants,
+        specifications,
+        images,
+      });
+      console.log(res);
+      if (res) {
+        toast.success("Product Created Successfull");
+        queryClient.invalidateQueries("products");
+        router.replace("/dashboard/product-specifications");
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        toast.error("There is error while creating product");
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
   }
 
   return (
@@ -64,6 +113,7 @@ const ProductForm = () => {
               {...register("price", {
                 required: "Price field must be filled",
               })}
+              type="number"
               placeholder="Price"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
@@ -119,7 +169,7 @@ const ProductForm = () => {
               {...register("stock", {
                 required: "Stock field must be filled",
               })}
-              type="text"
+              type="number"
               placeholder="Stock"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
@@ -180,26 +230,14 @@ const ProductForm = () => {
               </span>
             )}
           </div>
-        </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-            Specification
-          </label>
-          <div className="mt-1">
-            <textarea
-              {...register("specification")}
-              type="text"
-              placeholder="Specification"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-          </div>
+          <SpecificationForm control={control} />
         </div>
       </div>
       <button
         type="submit"
         className="btn-primary mt-5 font-semibold rounded-sm px-6 py-2"
       >
-        Save
+        {isSubmitting ? <SpinnerMini /> : "Create"}
       </button>
     </form>
   );
