@@ -6,20 +6,22 @@ import ProductTop from "./ProductTop";
 import { useProduct } from "@/app/_features/products/useProduct";
 import Spinner from "@/app/components/ui/Spinner";
 import DeleteProduct from "./DeleteProduct";
+import EditProduct from "./UpdateProduct";
 
 const Product = ({ params }) => {
   const { isLoading, product, error, isError } = useProduct(params.slug);
 
   if (isLoading) return <Spinner />;
 
-  const keyFeatures = product.key_features.split(",");
+  console.log(product);
 
   return (
     <div>
       <div className="flex flex-wrap justify-between items-center">
         <h1 className="heading-h1 my-4 mb-8">Product Specifications</h1>
         <div className="flex gap-3">
-          <button className="btn-primary">Edit</button>
+          {/* <button className="btn-primary">Edit</button> */}
+          <EditProduct product={product} />
           <DeleteProduct productId={product.id} />
         </div>
       </div>
@@ -45,7 +47,7 @@ const Product = ({ params }) => {
             </h2>
             <div className="my-3 shadow-sm pb-3">
               <ul className="md:list-disc pl-1 md:pl-10">
-                {keyFeatures.map((feature, i) => (
+                {product.key_features.split(",").map((feature, i) => (
                   <li key={i + 1}>{feature}</li>
                 ))}
               </ul>

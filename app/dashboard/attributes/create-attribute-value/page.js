@@ -14,8 +14,11 @@ import { createAttributeValue } from "@/app/_services/apiAttributes";
 import { useAttributeNames } from "@/app/_features/attributes/useAttributes";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Spinner from "@/app/components/ui/Spinner";
 
 const CreateNewAttributeValue = () => {
+  const [color, setColor] = useState("#000000");
+
   const [open, setOpen] = useState();
   const router = useRouter();
   const { data, isLoading, isError } = useAttributeNames();
@@ -24,6 +27,7 @@ const CreateNewAttributeValue = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm();
 
@@ -46,6 +50,14 @@ const CreateNewAttributeValue = () => {
     }
   }
 
+  const handleColorChange = (event) => {
+    setColor(event.target.value);
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <Dialog defaultOpen onOpenChange={() => router.back(-1)}>
       <DialogTrigger className="btn-primary">Add New Attribute</DialogTrigger>
@@ -58,6 +70,15 @@ const CreateNewAttributeValue = () => {
             Create new Attribute Value. Click create when you're done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
+            <div className="font-serif text-sm flex flex-col items-end gap-2 justify-end">
+              <div className="flex justify-end items-center">
+                <label className="mr-2 btn-primary bg-emerald-200">
+                  Get your color code
+                </label>
+                <input type="color" onChange={handleColorChange} />
+              </div>
+              <p className="flex-1">Selected Color Hex Value: {color}</p>
+            </div>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Attribute Value
@@ -91,8 +112,8 @@ const CreateNewAttributeValue = () => {
                   type="text"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 >
-                  {!isLoading &&
-                    data?.data?.map((attribute) => (
+                  {data?.data?.map((attribute) => {
+                    return (
                       <option
                         className="capitalize"
                         key={attribute?.id}
@@ -101,7 +122,8 @@ const CreateNewAttributeValue = () => {
                       >
                         {attribute.name}
                       </option>
-                    ))}
+                    );
+                  })}
                 </select>
                 {errors?.attribute_id && (
                   <span className="text-red-500 text-sm">

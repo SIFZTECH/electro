@@ -3,6 +3,29 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import ProductImage from "./ProductImage";
 
 const ProductTop = ({ product }) => {
+  console.log("product", product);
+
+  // Function to get the values based on attribute name
+  function getValuesByAttributeName(variants, attributeName) {
+    return variants
+      .filter(
+        (variant) => variant.attribute_value.attribute.name === attributeName
+      )
+      .map((variant) => variant.attribute_value.value);
+  }
+
+  const filteredVariants = product.variants.filter((variant) => {
+    const attributeName = variant.attribute_value.attribute.name;
+    return attributeName !== "Color" && attributeName !== "Size";
+  });
+
+  // Get the values for the attribute name "Color"
+  const colorValues = getValuesByAttributeName(product.variants, "Color");
+  const sizeValues = getValuesByAttributeName(product.variants, "Size");
+  console.log(sizeValues);
+  console.log(filteredVariants);
+  console.log(colorValues); // Output: ["#6b4747", "#d6a4a4"]
+
   return (
     <div className="flex gap-8 flex-col lg:flex-row">
       <ProductImage />
@@ -15,58 +38,69 @@ const ProductTop = ({ product }) => {
             Best Seller
           </span>
         </div>
-        <div className="product__colors">
-          <h3 className="font-serif mb-1">Colors</h3>
-          <Tabs>
-            <TabsList>
-              <div className="flex items-center font-serif w-fit gap-2">
-                <TabsTrigger
-                  className="w-6 h-6 rounded-full data-[state='active']:ring-2 data-[state='active']:ring-offset-1 data-[state='active']:ring-color-primary bg-gray-600"
-                  defaultValue="gray"
-                >
-                  &nbsp;
-                </TabsTrigger>
-                <TabsTrigger
-                  className="w-6 h-6 rounded-full data-[state='active']:ring-2 data-[state='active']:ring-offset-1 data-[state='active']:ring-color-primary  bg-red-600"
-                  value="red"
-                >
-                  &nbsp;
-                </TabsTrigger>
-                <TabsTrigger
-                  className="w-6 h-6 rounded-full data-[state='active']:ring-2 data-[state='active']:ring-offset-1 data-[state='active']:ring-color-primary  bg-yellow-600"
-                  value="yellow"
-                >
-                  &nbsp;
-                </TabsTrigger>
-              </div>
-              <TabsContent className="hidden" value="gray"></TabsContent>
-              <TabsContent className="hidden" value="red"></TabsContent>
-              <TabsContent className="hidden" value="yellow"></TabsContent>
-            </TabsList>
-          </Tabs>
-        </div>
-        <div className="product__sizes">
-          <h3 className="font-serif mb-1">Sizes</h3>
-          <Tabs>
-            <TabsList>
-              <div className="flex items-center font-serif border border-color-primary w-fit">
-                <TabsTrigger
-                  className="px-3 cursor-pointer py-1 data-[state='active']:bg-color-primary font-serif"
-                  defaultValue="42"
-                >
-                  42
-                </TabsTrigger>
-                <TabsTrigger
-                  className="px-3 cursor-pointer py-1 data-[state='active']:bg-color-primary font-serif"
-                  value="36"
-                >
-                  35
-                </TabsTrigger>
-              </div>
-              <TabsContent className="hidden" value="42"></TabsContent>
-              <TabsContent className="hidden" value="36"></TabsContent>
-            </TabsList>
-          </Tabs>
+        {colorValues.length > 0 && (
+          <div className="product__colors">
+            <h3 className="font-serif mb-1">Colors</h3>
+            <Tabs defaultValue={colorValues[0]}>
+              <TabsList>
+                <div className="flex items-center font-serif w-fit gap-2">
+                  {colorValues.map((color, i) => (
+                    <TabsTrigger
+                      key={i + 1}
+                      style={{ backgroundColor: color }}
+                      className="w-6 h-6 rounded-full data-[state='active']:ring-2 data-[state='active']:ring-offset-1 data-[state='active']:ring-color-primary"
+                      value={color}
+                    >
+                      &nbsp;
+                    </TabsTrigger>
+                  ))}
+                </div>
+                {colorValues.map((color, i) => (
+                  <TabsContent
+                    key={i + 1}
+                    className="hidden"
+                    value={color}
+                  ></TabsContent>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+        )}
+        {sizeValues.length > 0 && (
+          <div className="product__sizes">
+            <h3 className="font-serif mb-1">Sizes</h3>
+            <Tabs defaultValue={sizeValues[0]}>
+              <TabsList>
+                <div className="flex items-center font-serif border border-color-primary w-fit">
+                  {sizeValues.map((size, i) => (
+                    <TabsTrigger
+                      key={i + 1}
+                      value={size}
+                      className="px-3 cursor-pointer py-1 data-[state='active']:bg-color-primary font-serif"
+                    >
+                      {size}
+                    </TabsTrigger>
+                  ))}
+                </div>
+                {sizeValues.map((size, i) => (
+                  <TabsContent
+                    value={size}
+                    key={i + 1}
+                    className="hidden"
+                  ></TabsContent>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+        )}
+        {/* attribute_value : attribute : id : 9 name : "Test" [[Prototype]] :
+        Object attribute_id : 9 id : 21 value : "Normal" */}
+        <div className="flex gap-2">
+          {filteredVariants.map((variant) => (
+            <button key={variant.id} className="btn-primary">
+              {variant.attribute_value.value}
+            </button>
+          ))}
         </div>
       </div>
     </div>

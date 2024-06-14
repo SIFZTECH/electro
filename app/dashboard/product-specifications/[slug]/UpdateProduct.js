@@ -19,8 +19,11 @@ import SelectAttribute from "../add-product/SelectAttribute";
 import ImageUploader from "../add-product/SelectImages";
 import SpecificationForm from "../add-product/SpecificationForm";
 import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
+import "@tonz/react-draft-wysiwyg-input/style.css";
+import { useBrands } from "@/app/_features/brands/useBrands";
 
 const EditProduct = ({ product }) => {
+  const { data, isLoading, isError } = useBrands();
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -28,6 +31,7 @@ const EditProduct = ({ product }) => {
     register,
     handleSubmit,
     control,
+    setValue,
     watch,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -36,8 +40,15 @@ const EditProduct = ({ product }) => {
       price: product?.price || 0,
       introduction: product?.introduction || "",
       stock: product?.stock || "",
+      category_id: product?.category_id || "",
+      subcategory_id: product?.subcategory_id || "",
+      brand_id: product?.brand_id || "",
+      variants: [{ attribute_value_id: "", price: 0 }],
+      specifications: [{ key: "", value: "", icon_path_value: "" }],
     },
   });
+
+  console.log(product);
 
   async function onSubmit({
     name,
@@ -138,7 +149,25 @@ const EditProduct = ({ product }) => {
                 )}
               </div>
             </div>
-
+            <div className="col-span-2">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Key Features
+              </label>
+              <div className="mt-1">
+                <RichTextInput
+                  toolbar={{
+                    options: ["list", "textAlign"],
+                  }}
+                  wrapperClassName="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  toolbarClassName="bg-gray-100"
+                  disabled={isSubmitting}
+                  {...register("key_features", {
+                    required: "This is required field",
+                  })}
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                 Stock
@@ -169,13 +198,12 @@ const EditProduct = ({ product }) => {
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     {...register("brand_id")}
                   >
-                    <option value="">--Please choose an option--</option>
-                    {/* {!isLoading &&
-                      brands.data.map((brand) => (
+                    {!isLoading &&
+                      data?.data?.map((brand) => (
                         <option key={brand.id} value={brand.id}>
                           {brand.name}
                         </option>
-                      ))} */}
+                      ))}
                   </select>
                   {errors?.brand && (
                     <span className="text-red-500 text-sm">
@@ -188,7 +216,11 @@ const EditProduct = ({ product }) => {
             <SelectCategoryFormComponent control={control} watch={watch} />
 
             <SelectAttribute watch={watch} control={control} />
-            <ImageUploader register={register} errors={errors} />
+            <ImageUploader
+              register={register}
+              errors={errors}
+              setValue={setValue}
+            />
             <SpecificationForm control={control} />
           </div>
           <button

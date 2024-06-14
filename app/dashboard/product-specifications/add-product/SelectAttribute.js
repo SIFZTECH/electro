@@ -8,17 +8,14 @@ import React, { useState } from "react";
 import { useFieldArray, Controller } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 
-function SelectAttribute({ watch, control }) {
+function SelectAttribute({  control }) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "variants",
   });
 
-  const [attributeValues, setAttributeValues] = useState([]);
 
   const { data, isLoading } = useAttributes();
-
-  const selectedAttribute = watch("attribute_name");
 
   const attributes = !isLoading && data?.attributes;
 
