@@ -7,22 +7,25 @@ import { useProduct } from "@/app/_features/products/useProduct";
 import Spinner from "@/app/components/ui/Spinner";
 import DeleteProduct from "./DeleteProduct";
 import EditProduct from "./UpdateProduct";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const Product = ({ params }) => {
+  const isProductUpdatePermission = useCheckPermission("product_update");
+  const isProductDeletePermission = useCheckPermission("product_delete");
   const { isLoading, product, error, isError } = useProduct(params.slug);
 
   if (isLoading) return <Spinner />;
-
-  console.log(product);
+  if (isError && error) return;
 
   return (
     <div>
       <div className="flex flex-wrap justify-between items-center">
         <h1 className="heading-h1 my-4 mb-8">Product Specifications</h1>
         <div className="flex gap-3">
-          {/* <button className="btn-primary">Edit</button> */}
-          <EditProduct product={product} />
-          <DeleteProduct productId={product.id} />
+          {isProductUpdatePermission && <EditProduct product={product} />}
+          {isProductDeletePermission && (
+            <DeleteProduct productId={product.id} />
+          )}
         </div>
       </div>
       <ProductTop product={product} />

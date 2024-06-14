@@ -76,7 +76,7 @@ const SpecificationForm = ({ control }) => {
               />
             </div>
             <span
-              className="btn-primary texl-sm bg-gray-200 py-[9px] self-end"
+              className="btn-primary texl-sm bg-gray-200 py-[9px] self-end  cursor-pointer"
               onClick={() => remove(index)}
             >
               Remove

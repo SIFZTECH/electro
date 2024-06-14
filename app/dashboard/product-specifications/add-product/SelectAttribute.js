@@ -8,12 +8,11 @@ import React, { useState } from "react";
 import { useFieldArray, Controller } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 
-function SelectAttribute({  control }) {
+function SelectAttribute({ control }) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "variants",
   });
-
 
   const { data, isLoading } = useAttributes();
 
@@ -67,8 +66,7 @@ function SelectAttribute({  control }) {
               />
             </div>
             <span
-             
-              className="btn-primary texl-sm bg-gray-200 py-[9px] self-end"
+              className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
               onClick={() => remove(index)}
             >
               Remove

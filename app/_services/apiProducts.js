@@ -75,7 +75,7 @@ export async function updateProduct(id, formData) {
 
   if (!token) return null;
 
-  const { data } = await axios(`${BASE_URL}/update-product/${slug}`, {
+  const { data } = await axios(`${BASE_URL}/update-product/${id}`, {
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
