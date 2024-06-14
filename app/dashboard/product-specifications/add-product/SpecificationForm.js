@@ -25,7 +25,7 @@ const SpecificationForm = ({ control }) => {
           <div className="flex gap-8 items-center w-full">
             <div className="flex-1">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                Add Product
+                Select Product
               </label>
               <Controller
                 render={({ field }) => (
