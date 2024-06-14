@@ -14,10 +14,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import SelectCategoryFormComponent from "./SelectCategory&SubCategory";
-import SelectAttribute from "./SelectAttribute";
-import ImageUploader from "./SelectImages";
-import SpecificationForm from "./SpecificationForm";
+import SelectCategoryFormComponent from "../add-product/SelectCategory&SubCategory";
+import SelectAttribute from "../add-product/SelectAttribute";
+import ImageUploader from "../add-product/SelectImages";
+import SpecificationForm from "../add-product/SpecificationForm";
 import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
 
 const EditProduct = ({ product }) => {
@@ -32,19 +32,33 @@ const EditProduct = ({ product }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      status: product.status,
+      name: product?.name || "",
+      price: product?.price || 0,
+      introduction: product?.introduction || "",
+      stock: product?.stock || "",
     },
   });
 
-  async function onSubmit({ status }) {
+  async function onSubmit({
+    name,
+    price,
+    introduction,
+    stock,
+    category_id,
+    subcategory_id,
+    brand_id,
+    key_features,
+    variants,
+    specifications,
+    images,
+  }) {
     try {
-      const res = await updateProduct(warranty.id, status);
-
-      if (res) {
-        toast.success(res.message);
-        queryClient.invalidateQueries("product", product.slug);
-        setOpen((open) => !open);
-      }
+      // const res = await updateProduct(product.id );
+      // if (res) {
+      //   toast.success(res.message);
+      //   queryClient.invalidateQueries("product", product.slug);
+      //   setOpen((open) => !open);
+      // }
     } catch (err) {
       console.error(err);
       if (err.response) {
@@ -60,7 +74,7 @@ const EditProduct = ({ product }) => {
       <DialogTrigger className="btn-primary transition-all py-1">
         Edit Product
       </DialogTrigger>
-      <DialogContent className="">
+      <DialogContent className="max-w-[80rem]">
         <div>
           <h2 className="font-serif text-lg">Edit This Product</h2>
         </div>
@@ -122,23 +136,6 @@ const EditProduct = ({ product }) => {
                     {errors.introduction.message}
                   </span>
                 )}
-              </div>
-            </div>
-            <div className="col-span-2">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Key Features
-              </label>
-              <div className="mt-1">
-                <RichTextInput
-                  toolbar={{
-                    options: ["list", "textAlign"],
-                  }}
-                  wrapperClassName="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  toolbarClassName="bg-gray-100"
-                  disabled={isSubmitting}
-                  {...register("key_features")}
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
               </div>
             </div>
 

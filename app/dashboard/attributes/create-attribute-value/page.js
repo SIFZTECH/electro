@@ -28,14 +28,14 @@ const CreateNewAttributeValue = () => {
   } = useForm();
 
   async function onSubmit({ value, attribute_id }) {
-    console.log(attribute_id);
     try {
       const res = await createAttributeValue({ value, attribute_id });
 
-      toast.success(res.message);
-
-      queryClient.invalidateQueries("attributes");
-      router.back(-1);
+      if (res) {
+        toast.success(res.message);
+        queryClient.invalidateQueries("attributes");
+        router.replace("/dashboard/attributes");
+      }
     } catch (err) {
       console.error(err);
       if (err.response) {

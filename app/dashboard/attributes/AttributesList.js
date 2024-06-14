@@ -3,7 +3,7 @@
 import { TableCell, TableRow } from "@/app/components/ui/table";
 
 import EditCategory from "./EditAttribute";
-import DeleteCategory from "./DeleteAttribute";
+import DeleteAttribute from "./DeleteAttribute";
 
 const AttributesList = ({ attribute, attribute_value }) => {
   return (
@@ -18,8 +18,8 @@ const AttributesList = ({ attribute, attribute_value }) => {
       </TableCell>
       <TableCell className="w-6">
         <div className="flex gap-3">
-          {/* <EditCategory attribute={attribute} />
-          <DeleteCategory attribute={attribute} /> */}
+          {/* <EditCategory attribute={attribute} />  */}
+          <DeleteAttribute attribute={attribute} />
         </div>
       </TableCell>
     </TableRow>

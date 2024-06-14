@@ -5,7 +5,7 @@ import ProductSpecifications from "./ProductSpecifications";
 import ProductTop from "./ProductTop";
 import { useProduct } from "@/app/_features/products/useProduct";
 import Spinner from "@/app/components/ui/Spinner";
-import DeleteProduct from "../add-product/DeleteProduct";
+import DeleteProduct from "./DeleteProduct";
 
 const Product = ({ params }) => {
   const { isLoading, product, error, isError } = useProduct(params.slug);
