@@ -3,8 +3,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import ProductImage from "./ProductImage";
 
 const ProductTop = ({ product }) => {
-  console.log("product", product);
-
   // Function to get the values based on attribute name
   function getValuesByAttributeName(variants, attributeName) {
     return variants
@@ -22,9 +20,8 @@ const ProductTop = ({ product }) => {
   // Get the values for the attribute name "Color"
   const colorValues = getValuesByAttributeName(product.variants, "Color");
   const sizeValues = getValuesByAttributeName(product.variants, "Size");
-  console.log(sizeValues);
-  console.log(filteredVariants);
-  console.log(colorValues); // Output: ["#6b4747", "#d6a4a4"]
+
+  console.log("Color", colorValues);
 
   return (
     <div className="flex gap-8 flex-col lg:flex-row">

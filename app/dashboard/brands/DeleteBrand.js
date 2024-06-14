@@ -14,6 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const DeleteBrand = ({ brand }) => {
   const [open, setOpen] = useState(false);

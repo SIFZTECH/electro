@@ -41,7 +41,7 @@ const EditProduct = ({ product }) => {
       category_id: product?.category_id || "",
       subcategory_id: product?.subcategory_id || "",
       brand_id: product?.brand_id || "",
-
+      key_features: product?.key_features || "",
       variants: product?.variants
         ? product.variants
         : [{ attribute_value_id: "", price: 0 }],
@@ -64,10 +64,6 @@ const EditProduct = ({ product }) => {
     specifications,
     images,
   }) {
-    const formattedFeature = key_features.blocks
-      .map((text) => text.text)
-      .join(",");
-
     try {
       const res = await updateProduct(product.id, {
         name,
@@ -77,7 +73,7 @@ const EditProduct = ({ product }) => {
         category_id,
         subcategory_id,
         brand_id,
-        key_features: formattedFeature,
+        key_features,
         variants,
         specifications,
         images,
@@ -174,7 +170,7 @@ const EditProduct = ({ product }) => {
                 {product.key_features.split(",").map((feature, i) => (
                   <li key={i + 1}>{feature}</li>
                 ))}
-                <RichTextInput
+                {/* <RichTextInput
                   toolbar={{
                     options: ["list", "textAlign"],
                   }}
@@ -185,7 +181,7 @@ const EditProduct = ({ product }) => {
                     required: "This is required field",
                   })}
                   className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
+                /> */}
               </div>
             </div>
             <div className="">
