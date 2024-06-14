@@ -75,23 +75,21 @@ const SpecificationForm = ({ control }) => {
                 defaultValue={item.icon_path_value} // Make sure to set up defaultValue
               />
             </div>
-            <button
-              type="button"
+            <span
               className="btn-primary texl-sm bg-gray-200 py-[9px] self-end"
               onClick={() => remove(index)}
             >
               Remove
-            </button>
+            </span>
           </div>
         </div>
       ))}
-      <button
+      <span
         className="btn-primary font-serif text-sm"
-        type="button"
         onClick={() => append({ key: "", value: "", icon_path_value: "" })}
       >
         Add More
-      </button>
+      </span>
     </div>
   );
 };

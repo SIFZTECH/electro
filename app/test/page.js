@@ -1,71 +1,75 @@
 "use client";
+import React from "react";
 
-import React, { useState, useRef } from "react";
+const attributes = {
+  Color: [
+    {
+      id: 4,
+      value: "Red",
+    },
+    {
+      id: 5,
+      value: "Green",
+    },
+    {
+      id: 13,
+      value: "Yellow",
+    },
+    {
+      id: 14,
+      value: "Gray",
+    },
+  ],
+  Size: [
+    {
+      id: 6,
+      value: "S",
+    },
+    {
+      id: 7,
+      value: "M",
+    },
+    {
+      id: 9,
+      value: "XL",
+    },
+    {
+      id: 10,
+      value: "L",
+    },
+    {
+      id: 11,
+      value: "XXL",
+    },
+  ],
+  Test: [
+    {
+      id: 16,
+      value: "test",
+    },
+  ],
+};
 
-function ImageUploader() {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [previewUrls, setPreviewUrls] = useState([]);
-  const fileInputRef = useRef(null);
-
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    const newPreviewUrls = [];
-    const newSelectedFiles = [];
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        newPreviewUrls.push(reader.result);
-        if (newPreviewUrls.length === files.length) {
-          setPreviewUrls((prevUrls) => [...prevUrls, ...newPreviewUrls]);
-          setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const handleRemoveImage = (index) => {
-    setPreviewUrls((prevUrls) => prevUrls.filter((_, i) => i !== index));
-    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-
-    // To update the file input element, we need to clear and re-assign the remaining files.
-    const newFiles = Array.from(fileInputRef.current.files).filter(
-      (_, i) => i !== index
-    );
-    const dataTransfer = new DataTransfer();
-    newFiles.forEach((file) => dataTransfer.items.add(file));
-    fileInputRef.current.files = dataTransfer.files;
-  };
-
+const AttributeList = () => {
   return (
     <div>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleFileChange}
-        ref={fileInputRef}
-      />
-      <div>
-        {previewUrls.map((url, index) => (
-          <div key={index} style={{ marginBottom: "10px" }}>
-            <img
-              src={url}
-              alt={`Image Preview ${index + 1}`}
-              style={{
-                maxWidth: "100%",
-                height: "auto",
-                display: "block",
-                marginBottom: "5px",
-              }}
-            />
-            <button onClick={() => handleRemoveImage(index)}>Remove</button>
-          </div>
-        ))}
-      </div>
+      {Object.keys(attributes).map((key) => (
+        <div key={key}>
+          <h3>{key}</h3>
+          <ul>
+            {attributes[key].map((item) => {
+              console.log(item);
+              return (
+                <li key={item.id}>
+                  {key}, Value: {item.value}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
-export default ImageUploader;
+export default AttributeList;

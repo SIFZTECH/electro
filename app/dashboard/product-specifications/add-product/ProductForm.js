@@ -32,6 +32,7 @@ const ProductForm = () => {
     register,
     control,
     handleSubmit,
+    setValue,
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
@@ -129,12 +130,14 @@ const ProductForm = () => {
           </div>
         </div>
         <div className="col-span-2">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Introduction
           </label>
           <div className="mt-1">
             <textarea
-              {...register("introduction")}
+              {...register("introduction", {
+                required: "This is required field",
+              })}
               type="text"
               placeholder="Introduction"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
@@ -147,7 +150,7 @@ const ProductForm = () => {
           </div>
         </div>
         <div className="col-span-2">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Key Features
           </label>
           <div className="mt-1">
@@ -158,7 +161,9 @@ const ProductForm = () => {
               wrapperClassName="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               toolbarClassName="bg-gray-100"
               disabled={isSubmitting}
-              {...register("key_features")}
+              {...register("key_features", {
+                required: "This is required field",
+              })}
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
           </div>
@@ -192,7 +197,9 @@ const ProductForm = () => {
             <div className="mt-1">
               <select
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                {...register("brand_id")}
+                {...register("brand_id", {
+                  required: "This is required field",
+                })}
               >
                 <option value="">--Please choose an option--</option>
                 {!isLoading &&
@@ -213,7 +220,11 @@ const ProductForm = () => {
         <SelectCategoryFormComponent control={control} watch={watch} />
 
         <SelectAttribute watch={watch} control={control} />
-        <ImageUploader register={register} errors={errors} />
+        <ImageUploader
+          register={register}
+          errors={errors}
+          setValue={setValue}
+        />
         <SpecificationForm control={control} />
       </div>
       <button

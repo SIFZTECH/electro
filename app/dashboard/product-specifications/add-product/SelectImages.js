@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState, useRef } from "react";
 
-function ImageUploader({ register, errors }) {
+function ImageUploader({ register, errors, setValue }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const fileInputRef = useRef(null);
@@ -27,7 +27,6 @@ function ImageUploader({ register, errors }) {
   const handleRemoveImage = (index) => {
     setPreviewUrls((prevUrls) => prevUrls.filter((_, i) => i !== index));
     setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-
     // To update the file input element, we need to clear and re-assign the remaining files.
     const newFiles = Array.from(fileInputRef.current.files).filter(
       (_, i) => i !== index
@@ -36,6 +35,8 @@ function ImageUploader({ register, errors }) {
     newFiles.forEach((file) => dataTransfer.items.add(file));
     fileInputRef.current.files = dataTransfer.files;
   };
+
+  setValue("images", selectedFiles);
 
   return (
     <div className="col-span-2">
