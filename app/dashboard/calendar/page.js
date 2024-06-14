@@ -59,7 +59,7 @@ export default function ReactBigCalendar() {
         <h1 className="heading-h1 mb-6">Promotional Calendar</h1>
         {isCreateEventPermission && (
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-            <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
+            {/* <DialogTrigger className="btn-primary">Add New Event</DialogTrigger> */}
             <DialogContent>
               <CreateNewEvent date={date} setOpen={setOpen} />
             </DialogContent>

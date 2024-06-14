@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const CreateNewEvent = ({ setOpen }) => {
+const CreateNewEvent = ({ date, setOpen }) => {
   const queryClient = useQueryClient();
   const {
     register,
@@ -15,7 +15,7 @@ const CreateNewEvent = ({ setOpen }) => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      date: Date.now(),
+      date: date || Date.now(),
     },
   });
   const { isLoading, data } = useRoles();
@@ -74,21 +74,20 @@ const CreateNewEvent = ({ setOpen }) => {
           Visible to
         </label>
         <div className="mt-2">
-          {!isLoading && (
-            <select
-              {...register("visible_to")}
-              disabled={isSubmitting}
-              type="text"
-              className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            >
-              {data?.data?.rolesWithPermissions.map((role) => (
+          <select
+            {...register("visible_to")}
+            disabled={isSubmitting}
+            type="text"
+            className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+          >
+            {!isLoading &&
+              data?.data?.rolesWithPermissions.map((role) => (
                 <option key={role.name} value={role.name}>
                   {role.name === "admin" ? "only me" : role.name}
                 </option>
               ))}
-              <option value="anyone">anyone</option>
-            </select>
-          )}
+            <option value="anyone">anyone</option>
+          </select>
         </div>
       </div>
       <div>

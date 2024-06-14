@@ -376,6 +376,7 @@ const Navigation = () => {
                   pathname.startsWith("/find-a-dealer") ? "active" : ""
                 }`}
                 href={"/find-a-dealer"}
+                target="_blank"
               >
                 <svg
                   width="25"
