@@ -1,14 +1,19 @@
+import { useProducts } from "@/app/_features/products/useProducts";
 import { useMedia } from "@/app/_features/social_media/useMedia";
+import Spinner from "@/app/components/ui/Spinner";
 import { Controller, useFieldArray } from "react-hook-form";
 
 const SpecificationForm = ({ control }) => {
-  const { data, isError, isLoading, error } = useMedia(true);
+  const { products, isError, isLoading, error } = useProducts();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "specifications",
   });
 
-  const icons = data ? data.data : [];
+  if (isLoading) {
+    return <Spinner />;
+  }
+  console.log(products);
 
   return (
     <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
@@ -20,41 +25,7 @@ const SpecificationForm = ({ control }) => {
           <div className="flex gap-8 items-center w-full">
             <div className="flex-1">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                Key {index + 1}
-              </label>
-              <Controller
-                render={({ field }) => (
-                  <input
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
-                    placeholder="Specification key"
-                    {...field}
-                  />
-                )}
-                name={`specifications[${index}].key`}
-                control={control}
-                defaultValue={item.key} // Make sure to set up defaultValue
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                Name
-              </label>
-              <Controller
-                render={({ field }) => (
-                  <input
-                    placeholder="Specification name"
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
-                    {...field}
-                  />
-                )}
-                name={`specifications[${index}].name`}
-                control={control}
-                defaultValue={item.name} // Make sure to set up defaultValue
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                Icon Path
+                Add Product
               </label>
               <Controller
                 render={({ field }) => (
@@ -62,15 +33,15 @@ const SpecificationForm = ({ control }) => {
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
                     {...field}
                   >
-                    <option value="">--Please choose an Icon--</option>
-                    {icons.map((icon) => (
-                      <option key={icon} value={icon}>
-                        {icon}
+                    <option value="">--Please select a Product--</option>
+                    {products.data.data.map((product) => (
+                      <option key={product.id} value={product.slug}>
+                        {product.name}
                       </option>
                     ))}
                   </select>
                 )}
-                name={`specifications[${index}].icon_path_value`}
+                name={`specifications[${index}].product`}
                 control={control}
                 defaultValue={item.icon_path_value} // Make sure to set up defaultValue
               />
@@ -85,10 +56,10 @@ const SpecificationForm = ({ control }) => {
         </div>
       ))}
       <span
-        className="btn-primary font-serif text-sm"
-        onClick={() => append({ key: "", value: "", icon_path_value: "" })}
+        className="btn-primary font-serif text-sm cursor-pointer"
+        onClick={() => append({ product: "" })}
       >
-        Add More
+        Add More Product
       </span>
     </div>
   );

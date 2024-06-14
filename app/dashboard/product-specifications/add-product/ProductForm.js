@@ -23,6 +23,7 @@ import Image from "next/image";
 import { BiCloset } from "react-icons/bi";
 import ImageUploader from "./SelectImages";
 import SelectBrand from "./SelectBrand";
+import SelectKeyFeatures from "./SelectKeyFeatures";
 
 const ProductForm = () => {
   const queryClient = useQueryClient();
@@ -33,12 +34,14 @@ const ProductForm = () => {
     control,
     handleSubmit,
     setValue,
+    getValues,
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
       specifications: [{ key: "", value: "", icon_path_value: "" }],
+      keyFeatures: [{ product: "" }],
     },
   });
 
@@ -111,64 +114,24 @@ const ProductForm = () => {
         </div>
         <div className="">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-            Price
+            Model Name
           </label>
           <div className="mt-1">
             <input
-              {...register("price", {
-                required: "Price field must be filled",
-              })}
-              type="number"
-              placeholder="Price"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-            {errors?.price && (
-              <span className="text-red-500 text-sm">
-                {errors.price.message}
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-            Introduction
-          </label>
-          <div className="mt-1">
-            <textarea
-              {...register("introduction", {
-                required: "This is required field",
+              {...register("name", {
+                required: "Product Name field must be filled",
               })}
               type="text"
-              placeholder="Introduction"
+              placeholder="Model Name"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
-            {errors?.introduction && (
+            {errors?.name && (
               <span className="text-red-500 text-sm">
-                {errors.introduction.message}
+                {errors.name.message}
               </span>
             )}
           </div>
         </div>
-        <div className="col-span-2">
-          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-            Key Features
-          </label>
-          <div className="mt-1">
-            <RichTextInput
-              toolbar={{
-                options: ["list", "textAlign"],
-              }}
-              wrapperClassName="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              toolbarClassName="bg-gray-100"
-              disabled={isSubmitting}
-              {...register("key_features", {
-                required: "This is required field",
-              })}
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-          </div>
-        </div>
-
         <div className="">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Stock
@@ -189,7 +152,49 @@ const ProductForm = () => {
             )}
           </div>
         </div>
+        <div className="">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            Price
+          </label>
+          <div className="mt-1">
+            <input
+              {...register("price", {
+                required: "Price field must be filled",
+              })}
+              type="number"
+              placeholder="Price"
+              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+            {errors?.price && (
+              <span className="text-red-500 text-sm">
+                {errors.price.message}
+              </span>
+            )}
+          </div>
+        </div>
+        <div className="">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            Introduction
+          </label>
+          <div className="mt-1">
+            <textarea
+              {...register("introduction", {
+                required: "This is required field",
+              })}
+              type="text"
+              placeholder="Introduction"
+              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+            {errors?.introduction && (
+              <span className="text-red-500 text-sm">
+                {errors.introduction.message}
+              </span>
+            )}
+          </div>
+        </div>
         <SelectBrand register={register} errors={errors} />
+        <SelectKeyFeatures register={register} control={control} />
+
         <SelectCategoryFormComponent control={control} watch={watch} />
 
         <SelectAttribute control={control} />
