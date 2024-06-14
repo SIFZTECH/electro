@@ -13,7 +13,6 @@ const SpecificationForm = ({ control }) => {
   if (isLoading) {
     return <Spinner />;
   }
-  console.log(products);
 
   return (
     <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
@@ -47,7 +46,7 @@ const SpecificationForm = ({ control }) => {
               />
             </div>
             <span
-              className="btn-primary texl-sm bg-gray-200 py-[9px] self-end  cursor-pointer"
+              className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
               onClick={() => remove(index)}
             >
               Remove
@@ -59,7 +58,7 @@ const SpecificationForm = ({ control }) => {
         className="btn-primary font-serif text-sm cursor-pointer"
         onClick={() => append({ product: "" })}
       >
-        Add More Product
+        Select More Product
       </span>
     </div>
   );

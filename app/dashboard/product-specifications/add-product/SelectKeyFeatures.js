@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { useFieldArray, Controller, useWatch } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
 
-function SelectKeyFeatures({ register, control }) {
+function SelectKeyFeatures({ control }) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "keyFeatures",
@@ -20,8 +20,6 @@ function SelectKeyFeatures({ register, control }) {
   });
 
   console.log(keyFeatures);
-
-  // keyFeatures.map(feature =)
 
   return (
     <>

@@ -193,9 +193,8 @@ const ProductForm = () => {
           </div>
         </div>
         <SelectBrand register={register} errors={errors} />
-        <SelectKeyFeatures register={register} control={control} />
-
         <SelectCategoryFormComponent control={control} watch={watch} />
+        <SelectKeyFeatures control={control} />
 
         <SelectAttribute control={control} />
         <ImageUploader

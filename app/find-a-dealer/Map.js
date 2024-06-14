@@ -104,7 +104,7 @@ import { useForm } from "react-hook-form";
 export default function MyMap() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const router = useRouter();
-  const {register, handleSubmit} = useForm();
+  const { register, handleSubmit } = useForm();
 
   const {
     isLoading: isLoadingPosition,
@@ -138,6 +138,12 @@ export default function MyMap() {
       <div className="flex flex-col h-dvh w-dvw">
         <div className="find-store p-4 bg-white absolute left-6 top-6 z-[99999]">
           <div>
+            <button
+              className="btn-primary mb-2 bg-gray-200"
+              onClick={() => router.push("/dashboard")}
+            >
+              Go back to Dashboard
+            </button>
             <h1 className="font-serif text-lg mb-2 uppercase">Find a store</h1>
             <form className="flex items-center gap-4">
               <label htmlFor="search" className="sr-only">
