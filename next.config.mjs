@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "electro-api.sifztech.com",
       },
+      {
+        protocol: "https",
+        hostname: "electro-api.sifztech.comundefined",
+      },
     ],
   },
 };
