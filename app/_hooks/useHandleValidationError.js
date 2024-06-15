@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 export function handleValidationError(errors) {
   for (const field in errors) {
     if (errors.hasOwnProperty(field)) {

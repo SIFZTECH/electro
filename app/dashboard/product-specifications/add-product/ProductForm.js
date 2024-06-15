@@ -1,16 +1,9 @@
 "use client";
 
-import {
-  useCategories,
-  useCategory,
-} from "@/app/_features/categories/useCategory";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import SelectAttribute from "./SelectAttribute";
-import { useBrands } from "@/app/_features/brands/useBrands";
 
-import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
 import "@tonz/react-draft-wysiwyg-input/style.css";
-import Spinner from "@/app/components/ui/Spinner";
 import SelectCategoryFormComponent from "./SelectCategory&SubCategory";
 import SpecificationForm from "./SpecificationForm";
 import toast from "react-hot-toast";
@@ -18,9 +11,7 @@ import { createProduct } from "@/app/_services/apiProducts";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Image from "next/image";
-import { BiCloset } from "react-icons/bi";
 import ImageUploader from "./SelectImages";
 import SelectBrand from "./SelectBrand";
 import SelectKeyFeatures from "./SelectKeyFeatures";
@@ -35,19 +26,20 @@ const ProductForm = () => {
     control,
     handleSubmit,
     setValue,
-    getValues,
+
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
-      specifications: [{ key: "", value: "", icon_path_value: "" }],
-      keyFeatures: [{ product: "" }],
+      key_features: [{ key: "", value: "", icon_path_value: "" }],
+      products: [{ id: "" }],
     },
   });
 
   async function onSubmit({
     name,
+    model_name,
     price,
     introduction,
     stock,
@@ -56,22 +48,24 @@ const ProductForm = () => {
     brand_id,
     key_features,
     variants,
-    specifications,
+    specification,
     images,
+    products,
   }) {
     try {
       const res = await createProduct({
         name,
+        model_name,
         price,
         introduction,
         stock,
         category_id,
         subcategory_id,
         brand_id,
-        key_features,
         variants,
-        specifications,
+        specification: key_features,
         images,
+        compare: products,
       });
 
       if (res) {
@@ -118,16 +112,16 @@ const ProductForm = () => {
           </label>
           <div className="mt-1">
             <input
-              {...register("name", {
+              {...register("model_name", {
                 required: "Product Name field must be filled",
               })}
               type="text"
               placeholder="Model Name"
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             />
-            {errors?.name && (
+            {errors?.model_name && (
               <span className="text-red-500 text-sm">
-                {errors.name.message}
+                {errors.model_name.message}
               </span>
             )}
           </div>

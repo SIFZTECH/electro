@@ -19,6 +19,8 @@ import { RichTextInput } from "@tonz/react-draft-wysiwyg-input";
 import "@tonz/react-draft-wysiwyg-input/style.css";
 import { useBrands } from "@/app/_features/brands/useBrands";
 import UpdateImageUploader from "./UpdateImage";
+import SelectBrand from "../add-product/SelectBrand";
+import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
 
 const EditProduct = ({ product }) => {
   const { data, isLoading, isError } = useBrands();
@@ -35,24 +37,24 @@ const EditProduct = ({ product }) => {
   } = useForm({
     defaultValues: {
       name: product?.name || "",
+      model_name: product?.model_name || "",
       price: product?.price || 0,
       introduction: product?.introduction || "",
       stock: product?.stock || "",
       category_id: product?.category_id || "",
       subcategory_id: product?.subcategory_id || "",
       brand_id: product?.brand_id || "",
-      key_features: product?.key_features || "",
+      key_features: product?.specification || [],
       variants: product?.variants
         ? product.variants
         : [{ attribute_value_id: "", price: 0 }],
-      specifications: product?.specifications
-        ? product.specifications
-        : [{ key: "", value: "", icon_path_value: "" }],
+      products: product?.compare ? product.compare : [{ id: "" }],
     },
   });
 
   async function onSubmit({
     name,
+    model_name,
     price,
     introduction,
     stock,
@@ -61,22 +63,24 @@ const EditProduct = ({ product }) => {
     brand_id,
     key_features,
     variants,
-    specifications,
+    specification,
     images,
+    products,
   }) {
     try {
       const res = await updateProduct(product.id, {
         name,
+        model_name,
         price,
         introduction,
         stock,
         category_id,
         subcategory_id,
         brand_id,
-        key_features,
         variants,
-        specifications,
+        specification: key_features,
         images,
+        compare: products,
       });
       if (res) {
         toast.success(res.message);
@@ -125,6 +129,46 @@ const EditProduct = ({ product }) => {
               </div>
             </div>
             <div className="">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Model Name
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register("model_name", {
+                    required: "Product Name field must be filled",
+                  })}
+                  type="text"
+                  placeholder="Model Name"
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.model_name && (
+                  <span className="text-red-500 text-sm">
+                    {errors.model_name.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Stock
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register("stock", {
+                    required: "Stock field must be filled",
+                  })}
+                  type="number"
+                  placeholder="Stock"
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.stock && (
+                  <span className="text-red-500 text-sm">
+                    {errors.stock.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
                 Price
               </label>
@@ -162,49 +206,8 @@ const EditProduct = ({ product }) => {
                 )}
               </div>
             </div>
-            <div className="col-span-2">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Key Features
-              </label>
-              <div className="mt-1">
-                {product.key_features.split(",").map((feature, i) => (
-                  <li key={i + 1}>{feature}</li>
-                ))}
-                {/* <RichTextInput
-                  toolbar={{
-                    options: ["list", "textAlign"],
-                  }}
-                  wrapperClassName="mt-2 block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  toolbarClassName="bg-gray-100"
-                  disabled={isSubmitting}
-                  {...register("key_features", {
-                    required: "This is required field",
-                  })}
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                /> */}
-              </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Stock
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register("stock", {
-                    required: "Stock field must be filled",
-                  })}
-                  type="number"
-                  placeholder="Stock"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.stock && (
-                  <span className="text-red-500 text-sm">
-                    {errors.stock.message}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center gap-8 ">
+
+            {/* <div className="flex items-center gap-8 ">
               <div className="flex-1">
                 <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
                   Brand Name
@@ -228,8 +231,11 @@ const EditProduct = ({ product }) => {
                   )}
                 </div>
               </div>
-            </div>
+            </div> */}
+            <SelectBrand register={register} errors={errors} />
+
             <SelectCategoryFormComponent control={control} watch={watch} />
+            <SelectKeyFeatures control={control} />
 
             <SelectAttribute watch={watch} control={control} />
             <UpdateImageUploader

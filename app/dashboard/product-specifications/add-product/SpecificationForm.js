@@ -7,7 +7,7 @@ const SpecificationForm = ({ control }) => {
   const { products, isError, isLoading, error } = useProducts();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "specifications",
+    name: "products",
   });
 
   if (isLoading) {
@@ -34,15 +34,15 @@ const SpecificationForm = ({ control }) => {
                   >
                     <option value="">--Please select a Product--</option>
                     {products.data.data.map((product) => (
-                      <option key={product.id} value={product.slug}>
+                      <option key={product.id} value={product.id}>
                         {product.name}
                       </option>
                     ))}
                   </select>
                 )}
-                name={`specifications[${index}].product`}
+                name={`products[${index}].id`}
                 control={control}
-                defaultValue={item.icon_path_value} // Make sure to set up defaultValue
+                defaultValue={item.id} // Make sure to set up defaultValue
               />
             </div>
             <span

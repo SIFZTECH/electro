@@ -124,60 +124,56 @@ const dummyData = [
   },
 ];
 
-const ProductSpecifications = () => {
+const ProductSpecifications = ({ specification }) => {
+  console.log(specification);
+  const features = specification.map((spec) => spec.specification);
+  console.log("featue", features);
+
   return (
     <Table>
       <TableHeader>
-        <TableRow className="bg-color-primary">
+        <TableRow className="bg-color-primary hover:bg-color-primary">
           <TableHead></TableHead>
-          <TableHead>NCM T3S - New</TableHead>
+          {specification?.map((product) => (
+            <TableHead key={product.id}>{product.model_name}</TableHead>
+          ))}
+          {/* <TableHead>NCM T3S - New</TableHead>
           <TableHead>NCM T3S</TableHead>
-          <TableHead>NCM Milano +</TableHead>
+          <TableHead>NCM Milano +</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
-        {dummyData.map((data, i) => {
-          return (
-            <TableRow key={i + 1}>
-              <TableCell
-                data-label="NCM T3S - New"
-                className="font-serif font-semibold flex justify-between items-center  xl:justify-center"
-              >
-                <span>&nbsp;</span>
-                <div className="flex-1 flex flex-col items-end  lg:items-center">
-                  <Image src={data.icon[0]} alt="name" width={30} height={30} />
-                  <span className="font-medium text-sm text-gray-700 text-center">
-                    {data.icon[1]}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell
-                className="font-serif font-semibold"
-                data-label="NCM T3S - New"
-              >
-                <span className="font-medium font-sans">
-                  Das-kit X15 motor, 48V 250W, max speed 25 km/h
-                </span>
-              </TableCell>
-              <TableCell
-                className="font-serif font-semibold"
-                data-label="NCM T3S"
-              >
-                <span className="font-medium font-sans">
-                  Das-kit X15 motor, 48V 250W, max speed 25 km/h
-                </span>
-              </TableCell>
-              <TableCell
-                className="font-serif font-semibold"
-                data-label="NCM T3S - Milano +"
-              >
-                <span className="font-medium font-sans">
-                  Das-kit X15 motor, 48V 250W, max speed 25 km/h
-                </span>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+        {features.map((feature, i) =>
+          feature.map((spec) => {
+            return (
+              <TableRow key={i + 1}>
+                <TableCell
+                  data-label="NCM T3S - New"
+                  className="font-serif font-semibold flex justify-between items-center  xl:justify-center"
+                >
+                  <span>&nbsp;</span>
+                  <div className="flex-1 flex flex-col items-end  lg:items-center">
+                    <Image
+                      src="/icons8-saddle-60.png"
+                      alt="name"
+                      width={30}
+                      height={30}
+                    />
+                    <span className="font-medium text-sm text-gray-700 text-center">
+                      {spec.key}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell
+                  className="font-serif font-semibold"
+                  data-label="NCM T3S - New"
+                >
+                  <span className="font-medium font-sans">{spec.value}</span>
+                </TableCell>
+              </TableRow>
+            );
+          })
+        )}
       </TableBody>
     </Table>
   );

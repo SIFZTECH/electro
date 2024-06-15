@@ -16,22 +16,13 @@ export async function getAllProducts() {
 
   return data;
 }
-export async function createProduct({
-  name,
-  price,
-  introduction,
-  stock,
-  category_id,
-  subcategory_id,
-  brand_id,
-  key_features,
-  variants,
-  specifications,
-  images,
-}) {
+export async function createProduct(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+  const productIds = formData.compare.map((product) => +product.id);
+
+  console.log(productIds);
 
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
@@ -40,17 +31,8 @@ export async function createProduct({
       "content-type": "multipart/form-data",
     },
     data: {
-      name,
-      price,
-      introduction,
-      stock,
-      category_id: +category_id,
-      subcategory_id: +subcategory_id,
-      brand_id,
-      key_features,
-      variants,
-      specifications,
-      images,
+      ...formData,
+      compare: productIds,
     },
   });
 

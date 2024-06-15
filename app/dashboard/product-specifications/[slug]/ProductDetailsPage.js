@@ -8,6 +8,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import DeleteProduct from "./DeleteProduct";
 import EditProduct from "./UpdateProduct";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import Image from "next/image";
 
 const ProductDetailsPage = ({ params }) => {
   const isProductUpdatePermission = useCheckPermission("product_update");
@@ -16,6 +17,8 @@ const ProductDetailsPage = ({ params }) => {
 
   if (isLoading) return <Spinner />;
   if (isError && error) return;
+
+  console.log("product", product);
 
   return (
     <div>
@@ -49,7 +52,20 @@ const ProductDetailsPage = ({ params }) => {
               <span>Key Features</span>
             </h2>
             <div className="my-3 shadow-sm pb-3">
-              {/* <ul className="md:list-disc pl-1 md:pl-10">
+              <ul className="md:list-disc pl-1 md:pl-10">
+                {product?.specification?.map((feature, i) => (
+                  <li className="flex gap-2 items-center" key={i + 1}>
+                    <Image
+                      src="/icons8-saddle-60.png"
+                      alt="name"
+                      width={25}
+                      height={25}
+                    />
+                    <span>{feature.value}</span>
+                  </li>
+                ))}
+              </ul>
+              {/* 
                 {product.key_features.split(",").map((feature, i) => (
                   <li key={i + 1}>{feature}</li>
                 ))}
@@ -62,7 +78,7 @@ const ProductDetailsPage = ({ params }) => {
             <BsPatchExclamation />
             <span>Specifications</span>
           </h2>
-          <ProductSpecifications />
+          <ProductSpecifications specification={product?.compare} />
         </div>
       </div>
     </div>

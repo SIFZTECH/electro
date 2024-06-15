@@ -92,12 +92,20 @@ const ProductTop = ({ product }) => {
         )}
         {/* attribute_value : attribute : id : 9 name : "Test" [[Prototype]] :
         Object attribute_id : 9 id : 21 value : "Normal" */}
-        <div className="flex gap-2">
-          {filteredVariants.map((variant) => (
-            <button key={variant.id} className="btn-primary">
-              {variant.attribute_value.value}
-            </button>
-          ))}
+        <div className="flex flex-col items-start gap-2">
+          {filteredVariants.map((variant) => {
+            console.log(variant);
+            return (
+              <div key={variant.id} className="flex flex-col">
+                <span className="font-serif mb-1">
+                  {variant.attribute_value.attribute.name}
+                </span>
+                <button className="btn-primary">
+                  {variant.attribute_value.value}
+                </button>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
