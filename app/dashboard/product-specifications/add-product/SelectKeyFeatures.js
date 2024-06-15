@@ -59,10 +59,10 @@ function SelectKeyFeatures({ control }) {
                     <option value="">Select Feature Key</option>
                     <option value="motor">Motor</option>
                     <option value="bettary">Bettary</option>
-                    <option value="bettary">Display</option>
+                    <option value="dispaly">Display</option>
                     <option value="charger">Charger</option>
-                    <option value="bettary">Frome</option>
-                    <option value="bettary">Forks</option>
+                    <option value="frome">Frome</option>
+                    <option value="forks">Forks</option>
                   </select>
                 )}
                 name={`key_features[${index}].key`}

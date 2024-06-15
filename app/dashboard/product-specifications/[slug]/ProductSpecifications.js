@@ -1,5 +1,3 @@
-import { TbMotorbike } from "react-icons/tb";
-
 import {
   Table,
   TableBody,
@@ -10,125 +8,66 @@ import {
 } from "@/app/components/ui/table";
 import Image from "next/image";
 
-const dummyData = [
+// Sample data to simulate fetched data structure
+const specification = [
   {
     id: 1,
-    name: "NCM T3S - New",
-    icon: ["/icons8-motor-64.png", "Motor"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+    model_name: "NCM T3S - New",
+    specification: [
+      {
+        icon_path_value: "/icons8-motor-64.png",
+        key: "Motor",
+        value: "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      },
+      // other features
     ],
   },
   {
     id: 2,
-    name: "NCM T3S",
-    icon: ["/icons8-battery-90.png", "Battary"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+    model_name: "NCM T3S",
+    specification: [
+      {
+        icon_path_value: "/icons8-battery-90.png",
+        key: "Battery",
+        value: "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      },
+      // other features
     ],
   },
   {
     id: 3,
-    name: "NCM Milano +",
-    icon: ["/icons8-performance-smartphone-50.png", "Display"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+    model_name: "NCM Milano +",
+    specification: [
+      {
+        icon_path_value: "/icons8-performance-smartphone-50.png",
+        key: "Display",
+        value: "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
+      },
+      // other features
     ],
   },
-  {
-    id: 4,
-    icon: ["/icons8-charger-60.png", "Charger"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 5,
-    icon: ["/icons8-charger-60.png", "Frome"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 6,
-    icon: ["/icons8-charger-60.png", "Forks"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 7,
-    icon: ["/icons8-charger-60.png", "Broking System"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 8,
-    icon: ["/icons8-charger-60.png", "Gear Selector"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 9,
-    icon: ["/icons8-derailleur-96.png", "Front Derailleur"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 10,
-    icon: ["/icons8-bicycle-rear-derailleur-80.png", "Rear Derailleur"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 11,
-    icon: ["/icons8-saddle-60.png", "Saddle"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
-  {
-    id: 12,
-    icon: ["/icons8-circle-80.png", "Shwalbe"],
-    features: [
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-      "Das-kit X15 motor, 48V 250W, max speed 25 km/h",
-    ],
-  },
+  // other products
 ];
 
 const ProductSpecifications = ({ specification }) => {
-  console.log("Product", specification);
-  const features = specification.map((spec, i) => spec.specification[i]);
+  // Extract all unique features across all products
+  const allFeatures = [
+    ...new Set(
+      specification.flatMap((product) =>
+        product.specification.map((spec) => spec.key)
+      )
+    ),
+  ];
 
-  console.log("features", features);
+  // Map features to their icons
+  const featureIcons = specification.reduce((acc, product) => {
+    product.specification.forEach((spec) => {
+      if (!acc[spec.key]) {
+        acc[spec.key] = spec.icon_path_value;
+      }
+    });
+    return acc;
+  }, {});
 
   return (
     <Table>
@@ -141,36 +80,36 @@ const ProductSpecifications = ({ specification }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {features.map((feature, i) => {
-          return (
-            <TableRow key={i + 1}>
-              <TableCell
-                data-label="NCM T3S - New"
-                className="font-serif font-semibold flex justify-between items-center  xl:justify-center"
-              >
-                <span>&nbsp;</span>
-                <div className="flex-1 flex flex-col items-end  lg:items-center">
-                  <Image
-                    src={`https://electro-api.sifztech.com${feature.icon_path_value}`}
-                    alt="name"
-                    width={30}
-                    height={30}
-                  />
-                  <span className="font-medium text-sm text-gray-700 text-center">
-                    {feature.key}
-                  </span>
-                </div>
-              </TableCell>
-
-              <TableCell
-                className="font-serif font-semibold"
-                data-label="NCM T3S - New"
-              >
-                <span className="font-medium font-sans">{features.value}</span>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+        {allFeatures.map((feature, i) => (
+          <TableRow key={i}>
+            <TableCell className="font-serif font-semibold flex flex-col gap-2 items-center">
+              <Image
+                src={`https://electro-api.sifztech.com${featureIcons[feature]}`}
+                alt={feature}
+                width={30}
+                height={30}
+              />
+              <span className="ml-2">{feature}</span>
+            </TableCell>
+            {specification.map((product) => {
+              const productFeature =
+                product.specification.find((spec) => spec.key === feature) ||
+                {};
+              return (
+                <TableCell
+                  key={product.id}
+                  className="font-serif font-semibold"
+                >
+                  <div className="flex items-center">
+                    <span className="font-medium text-sm text-gray-700 ml-2">
+                      {productFeature.value || "N/A"}
+                    </span>
+                  </div>
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
