@@ -22,8 +22,6 @@ export async function createProduct(formData) {
   if (!token) return null;
   const productIds = formData.compare.map((product) => +product.id);
 
-  console.log(productIds);
-
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
     headers: {
@@ -57,12 +55,17 @@ export async function updateProduct(id, formData) {
 
   if (!token) return null;
 
+  const productIds = formData.compare.map((product) => +product.id);
+
   const { data } = await axios(`${BASE_URL}/update-product/${id}`, {
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: formData,
+    data: {
+      ...formData,
+      compare: productIds,
+    },
   });
 
   return data;

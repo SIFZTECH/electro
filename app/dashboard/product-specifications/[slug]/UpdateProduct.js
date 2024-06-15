@@ -82,6 +82,7 @@ const EditProduct = ({ product }) => {
         images,
         compare: products,
       });
+      console.log(res);
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("product", product.slug);
