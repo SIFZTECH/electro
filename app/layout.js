@@ -2,10 +2,7 @@ import "./globals.css";
 
 import ReactQueryProvider from "@/app/components/ReactQueryProvider";
 import { inter, playfair } from "@/app/lib/fonts";
-// import { Toaster } from "./components/ui/toaster";
 import { Toaster } from "react-hot-toast";
-
-const notify = () => toast("Here is your toast.");
 
 export const metadata = {
   title: "Leon Cycle",

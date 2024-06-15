@@ -14,6 +14,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const Navigation = () => {
+  const { isLoading, isAdmin } = useUser();
   const isSocialMediaPermission = useCheckPermission("social_media_assets");
   const isCategoryListPermission = useCheckPermission("category_list");
   const isProductListPermission = useCheckPermission("product_list");
@@ -395,7 +396,7 @@ const Navigation = () => {
             </li>
           )}
 
-          {isWarrantyListPermission && (
+          {isWarrantyListPermission && !isAdmin && (
             <li>
               <Link
                 className={`flex gap-2 items-center px-3 py-1 rounded-md ${
@@ -421,7 +422,7 @@ const Navigation = () => {
             </li>
           )}
 
-          {isWarrantyListPermission && (
+          {isWarrantyListPermission && isAdmin && (
             <li>
               <Link
                 className={`flex gap-2 items-center px-3 py-1 rounded-md ${

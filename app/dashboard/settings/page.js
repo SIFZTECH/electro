@@ -1,18 +1,11 @@
-"use client";
-import useCheckPermission from "@/app/_hooks/usePermission";
-import SettingsForm from "./SettingsForm";
-import NotFoundData from "@/app/components/ui/NotFoundData";
+import SettingsPage from "./SettingsPage";
 
-const Page = () => {
-  const isPermission = useCheckPermission("settings");
-
-  if (isPermission) {
-    return <SettingsForm />;
-  } else {
-    return (
-      <NotFoundData message="You don't have permission to access that route!" />
-    );
-  }
+export const metadata = {
+  title: "Leon Cycle | Settings",
 };
 
-export default Page;
+const page = () => {
+  return <SettingsPage />;
+};
+
+export default page;

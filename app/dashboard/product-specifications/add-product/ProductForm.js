@@ -24,6 +24,7 @@ import { BiCloset } from "react-icons/bi";
 import ImageUploader from "./SelectImages";
 import SelectBrand from "./SelectBrand";
 import SelectKeyFeatures from "./SelectKeyFeatures";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
 const ProductForm = () => {
   const queryClient = useQueryClient();
@@ -58,7 +59,6 @@ const ProductForm = () => {
     specifications,
     images,
   }) {
-    const keyFeatures = key_features.blocks.map((text) => text.text).join(",");
     try {
       const res = await createProduct({
         name,
@@ -68,12 +68,12 @@ const ProductForm = () => {
         category_id,
         subcategory_id,
         brand_id,
-        key_features: keyFeatures,
+        key_features,
         variants,
         specifications,
         images,
       });
-      console.log(res);
+
       if (res) {
         toast.success("Product Created Successfull");
         queryClient.invalidateQueries("products");
@@ -82,9 +82,9 @@ const ProductForm = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error("There is error while creating product");
+        handleValidationError(err.response.data.errors);
       } else {
-        toast.error("Something went wrong!");
+        toast.error(err.message);
       }
     }
   }
@@ -159,7 +159,7 @@ const ProductForm = () => {
           <div className="mt-1">
             <input
               {...register("price", {
-                required: "Price field must be filled",
+                required: "This is required field.",
               })}
               type="number"
               placeholder="Price"
@@ -179,7 +179,7 @@ const ProductForm = () => {
           <div className="mt-1">
             <textarea
               {...register("introduction", {
-                required: "This is required field",
+                required: "This is required field.",
               })}
               type="text"
               placeholder="Introduction"

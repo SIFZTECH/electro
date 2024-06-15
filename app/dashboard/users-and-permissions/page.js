@@ -1,17 +1,11 @@
-import UsersTabs from "./UsersTabs";
-import NewUserModal from "./NewUserModal";
-import Search from "./Search";
+import UsersAndPermissionsPage from "./UsersAndPermissionsPage";
+
+export const metadata = {
+  title: "Leon Cycle | Users and Permissions",
+};
 
 const page = () => {
-  return (
-    <div>
-      <div className="flex flex-col sm:flex-row sm:justify-between items-start gap-y-3 sm:items-center my-3 mb-8">
-        <h1 className="heading-h1">User and Permission</h1>
-        <NewUserModal btn="New User" />
-      </div>
-      <UsersTabs />
-    </div>
-  );
+  return <UsersAndPermissionsPage />;
 };
 
 export default page;

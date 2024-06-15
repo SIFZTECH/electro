@@ -15,6 +15,7 @@ export function useUser() {
     error,
     user,
     permissions: user?.roles ? user.roles[0].permissions : [],
+    isAdmin: user?.roles ? user?.roles[0].name === "admin" : false,
     isVerified: user?.email_verified_at,
     isTwoAuthEnable: user?.isTwoFactorEnable === 1,
     isBlocked: user?.is_blocked === 1,
