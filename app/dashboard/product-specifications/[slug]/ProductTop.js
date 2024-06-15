@@ -21,11 +21,9 @@ const ProductTop = ({ product }) => {
   const colorValues = getValuesByAttributeName(product.variants, "Color");
   const sizeValues = getValuesByAttributeName(product.variants, "Size");
 
-  console.log("Color", colorValues);
-
   return (
     <div className="flex gap-8 flex-col lg:flex-row">
-      <ProductImage />
+      <ProductImage images={product.images} />
       <div className="product__summary flex flex-col gap-8">
         <div className="product__name flex items-center gap-3">
           <span className="font-serif font-semibold text-xl">
@@ -94,7 +92,6 @@ const ProductTop = ({ product }) => {
         Object attribute_id : 9 id : 21 value : "Normal" */}
         <div className="flex flex-col items-start gap-2">
           {filteredVariants.map((variant) => {
-            console.log(variant);
             return (
               <div key={variant.id} className="flex flex-col">
                 <span className="font-serif mb-1">

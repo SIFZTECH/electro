@@ -3,13 +3,14 @@ import Link from "next/link";
 import { IoMdHeartEmpty } from "react-icons/io";
 
 const Product = ({ id, slug, image, name, summary }) => {
+  console.log(image);
   return (
     <Link
       href={`product-specifications/${slug}`}
       className="product flex flex-col gap-2 border border-gray-200 p-5 pt-3"
     >
       <Image
-        src={"/cycle-1.jpg"}
+        src={image}
         className="self-center"
         alt={name}
         height={180}

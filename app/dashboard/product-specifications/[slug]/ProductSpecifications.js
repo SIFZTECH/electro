@@ -125,55 +125,52 @@ const dummyData = [
 ];
 
 const ProductSpecifications = ({ specification }) => {
-  console.log(specification);
-  const features = specification.map((spec) => spec.specification);
-  console.log("featue", features);
+  console.log("Product", specification);
+  const features = specification.map((spec, i) => spec.specification[i]);
+
+  console.log("features", features);
 
   return (
     <Table>
       <TableHeader>
         <TableRow className="bg-color-primary hover:bg-color-primary">
           <TableHead></TableHead>
-          {specification?.map((product) => (
+          {specification.map((product) => (
             <TableHead key={product.id}>{product.model_name}</TableHead>
           ))}
-          {/* <TableHead>NCM T3S - New</TableHead>
-          <TableHead>NCM T3S</TableHead>
-          <TableHead>NCM Milano +</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
-        {features.map((feature, i) =>
-          feature.map((spec) => {
-            return (
-              <TableRow key={i + 1}>
-                <TableCell
-                  data-label="NCM T3S - New"
-                  className="font-serif font-semibold flex justify-between items-center  xl:justify-center"
-                >
-                  <span>&nbsp;</span>
-                  <div className="flex-1 flex flex-col items-end  lg:items-center">
-                    <Image
-                      src="/icons8-saddle-60.png"
-                      alt="name"
-                      width={30}
-                      height={30}
-                    />
-                    <span className="font-medium text-sm text-gray-700 text-center">
-                      {spec.key}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell
-                  className="font-serif font-semibold"
-                  data-label="NCM T3S - New"
-                >
-                  <span className="font-medium font-sans">{spec.value}</span>
-                </TableCell>
-              </TableRow>
-            );
-          })
-        )}
+        {features.map((feature, i) => {
+          return (
+            <TableRow key={i + 1}>
+              <TableCell
+                data-label="NCM T3S - New"
+                className="font-serif font-semibold flex justify-between items-center  xl:justify-center"
+              >
+                <span>&nbsp;</span>
+                <div className="flex-1 flex flex-col items-end  lg:items-center">
+                  <Image
+                    src={`https://electro-api.sifztech.com${feature.icon_path_value}`}
+                    alt="name"
+                    width={30}
+                    height={30}
+                  />
+                  <span className="font-medium text-sm text-gray-700 text-center">
+                    {feature.key}
+                  </span>
+                </div>
+              </TableCell>
+
+              <TableCell
+                className="font-serif font-semibold"
+                data-label="NCM T3S - New"
+              >
+                <span className="font-medium font-sans">{features.value}</span>
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

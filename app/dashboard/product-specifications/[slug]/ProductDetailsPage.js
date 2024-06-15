@@ -56,7 +56,7 @@ const ProductDetailsPage = ({ params }) => {
                 {product?.specification?.map((feature, i) => (
                   <li className="flex gap-2 items-center" key={i + 1}>
                     <Image
-                      src="/icons8-saddle-60.png"
+                      src={`https://electro-api.sifztech.com${feature.icon_path_value}`}
                       alt="name"
                       width={25}
                       height={25}

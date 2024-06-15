@@ -5,8 +5,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "electro-api.sifztech.com",
-        port: "",
-        pathname: "",
       },
     ],
   },

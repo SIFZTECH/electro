@@ -15,7 +15,7 @@ const Products = ({ products }) => {
             key={product.id}
             id={product.id}
             slug={product.slug}
-            image={`${product?.images[0]?.image_path}`}
+            image={`https://electro-api.sifztech.com/${product?.images[0]?.image_path}`}
             name={product.name}
             summary={product.introduction}
           />
