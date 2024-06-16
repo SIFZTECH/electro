@@ -90,8 +90,6 @@ const CreateNewRole = () => {
     }
   });
 
-  console.log(groupedPermissions);
-
   const {
     register,
     handleSubmit,

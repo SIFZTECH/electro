@@ -23,7 +23,7 @@ const Search = () => {
     try {
       const res = await searchUsers(query);
       if (res.data) {
-        queryClient.setQueryData(["users", page], res);
+        queryClient.setQueryData(["users", { page }], res);
       }
     } catch (err) {
       console.error(err);

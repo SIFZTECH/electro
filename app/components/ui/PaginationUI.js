@@ -1,43 +1,38 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/app/components/ui/pagination";
-import { PAGE_SIZE } from "@/app/lib/utils";
 
-function PaginationUI({ data, page }) {
-  console.log(data);
-
+function PaginationUI({ data, page, page_size, navigation }) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between">
-      {data?.total > PAGE_SIZE && (
+      {data?.total > page_size && (
         <p className="w-full">
           Showing
           <span className="font-semibold">
             {" "}
-            {(page - 1) * PAGE_SIZE + 1}
+            {(page - 1) * page_size + 1}
           </span>{" "}
           to
           <span className="font-semibold">
             {" "}
-            {page === data?.last_page ? data.total : page * PAGE_SIZE}
+            {page === data?.last_page ? data.total : page * page_size}
           </span>{" "}
           of
           <span className="font-semibold"> {data?.total}</span> results
         </p>
       )}
-      {data?.total > PAGE_SIZE && (
+      {data?.total > page_size && (
         <Pagination className="mt-6 flex justify-end w-full">
           <PaginationContent>
             <PaginationItem>
               {1 < page && (
                 <PaginationPrevious
                   className="bg-gray-100 hover:bg-gray-200"
-                  href={`/dashboard/users-and-permissions?page=${page - 1}`}
+                  href={`/dashboard/${navigation}?page=${page - 1}`}
                 />
               )}
             </PaginationItem>
@@ -46,7 +41,7 @@ function PaginationUI({ data, page }) {
               {!(page === data?.last_page) && (
                 <PaginationNext
                   className="bg-gray-100 hover:bg-gray-200"
-                  href={`/dashboard/users-and-permissions?page=${page + 1}`}
+                  href={`/dashboard/${navigation}?page=${page + 1}`}
                 />
               )}
             </PaginationItem>

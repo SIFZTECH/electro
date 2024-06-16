@@ -33,7 +33,6 @@ const NewUserModal = ({ btn }) => {
   } = useForm();
 
   const watchRole = watch("role");
-  console.log(watchRole);
 
   async function onSubmit({
     firstname,

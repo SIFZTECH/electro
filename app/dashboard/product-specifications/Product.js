@@ -3,7 +3,6 @@ import Link from "next/link";
 import { IoMdHeartEmpty } from "react-icons/io";
 
 const Product = ({ id, slug, image, name, summary }) => {
-  console.log(image);
   return (
     <Link
       href={`product-specifications/${slug}`}

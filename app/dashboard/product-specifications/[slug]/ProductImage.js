@@ -11,15 +11,6 @@ const ProductImage = ({ images }) => {
         defaultValue={`https://electro-api.sifztech.com${images[0].image_path}`}
       >
         <div className="product__image">
-          <TabsContent>
-            <Image
-              src={`https://electro-api.sifztech.com${images[0].image_path}`}
-              alt="name"
-              width={600}
-              height={450}
-              className="object-contain"
-            />
-          </TabsContent>
           {images.map((img, i) => {
             return (
               <TabsContent
@@ -37,7 +28,7 @@ const ProductImage = ({ images }) => {
             );
           })}
         </div>
-        <TabsList className="product__thumbnails flex items-center justify-center gap-3">
+        <TabsList className="product__thumbnails flex items-center justify-center gap-3 mt-6">
           {images.map((img) => (
             <TabsTrigger
               value={`https://electro-api.sifztech.com${img.image_path}`}

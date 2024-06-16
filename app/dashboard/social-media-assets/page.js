@@ -1,4 +1,4 @@
-import MediaPage from "./Media";
+import MediaPage from "./MediaPage";
 
 export const metadata = {
   title: "Leon Cycle | Social Media Assets",

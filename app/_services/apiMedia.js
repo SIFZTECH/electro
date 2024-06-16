@@ -1,18 +1,19 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, MEDIA_PAGE_SIZE } from "../lib/utils";
 
-export async function getAllMedia(icon) {
+export async function getAllMedia(page) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
-  let url = `${BASE_URL}/media`;
+  let url = `${BASE_URL}/media?per_page=${MEDIA_PAGE_SIZE}`;
 
-  if (icon) {
-    url = `${BASE_URL}/media?icon={true}`;
+  if (page) {
+    url = `${BASE_URL}/media?per_page=${MEDIA_PAGE_SIZE}&page=${page}`;
   }
+
   const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,14 +23,18 @@ export async function getAllMedia(icon) {
   return data.data;
 }
 
-export async function getMedia(id) {
+export async function deleteMedia(path) {
   const token = localStorage.getItem("access-token");
 
   if (!token && !id) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/media/${id}`, {
+  const { data } = await axios(`${BASE_URL}/delete-media`, {
+    method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
+    },
+    data: {
+      path,
     },
   });
 

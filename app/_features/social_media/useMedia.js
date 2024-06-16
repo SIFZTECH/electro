@@ -3,10 +3,10 @@
 import { getAllMedia } from "@/app/_services/apiMedia";
 import { useQuery } from "@tanstack/react-query";
 
-export function useMedia() {
+export function useMedia(page) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["media"],
-    queryFn: () => getAllMedia(),
+    queryKey: ["media", { page }],
+    queryFn: () => getAllMedia(page),
   });
 
   return { data, isLoading, error, isError };

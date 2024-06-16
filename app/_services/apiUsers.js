@@ -6,35 +6,32 @@ export async function getAllUsers(page) {
 
   if (!token) return null;
 
-  let url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}`;
-
-  if (page) {
-    url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}`;
-  }
-
   const { data } = await axios({
-    url,
+    url: `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
+  console.log("all users", data);
   return data.data;
 }
 
-export async function getAllBlockedUsers() {
+export async function getAllBlockedUsers(page) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/admin/users-and-admin?block=true`,
+    url: `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}&block=true`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  return data.data;
+  console.log("blocked", data);
+
+  return data;
 }
 
 export async function searchUsers(query) {

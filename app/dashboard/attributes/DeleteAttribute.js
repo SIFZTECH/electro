@@ -25,12 +25,9 @@ const DeleteAttribute = ({ attribute }) => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  console.log("attribute", attribute);
-
   async function onSubmit() {
     try {
       const res = await deleteAttribute(attribute);
-      console.log(res);
 
       if (res) {
         toast.success(res.message);

@@ -20,7 +20,6 @@ const AdminTable = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  console.log(data, error);
 
   return (
     <Table className="mt-10 table_modify">

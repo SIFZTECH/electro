@@ -14,11 +14,12 @@ import BlockUser from "./BlockUser";
 import AssignUserRole from "./AssignUserRole";
 import { useUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
-import PaginationUI from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import Search from "./Search";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import PaginationUI from "@/app/components/ui/PaginationUI";
+import { PAGE_SIZE } from "@/app/lib/utils";
 
 const UsersTable = () => {
   const params = useSearchParams();
@@ -100,7 +101,12 @@ const UsersTable = () => {
                   })}
                 </TableBody>
               </Table>
-              <PaginationUI data={data} page={+page} />
+              <PaginationUI
+                data={data}
+                page={page}
+                page_size={PAGE_SIZE}
+                navigation="users-and-permissions"
+              />
             </>
           )}
         </>

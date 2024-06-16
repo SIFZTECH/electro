@@ -16,11 +16,9 @@ import {
   useUsers,
 } from "@/app/_features/users/useUsers";
 import BlockedUsers from "./BlockedUsers";
-import { useRouter } from "next/navigation";
 import useCheckPermission from "@/app/_hooks/usePermission";
 
 const UsersTabs = () => {
-  const router = useRouter();
   const { data, total_num, isLoading } = useUsers();
   const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
   const { total_num: total_num3, isLoading: isLoading3 } = useAdminUsers();

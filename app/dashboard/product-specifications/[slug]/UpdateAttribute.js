@@ -23,7 +23,7 @@ function UpdateAttribute({ control, productId }) {
     })
       .then((data) => toast.success(data.message))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         return toast.error("someting went wrong!");
       });
   }

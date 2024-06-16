@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useUsers(page = 1) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["users", page],
+    queryKey: ["users", { page }],
     queryFn: () => getAllUsers(page),
   });
 
@@ -22,11 +22,11 @@ export function useAdminUsers() {
   return { data, isLoading, error, isError, total_num: data?.data?.total };
 }
 
-export function useBlockedUsers() {
+export function useBlockedUsers(page = 1) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["blockedUsers"],
-    queryFn: () => getAllBlockedUsers(),
+    queryKey: ["blockedUsers", { page }],
+    queryFn: () => getAllBlockedUsers(page),
   });
 
-  return { data, isLoading, error, isError, total_num: data?.total };
+  return { data, isLoading, error, isError, total_num: data?.data?.total };
 }

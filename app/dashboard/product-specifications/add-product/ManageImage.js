@@ -2,8 +2,6 @@ import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Image from "next/image";
 
 const ManageImage = ({ images }) => {
-  console.log(images);
-
   function handleClick() {}
   return (
     <div className="flex gap-2 items-start flex-wrap mt-2">

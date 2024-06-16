@@ -29,7 +29,6 @@ export default function ForgotPassword() {
         password_confirmation,
       });
 
-      console.log(data);
 
       if (data.status === 200) {
         toast.success(data.message);

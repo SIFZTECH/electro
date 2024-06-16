@@ -97,8 +97,6 @@ export async function createWarranty(formData) {
     motor_serial_no_image,
   } = formData;
 
-  console.log(invoice_image[0]);
-
   const { data } = await axios({
     url: `${BASE_URL}/warranty/create`,
     method: "post",

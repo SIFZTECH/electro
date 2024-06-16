@@ -9,8 +9,9 @@ import useCheckPermission from "@/app/_hooks/usePermission";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import NoPermission from "@/app/components/ui/NoPermission";
 import { useSearchParams } from "next/navigation";
-
-import PaginationForProduct from "./Pagination";
+import Pagination from "@/app/components/ui/pagination";
+import { PRODUCT_PAGE_SIZE } from "@/app/lib/utils";
+import PaginationUI from "@/app/components/ui/PaginationUI";
 
 const ProductsPage = () => {
   const isPermission = useCheckPermission("product_add");
@@ -57,7 +58,12 @@ const ProductsPage = () => {
             </h1>
           )}
         </div>
-        <PaginationForProduct data={products?.data} page={+page} />
+        <PaginationUI
+          data={products?.data}
+          page={+page}
+          page_size={PRODUCT_PAGE_SIZE}
+          navigation="product-specifications"
+        />
       </div>
     </>
   );

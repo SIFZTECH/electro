@@ -10,21 +10,20 @@ import {
 import BlockUser from "./BlockUser";
 import { useBlockedUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
-import PaginationUI from "./Pagination";
 import { useSearchParams } from "next/navigation";
 import Search from "./SearchForBlockUsers";
 import NotFoundData from "@/app/components/ui/NotFoundData";
+import PaginationUI from "@/app/components/ui/PaginationUI";
+import { PAGE_SIZE } from "@/app/lib/utils";
 
 const BlockedUsers = () => {
   const params = useSearchParams();
   const page = params.get("page") ? params.get("page") : 1;
-  const { data, isLoading, isError, error } = useBlockedUsers();
+  const { data, isLoading, isError, error } = useBlockedUsers(+page);
 
   if (isLoading) {
     return <Spinner />;
   }
-
-  console.log(data);
 
   return (
     <>
@@ -58,8 +57,7 @@ const BlockedUsers = () => {
             </TableRow>
           </TableHeader>
           <tbody>
-            {data.data?.map((data, i) => {
-              console.log(data);
+            {data?.data?.data?.map((data, i) => {
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">
@@ -84,7 +82,12 @@ const BlockedUsers = () => {
         </Table>
       )}
 
-      <PaginationUI data={data?.data} page={+page} />
+      <PaginationUI
+        data={data?.data}
+        page={+page}
+        page_size={PAGE_SIZE}
+        navigation="users-and-permissions"
+      />
     </>
   );
 };

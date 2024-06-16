@@ -1,10 +1,8 @@
 import Search from "@/app/components/ui/Search";
-import Pagination from "./Pagination";
 import Product from "./Product";
 
 const Products = ({ products }) => {
   const data = products.data.data;
-  console.log(data);
 
   return (
     <div>
@@ -21,7 +19,6 @@ const Products = ({ products }) => {
           />
         ))}
       </div>
-      {data.length > 9 && <Pagination />}
     </div>
   );
 };

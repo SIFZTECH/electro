@@ -18,8 +18,6 @@ const EditWarranty = ({ warranty }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  console.log(warranty);
-
   const {
     register,
     handleSubmit,

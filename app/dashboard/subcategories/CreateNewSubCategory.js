@@ -31,7 +31,6 @@ const CreateNewSubCategory = () => {
   } = useForm();
 
   async function onSubmit({ name, category_id }) {
-    console.log(name, category_id);
     try {
       const res = await createSubcategory({ name, category_id });
 

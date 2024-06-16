@@ -68,15 +68,13 @@ export async function updateProduct(id, formData) {
 
   if (!token) return null;
 
-  console.log("payload", formData);
-
   const productIds = formData.compare.map((product) => +product.id);
 
   const { data } = await axios(`${BASE_URL}/update-product/${id}`, {
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
-      // "content-type": "multipart/form-data",
+      "content-type": "multipart/form-data",
     },
     data: {
       ...formData,
@@ -98,8 +96,6 @@ export async function deleteProduct(id) {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  console.log(data);
 
   return data;
 }
