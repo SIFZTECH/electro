@@ -20,7 +20,7 @@ const SpecificationForm = ({ control }) => {
         Specifications
       </h1>
       {fields.map((item, index) => (
-        <div className="w-full" key={index + 1}>
+        <div className="w-full" key={item.id}>
           <div className="flex gap-8 items-center w-full">
             <div className="flex-1">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { useFieldArray, Controller, useWatch } from "react-hook-form";
+import React from "react";
+import { useFieldArray, Controller } from "react-hook-form";
 import featuresWithKeyAndIcon from "@/app/lib/features.json";
 
 function SelectKeyFeatures({ control }) {
@@ -14,7 +14,7 @@ function SelectKeyFeatures({ control }) {
     <>
       <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
         {fields.map((item, index) => (
-          <div className="flex gap-8 items-center w-full" key={index + 1}>
+          <div className="flex gap-8 items-center w-full" key={item.id}>
             <div className="flex-1">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
                 Features Key
@@ -39,7 +39,7 @@ function SelectKeyFeatures({ control }) {
                 )}
                 name={`key_features[${index}].key`}
                 control={control}
-                defaultValue={item.key} // Make sure to set up
+                defaultValue={item.key} // Make sure to set up defaultValue
               />
             </div>
             <div className="flex-1">
@@ -56,7 +56,7 @@ function SelectKeyFeatures({ control }) {
                 )}
                 name={`key_features[${index}].value`}
                 control={control}
-                defaultValue={item.feature} // Make sure to set up defaultValue
+                defaultValue={item.value} // Corrected: should match the data structure
               />
             </div>
             <span
@@ -69,7 +69,7 @@ function SelectKeyFeatures({ control }) {
         ))}
         <span
           className="btn-primary font-serif text-sm"
-          onClick={() => append({ key: "", feature: "" })}
+          onClick={() => append({ key: "", value: "" })} // Corrected: field names should match the data structure
         >
           Add More Features
         </span>

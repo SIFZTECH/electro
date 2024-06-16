@@ -76,6 +76,7 @@ export async function updateProduct(id, formData) {
     method: "put",
     headers: {
       Authorization: `Bearer ${token}`,
+      // "content-type": "multipart/form-data",
     },
     data: {
       ...formData,

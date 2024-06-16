@@ -22,7 +22,7 @@ function SelectAttribute({ control }) {
     <>
       <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
         {fields.map((item, index) => (
-          <div className="flex gap-8 items-center w-full" key={index + 1}>
+          <div className="flex gap-8 items-center w-full" key={item.id}>
             <div className="flex-1">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
                 Attribute Value

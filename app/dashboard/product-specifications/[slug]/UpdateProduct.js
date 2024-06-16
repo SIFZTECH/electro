@@ -21,6 +21,7 @@ import { useBrands } from "@/app/_features/brands/useBrands";
 import UpdateImageUploader from "./UpdateImage";
 import SelectBrand from "../add-product/SelectBrand";
 import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
 const EditProduct = ({ product }) => {
   const [open, setOpen] = useState(false);
@@ -35,18 +36,18 @@ const EditProduct = ({ product }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      name: product?.name || "",
-      model_name: product?.model_name || "",
-      price: product?.price || 0,
-      introduction: product?.introduction || "",
-      stock: product?.stock || "",
-      category_id: product?.category_id || "",
-      subcategory_id: product?.subcategory_id || "",
-      brand_id: product?.brand_id || "",
-      key_features: product?.specification || [],
-      variants: product?.variants || [],
+      name: product ? product?.name : "",
+      model_name: product ? product?.model_name : "",
+      price: product ? product?.price : 0,
+      introduction: product ? product?.introduction : "",
+      stock: product ? product?.stock : "",
+      category_id: product ? product?.category_id : "",
+      subcategory_id: product ? product?.subcategory_id : "",
+      brand_id: product ? product?.brand_id : "",
+      key_features: product ? product?.specification : [],
+      variants: product ? product?.variants : [],
       products: product?.compare ? product.compare : [{ id: "" }],
-      images: product?.images,
+      images: product ? product?.images : [],
     },
   });
 
@@ -96,7 +97,8 @@ const EditProduct = ({ product }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        handleValidationError(err.response.data.message);
+        // toast.error(err.response.data.message);
       } else {
         toast.error("Something went wrong!");
       }
