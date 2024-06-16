@@ -6,27 +6,27 @@ import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useUsers } from "@/app/_features/users/useUsers";
 
 const Search = () => {
-  const queryClient = useQueryClient();
+  const router = useRouter();
   const params = useSearchParams();
-  const page = params.get("page") ? +params.get("page") : 1;
 
   const {
     register,
     handleSubmit,
     resetField,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      query: params.get("query"),
+    },
+  });
 
-  async function onSubmit({ query }) {
-    try {
-      const res = await searchUsers(query);
-      if (res.data) {
-        queryClient.setQueryData(["users", { page }], res);
-      }
-    } catch (err) {
-      console.error(err);
+  function onSubmit({ query }) {
+    router.push(`/dashboard/users-and-permissions?query=${query}`);
+    if (!query) {
+      router.push(`/dashboard/users-and-permissions`);
     }
   }
 
@@ -57,7 +57,6 @@ const Search = () => {
           {...register("query")}
           className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
           placeholder="Search..."
-          required
         />
       </div>
       <button

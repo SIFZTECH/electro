@@ -8,18 +8,19 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import BlockUser from "./BlockUser";
-import { useBlockedUsers } from "@/app/_features/users/useUsers";
+import { useBlockedUsers, useUsers } from "@/app/_features/users/useUsers";
 import Spinner from "@/app/components/ui/Spinner";
 import { useSearchParams } from "next/navigation";
-import Search from "./SearchForBlockUsers";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import { PAGE_SIZE } from "@/app/lib/utils";
+import Search from "./Search";
 
 const BlockedUsers = () => {
   const params = useSearchParams();
   const page = params.get("page") ? params.get("page") : 1;
-  const { data, isLoading, isError, error } = useBlockedUsers(+page);
+  const query = params.get("query") && params.get("query");
+  const { data, isLoading, isError, error } = useUsers(page, true, query);
 
   if (isLoading) {
     return <Spinner />;
@@ -57,7 +58,7 @@ const BlockedUsers = () => {
             </TableRow>
           </TableHeader>
           <tbody>
-            {data?.data?.data?.map((data, i) => {
+            {data?.data?.map((data, i) => {
               return (
                 <TableRow key={i + 1} className="font-sans">
                   <TableCell data-label="User Name">

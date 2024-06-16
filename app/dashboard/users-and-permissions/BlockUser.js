@@ -34,8 +34,6 @@ const BlockUser = ({ user }) => {
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("users");
-        queryClient.invalidateQueries("blockedUsers");
-
         setOpen((open) => !open);
       }
     } catch (err) {

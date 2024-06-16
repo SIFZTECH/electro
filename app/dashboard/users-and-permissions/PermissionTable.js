@@ -1,4 +1,3 @@
-import { Switch } from "@/app/components/ui/switch";
 import {
   Table,
   TableBody,
@@ -8,16 +7,11 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import EditPermission from "./EditPermission";
 import DeleteRole from "./DeleteRole";
-import Link from "next/link";
-import CreateRolesAndPermissions from "./CreateRolesAndPermissions";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import Spinner from "@/app/components/ui/Spinner";
-import CreatePermission from "./CreatePermission";
-import CreateNewRole from "./CreateNewRole";
-import DeletePermission from "./DeletePermission";
-import UpdateRole from "./UpdateRolesAndPermissions";
+import CreateNewRoleWithPermissions from "./CreateNewRoleWithPermissions";
+import UpdateUsersPermissions from "./UpdateUsersPermissions";
 
 const PermissionTable = () => {
   const { isLoading, data, isError, error } = useRoles();
@@ -27,7 +21,7 @@ const PermissionTable = () => {
   return (
     <>
       <div className="flex gap-3 justify-end">
-        <CreateNewRole />
+        <CreateNewRoleWithPermissions />
         {/* <CreatePermission />
         <CreateRolesAndPermissions /> */}
       </div>
@@ -73,7 +67,7 @@ const PermissionTable = () => {
                 <TableCell data-label="Click and Collect">Web</TableCell>
                 <TableCell data-label="Actions">
                   <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
-                    <UpdateRole
+                    <UpdateUsersPermissions
                       roleName={data.name}
                       id={data.id}
                       permissions={data.permissions}

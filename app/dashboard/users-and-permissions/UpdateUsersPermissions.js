@@ -15,7 +15,11 @@ import { useForm } from "react-hook-form";
 import UpdateList from "./UpdateListPermissions";
 import { permissions } from "@/app/lib/utils";
 
-const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
+const UpdateUsersPermissions = ({
+  roleName,
+  id,
+  permissions: permissionsName,
+}) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -249,4 +253,4 @@ const UpdateRole = ({ roleName, id, permissions: permissionsName }) => {
   );
 };
 
-export default UpdateRole;
+export default UpdateUsersPermissions;

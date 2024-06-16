@@ -10,17 +10,16 @@ import UsersTable from "./UsersTable";
 import PermissionTable from "./PermissionTable";
 
 import AdminTable from "./AdminTable";
-import {
-  useAdminUsers,
-  useBlockedUsers,
-  useUsers,
-} from "@/app/_features/users/useUsers";
+import { useAdminUsers, useUsers } from "@/app/_features/users/useUsers";
 import BlockedUsers from "./BlockedUsers";
 import useCheckPermission from "@/app/_hooks/usePermission";
 
 const UsersTabs = () => {
   const { data, total_num, isLoading } = useUsers();
-  const { total_num: total_num2, isLoading: isLoading2 } = useBlockedUsers();
+  const { total_num: total_num2, isLoading: isLoading2 } = useUsers(
+    undefined,
+    true
+  );
   const { total_num: total_num3, isLoading: isLoading3 } = useAdminUsers();
 
   const isGetAllUsersPermission = useCheckPermission("all_users");

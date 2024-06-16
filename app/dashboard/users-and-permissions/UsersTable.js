@@ -24,7 +24,8 @@ import { PAGE_SIZE } from "@/app/lib/utils";
 const UsersTable = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
-  const { data, isLoading, isError, error } = useUsers(page);
+  const query = params.get("query") && params.get("query");
+  const { data, isLoading, isError, error } = useUsers(page, false, query);
 
   const isAssignRolePermission = useCheckPermission("assign_role");
   const isEditUserPermission = useCheckPermission("edit_user");
@@ -32,6 +33,8 @@ const UsersTable = () => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  console.log("from pare", data);
 
   return (
     <>

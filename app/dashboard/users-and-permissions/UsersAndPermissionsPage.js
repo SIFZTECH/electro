@@ -2,7 +2,6 @@
 
 import UsersTabs from "./UsersTabs";
 import NewUserModal from "./NewUserModal";
-import Search from "./Search";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
 

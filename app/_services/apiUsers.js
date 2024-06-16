@@ -1,71 +1,39 @@
 import axios from "axios";
 import { BASE_URL, PAGE_SIZE } from "../lib/utils";
 
-export async function getAllUsers(page) {
+export async function getAllUsers(page, block, query) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
-  const { data } = await axios({
-    url: `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  let url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}`;
 
-  console.log("all users", data);
-  return data.data;
-}
+  if (block) {
+    url = `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}&block=true`;
+  }
 
-export async function getAllBlockedUsers(page) {
-  const token = localStorage.getItem("access-token");
+  if (query) {
+    const { data } = await axios({
+      url: `${BASE_URL}/admin/users/search`,
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { query, block },
+    });
 
-  if (!token) return null;
+    console.log(data);
+    return data;
+  } else {
+    const { data } = await axios({
+      url,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  const { data } = await axios({
-    url: `${BASE_URL}/admin/users-and-admin?per_page=${PAGE_SIZE}&page=${page}&block=true`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  console.log("blocked", data);
-
-  return data;
-}
-
-export async function searchUsers(query) {
-  const token = localStorage.getItem("access-token");
-
-  if (!token) return null;
-
-  const { data } = await axios({
-    url: `${BASE_URL}/admin/users/search`,
-    method: "post",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: { query, block: false },
-  });
-
-  return data;
-}
-
-export async function searchBlockedUsers(query) {
-  const token = localStorage.getItem("access-token");
-
-  if (!token) return null;
-
-  const { data } = await axios({
-    url: `${BASE_URL}/admin/users/search`,
-    method: "post",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: { query, block: true },
-  });
-
-  return data;
+    return data.data;
+  }
 }
 
 export async function createPermission(name) {

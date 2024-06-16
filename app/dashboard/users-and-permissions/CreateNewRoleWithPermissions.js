@@ -16,7 +16,7 @@ import { useRoles } from "@/app/_features/roles/useRoles";
 import PermissionList from "./PermissionList";
 import { permissions } from "@/app/lib/utils";
 
-const CreateNewRole = () => {
+const CreateNewRoleWithPermissions = () => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -238,4 +238,4 @@ const CreateNewRole = () => {
   );
 };
 
-export default CreateNewRole;
+export default CreateNewRoleWithPermissions;

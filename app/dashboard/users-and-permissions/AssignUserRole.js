@@ -24,7 +24,7 @@ const AssignUserRole = ({ user }) => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      name: user?.roles[0]?.name,
+      role_name: user?.roles[0]?.name,
     },
   });
 
