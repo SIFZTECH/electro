@@ -4,15 +4,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import Image from "next/image";
 
-// const images = ["/cycle-1.jpg", "/cycle-2.jpg", "/cycle-3.jpg", "/cycle-4.jpg"];
-
 const ProductImage = ({ images }) => {
   return (
     <>
       <Tabs
         defaultValue={`https://electro-api.sifztech.com${images[0].image_path}`}
       >
-        <div className="lg:h-[500px] product__image">
+        <div className="product__image">
           <TabsContent>
             <Image
               src={`https://electro-api.sifztech.com${images[0].image_path}`}

@@ -1,7 +1,7 @@
 import { useProducts } from "@/app/_features/products/useProducts";
 import { useMedia } from "@/app/_features/social_media/useMedia";
 import Spinner from "@/app/components/ui/Spinner";
-import { Controller, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray, useWatch } from "react-hook-form";
 
 const SpecificationForm = ({ control }) => {
   const { products, isError, isLoading, error } = useProducts();
@@ -9,6 +9,28 @@ const SpecificationForm = ({ control }) => {
     control,
     name: "products",
   });
+
+  const watchProductIds = useWatch({
+    control,
+    name: "products",
+  });
+
+  const checkForDuplicateProductIds = (data) => {
+    const keysSeen = new Set();
+    const duplicates = [];
+
+    data.forEach((item) => {
+      if (keysSeen.has(item.id)) {
+        duplicates.push(item.id);
+      } else {
+        keysSeen.add(item.id);
+      }
+    });
+
+    return duplicates;
+  };
+
+  const duplicateProductIds = checkForDuplicateProductIds(watchProductIds);
 
   if (isLoading) {
     return <Spinner />;
@@ -54,12 +76,21 @@ const SpecificationForm = ({ control }) => {
           </div>
         </div>
       ))}
-      <span
-        className="btn-primary font-serif text-sm cursor-pointer"
-        onClick={() => append({ product: "" })}
-      >
-        Select More Product
-      </span>
+      {duplicateProductIds.length > 0 &&
+        duplicateProductIds.map((key, i) => (
+          <p className="text-red-500 text-sm" key={i + 1}>
+            Please Check You have selected same Product id({key}) multiple
+            times!
+          </p>
+        ))}
+      {!(duplicateProductIds.length > 0) && (
+        <span
+          className="btn-primary font-serif text-sm cursor-pointer"
+          onClick={() => append({ product: "" })}
+        >
+          Select More Product
+        </span>
+      )}
     </div>
   );
 };

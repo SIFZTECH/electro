@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useFieldArray, Controller } from "react-hook-form";
+import { useFieldArray, Controller, useWatch } from "react-hook-form";
 import featuresWithKeyAndIcon from "@/app/lib/features.json";
 
 function SelectKeyFeatures({ control }) {
@@ -9,6 +9,28 @@ function SelectKeyFeatures({ control }) {
     control,
     name: "key_features",
   });
+
+  const watchFeatures = useWatch({
+    control,
+    name: "key_features",
+  });
+
+  const checkForDuplicateKeys = (data) => {
+    const keysSeen = new Set();
+    const duplicates = [];
+
+    data.forEach((item) => {
+      if (keysSeen.has(item.key)) {
+        duplicates.push(item.key);
+      } else {
+        keysSeen.add(item.key);
+      }
+    });
+
+    return duplicates;
+  };
+
+  const duplicateKeys = checkForDuplicateKeys(watchFeatures);
 
   return (
     <>
@@ -39,7 +61,7 @@ function SelectKeyFeatures({ control }) {
                 )}
                 name={`key_features[${index}].key`}
                 control={control}
-                defaultValue={item.key} // Make sure to set up defaultValue
+                defaultValue={item.key}
               />
             </div>
             <div className="flex-1">
@@ -56,7 +78,7 @@ function SelectKeyFeatures({ control }) {
                 )}
                 name={`key_features[${index}].value`}
                 control={control}
-                defaultValue={item.value} // Corrected: should match the data structure
+                defaultValue={item.value}
               />
             </div>
             <span
@@ -67,12 +89,20 @@ function SelectKeyFeatures({ control }) {
             </span>
           </div>
         ))}
-        <span
-          className="btn-primary font-serif text-sm"
-          onClick={() => append({ key: "", value: "" })} // Corrected: field names should match the data structure
-        >
-          Add More Features
-        </span>
+        {duplicateKeys.length > 0 &&
+          duplicateKeys.map((key, i) => (
+            <p className="text-red-500 text-sm" key={i + 1}>
+              You have selected {key} multiple times!
+            </p>
+          ))}
+        {!(duplicateKeys.length > 0) && (
+          <span
+            className="btn-primary font-serif text-sm"
+            onClick={() => append({ key: "", value: "" })}
+          >
+            Add More Features
+          </span>
+        )}
       </div>
     </>
   );

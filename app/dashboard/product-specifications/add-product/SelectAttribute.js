@@ -5,7 +5,7 @@ import {
   useAttributes,
 } from "@/app/_features/attributes/useAttributes";
 import React, { useState } from "react";
-import { useFieldArray, Controller } from "react-hook-form";
+import { useFieldArray, Controller, useWatch } from "react-hook-form";
 
 function SelectAttribute({ control }) {
   const { fields, append, remove } = useFieldArray({
@@ -16,6 +16,28 @@ function SelectAttribute({ control }) {
   const { data, isLoading } = useAttributes();
 
   const attributes = !isLoading && data?.attributes;
+
+  const watchVariants = useWatch({
+    control,
+    name: "variants",
+  });
+
+  const checkForDuplicateAttributeIds = (data) => {
+    const keysSeen = new Set();
+    const duplicates = [];
+
+    data.forEach((item) => {
+      if (keysSeen.has(item.attribute_value_id)) {
+        duplicates.push(item.attribute_value_id);
+      } else {
+        keysSeen.add(item.attribute_value_id);
+      }
+    });
+
+    return duplicates;
+  };
+
+  const duplicateAttributeIds = checkForDuplicateAttributeIds(watchVariants);
 
   return (
     <>
@@ -72,12 +94,21 @@ function SelectAttribute({ control }) {
             </span>
           </div>
         ))}
-        <span
-          className="btn-primary font-serif text-sm"
-          onClick={() => append({ attribute_value_id: "", price: 0 })}
-        >
-          Add More Variants
-        </span>
+        {duplicateAttributeIds.length > 0 &&
+          duplicateAttributeIds.map((key, i) => (
+            <p className="text-red-500 text-sm" key={i + 1}>
+              Please Check You have selected Attribute Value Id({key}) multiple
+              times!
+            </p>
+          ))}
+        {!(duplicateAttributeIds.length > 0) && (
+          <span
+            className="btn-primary font-serif text-sm"
+            onClick={() => append({ attribute_value_id: "", price: 0 })}
+          >
+            Add More Variants
+          </span>
+        )}
       </div>
     </>
   );

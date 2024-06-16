@@ -23,6 +23,7 @@ import SelectBrand from "../add-product/SelectBrand";
 import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import UpdateAttribute from "./UpdateAttribute";
+import ManageImage from "../add-product/ManageImage";
 
 const EditProduct = ({ product }) => {
   const [open, setOpen] = useState(false);
@@ -226,6 +227,7 @@ const EditProduct = ({ product }) => {
               control={control}
               productId={product?.id}
             />
+            <ManageImage images={product?.images} />
             <UpdateImageUploader
               register={register}
               errors={errors}
