@@ -8,12 +8,24 @@ import Spinner from "@/app/components/ui/Spinner";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import NoPermission from "@/app/components/ui/NoPermission";
+import { useSearchParams } from "next/navigation";
+
+import PaginationForProduct from "./Pagination";
 
 const ProductsPage = () => {
   const isPermission = useCheckPermission("product_add");
   const isProductListPermission = useCheckPermission("product_list");
+  const params = useSearchParams();
 
-  const { products, isLoading, isError, error } = useProducts();
+  const page = params.get("page") || 1;
+  const categoryId = params.get("category");
+  const brandId = params.get("brand");
+
+  const { products, isLoading, isError, error } = useProducts(
+    categoryId,
+    brandId,
+    page
+  );
 
   if (!isProductListPermission) {
     return (
@@ -35,7 +47,7 @@ const ProductsPage = () => {
           {!isLoading && !isError && products.data.data.length > 0 ? (
             <Products products={products} />
           ) : (
-            <NotFoundData message="There is no products at that moment!" />
+            <NotFoundData message="There is no products!" />
           )}
           {!isLoading && isError && error && (
             <h1>
@@ -45,6 +57,7 @@ const ProductsPage = () => {
             </h1>
           )}
         </div>
+        <PaginationForProduct data={products?.data} page={+page} />
       </div>
     </>
   );

@@ -6,9 +6,36 @@ import {
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
 import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const FilterByCategory = () => {
   const { data, isLoading, isError, error } = useCategories();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  // Set initial state from URL query parameters
+  useEffect(() => {
+    const categoryQuery = searchParams.get("category");
+    if (categoryQuery) {
+      setSelectedCategories(categoryQuery.split(",").map(Number));
+    }
+  }, [searchParams]);
+
+  const handleCheckboxChange = (categoryId) => {
+    const updatedSelectedCategories = selectedCategories.includes(categoryId)
+      ? selectedCategories.filter((id) => id !== categoryId)
+      : [...selectedCategories, categoryId];
+
+    setSelectedCategories(updatedSelectedCategories);
+
+    const query = updatedSelectedCategories.length
+      ? `?category=${updatedSelectedCategories.join(",")}`
+      : "";
+    router.push(`/dashboard/product-specifications${query}`);
+  };
 
   return (
     <Accordion type="single" collapsible defaultValue="category">
@@ -30,6 +57,8 @@ const FilterByCategory = () => {
                     type="checkbox"
                     id={category.name}
                     name={category.name}
+                    checked={selectedCategories.includes(category.id)}
+                    onChange={() => handleCheckboxChange(category.id)}
                     className="cursor-pointer"
                   />
                   <label className="cursor-pointer" htmlFor={category.name}>

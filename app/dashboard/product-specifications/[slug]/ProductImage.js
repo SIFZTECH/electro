@@ -7,8 +7,6 @@ import Image from "next/image";
 // const images = ["/cycle-1.jpg", "/cycle-2.jpg", "/cycle-3.jpg", "/cycle-4.jpg"];
 
 const ProductImage = ({ images }) => {
-  console.log("images", images);
-
   return (
     <>
       <Tabs>

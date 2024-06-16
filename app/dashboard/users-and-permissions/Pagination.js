@@ -10,6 +10,8 @@ import {
 import { PAGE_SIZE } from "@/app/lib/utils";
 
 function PaginationUI({ data, page }) {
+  console.log(data);
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-between">
       {data?.total > PAGE_SIZE && (

@@ -1,14 +1,27 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, PRODUCT_PAGE_SIZE } from "../lib/utils";
 
-export async function getAllProducts() {
+export async function getAllProducts({ categoryId, brandId, page }) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/products`, {
+  let url = `${BASE_URL}/products?per_page=${PRODUCT_PAGE_SIZE}`;
+
+  if (page) {
+    url = `${BASE_URL}/products?per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (categoryId) {
+    url = `${BASE_URL}/products?category=${categoryId}&per_page=${PRODUCT_PAGE_SIZE}`;
+  }
+  if (brandId) {
+    url = `${BASE_URL}/products?brand=${brandId}&per_page=${PRODUCT_PAGE_SIZE}`;
+  }
+
+  const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -54,6 +67,8 @@ export async function updateProduct(id, formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+
+  console.log("payload", formData);
 
   const productIds = formData.compare.map((product) => +product.id);
 

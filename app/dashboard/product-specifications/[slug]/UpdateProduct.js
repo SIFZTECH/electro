@@ -23,7 +23,6 @@ import SelectBrand from "../add-product/SelectBrand";
 import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
 
 const EditProduct = ({ product }) => {
-  const { data, isLoading, isError } = useBrands();
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -45,10 +44,9 @@ const EditProduct = ({ product }) => {
       subcategory_id: product?.subcategory_id || "",
       brand_id: product?.brand_id || "",
       key_features: product?.specification || [],
-      variants: product?.variants
-        ? product.variants
-        : [{ attribute_value_id: "", price: 0 }],
+      variants: product?.variants || [],
       products: product?.compare ? product.compare : [{ id: "" }],
+      images: product?.images,
     },
   });
 
@@ -67,6 +65,13 @@ const EditProduct = ({ product }) => {
     images,
     products,
   }) {
+    const formattedVariants = variants.map((variant) => {
+      return {
+        attribute_value_id: variant.attribute_value_id,
+        price: variant.price,
+      };
+    });
+
     try {
       const res = await updateProduct(product.id, {
         name,
@@ -77,12 +82,12 @@ const EditProduct = ({ product }) => {
         category_id,
         subcategory_id,
         brand_id,
-        variants,
+        variants: formattedVariants,
         specification: key_features,
         images,
         compare: products,
       });
-      console.log(res);
+
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("product", product.slug);

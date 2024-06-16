@@ -18,8 +18,6 @@ const ProductDetailsPage = ({ params }) => {
   if (isLoading) return <Spinner />;
   if (isError && error) return;
 
-  console.log("product", product);
-
   return (
     <div>
       <div className="flex flex-wrap justify-between items-center">
@@ -54,13 +52,7 @@ const ProductDetailsPage = ({ params }) => {
             <div className="my-3 shadow-sm pb-3">
               <ul className="md:list-disc pl-1 md:pl-10">
                 {product?.specification?.map((feature, i) => (
-                  <li className="flex gap-2 items-center" key={i + 1}>
-                    <Image
-                      src={`https://electro-api.sifztech.com${feature.icon_path_value}`}
-                      alt="name"
-                      width={25}
-                      height={25}
-                    />
+                  <li key={i + 1}>
                     <span>{feature.value}</span>
                   </li>
                 ))}

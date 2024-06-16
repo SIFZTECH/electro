@@ -32,7 +32,7 @@ const ProductForm = () => {
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
-      key_features: [{ key: "", value: "", icon_path_value: "" }],
+      key_features: [{ key: "", value: "" }],
       products: [{ id: "" }],
     },
   });

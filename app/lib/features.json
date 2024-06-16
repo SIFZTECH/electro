@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "icon": "/icons8-motor-64.png",
+    "key": "motor"
+  },
+  {
+    "id": 2,
+    "icon": "/icons8-battery-90.png",
+    "key": "bettary"
+  },
+  {
+    "id": 3,
+    "icon": "/icons8-performance-smartphone-50.png",
+    "key": "display"
+  },
+  {
+    "id": 4,
+    "icon": "/icons8-charger-60.png",
+    "key": "charger"
+  },
+  {
+    "id": 5,
+    "icon": "/icons8-charger-60.png",
+    "key": "frome"
+  },
+  {
+    "id": 6,
+    "icon": "/icons8-performance-smartphone-50.png",
+    "key": "forks"
+  },
+  {
+    "id": 7,
+    "icon": "/icons8-performance-smartphone-50.png",
+    "key": "broking-system"
+  },
+  {
+    "id": 8,
+    "icon": "/icons8-performance-smartphone-50.png",
+    "key": "gear-selector"
+  },
+  {
+    "id": 9,
+    "icon": "/icons8-derailleur-96.png",
+    "key": "front-derailleur"
+  },
+  {
+    "id": 10,
+    "icon": "/icons8-bicycle-rear-derailleur-80.png",
+    "key": "rear-derailleur"
+  },
+  {
+    "id": 11,
+    "icon": "/icons8-saddle-60.png",
+    "key": "saddle"
+  },
+  {
+    "id": 12,
+    "icon": "/icons8-circle-80.png",
+    "key": "shwalbe"
+  }
+]
