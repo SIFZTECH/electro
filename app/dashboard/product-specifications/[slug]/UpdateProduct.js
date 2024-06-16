@@ -22,6 +22,7 @@ import UpdateImageUploader from "./UpdateImage";
 import SelectBrand from "../add-product/SelectBrand";
 import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import UpdateAttribute from "./UpdateAttribute";
 
 const EditProduct = ({ product }) => {
   const [open, setOpen] = useState(false);
@@ -215,37 +216,16 @@ const EditProduct = ({ product }) => {
               </div>
             </div>
 
-            {/* <div className="flex items-center gap-8 ">
-              <div className="flex-1">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                  Brand Name
-                </label>
-                <div className="mt-1">
-                  <select
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    {...register("brand_id")}
-                  >
-                    {!isLoading &&
-                      data?.data?.map((brand) => (
-                        <option key={brand.id} value={brand.id}>
-                          {brand.name}
-                        </option>
-                      ))}
-                  </select>
-                  {errors?.brand && (
-                    <span className="text-red-500 text-sm">
-                      {errors.brand.message}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div> */}
             <SelectBrand register={register} errors={errors} />
 
             <SelectCategoryFormComponent control={control} watch={watch} />
             <SelectKeyFeatures control={control} />
 
-            <SelectAttribute watch={watch} control={control} />
+            <UpdateAttribute
+              watch={watch}
+              control={control}
+              productId={product?.id}
+            />
             <UpdateImageUploader
               register={register}
               errors={errors}

@@ -120,3 +120,22 @@ export async function deleteAttribute(name) {
 
   return data;
 }
+
+export async function deleteVariant({ product_id, attribute_value_id }) {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/delete-product-varient`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      product_id,
+      attribute_value_id,
+    },
+  });
+
+  return data;
+}

@@ -99,5 +99,7 @@ export async function deleteProduct(id) {
     },
   });
 
+  console.log(data);
+
   return data;
 }
