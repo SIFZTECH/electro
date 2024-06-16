@@ -9,11 +9,11 @@ import Image from "next/image";
 const ProductImage = ({ images }) => {
   return (
     <>
-      <Tabs>
+      <Tabs
+        defaultValue={`https://electro-api.sifztech.com${images[0].image_path}`}
+      >
         <div className="lg:h-[500px] product__image">
-          <TabsContent
-            defaultValue={`https://electro-api.sifztech.com${images[0].image_path}`}
-          >
+          <TabsContent>
             <Image
               src={`https://electro-api.sifztech.com${images[0].image_path}`}
               alt="name"
