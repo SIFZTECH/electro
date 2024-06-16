@@ -6,7 +6,6 @@ import {
 } from "@/app/_features/attributes/useAttributes";
 import React, { useState } from "react";
 import { useFieldArray, Controller } from "react-hook-form";
-import { IoMdClose } from "react-icons/io";
 
 function SelectAttribute({ control }) {
   const { fields, append, remove } = useFieldArray({

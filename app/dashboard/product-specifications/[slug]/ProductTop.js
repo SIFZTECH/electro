@@ -33,6 +33,7 @@ const ProductTop = ({ product }) => {
             Best Seller
           </span>
         </div>
+        <h1 className="font-serif text-xl font-semibold">${product.price}</h1>
         {colorValues.length > 0 && (
           <div className="product__colors">
             <h3 className="font-serif mb-1">Colors</h3>

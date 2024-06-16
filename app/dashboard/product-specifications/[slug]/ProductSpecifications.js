@@ -38,7 +38,7 @@ const ProductSpecifications = ({ specification }) => {
 
           return (
             <TableRow key={i}>
-              <TableCell className="font-serif font-semibold flex flex-col gap-2 items-center">
+              <TableCell className="font-serif font-semibold flex flex-col text-center gap-2 items-center">
                 <Image
                   src={matchedFeature && `${matchedFeature?.icon}`}
                   alt={feature}
