@@ -1,3 +1,5 @@
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { CreateNewFile } from "@/app/_services/apiResources";
 import {
   Dialog,
   DialogClose,
@@ -8,22 +10,30 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
-const UploadFileModal = () => {
+const UploadFileModal = ({ folder_id }) => {
+  const [open, setOpen] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [previews, setPreviews] = useState([]);
+
+  const queryClient = useQueryClient();
+
   const {
     register,
     handleSubmit,
-    setValue,
-    clearErrors,
     resetField,
     setError,
+    clearErrors,
+    setValue,
     formState: { isSubmitting, errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { folder_id, files: [] },
+  });
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -39,13 +49,13 @@ const UploadFileModal = () => {
     e.preventDefault();
     setDragOver(false);
     const droppedFiles = Array.from(e.dataTransfer.files);
-    setValue("stockCsv", droppedFiles);
+    setValue("files", droppedFiles);
     generatePreviews(droppedFiles);
   };
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    setValue("stockCsv", selectedFiles);
+    setValue("files", selectedFiles);
     generatePreviews(selectedFiles);
 
     clearErrors();
@@ -56,27 +66,51 @@ const UploadFileModal = () => {
     setPreviews(previewsArray);
   };
 
-  function onSubmit({ stockCsv }) {
-    if (stockCsv.length === 0) {
-      setError("stockCsv", {
+  async function onSubmit({ folder_id, files }) {
+    if (files.length === 0) {
+      setError("files", {
         type: "custom",
         message: "Please select file before submit!",
       });
       return;
     }
-    resetField("stockCsv");
+
+    try {
+      const res = await CreateNewFile({
+        folder_id,
+        files,
+      });
+      console.log(res);
+      if (res) {
+        toast.success(res.message);
+        queryClient.invalidateQueries("folder");
+        setOpen(false);
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        err.response?.data?.data
+          ? handleValidationError(err.response.data.data)
+          : toast.error(err.response.data.message);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
+    resetField("files");
     setPreviews([]);
   }
 
+  console.log(errors);
+
   return (
-    <Dialog>
-      <DialogTrigger className="btn-primary">Upload</DialogTrigger>
+    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
+      <DialogTrigger className="btn-primary">Upload File</DialogTrigger>
 
       <DialogContent className="bg-white">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle className="mb-3 font-serif">
-              Upload Social Media Assets
+              Upload File to that folder
             </DialogTitle>
 
             <div
@@ -119,29 +153,29 @@ const UploadFileModal = () => {
 
               <h1 className="font-serif text-lg">Drop Files Here</h1>
               <p className="text-sm text-gray-500">
-                Supported Format: jpg.jpeg,png
+                Supported Format: All type
               </p>
               <div>
                 <p className="text-gray-500 mb-3">OR</p>
 
                 <label
-                  htmlFor="stock-csv"
+                  htmlFor="files"
                   className="block text-sm font-medium font-serif leading-6 text-color-primary cursor-pointer"
                 >
                   Browse files
                 </label>
 
                 <input
-                  {...register("stockCsv")}
-                  id="stock-csv"
-                  type="file"
-                  accept="image/*"
+                  {...register("files")}
+                  id="files"
                   className="hidden"
+                  type="file"
+                  multiple
                   onChange={handleFileChange}
                 />
-                {errors?.stockCsv && (
+                {errors?.files && (
                   <span className="text-red-500 text-sm">
-                    {errors.stockCsv.message}
+                    {errors.files.message}
                   </span>
                 )}
               </div>

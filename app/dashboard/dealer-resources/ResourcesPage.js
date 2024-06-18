@@ -9,9 +9,12 @@ import CreateNewResources from "./CreateNewResources";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
 import NotFoundData from "@/app/components/ui/NotFoundData";
+import { useSearchParams } from "next/navigation";
 
 const ResourcesPage = () => {
-  const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
+  const params = useSearchParams();
+  const page = params.get("page") ? +params.get("page") : 1;
+  const { data, isLoading, isError, error } = useDealerResourcesForAdmin(page);
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isDealerListPermission = useCheckPermission("dealer_list");
 
@@ -43,7 +46,7 @@ const ResourcesPage = () => {
         {!isLoading && !isError && !error && (
           <>
             <FilterBy />
-            <AllResources data={data.data} />
+            <AllResources data={data.data} metaData={data} page={page} />
           </>
         )}
       </div>

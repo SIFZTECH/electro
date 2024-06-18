@@ -15,10 +15,10 @@ export function useDealerResources() {
   return { data, isLoading, error, isError };
 }
 
-export function useDealerResourcesForAdmin() {
+export function useDealerResourcesForAdmin(page) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["resources"],
-    queryFn: () => getAllResourcesForAdmin(),
+    queryKey: ["resources", {page}],
+    queryFn: () => getAllResourcesForAdmin(page),
   });
 
   return { data, isLoading, error, isError };
