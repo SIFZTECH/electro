@@ -297,7 +297,7 @@ const WarrantyRegistrationPage = () => {
                 {...register("invoice_image")}
                 type="file"
                 placeholder="Upload your Invoice"
-                accept=".png,.jpg"
+                accept=".png,.jpg,.jpeg"
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
@@ -339,7 +339,7 @@ const WarrantyRegistrationPage = () => {
               <input
                 {...register("frame_serial_no_image")}
                 type="file"
-                accept=".png,.jpg"
+                accept=".png,.jpg,.jpeg"
                 placeholder="Upload your Invoice"
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
@@ -381,7 +381,7 @@ const WarrantyRegistrationPage = () => {
               <input
                 {...register("battery_serial_no_image")}
                 type="file"
-                accept=".png,.jpg"
+                accept=".png,.jpg,.jpeg"
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
@@ -422,7 +422,7 @@ const WarrantyRegistrationPage = () => {
               <input
                 {...register("motor_serial_no_image")}
                 type="file"
-                accept=".png,.jpg"
+                accept=".png,.jpg,.jpeg"
                 className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1

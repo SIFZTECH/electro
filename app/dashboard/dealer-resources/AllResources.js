@@ -1,6 +1,6 @@
-import FolderFiles from "@/app/components/ui/FolderFiles";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import Search from "@/app/components/ui/Search";
+import FolderFiles from "./FolderFiles";
 
 const AllResources = ({ data }) => {
   return (

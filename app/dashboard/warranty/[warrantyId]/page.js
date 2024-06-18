@@ -4,6 +4,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import Image from "next/image";
 import DeleteWarranty from "../DeleteWarranty";
 import EditWarranty from "../EditWarranty";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 
 const WarrantyPageInfo = ({ params }) => {
   const { warrantyId } = params;
@@ -22,9 +23,16 @@ const WarrantyPageInfo = ({ params }) => {
       )}
       {!isLoading && !isError && !error && (
         <div className="space-y-2">
-          <p className="btn-primary inline-block bg-color-primary">
-            {warranty.status}
-          </p>
+          {warranty.status === "active" ? (
+            <span className="btn-primary bg-green-300 capitalize">
+              {warranty.status}
+            </span>
+          ) : (
+            <span className="btn-primary bg-yellow-300 capitalize">
+              {warranty.status}
+            </span>
+          )}
+
           <h1>
             Company Name:
             <span className="font-semibold font-serif">
@@ -40,7 +48,10 @@ const WarrantyPageInfo = ({ params }) => {
           </p>
           <p>
             Created At:
-            <span className="font-medium"> {warranty.created_at}</span>
+            <span className="font-medium">
+              {" "}
+              {new Date(warranty.created_at).toDateString()}
+            </span>
           </p>
 
           <p>
@@ -62,10 +73,13 @@ const WarrantyPageInfo = ({ params }) => {
           </p>
           <p>
             Updated at:
-            <span className="font-medium"> {warranty.updated_at}</span>
+            <span className="font-medium">
+              {" "}
+              {new Date(warranty.updated_at).toDateString()}
+            </span>
           </p>
 
-          <div className="flex gap-4 flex-wrap items-center !mt-6">
+          <div className="flex gap-4 flex-wrap items-start !mt-6">
             <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
               <p>
                 Bike Battary serial no:
@@ -73,7 +87,12 @@ const WarrantyPageInfo = ({ params }) => {
                   {warranty.bike_battery_serial_no}
                 </span>
               </p>
-              <Image src="/serial-1.jpeg" width={400} height={320} alt="test" />
+              <Image
+                src={`${BASE_URL_IMAGE}${warranty.battery_serial_no_image}`}
+                width={400}
+                height={320}
+                alt={`${warranty.company_name}`}
+              />
             </div>
             <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
               <p>
@@ -82,7 +101,12 @@ const WarrantyPageInfo = ({ params }) => {
                   &nbsp;{warranty.bike_frame_serial_no}
                 </span>
               </p>
-              <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
+              <Image
+                src={`${BASE_URL_IMAGE}${warranty.frame_serial_no_image}`}
+                width={400}
+                height={320}
+                alt={warranty.company_name}
+              />
             </div>
             <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
               <p>
@@ -91,7 +115,12 @@ const WarrantyPageInfo = ({ params }) => {
                   &nbsp;{warranty.bike_motor_serial_no}
                 </span>
               </p>
-              <Image src="/serial-3.jpeg" width={400} height={320} alt="test" />
+              <Image
+                src={`${BASE_URL_IMAGE}${warranty.motor_serial_no_image}`}
+                width={400}
+                height={320}
+                alt={warranty.company_name}
+              />
             </div>
             <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
               <p>
@@ -100,7 +129,12 @@ const WarrantyPageInfo = ({ params }) => {
                   &nbsp;{warranty.invoice_number}
                 </span>
               </p>
-              <Image src="/serial-2.jpeg" width={400} height={320} alt="test" />
+              <Image
+                src={`${BASE_URL_IMAGE}${warranty.invoice_image}`}
+                width={400}
+                height={320}
+                alt={warranty.company_name}
+              />
             </div>
           </div>
         </div>

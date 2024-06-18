@@ -34,7 +34,7 @@ const FolderFiles = ({ metaData, page, data }) => {
                 width={1000}
                 height={800}
               />
-              <DeleteMedia />
+              <DeleteMedia item={item} />
             </DialogContent>
           </Dialog>
         ))}

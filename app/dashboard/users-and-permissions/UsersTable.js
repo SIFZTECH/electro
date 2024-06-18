@@ -34,8 +34,6 @@ const UsersTable = () => {
     return <Spinner />;
   }
 
-  console.log("from pare", data);
-
   return (
     <>
       <Search />

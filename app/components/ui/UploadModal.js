@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,8 +9,44 @@ import {
   DialogClose,
   DialogFooter,
 } from "@/app/components/ui/dialog";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import SpinnerMini from "./SpinnerMini";
 
-const Modal = ({ title, btn }) => {
+const UploadModal = ({ title, btn }) => {
+  const [dragOver, setDragOver] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [previews, setPreviews] = useState([]);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    setFiles(droppedFiles);
+    generatePreviews(droppedFiles);
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(selectedFiles);
+    generatePreviews(selectedFiles);
+  };
+
+  const generatePreviews = (files) => {
+    const previewsArray = files.map((file) => URL.createObjectURL(file));
+    setPreviews(previewsArray);
+  };
+
   return (
     <Dialog className="bg-white">
       <DialogTrigger className="btn-primary">{btn}</DialogTrigger>
@@ -17,7 +54,14 @@ const Modal = ({ title, btn }) => {
         <DialogHeader>
           <DialogTitle className="mb-3 font-serif">{title}</DialogTitle>
           <form className="">
-            <div className="flex items-center gap-3 flex-col text-center border-dashed border border-gray-400 p-3">
+            <div
+              className={`flex items-center gap-3 flex-col text-center border-dashed border border-gray-400 p-3 ${
+                dragOver ? "bg-gray-200" : ""
+              }`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <svg
                 width="80"
                 height="80"
@@ -55,7 +99,7 @@ const Modal = ({ title, btn }) => {
 
                 <label
                   htmlFor="stock-csv"
-                  className="block text-sm font-medium font-serif leading-6 text-color-primary"
+                  className="block text-sm font-medium font-serif leading-6 text-color-primary cursor-pointer"
                 >
                   Browse files
                 </label>
@@ -64,6 +108,7 @@ const Modal = ({ title, btn }) => {
                   id="stock-csv"
                   name="stock-csv"
                   type="file"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                   className="hidden"
                 />
               </div>
@@ -71,6 +116,23 @@ const Modal = ({ title, btn }) => {
           </form>
         </DialogHeader>
         <DialogFooter>
+          {previews.length > 0 && (
+            <div className="mt-3">
+              <h2 className="font-serif text-base">File Previews:</h2>
+              <div className="flex flex-wrap gap-2">
+                {previews.map((preview, index) => (
+                  <Image
+                    key={index}
+                    src={preview}
+                    height={20}
+                    width={20}
+                    alt={`Preview ${index}`}
+                    className="w-20 h-20 object-cover border border-gray-400"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
           <DialogClose>
             <button className="mr-2">Close</button>
           </DialogClose>
@@ -83,4 +145,4 @@ const Modal = ({ title, btn }) => {
   );
 };
 
-export default Modal;
+export default UploadModal;

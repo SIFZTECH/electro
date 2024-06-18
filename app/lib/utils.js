@@ -9,6 +9,7 @@ export const BASE_URL = "https://electro-api.sifztech.com/api";
 export const PAGE_SIZE = 8;
 export const PRODUCT_PAGE_SIZE = 10;
 export const MEDIA_PAGE_SIZE = 20;
+export const WARRANTY_PAGE_SIZE = 10;
 export const BASE_URL_IMAGE = "https://electro-api.sifztech.com";
 
 export const permissions = [

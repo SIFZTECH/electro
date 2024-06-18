@@ -12,7 +12,7 @@ import NotFoundData from "@/app/components/ui/NotFoundData";
 
 const ResourcesPage = () => {
   const { data, isLoading, isError, error } = useDealerResourcesForAdmin();
-  const isDealerAddPermission = useCheckPermission("dealer_add");
+  // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isDealerListPermission = useCheckPermission("dealer_list");
 
   if (!isDealerListPermission) {
@@ -27,14 +27,15 @@ const ResourcesPage = () => {
     <div className="dealer-resources">
       <div className="flex justify-between items-center mb-10">
         <h1 className="heading-h1">Dealer Resources</h1>
-        {isDealerAddPermission && <CreateNewResources />}
+        {/* {isDealerAddPermission && <CreateNewResources />} */}
+        <CreateNewResources />
       </div>
       {!isLoading && isError && error && (
         <NotFoundData
           message={
             error?.response.data.message
               ? error.response.data.message
-              : error.messag
+              : error.message
           }
         />
       )}

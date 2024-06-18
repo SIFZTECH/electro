@@ -29,13 +29,13 @@ const WarrantyProducts = ({ data }) => {
                     {data.firstname} {data.lastname}
                   </td>
                   <td data-label="Customer Name">{data.company_name}</td>
-                  <td data-label="Status">
+                  <td data-label="Status" className="capitalize">
                     {data.status === "active" ? (
-                      <span className="btn-primary bg-emerald-200">
+                      <span className="btn-primary bg-green-300">
                         {data.status}
                       </span>
                     ) : (
-                      <span className="btn-primary bg-yellow-200">
+                      <span className="btn-primary bg-yellow-300">
                         {data.status}
                       </span>
                     )}

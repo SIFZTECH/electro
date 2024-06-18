@@ -16,6 +16,7 @@ export async function getAllResources() {
 
   return data.data;
 }
+
 export async function getAllResourcesForAdmin() {
   const token = localStorage.getItem("access-token");
 
@@ -30,15 +31,17 @@ export async function getAllResourcesForAdmin() {
   return data.data;
 }
 
-export async function getResources(id) {
+export async function CreateNewResource(formData) {
   const token = localStorage.getItem("access-token");
 
-  if (!token && !id) return null;
+  if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/media/${id}`, {
+  const { data } = await axios(`${BASE_URL}/create-folder`, {
+    method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    data: formData,
   });
 
   return data;

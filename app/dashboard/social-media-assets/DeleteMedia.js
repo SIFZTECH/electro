@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const DeleteMedia = () => {
+const DeleteMedia = ({ item }) => {
   const queryClient = useQueryClient();
 
   const {
@@ -12,7 +12,7 @@ const DeleteMedia = () => {
     formState: { isSubmitting },
   } = useForm();
 
-  async function onSubmit(item) {
+  async function onSubmit() {
     try {
       const res = await deleteMedia(item);
       if (res) {
@@ -30,7 +30,7 @@ const DeleteMedia = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(() => onSubmit(item))}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <button className="w-full flex justify-end mt-4">
         <span className="btn-primary bg-red-500 text-white">
           {isSubmitting ? <SpinnerMini /> : "Delete"}

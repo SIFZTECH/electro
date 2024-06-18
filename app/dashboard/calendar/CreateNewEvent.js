@@ -1,6 +1,7 @@
 "use client";
 
 import { useRoles } from "@/app/_features/roles/useRoles";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { createEvent } from "@/app/_services/apiEvents";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -42,7 +43,9 @@ const CreateNewEvent = ({ date, setOpen }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response.data.data
+          ? handleValidationError(err.response.data.data)
+          : toast.error(err.response.data.message);
       } else {
         toast.success(err.message);
       }

@@ -15,10 +15,10 @@ export function useWarranties() {
   return { data, isLoading, error, isError };
 }
 
-export function useWarrantiesForAdmin() {
+export function useWarrantiesForAdmin(page) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["warranties"],
-    queryFn: () => getAllWarrantiesForAdmin(),
+    queryKey: ["warranties", { page }],
+    queryFn: () => getAllWarrantiesForAdmin(page),
   });
 
   return { data, isLoading, error, isError };

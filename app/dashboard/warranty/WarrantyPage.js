@@ -18,6 +18,7 @@ const WarrantyPage = () => {
       <NoPermission message="You don't have permission to access this route" />
     );
   }
+
   if (isLoading) {
     return <Spinner />;
   }

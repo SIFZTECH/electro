@@ -7,6 +7,7 @@ import AllMedia from "./AllMedia";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
 import { useSearchParams } from "next/navigation";
+import UploadFileModal from "./UploadFileModal";
 
 const MediaPage = () => {
   const params = useSearchParams();
@@ -28,7 +29,7 @@ const MediaPage = () => {
     <div className="dealer-resources">
       <div className="flex items-start justify-between mb-8">
         <h1 className="heading-h1">Social Media Assets</h1>
-        <button className="btn-primary">Upload New</button>
+        <UploadFileModal />
       </div>
       {/* <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6 2xl:w-[95%]"> */}
       <div>

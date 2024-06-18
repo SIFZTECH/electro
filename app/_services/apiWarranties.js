@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, PAGE_SIZE, WARRANTY_PAGE_SIZE } from "../lib/utils";
 
 export async function getAllWarranties() {
   const token = localStorage.getItem("access-token");
@@ -16,16 +16,19 @@ export async function getAllWarranties() {
 
   return data.data;
 }
-export async function getAllWarrantiesForAdmin() {
+export async function getAllWarrantiesForAdmin(page) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/warranties`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${BASE_URL}/warranties?per_page=${WARRANTY_PAGE_SIZE}&page=${page}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return data.data;
 }

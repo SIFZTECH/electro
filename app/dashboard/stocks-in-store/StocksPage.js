@@ -2,7 +2,7 @@
 
 import useCheckPermission from "@/app/_hooks/usePermission";
 import Stocks from "./Stocks";
-import UploadModal from "./UploadModal";
+import UploadStock from "./UploadStock";
 import NoPermission from "@/app/components/ui/NoPermission";
 
 const StocksPage = () => {
@@ -20,7 +20,7 @@ const StocksPage = () => {
       <div className="flex flex-col sm:flex-row justify-between items-center">
         <h1 className="heading-h1">Stock in Store</h1>
         <div className="flex items-center mb-8 mt-4 gap-3">
-          {isUpdateStockPermission && <UploadModal />}
+          {isUpdateStockPermission && <UploadStock />}
           {isDeleteStockPermission && (
             <button className="btn-primary">Edit Stoke</button>
           )}
