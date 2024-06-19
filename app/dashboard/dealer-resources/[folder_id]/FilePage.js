@@ -16,6 +16,7 @@ import {
 } from "@/app/components/ui/dialog";
 import DeleteFile from "./DeleteFile";
 import DeleteFolder from "./DeleteFolder";
+import { useState } from "react";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -77,7 +78,7 @@ const FolderPage = ({ folder_id }) => {
                   )}
                 </div>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="max-w-[60rem] pt-9">
                 {isImage(file) && (
                   <Image
                     src={`${BASE_URL_IMAGE}${file}`}
