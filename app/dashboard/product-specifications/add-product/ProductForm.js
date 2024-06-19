@@ -3,7 +3,6 @@
 import { useForm } from "react-hook-form";
 import SelectAttribute from "./SelectAttribute";
 
-import "@tonz/react-draft-wysiwyg-input/style.css";
 import SelectCategoryFormComponent from "./SelectCategory&SubCategory";
 import SpecificationForm from "./SpecificationForm";
 import toast from "react-hot-toast";
@@ -11,7 +10,6 @@ import { createProduct } from "@/app/_services/apiProducts";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import ImageUploader from "./SelectImages";
 import SelectBrand from "./SelectBrand";
 import SelectKeyFeatures from "./SelectKeyFeatures";

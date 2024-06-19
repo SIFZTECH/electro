@@ -132,6 +132,9 @@ input[type="checkbox"] {
   transition: width 0.3s;
 }
 
+.file-preview path {
+  stroke-width: 1.1px !important;
+}
 .active {
   background-color: var(--color-primary-shade-1);
   color: #333;
