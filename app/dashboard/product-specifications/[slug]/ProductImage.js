@@ -1,10 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-
 import Image from "next/image";
 
-const ProductImage = ({ images }) => {
+const ProductImage = ({ images, product_name }) => {
+  const [loading, setLoading] = useState(
+    images.reduce((acc, img) => {
+      acc[`https://electro-api.sifztech.com${img.image_path}`] = true;
+      return acc;
+    }, {})
+  );
+
+  const handleLoadingComplete = (imagePath) => {
+    setLoading((prevState) => ({
+      ...prevState,
+      [imagePath]: false,
+    }));
+  };
+
   return (
     <>
       <Tabs
@@ -12,38 +26,55 @@ const ProductImage = ({ images }) => {
       >
         <div className="product__image">
           {images.map((img, i) => {
+            const imgPath = `https://electro-api.sifztech.com${img.image_path}`;
             return (
-              <TabsContent
-                key={i + 1}
-                value={`https://electro-api.sifztech.com${img.image_path}`}
-              >
-                <Image
-                  src={`https://electro-api.sifztech.com${img.image_path}`}
-                  alt="name"
-                  width={600}
-                  height={450}
-                  className="object-contain"
-                />
+              <TabsContent key={i + 1} value={imgPath}>
+                <div className="relative mt-4 md:mt-0">
+                  {loading[imgPath] && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="loader"></div>
+                    </div>
+                  )}
+                  <Image
+                    src={imgPath}
+                    alt={`Image of ${product_name}`}
+                    height={600}
+                    width={450}
+                    className="object-contain"
+                    onLoadingComplete={() => handleLoadingComplete(imgPath)}
+                  />
+                </div>
               </TabsContent>
             );
           })}
         </div>
         <TabsList className="product__thumbnails flex items-center justify-center gap-3 mt-6">
-          {images.map((img) => (
-            <TabsTrigger
-              value={`https://electro-api.sifztech.com${img.image_path}`}
-              key={`https://electro-api.sifztech.com${img.image_path}`}
-              className="border border-gray-300 data-[state='active']:ring-1 data-[state='active']:ring-color-primary"
-            >
-              <Image
-                src={`https://electro-api.sifztech.com${img.image_path}`}
-                alt="name"
-                width={90}
-                className="object-contain"
-                height={70}
-              />
-            </TabsTrigger>
-          ))}
+          {images.map((img) => {
+            const imgPath = `https://electro-api.sifztech.com${img.image_path}`;
+            return (
+              <TabsTrigger
+                value={imgPath}
+                key={imgPath}
+                className="border border-gray-300 data-[state='active']:ring-1 data-[state='active']:ring-color-primary"
+              >
+                <div className="relative">
+                  {loading[imgPath] && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="loader"></div>
+                    </div>
+                  )}
+                  <Image
+                    src={imgPath}
+                    alt={`Image of ${product_name}`}
+                    width={90}
+                    height={70}
+                    className="object-contain"
+                    onLoadingComplete={() => handleLoadingComplete(imgPath)}
+                  />
+                </div>
+              </TabsTrigger>
+            );
+          })}
         </TabsList>
       </Tabs>
     </>

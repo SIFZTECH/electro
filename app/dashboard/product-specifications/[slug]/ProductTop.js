@@ -23,7 +23,7 @@ const ProductTop = ({ product }) => {
 
   return (
     <div className="flex gap-8 flex-col lg:flex-row">
-      <ProductImage images={product?.images} />
+      <ProductImage images={product?.images} product_name={product?.name} />
       <div className="product__summary flex flex-col gap-8">
         <div className="product__name flex items-center gap-3">
           <span className="font-serif font-semibold text-xl">

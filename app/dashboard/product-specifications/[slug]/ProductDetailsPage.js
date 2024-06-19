@@ -57,21 +57,18 @@ const ProductDetailsPage = ({ params }) => {
                   </li>
                 ))}
               </ul>
-              {/* 
-                {product.key_features.split(",").map((feature, i) => (
-                  <li key={i + 1}>{feature}</li>
-                ))}
-              </ul> */}
             </div>
           </div>
         </div>
-        <div className="product__specifications">
-          <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
-            <BsPatchExclamation />
-            <span>Specifications</span>
-          </h2>
-          <ProductSpecifications specification={product?.compare} />
-        </div>
+        {product?.compare.length !== 0 && (
+          <div className="product__specifications">
+            <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
+              <BsPatchExclamation />
+              <span>Specifications</span>
+            </h2>
+            <ProductSpecifications specification={product?.compare} />
+          </div>
+        )}
       </div>
     </div>
   );
