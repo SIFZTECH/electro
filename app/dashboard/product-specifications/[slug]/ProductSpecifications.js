@@ -14,8 +14,8 @@ const ProductSpecifications = ({ specification }) => {
   // Extract all unique features across all products
   const allFeatures = [
     ...new Set(
-      specification?.flatMap((product) =>
-        product?.specification?.map((spec) => spec.key)
+      specification.flatMap((product) =>
+        product.specification.map((spec) => spec.key)
       )
     ),
   ];
@@ -25,7 +25,7 @@ const ProductSpecifications = ({ specification }) => {
       <TableHeader>
         <TableRow className="bg-color-primary hover:bg-color-primary">
           <TableHead></TableHead>
-          {specification?.map((product) => (
+          {specification.map((product) => (
             <TableHead key={product.id}>{product.model_name}</TableHead>
           ))}
         </TableRow>

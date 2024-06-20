@@ -95,8 +95,8 @@ const EditProduct = ({ product }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        err?.response?.data?.message
-          ? handleValidationError(err.response.data.message)
+        err?.response?.data?.data
+          ? handleValidationError(err.response.data.data)
           : toast.error(err.response.data.message);
       } else {
         toast.error("Something went wrong!");
@@ -224,7 +224,7 @@ const EditProduct = ({ product }) => {
               control={control}
               productId={product?.id}
             />
-            <ManageImage images={product?.images} />
+            <ManageImage images={product?.images} slug={product?.slug} />
             <UpdateImageUploader
               register={register}
               errors={errors}

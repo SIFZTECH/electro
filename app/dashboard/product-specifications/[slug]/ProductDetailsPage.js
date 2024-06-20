@@ -44,13 +44,14 @@ const ProductDetailsPage = ({ params }) => {
               {product.introduction}
             </p>
           </div>
+
           <div className="product__features">
             <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
               <BsPatchExclamation />
               <span>Key Features</span>
             </h2>
             <div className="my-3 shadow-sm pb-3">
-              <ul className="md:list-disc pl-1 md:pl-10">
+              <ul className="md:list-disc pl-1 md:pl-10 space-y-2">
                 {product?.specification?.map((feature, i) => (
                   <li key={i + 1}>
                     <span>{feature.value}</span>

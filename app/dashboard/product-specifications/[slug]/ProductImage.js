@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import Image from "next/image";
+import Magnifier from "@/app/components/ui/CustomMagnifier";
 
 const imageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
@@ -39,16 +40,12 @@ const ProductImage = ({ images, product_name }) => {
                     <div className="loader"></div>
                   </div>
                 )}
-                <div className="h-[550px] w-[550px]">
-                  <Image
-                    loader={imageLoader}
-                    src={imgPath}
-                    alt={`Image of ${product_name}`}
-                    fill
-                    className="object-contain"
-                    onLoadingComplete={() => handleLoadingComplete(imgPath)}
-                  />
-                </div>
+                <Magnifier
+                  src={imgPath}
+                  alt={`Image of ${product_name}`}
+                  width={550}
+                  height={550}
+                />
               </div>
             </TabsContent>
           );
@@ -70,6 +67,7 @@ const ProductImage = ({ images, product_name }) => {
                   </div>
                 )}
                 <Image
+                  loader={imageLoader}
                   src={imgPath}
                   alt={`Image of ${product_name}`}
                   width={90}

@@ -30,7 +30,7 @@ const ProductTop = ({ product }) => {
             {product.name}
           </span>
           <span className="badge bg-color-primary rounded-full px-2 text-[12px]">
-            Best Seller
+            {product.model_name}
           </span>
         </div>
         <h1 className="font-serif text-xl font-semibold">${product.price}</h1>
