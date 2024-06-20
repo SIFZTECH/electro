@@ -29,14 +29,8 @@ const Magnifier = ({ src, alt, width, height }) => {
     const yPercent = offsetY / imgHeight;
 
     // Move the large image to show the magnified area
-    const translateX = -(
-      xPercent * largeImageSize.width -
-      largeImageContainer.clientWidth / 2
-    );
-    const translateY = -(
-      yPercent * largeImageSize.height -
-      largeImageContainer.clientHeight / 2
-    );
+    const translateX = -(offsetX * ratioX - lensSize / 2);
+    const translateY = -(offsetY * ratioY - lensSize / 2);
 
     largeImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(2)`;
 
@@ -108,7 +102,7 @@ const Magnifier = ({ src, alt, width, height }) => {
           layout="fill"
           className="magnifier-img large"
           ref={largeImageRef}
-          style={{ transform: "scale(1.5)" }}
+          style={{ transform: "scale(2)" }}
         />
       </div>
       <div
@@ -116,7 +110,7 @@ const Magnifier = ({ src, alt, width, height }) => {
         ref={lensRef}
         style={{
           position: "absolute",
-          width: "100px", // Change this to the size you want for the lens
+          width: "100px",
           height: "100px",
           border: "1px solid #000",
           backgroundColor: "rgba(255, 255, 255, 0.3)",

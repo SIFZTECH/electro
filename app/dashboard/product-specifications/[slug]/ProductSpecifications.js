@@ -57,7 +57,7 @@ const ProductSpecifications = ({ specification }) => {
                     className="font-serif font-semibold"
                   >
                     <div className="flex items-center">
-                      <span className="font-medium text-sm text-gray-700 ml-2">
+                      <span className="font-medium text-sm text-gray-700 ml-2 w-full text-center lg:text-start">
                         {productFeature.value || "N/A"}
                       </span>
                     </div>

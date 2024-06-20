@@ -25,11 +25,11 @@ const ProductTop = ({ product }) => {
     <div className="flex gap-8 flex-col lg:flex-row">
       <ProductImage images={product?.images} product_name={product?.name} />
       <div className="product__summary flex flex-col gap-8">
-        <div className="product__name flex items-center gap-3">
+        <div className="product__name flex gap-3 flex-col xl:flex-row xl:items-center ">
           <span className="font-serif font-semibold text-xl">
             {product.name}
           </span>
-          <span className="badge bg-color-primary rounded-full px-2 text-[12px]">
+          <span className="badge xl:bg-color-primary rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px]">
             {product.model_name}
           </span>
         </div>

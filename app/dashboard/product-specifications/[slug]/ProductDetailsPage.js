@@ -8,7 +8,6 @@ import Spinner from "@/app/components/ui/Spinner";
 import DeleteProduct from "./DeleteProduct";
 import EditProduct from "./UpdateProduct";
 import useCheckPermission from "@/app/_hooks/usePermission";
-import Image from "next/image";
 
 const ProductDetailsPage = ({ params }) => {
   const isProductUpdatePermission = useCheckPermission("product_update");
