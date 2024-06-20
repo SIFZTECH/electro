@@ -1,12 +1,29 @@
+import { deleteImage } from "@/app/_services/apiProducts";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 const imageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
 };
 
 const ManageImage = ({ images }) => {
-  function handleClick() {}
+  async function handleClick(id) {
+    try {
+      const res = await deleteImage(id);
+
+      if (res) {
+        toast.success("Product image deleted successfully!");
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
+  }
   return (
     <div className="flex gap-2 items-start flex-wrap mt-2">
       {images.map((img, index) => (
@@ -22,7 +39,7 @@ const ManageImage = ({ images }) => {
           />
           <span
             className="text-sm font-serif btn-primary bg-gray-200 cursor-pointer"
-            onClick={() => handleClick}
+            onClick={() => handleClick(img.id)}
           >
             Remove
           </span>

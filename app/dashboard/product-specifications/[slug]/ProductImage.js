@@ -39,7 +39,7 @@ const ProductImage = ({ images, product_name }) => {
                     <div className="loader"></div>
                   </div>
                 )}
-                <div className="h-[550px] w-[450px]">
+                <div className="h-[550px] w-[550px]">
                   <Image
                     loader={imageLoader}
                     src={imgPath}

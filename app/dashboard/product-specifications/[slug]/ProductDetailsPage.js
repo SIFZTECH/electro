@@ -60,7 +60,7 @@ const ProductDetailsPage = ({ params }) => {
             </div>
           </div>
         </div>
-        {product?.compare.length !== 0 && (
+        {product.compare && (
           <div className="product__specifications">
             <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
               <BsPatchExclamation />

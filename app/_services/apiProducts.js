@@ -101,3 +101,18 @@ export async function deleteProduct(id) {
 
   return data;
 }
+
+export async function deleteImage(id) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(`${BASE_URL}/delete-product-image/${id}`, {
+    method: "delete",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
