@@ -95,8 +95,9 @@ const EditProduct = ({ product }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        handleValidationError(err.response.data.message);
-        // toast.error(err.response.data.message);
+        err?.response?.data?.message
+          ? handleValidationError(err.response.data.message)
+          : toast.error(err.response.data.message);
       } else {
         toast.error("Something went wrong!");
       }

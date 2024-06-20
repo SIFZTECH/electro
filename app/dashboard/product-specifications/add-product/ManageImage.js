@@ -1,6 +1,10 @@
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Image from "next/image";
 
+const imageLoader = ({ src, width, quality }) => {
+  return `${src}?w=${width}&q=${quality || 75}`;
+};
+
 const ManageImage = ({ images }) => {
   function handleClick() {}
   return (
@@ -8,6 +12,7 @@ const ManageImage = ({ images }) => {
       {images.map((img, index) => (
         <>
           <Image
+            loader={imageLoader}
             key={index + 1}
             src={`${BASE_URL_IMAGE}${img.image_path}`}
             height={50}
