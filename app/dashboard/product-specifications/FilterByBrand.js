@@ -50,7 +50,7 @@ const FilterByBrand = () => {
               data?.data?.map((brand) => (
                 <div
                   key={brand.id}
-                  className="flex gap-1 items-center cursor-pointer"
+                  className="flex gap-2 items-center cursor-pointer"
                 >
                   <input
                     type="checkbox"

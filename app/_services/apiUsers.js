@@ -22,7 +22,6 @@ export async function getAllUsers(page, block, query) {
       data: { query, block },
     });
 
-    console.log(data);
     return data;
   } else {
     const { data } = await axios({

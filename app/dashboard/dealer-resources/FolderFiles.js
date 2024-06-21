@@ -2,8 +2,6 @@ import Link from "next/link";
 import { PiFoldersThin } from "react-icons/pi";
 
 const FolderFiles = ({ data }) => {
-  console.log(data);
-
   return (
     <div>
       {/* <h1 className="heading-h1 mt-12">NCM Moscow</h1> */}

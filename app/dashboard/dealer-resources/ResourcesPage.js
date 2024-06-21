@@ -4,7 +4,6 @@ import { useDealerResourcesForAdmin } from "@/app/_features/dealer-resources/use
 import FilterBy from "@/app/components/ui/FilterBy";
 import Spinner from "@/app/components/ui/Spinner";
 import AllResources from "./AllResources";
-import Link from "next/link";
 import CreateNewResources from "./CreateNewResources";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
@@ -15,6 +14,7 @@ const ResourcesPage = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
   const { data, isLoading, isError, error } = useDealerResourcesForAdmin(page);
+
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isDealerListPermission = useCheckPermission("dealer_list");
 
@@ -36,7 +36,7 @@ const ResourcesPage = () => {
       {!isLoading && isError && error && (
         <NotFoundData
           message={
-            error?.response.data.message
+            error?.response?.data?.message
               ? error.response.data.message
               : error.message
           }

@@ -1,7 +1,7 @@
 "use client";
 
 import { getAllAdminUsers } from "@/app/_services/apiAuth";
-import { getAllBlockedUsers, getAllUsers } from "@/app/_services/apiUsers";
+import { getAllUsers } from "@/app/_services/apiUsers";
 import { useQuery } from "@tanstack/react-query";
 
 export function useUsers(page = 1, block, query) {
