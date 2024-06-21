@@ -9,10 +9,26 @@ const AttributesList = ({ attribute, attribute_value }) => {
   return (
     <TableRow>
       <TableCell>{attribute}</TableCell>
-      <TableCell className="space-x-2">
+      <TableCell className="space-x-2 space-y-2">
         {attribute_value?.map((value, index) => (
-          <small className="btn-primary bg-green-200" key={index}>
-            {value.value}
+          <small
+            className="font-semibold font-serif text-[15px] inline-block"
+            key={index}
+            style={
+              attribute.toLowerCase() === "color"
+                ? {
+                    backgroundColor: value.value,
+
+                    display: "inline-block",
+                    width: "24px",
+                    height: "24px",
+
+                    margin: "0 5px",
+                  }
+                : {}
+            }
+          >
+            {attribute.toLowerCase() === "color" ? "" : `${value.value} |`}
           </small>
         ))}
       </TableCell>
