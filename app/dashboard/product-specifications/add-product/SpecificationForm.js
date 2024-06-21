@@ -80,7 +80,7 @@ const SpecificationForm = ({ control }) => {
 
       <span
         className="btn-primary font-serif text-sm cursor-pointer"
-        onClick={() => append({ product: "" })}
+        onClick={() => append({ id: "" })}
       >
         Select More Product
       </span>
