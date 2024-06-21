@@ -15,22 +15,7 @@ const SpecificationForm = ({ control }) => {
     name: "products",
   });
 
-  const checkForDuplicateProductIds = (data) => {
-    const keysSeen = new Set();
-    const duplicates = [];
-
-    data.forEach((item) => {
-      if (keysSeen.has(item.id)) {
-        duplicates.push(item.id);
-      } else {
-        keysSeen.add(item.id);
-      }
-    });
-
-    return duplicates;
-  };
-
-  const duplicateProductIds = checkForDuplicateProductIds(watchProductIds);
+  const seletedProductIds = watchProductIds.map((item) => Number(item.id));
 
   if (isLoading) {
     return <Spinner />;
@@ -49,22 +34,38 @@ const SpecificationForm = ({ control }) => {
                 Select Product
               </label>
               <Controller
+                name={`products[${index}].id`}
+                control={control}
+                defaultValue={item.id}
                 render={({ field }) => (
                   <select
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
                     {...field}
                   >
                     <option value="">--Please select a Product--</option>
-                    {products.data.data.map((product) => (
+                    {products.data.data
+                      .filter((product) => {
+                        return (
+                          !seletedProductIds.includes(product.id) ||
+                          product.id === field.value
+                        );
+                      })
+                      .map((product) => (
+                        <option
+                          className="capitalize"
+                          key={product.id}
+                          value={product.id}
+                        >
+                          {product.name}
+                        </option>
+                      ))}
+                    {/* {products.data.data.map((product) => (
                       <option key={product.id} value={product.id}>
                         {product.name}
                       </option>
-                    ))}
+                    ))} */}
                   </select>
                 )}
-                name={`products[${index}].id`}
-                control={control}
-                defaultValue={item.id} // Make sure to set up defaultValue
               />
             </div>
             <span
@@ -76,21 +77,13 @@ const SpecificationForm = ({ control }) => {
           </div>
         </div>
       ))}
-      {duplicateProductIds.length > 0 &&
-        duplicateProductIds.map((key, i) => (
-          <p className="text-red-500 text-sm" key={i + 1}>
-            Please Check You have selected same Product id({key}) multiple
-            times!
-          </p>
-        ))}
-      {!(duplicateProductIds.length > 0) && (
-        <span
-          className="btn-primary font-serif text-sm cursor-pointer"
-          onClick={() => append({ product: "" })}
-        >
-          Select More Product
-        </span>
-      )}
+
+      <span
+        className="btn-primary font-serif text-sm cursor-pointer"
+        onClick={() => append({ product: "" })}
+      >
+        Select More Product
+      </span>
     </div>
   );
 };

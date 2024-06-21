@@ -21,8 +21,10 @@ const Product = ({ id, slug, image, name, summary }) => {
           objectFit="contain"
         />
       </div>
-      <button className="flex justify-between items-center gap-3 mb-2">
-        <span className="font-semibold mt-2 font-serif">{name}</span>
+      <button className="flex justify-between items-center gap-3 mb-2 text-start ">
+        <span className="font-semibold mt-2 font-serif line-clamp-2">
+          {name}
+        </span>
         <span className="icon-heart border border-gray-200 p-1 bg-gray-100">
           <IoMdHeartEmpty size="18" />
         </span>

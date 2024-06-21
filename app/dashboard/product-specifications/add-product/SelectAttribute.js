@@ -57,7 +57,18 @@ function SelectAttribute({ control }) {
                     <option value="">Select Attribute Value</option>
                     {Object.keys(attributes).map((key) => {
                       return attributes[key].map((item) => (
-                        <option key={item.id} value={item.id}>
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          style={
+                            key === "Color"
+                              ? {
+                                  backgroundColor: item.value,
+                                  color: item.value,
+                                }
+                              : {}
+                          }
+                        >
                           {key} - {item.value}
                         </option>
                       ));
