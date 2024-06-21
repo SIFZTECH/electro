@@ -43,6 +43,9 @@ function SelectKeyFeatures({ control }) {
                 Features Key
               </label>
               <Controller
+                name={`key_features[${index}].key`}
+                control={control}
+                defaultValue={item.key}
                 render={({ field }) => (
                   <select
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
@@ -53,7 +56,7 @@ function SelectKeyFeatures({ control }) {
                       .filter(
                         (feature) =>
                           !selectedFeatureKeys.includes(feature.key) ||
-                          feature.key === item.key
+                          feature.key === field.value
                       )
                       .map((feature) => (
                         <option
@@ -66,9 +69,6 @@ function SelectKeyFeatures({ control }) {
                       ))}
                   </select>
                 )}
-                name={`key_features[${index}].key`}
-                control={control}
-                defaultValue={item.key}
               />
             </div>
             <div className="flex-1">
@@ -76,16 +76,16 @@ function SelectKeyFeatures({ control }) {
                 Feature Text
               </label>
               <Controller
+                name={`key_features[${index}].value`}
+                control={control}
+                defaultValue={item.value}
                 render={({ field }) => (
                   <input
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
                     placeholder="Feature text"
                     {...field}
                   />
                 )}
-                name={`key_features[${index}].value`}
-                control={control}
-                defaultValue={item.value}
               />
             </div>
             <span

@@ -1,10 +1,10 @@
 "use client";
 
+import React from "react";
 import {
   useAttributeNames,
   useAttributes,
 } from "@/app/_features/attributes/useAttributes";
-import React, { useState } from "react";
 import { useFieldArray, Controller, useWatch } from "react-hook-form";
 
 function SelectAttribute({ control }) {
@@ -14,7 +14,6 @@ function SelectAttribute({ control }) {
   });
 
   const { data, isLoading } = useAttributes();
-
   const attributes = !isLoading && data?.attributes;
 
   const watchVariants = useWatch({
@@ -22,22 +21,9 @@ function SelectAttribute({ control }) {
     name: "variants",
   });
 
-  const checkForDuplicateAttributeIds = (data) => {
-    const keysSeen = new Set();
-    const duplicates = [];
-
-    data.forEach((item) => {
-      if (keysSeen.has(item.attribute_value_id)) {
-        duplicates.push(item.attribute_value_id);
-      } else {
-        keysSeen.add(item.attribute_value_id);
-      }
-    });
-
-    return duplicates;
-  };
-
-  const duplicateAttributeIds = checkForDuplicateAttributeIds(watchVariants);
+  const selectedVariantValues = watchVariants.map((item) =>
+    Number(item.attribute_value_id)
+  );
 
   return (
     <>
@@ -49,6 +35,9 @@ function SelectAttribute({ control }) {
                 Attribute Value
               </label>
               <Controller
+                name={`variants[${index}].attribute_value_id`}
+                control={control}
+                defaultValue={item.attribute_value_id}
                 render={({ field }) => (
                   <select
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
@@ -56,28 +45,33 @@ function SelectAttribute({ control }) {
                   >
                     <option value="">Select Attribute Value</option>
                     {Object.keys(attributes).map((key) => {
-                      return attributes[key].map((item) => (
-                        <option
-                          key={item.id}
-                          value={item.id}
-                          style={
-                            key === "Color"
-                              ? {
-                                  backgroundColor: item.value,
-                                  color: item.value,
-                                }
-                              : {}
-                          }
-                        >
-                          {key} - {item.value}
-                        </option>
-                      ));
+                      return attributes[key]
+                        .filter((attr) => {
+                          console.log(attr);
+                          return (
+                            !selectedVariantValues.includes(attr.id) ||
+                            attr.id === Number(field.value)
+                          );
+                        })
+                        .map((item) => (
+                          <option
+                            key={item.id}
+                            value={item.id}
+                            style={
+                              key === "Color"
+                                ? {
+                                    backgroundColor: item.value,
+                                    color: item.value,
+                                  }
+                                : {}
+                            }
+                          >
+                            {key} - {item.value}
+                          </option>
+                        ));
                     })}
                   </select>
                 )}
-                name={`variants[${index}].attribute_value_id`}
-                control={control}
-                defaultValue={item.attribute_value_id} // Make sure to set up
               />
             </div>
             <div className="flex-1">
@@ -85,16 +79,16 @@ function SelectAttribute({ control }) {
                 Price
               </label>
               <Controller
+                name={`variants[${index}].price`}
+                control={control}
+                defaultValue={item.price}
                 render={({ field }) => (
                   <input
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:text-gray-500"
                     type="number"
                     {...field}
                   />
                 )}
-                name={`variants[${index}].price`}
-                control={control}
-                defaultValue={item.price} // Make sure to set up defaultValue
               />
             </div>
             <span
@@ -105,21 +99,13 @@ function SelectAttribute({ control }) {
             </span>
           </div>
         ))}
-        {duplicateAttributeIds.length > 0 &&
-          duplicateAttributeIds.map((key, i) => (
-            <p className="text-red-500 text-sm" key={i + 1}>
-              Please Check You have selected Attribute Value Id({key}) multiple
-              times!
-            </p>
-          ))}
-        {!(duplicateAttributeIds.length > 0) && (
-          <span
-            className="btn-primary font-serif text-sm"
-            onClick={() => append({ attribute_value_id: "", price: 0 })}
-          >
-            Add More Variants
-          </span>
-        )}
+
+        <span
+          className="btn-primary font-serif text-sm"
+          onClick={() => append({ attribute_value_id: "", price: 0 })}
+        >
+          Add More Variants
+        </span>
       </div>
     </>
   );

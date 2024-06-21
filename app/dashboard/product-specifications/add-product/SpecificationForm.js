@@ -1,5 +1,6 @@
 import { useProducts } from "@/app/_features/products/useProducts";
 import { useMedia } from "@/app/_features/social_media/useMedia";
+import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import Spinner from "@/app/components/ui/Spinner";
 import { Controller, useFieldArray, useWatch } from "react-hook-form";
 
@@ -16,10 +17,6 @@ const SpecificationForm = ({ control }) => {
   });
 
   const seletedProductIds = watchProductIds.map((item) => Number(item.id));
-
-  if (isLoading) {
-    return <Spinner />;
-  }
 
   return (
     <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
@@ -43,27 +40,26 @@ const SpecificationForm = ({ control }) => {
                     {...field}
                   >
                     <option value="">--Please select a Product--</option>
-                    {products.data.data
-                      .filter((product) => {
-                        return (
-                          !seletedProductIds.includes(product.id) ||
-                          product.id === field.value
-                        );
-                      })
-                      .map((product) => (
-                        <option
-                          className="capitalize"
-                          key={product.id}
-                          value={product.id}
-                        >
-                          {product.name}
-                        </option>
-                      ))}
-                    {/* {products.data.data.map((product) => (
-                      <option key={product.id} value={product.id}>
-                        {product.name}
-                      </option>
-                    ))} */}
+                    {isLoading ? (
+                      <SkeletonFiler />
+                    ) : (
+                      products.data.data
+                        .filter((product) => {
+                          return (
+                            !seletedProductIds.includes(product.id) ||
+                            product.id === Number(field.value)
+                          );
+                        })
+                        .map((product) => (
+                          <option
+                            className="capitalize"
+                            key={product.id}
+                            value={product.id}
+                          >
+                            {product.name}
+                          </option>
+                        ))
+                    )}
                   </select>
                 )}
               />
