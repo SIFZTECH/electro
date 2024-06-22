@@ -130,7 +130,7 @@ const FolderPage = ({ folder_id }) => {
                     )}
                 </div>
               </DialogTrigger>
-              <DialogContent className="max-w-[60rem] pt-9">
+              <DialogContent className=" pt-9">
                 {isImage(file) && (
                   <Image
                     src={`${BASE_URL_IMAGE}${file}`}
