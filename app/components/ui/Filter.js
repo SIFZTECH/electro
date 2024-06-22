@@ -8,6 +8,7 @@ import {
 import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 
 const Filter = ({
+  title,
   isLoading,
   isError,
   data,
@@ -18,7 +19,7 @@ const Filter = ({
     <Accordion type="single" collapsible defaultValue="category">
       <AccordionItem value="category">
         <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
-          By Category
+          By {title}
         </AccordionTrigger>
         <AccordionContent>
           <div className="border-b border-grey-0 px-3 pb-3">

@@ -40,6 +40,7 @@ const FilterByCategory = () => {
 
   return (
     <Filter
+      title="Category"
       isLoading={isLoading}
       isError={isError}
       data={data?.data}

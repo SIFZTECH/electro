@@ -6,7 +6,7 @@ import { RESOURCE_PAGE_SIZE } from "@/app/lib/utils";
 
 const AllResources = ({ data, metaData, page }) => {
   return (
-    <div>
+    <div className="flex-1">
       <Search />
       {data.length === 0 ? (
         <NotFoundData message="There is no resources available" />

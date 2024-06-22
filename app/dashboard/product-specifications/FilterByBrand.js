@@ -39,6 +39,7 @@ const FilterByBrand = () => {
 
   return (
     <Filter
+      title="Brand"
       isLoading={isLoading}
       isError={isError}
       data={data?.data}

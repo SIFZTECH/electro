@@ -42,10 +42,11 @@ const ResourcesPage = () => {
           }
         />
       )}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6">
+      {/* <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6"> */}
+      <div className="flex flex-wrap w-full">
         {!isLoading && !isError && !error && (
           <>
-            <FilterBy />
+            {/* <FilterBy /> */}
             <AllResources data={data.data} metaData={data} page={page} />
           </>
         )}

@@ -76,6 +76,7 @@ const FolderPage = ({ folder_id }) => {
                       <p className="font-serif">Text Document</p>
                     </div>
                   )}
+                  
                 </div>
               </DialogTrigger>
               <DialogContent className="max-w-[60rem] pt-9">
