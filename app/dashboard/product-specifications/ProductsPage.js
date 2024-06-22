@@ -21,11 +21,13 @@ const ProductsPage = () => {
   const page = params.get("page") || 1;
   const categoryId = params.get("category");
   const brandId = params.get("brand");
+  const query = params.get("query");
 
   const { products, isLoading, isError, error } = useProducts(
     categoryId,
     brandId,
-    page
+    page,
+    query
   );
 
   if (!isProductListPermission) {
