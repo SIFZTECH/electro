@@ -1,10 +1,10 @@
-import { deleteMedia } from "@/app/_services/apiMedia";
+import { deleteMediaFile } from "@/app/_services/apiMedia";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const DeleteMedia = ({ item }) => {
+const DeleteFile = ({ file_path, folder_id }) => {
   const queryClient = useQueryClient();
 
   const {
@@ -14,10 +14,11 @@ const DeleteMedia = ({ item }) => {
 
   async function onSubmit() {
     try {
-      const res = await deleteMedia(item);
+      const res = await deleteMediaFile({ folder_id, file_path });
+
       if (res) {
         toast.success(res.message);
-        queryClient.invalidateQueries("media");
+        queryClient.invalidateQueries("folder", folder_id);
       }
     } catch (err) {
       console.error(err);
@@ -30,9 +31,9 @@ const DeleteMedia = ({ item }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <button className="w-full flex justify-end mt-4">
-        <span className="btn-primary bg-red-500 text-white">
+    <form className="w-full flex justify-end" onSubmit={handleSubmit(onSubmit)}>
+      <button className="mt-4">
+        <span className="btn-primary bg-red-500 text-white inline-block">
           {isSubmitting ? <SpinnerMini /> : "Delete"}
         </span>
       </button>
@@ -40,4 +41,4 @@ const DeleteMedia = ({ item }) => {
   );
 };
 
-export default DeleteMedia;
+export default DeleteFile;

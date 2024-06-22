@@ -1,50 +1,23 @@
-import { BASE_URL_IMAGE, MEDIA_PAGE_SIZE } from "@/app/lib/utils";
-import Image from "next/image";
+import Link from "next/link";
+import { PiFoldersThin } from "react-icons/pi";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/app/components/ui/dialog";
-import DeleteMedia from "./DeleteMedia";
-import PaginationUI from "@/app/components/ui/PaginationUI";
-
-const FolderFiles = ({ metaData, page, data }) => {
+const FolderFiles = ({ data }) => {
   return (
     <div>
       {/* <h1 className="heading-h1 mt-12">NCM Moscow</h1> */}
-      <div className="folders flex flex-wrap gap-8  mt-12">
-        {data.map((item, i) => (
-          <Dialog key={i + 1}>
-            <DialogTrigger className="h-[200px]">
-              <div className="border border-gray-200 shadow-sm flex items-center justify-center cursor-pointer h-full">
-                <Image
-                  src={`${BASE_URL_IMAGE}${item}`}
-                  alt={`Media ${i + 1}`}
-                  width={200}
-                  height={200}
-                  className="p-2"
-                />
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <Image
-                src={`${BASE_URL_IMAGE}${item}`}
-                alt={`Media ${i + 1}`}
-                width={1000}
-                height={800}
-              />
-              <DeleteMedia item={item} />
-            </DialogContent>
-          </Dialog>
+
+      <div className="folders grid grid-cols-2 md:grid-cols-5 2xl:grid-cols-5 gap-4 flex-wrap mt-12">
+        {data.map((item) => (
+          <Link
+            href={`/dashboard/social-media-assets/${item.id}`}
+            key={item}
+            className="folder flex flex-col items-center flex-wrap"
+          >
+            <PiFoldersThin size="100" color="#27272a" />
+            <span className="text-sm font-medium">{item.folder_name}</span>
+          </Link>
         ))}
       </div>
-      <PaginationUI
-        data={metaData}
-        page={+page}
-        page_size={MEDIA_PAGE_SIZE}
-        navigation="social-media-assets"
-      />
     </div>
   );
 };

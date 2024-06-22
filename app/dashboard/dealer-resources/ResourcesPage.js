@@ -1,6 +1,6 @@
 "use client";
 
-import { useDealerResourcesForAdmin } from "@/app/_features/dealer-resources/useResources";
+import { useDealerResources } from "@/app/_features/dealer-resources/useResources";
 import FilterBy from "@/app/components/ui/FilterBy";
 import Spinner from "@/app/components/ui/Spinner";
 import AllResources from "./AllResources";
@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 const ResourcesPage = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
-  const { data, isLoading, isError, error } = useDealerResourcesForAdmin(page);
+  const { data, isLoading, isError, error } = useDealerResources(page);
 
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isDealerListPermission = useCheckPermission("dealer_list");

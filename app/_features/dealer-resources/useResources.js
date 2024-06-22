@@ -6,16 +6,7 @@ import {
 } from "@/app/_services/apiResources";
 import { useQuery } from "@tanstack/react-query";
 
-// export function useDealerResources(page) {
-//   const { data, isLoading, error, isError } = useQuery({
-//     queryKey: ["resources", { page }],
-//     queryFn: () => getAllResources(page),
-//   });
-
-//   return { data, isLoading, error, isError };
-// }
-
-export function useDealerResourcesForAdmin(page) {
+export function useDealerResources(page) {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["resources", { page }],
     queryFn: () => getAllResourcesForAdmin(page),

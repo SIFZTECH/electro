@@ -105,6 +105,7 @@ export async function deleteFolder(id) {
 
   return data;
 }
+
 export async function CreateNewFile(formData) {
   const token = localStorage.getItem("access-token");
 
