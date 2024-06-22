@@ -32,7 +32,7 @@ const SelectCategoryFormComponent = ({ control, watch }) => {
   }, [selectedCategory]);
 
   return (
-    <div className="flex items-center gap-8 col-span-2">
+    <div className="flex flex-col md:flex-row md:items-center gap-8 col-span-2">
       <div className="flex-1">
         <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600 mb-1">
           Category

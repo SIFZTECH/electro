@@ -82,8 +82,8 @@ const ProductForm = () => {
   }
 
   return (
-    <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid grid-cols-2 gap-x-9 gap-y-6">
+    <form className="py-8 p-3 md:px-6" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-x-9 gap-y-6">
         <div className="">
           <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
             Product Name

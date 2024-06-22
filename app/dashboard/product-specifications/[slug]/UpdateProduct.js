@@ -109,12 +109,12 @@ const EditProduct = ({ product }) => {
       <DialogTrigger className="btn-primary transition-all py-1">
         Edit Product
       </DialogTrigger>
-      <DialogContent className="max-w-[80rem]">
+      <DialogContent className="max-w-[80rem] mt-24 xl:mt-0">
         <div>
           <h2 className="font-serif text-lg">Edit This Product</h2>
         </div>
         <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-2 gap-x-9 gap-y-6">
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-x-9 gap-y-6">
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
                 Product Name
@@ -195,7 +195,7 @@ const EditProduct = ({ product }) => {
                 )}
               </div>
             </div>
-            <div className="col-span-2">
+            <div>
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
                 Introduction
               </label>
