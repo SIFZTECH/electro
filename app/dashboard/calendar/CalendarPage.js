@@ -22,8 +22,8 @@ const localizer = momentLocalizer(moment);
 export default function CalendarPage() {
   const isCreateEventPermission = useCheckPermission("create_event");
   const isCalendarViewPermission = useCheckPermission("calendar_view");
-
   const { isLoading, isError, error, data } = useEvents();
+
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [date, setDate] = useState("");
@@ -54,13 +54,21 @@ export default function CalendarPage() {
     return <Spinner />;
   }
 
-  const formattedDate = data.data.map((event) => ({
-    id: event.id,
-    title: event.title,
-    start: new Date(event.date),
-    end: new Date(event.date),
-    visible_to: event.visible_to,
-  }));
+  const formattedDate = data?.data?.data
+    ? data?.data?.data?.map((event) => ({
+        id: event.id,
+        title: event.title,
+        start: new Date(event.date),
+        end: new Date(event.date),
+        visible_to: event.visible_to,
+      }))
+    : data?.data?.map((event) => ({
+        id: event.id,
+        title: event.title,
+        start: new Date(event.date),
+        end: new Date(event.date),
+        visible_to: event.visible_to,
+      }));
 
   return (
     <div className="py-3">
@@ -86,15 +94,17 @@ export default function CalendarPage() {
         onSelectEvent={handleManage}
         onSelectSlot={handleSelect}
       />
-      <Dialog open={open2} onOpenChange={() => setOpen2((open) => !open)}>
-        <UpdateAndDeleteEvent
-          id={id}
-          date={date}
-          title={title}
-          visible={visible}
-          setOpen={setOpen2}
-        />
-      </Dialog>
+      {isCreateEventPermission && (
+        <Dialog open={open2} onOpenChange={() => setOpen2((open) => !open)}>
+          <UpdateAndDeleteEvent
+            id={id}
+            date={date}
+            title={title}
+            visible={visible}
+            setOpen={setOpen2}
+          />
+        </Dialog>
+      )}
     </div>
   );
 }
