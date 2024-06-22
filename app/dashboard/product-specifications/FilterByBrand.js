@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
+import Filter from "@/app/components/ui/Filter";
 import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -37,39 +38,13 @@ const FilterByBrand = () => {
   };
 
   return (
-    <Accordion type="single" collapsible defaultValue="brand">
-      <AccordionItem value="brand">
-        <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
-          By Brand
-        </AccordionTrigger>
-        <AccordionContent>
-          <div className="border-b border-grey-0 px-3 pb-3">
-            {isLoading && !isError ? (
-              <SkeletonFiler />
-            ) : (
-              data?.data?.map((brand) => (
-                <div
-                  key={brand.id}
-                  className="flex gap-2 items-center cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    id={brand.name}
-                    name={brand.name}
-                    checked={selectedBrands.includes(brand.id)}
-                    onChange={() => handleCheckboxChange(brand.id)}
-                    className="cursor-pointer"
-                  />
-                  <label className="cursor-pointer" htmlFor={brand.name}>
-                    {brand.name}
-                  </label>
-                </div>
-              ))
-            )}
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <Filter
+      isLoading={isLoading}
+      isError={isError}
+      data={data?.data}
+      selectedItems={selectedBrands}
+      handleCheckboxChange={handleCheckboxChange}
+    />
   );
 };
 

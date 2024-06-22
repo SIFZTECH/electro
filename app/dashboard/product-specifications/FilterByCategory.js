@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
+import Filter from "@/app/components/ui/Filter";
 import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -38,39 +39,13 @@ const FilterByCategory = () => {
   };
 
   return (
-    <Accordion type="single" collapsible defaultValue="category">
-      <AccordionItem value="category">
-        <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
-          By Category
-        </AccordionTrigger>
-        <AccordionContent>
-          <div className="border-b border-grey-0 px-3 pb-3">
-            {isLoading && !isError ? (
-              <SkeletonFiler />
-            ) : (
-              data?.data?.map((category) => (
-                <div
-                  key={category.id}
-                  className="flex gap-2 items-center cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    id={category.name}
-                    name={category.name}
-                    checked={selectedCategories.includes(category.id)}
-                    onChange={() => handleCheckboxChange(category.id)}
-                    className="cursor-pointer"
-                  />
-                  <label className="cursor-pointer" htmlFor={category.name}>
-                    {category.name}
-                  </label>
-                </div>
-              ))
-            )}
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <Filter
+      isLoading={isLoading}
+      isError={isError}
+      data={data?.data}
+      selectedItems={selectedCategories}
+      handleCheckboxChange={handleCheckboxChange}
+    />
   );
 };
 
