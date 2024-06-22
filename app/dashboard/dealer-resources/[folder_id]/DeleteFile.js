@@ -31,8 +31,8 @@ const DeleteFile = ({ file_path, folder_id }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <button className="w-full flex justify-end mt-4">
+    <form className="w-full flex justify-end" onSubmit={handleSubmit(onSubmit)}>
+      <button className="mt-4">
         <span className="btn-primary bg-red-500 text-white">
           {isSubmitting ? <SpinnerMini /> : "Delete"}
         </span>
