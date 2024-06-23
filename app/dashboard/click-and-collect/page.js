@@ -1,16 +1,11 @@
-import Search from "@/app/ui/Search";
-import Filter from "./Filter";
-import RecentOrder from "./RecentOrder";
-import Orders from "./Orders";
+import ClickAndCollectPage from "./ClickAndCollectPage";
+
+export const metadata = {
+  title: "Leon Cycle | Click and Collect",
+};
 
 const page = () => {
-  return (
-    <div>
-      <h1 className="heading-h1 mb-8 mt-4">Click and Collect</h1>
-      <Search />
-      <Orders />
-    </div>
-  );
+  return <ClickAndCollectPage />;
 };
 
 export default page;

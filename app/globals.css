@@ -1,20 +1,105 @@
+@import "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --color-primary: #facc15;
+    --color-primary-shade-1: #fefce8;
+    --color-primary-tint-1: #e1b813;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
 
 @layer components {
   .heading-h1 {
     @apply text-2xl font-bold font-serif;
   }
   .btn-primary {
-    @apply bg-color-primary text-sm px-2 py-1 font-serif rounded-sm;
+    @apply bg-color-primary text-sm px-2 py-1 font-serif rounded-sm cursor-pointer;
   }
 }
 
-:root {
-  --color-primary: #facc15;
-  --color-primary-shade-1: #fefce8;
-  --color-primary-tint-1: #e1b813;
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+
+  border-radius: 2px 2px 5px 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 html,
@@ -23,14 +108,14 @@ body {
   overflow-x: hidden;
 }
 
+/* .focus-visible\:ring-offset-2:focus-visible {
+  offset-distance: 1px !important;
+  color: var(var(--color-primary)) !important;
+} */
+
 input[type="checkbox"] {
   accent-color: var(--color-primary);
   padding: 0.3rem;
-}
-
-.sidebar nav svg {
-  /* -webkit-text-stroke-color: #fff;
-  stroke: #fff; */
 }
 
 .btn-active {
@@ -47,6 +132,9 @@ input[type="checkbox"] {
   transition: width 0.3s;
 }
 
+.file-preview path {
+  stroke-width: 1.1px !important;
+}
 .active {
   background-color: var(--color-primary-shade-1);
   color: #333;
@@ -58,21 +146,58 @@ input[type="checkbox"] {
   outline: 0;
 }
 
-.recentOrders {
+.table_modify {
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin: 0;
   padding: 0;
   width: 100%;
-  table-layout: fixed;
+  /* table-layout: fixed; */
 }
 
+.stores > div {
+  cursor: pointer;
+}
 .icon-heart {
+}
+
+.leaflet-control-container {
+  position: absolute;
+  right: 56px;
 }
 
 .product__thumbnails img {
   height: 70px;
 }
+
+.rbc-today {
+  background-color: #fde68a !important;
+}
+.rbc-day-bg + .rbc-day-bg {
+  cursor: pointer;
+}
+.rbc-off-range-bg {
+  background-color: #fafaf9 !important;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: var(--color-primary);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+table th {
+  font-weight: 600 !important;
+}
+
 @media (max-width: 600px) {
   .product__thumbnails img {
     height: 50px;
@@ -129,7 +254,7 @@ table th {
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
-    font-size: 0.8em;
+    font-size: 1em;
     text-align: right !important;
   }
 
@@ -141,7 +266,6 @@ table th {
     content: attr(data-label);
     float: left;
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   table td:last-child {
@@ -153,4 +277,51 @@ table th {
 .rbc-day-slot .rbc-background-event {
   background-color: var(--color-primary) !important;
   text-align: center !important;
+}
+
+.magnifier-container {
+  position: relative;
+  background-color: #fff;
+}
+
+.magnifier-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.magnifier-large-container {
+  position: absolute;
+
+  display: none;
+  background-color: #fff;
+}
+
+@media (max-width: 700px) {
+  .magnifier-container {
+    height: 350px !important;
+    width: 100% !important;
+  }
+}
+
+.magnifier-img.large {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+.magnifier-lens {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+
+  background-color: rgba(255, 255, 255, 0.3);
+  display: none;
+  pointer-events: none;
 }

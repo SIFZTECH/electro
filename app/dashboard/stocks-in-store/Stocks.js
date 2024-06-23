@@ -45,7 +45,7 @@ const dummyData = [
 
 const Stocks = () => {
   return (
-    <table className="mt-10 recentOrders">
+    <table className="mt-10 table_modify">
       <thead>
         <tr>
           <th scope="col">Products</th>

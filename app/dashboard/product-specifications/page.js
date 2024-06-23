@@ -1,20 +1,11 @@
-import FilterByProduct from "./FilterByProduct";
-import ProductCategories from "./ProductCategories";
-import Products from "./Products";
+import ProductsPage from "./ProductsPage";
+
+export const metadata = {
+  title: "Leon Cycle | Product Specifications",
+};
 
 const page = () => {
-  return (
-    <>
-      <ProductCategories />
-      <div className="product-specification">
-        <h1 className="heading-h1 mb-10 mt-6">Product Specifications</h1>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6">
-          <FilterByProduct />
-          <Products />
-        </div>
-      </div>
-    </>
-  );
+  return <ProductsPage />;
 };
 
 export default page;

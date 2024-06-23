@@ -1,66 +1,51 @@
-// const FilterByCategory = () => {
-//   return (
-//     <div className="border-b border-grey-0 py-6 px-3">
-//       <legend className="font-bold mb-2 font-serif">By Category</legend>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-1" name="ct-1" defaultChecked />
-//         <label htmlFor="ct-1">E Mountain</label>
-//       </div>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-2" name="ct-2" />
-//         <label htmlFor="ct-2">E Tekking</label>
-//       </div>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-3" name="ct-3" />
-//         <label htmlFor="ct-3">E Mountain</label>
-//       </div>
-//       <div className="flex gap-1 items-center">
-//         <input type="checkbox" id="ct-4" name="ct-4" />
-//         <label htmlFor="ct-4">E Mountain</label>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FilterByCategory;
-
+import { useBrands } from "@/app/_features/brands/useBrands";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/app/components/ui/accordion";
+import Filter from "@/app/components/ui/Filter";
+import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
-const FilterByCategory = () => {
+const FilterByBrand = ({ selectedBrands, setSelectedBrands }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data, isLoading, isError } = useBrands();
+
+  // Set initial state from URL query parameters
+  useEffect(() => {
+    const brandQuery = searchParams.get("brand");
+    if (brandQuery) {
+      setSelectedBrands(brandQuery.split(",").map(Number));
+    }
+  }, [searchParams]);
+
+  const handleCheckboxChange = (brandId) => {
+    const updatedSelectedBrands = selectedBrands.includes(brandId)
+      ? selectedBrands.filter((id) => id !== brandId)
+      : [...selectedBrands, brandId];
+
+    setSelectedBrands(updatedSelectedBrands);
+
+    const query = updatedSelectedBrands.length
+      ? `?brand=${updatedSelectedBrands.join(",")}`
+      : "";
+    router.push(`/dashboard/product-specifications${query}`);
+  };
+
   return (
-    <Accordion type="single" collapsible defaultValue="brand">
-      <AccordionItem value="brand">
-        <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
-          By Brand
-        </AccordionTrigger>
-        <AccordionContent>
-          <div className="border-b border-grey-0 px-3 pb-3">
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-1" name="ct-1" defaultChecked />
-              <label htmlFor="ct-1">E Mountain</label>
-            </div>
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-2" name="ct-2" />
-              <label htmlFor="ct-2">E Tekking</label>
-            </div>
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-3" name="ct-3" />
-              <label htmlFor="ct-3">E Mountain</label>
-            </div>
-            <div className="flex gap-1 items-center">
-              <input type="checkbox" id="ct-4" name="ct-4" />
-              <label htmlFor="ct-4">E Mountain</label>
-            </div>
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <Filter
+      title="Brand"
+      isLoading={isLoading}
+      isError={isError}
+      data={data?.data}
+      selectedItems={selectedBrands}
+      handleCheckboxChange={handleCheckboxChange}
+    />
   );
 };
 
-export default FilterByCategory;
+export default FilterByBrand;

@@ -1,116 +1,87 @@
-import { Switch } from "@/components/ui/switch";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/app/components/ui/table";
 
-const dummyData = [
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 1",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 2",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 3",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 4",
-  },
-];
+import DeleteRole from "./DeleteRole";
+import { useRoles } from "@/app/_features/roles/useRoles";
+import Spinner from "@/app/components/ui/Spinner";
+import CreateNewRoleWithPermissions from "./CreateNewRoleWithPermissions";
+import UpdateUsersPermissions from "./UpdateUsersPermissions";
 
 const PermissionTable = () => {
+  const { isLoading, data, isError, error } = useRoles();
+
+  if (isLoading) return <Spinner />;
+
   return (
-    <table className="mt-10 recentOrders">
-      <thead>
-        <tr className="text-center">
-          <th scope="col" className="2xl:w-[18rem]">
-            Dealer Name
-          </th>
-          <th scope="col" className="text-center">
-            Click and Collect
-          </th>
-          <th scope="col" className="text-center">
-            Stock in Store
-          </th>
-          <th scope="col" className="text-center">
-            Social Media Assets
-          </th>
-          <th scope="col" className="text-center">
-            Dealer Resources
-          </th>
-          <th scope="col" className="text-center">
-            Warranty
-          </th>
-          <th scope="col" className="text-center">
-            Product Specifications
-          </th>
-          <th scope="col" className="text-center">
-            Promotional Calendar
-          </th>
-          <th scope="col" className="text-center">
-            Promotional Calendar
-          </th>
-          <th scope="col" className="text-center">
-            Active
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {dummyData.map((data, i) => {
-          return (
-            <tr key={i + 1}>
-              <td data-label="Dealer Name">{data.dealerName}</td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <input type="checkbox" className="" />
-                </div>
-              </td>
-              <td data-label="Click and Collect">
-                <div className="flex items-center justify-end lg:justify-center">
-                  <Switch />
-                </div>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <>
+      <div className="flex gap-3 justify-end">
+        <CreateNewRoleWithPermissions />
+        {/* <CreatePermission />
+        <CreateRolesAndPermissions /> */}
+      </div>
+
+      <Table className="mt-10 table_modify">
+        <TableHeader>
+          <TableRow className="text-center">
+            <TableHead scope="col" className="w-fit">
+              SN
+            </TableHead>
+            <TableHead scope="col" className="w-fit">
+              Role Name
+            </TableHead>
+            <TableHead scope="col" className="w-2/4">
+              Perimission
+            </TableHead>
+            <TableHead scope="col" className="w-fit">
+              Guard Name
+            </TableHead>
+            <TableHead scope="col" className="w-fit">
+              Actions
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="font-sans">
+          {data.data.rolesWithPermissions.map((data, i) => {
+            return (
+              <TableRow key={i + 1}>
+                <TableCell data-label="Id">{i + 1}</TableCell>
+                <TableCell data-label="Role Name">{data.name}</TableCell>
+                <TableCell className="space-x-2" data-label="Permissions">
+                  <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
+                    {data.permissions.map((permission) => (
+                      <span
+                        className="btn-primary bg-amber-200"
+                        key={permission}
+                      >
+                        {permission}
+                      </span>
+                    ))}
+                  </div>
+                </TableCell>
+                <TableCell data-label="Click and Collect">Web</TableCell>
+                <TableCell data-label="Actions">
+                  <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
+                    <UpdateUsersPermissions
+                      roleName={data.name}
+                      id={data.id}
+                      permissions={data.permissions}
+                    />
+
+                    <DeleteRole roleName={data.name} />
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 export default PermissionTable;

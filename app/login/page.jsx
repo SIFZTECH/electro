@@ -1,6 +1,48 @@
-import Logo from "../ui/Logo";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import Logo from "../components/ui/Logo";
+import SpinnerMini from "../components/ui/SpinnerMini";
+import Link from "next/link";
+import { login } from "../_services/apiAuth";
+import toast from "react-hot-toast";
 
 export default function Login() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting: isLoading },
+  } = useForm();
+
+  async function onSubmit({ email, password }) {
+    try {
+      const res = await login({ email, password });
+
+      if (res.message && res.data?.available_otp_channel) {
+        router.replace(`/otp/verify?email=${email}`);
+        localStorage.setItem(
+          "channel",
+          JSON.stringify(res.data?.available_otp_channel)
+        );
+      } else {
+        localStorage.setItem("access-token", res.data.auth);
+        router.replace("/dashboard");
+      }
+      toast.success(res.message);
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        err.response.data.data
+          ? toast.error(err.response.data.data.email)
+          : toast.error(err.response.data.message);
+      } else {
+        toast.error(err.message);
+      }
+    }
+  }
+
   return (
     <>
       <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
@@ -13,61 +55,75 @@ export default function Login() {
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
+                <label className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
                 </label>
                 <div className="mt-2">
                   <input
-                    id="email"
-                    name="email"
+                    {...register("email", {
+                      required: "Please provide your email address",
+                      pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: "Please provide a valid email address",
+                      },
+                    })}
+                    disabled={isLoading}
                     type="email"
                     autoComplete="email"
-                    required
-                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
+                  {errors?.email && (
+                    <span className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div>
                 <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
+                  <label className="block text-sm font-medium leading-6 text-gray-900">
                     Password
                   </label>
-                  <div className="text-sm">
-                    <a
-                      href="#"
-                      className="font-semibold text-color-primary hover:text-color-primary/70"
+                  <div className="text-[13px]">
+                    <Link
+                      href="/password/forgot"
+                      className="font-semibold text-color-primary hover:text-color-primary/60"
                     >
                       Forgot password?
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="mt-2">
                   <input
-                    id="password"
-                    name="password"
+                    {...register("password", {
+                      required: "Please enter your password",
+                      minLength: {
+                        value: 8,
+                        message: "Password needs a minimum of 8 characters",
+                      },
+                    })}
+                    disabled={isLoading}
                     type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
+                  {errors?.password && (
+                    <span className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
               </div>
 
               <div>
                 <button
                   type="submit"
+                  disabled={isLoading}
                   className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
                 >
-                  Sign in
+                  {isLoading ? <SpinnerMini /> : "Sign in"}
                 </button>
               </div>
             </form>

@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "icon": "/motor-icon.png",
+    "key": "motor"
+  },
+  {
+    "id": 2,
+    "icon": "/akku.jpg",
+    "key": "bettary"
+  },
+  {
+    "id": 3,
+    "icon": "/display-icon.png",
+    "key": "display"
+  },
+  {
+    "id": 4,
+    "icon": "/ladegeraet-icon.png",
+    "key": "charger"
+  },
+  {
+    "id": 5,
+    "icon": "/rahmen-icon.png",
+    "key": "frome"
+  },
+  {
+    "id": 6,
+    "icon": "/bremsen-icon.png",
+    "key": "forks"
+  },
+  {
+    "id": 7,
+    "icon": "/federgabel-icon.png",
+    "key": "broking-system"
+  },
+  {
+    "id": 8,
+    "icon": "/umwerfer-icon.png",
+    "key": "gear-selector"
+  },
+  {
+    "id": 9,
+    "icon": "/kurbelsatz-icon.png",
+    "key": "front-derailleur"
+  },
+  {
+    "id": 10,
+    "icon": "/schaltwerk-icon.png",
+    "key": "rear-derailleur"
+  },
+  {
+    "id": 11,
+    "icon": "/sattel-icon.png",
+    "key": "saddle"
+  },
+  {
+    "id": 12,
+    "icon": "/reifen-icon.png",
+    "key": "tyre"
+  },
+  {
+    "id": 13,
+    "icon": "/griff-icon.png",
+    "key": "handle-grips"
+  },
+  {
+    "id": 14,
+    "icon": "/pedale-icon.png",
+    "key": "paddle"
+  },
+  {
+    "id": 15,
+    "icon": "/reichweite-icon.png",
+    "key": "range"
+  },
+  {
+    "id": 16,
+    "icon": "/gewicht-icon.png",
+    "key": "weight"
+  }
+]

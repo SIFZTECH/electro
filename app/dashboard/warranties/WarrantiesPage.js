@@ -1,0 +1,51 @@
+"use client";
+
+import Link from "next/link";
+import WarrantyProducts from "./WarrantyProducts";
+import Stats from "./WarrantyStats";
+import Spinner from "@/app/components/ui/Spinner";
+import { useWarrantiesForAdmin } from "@/app/_features/warranties/useWarranties";
+import NotFoundData from "@/app/components/ui/NotFoundData";
+import PaginationUI from "@/app/components/ui/PaginationUI";
+import { useSearchParams } from "next/navigation";
+import { WARRANTY_PAGE_SIZE } from "@/app/lib/utils";
+
+const WarrantiesPage = () => {
+  const params = useSearchParams();
+  const page = params.get("page") ? +params.get("page") : 1;
+  const { data, isLoading, error, isError } = useWarrantiesForAdmin(page);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  return (
+    <div>
+      <h1 className="heading-h1 my-6">SEB Customer Warranty Registration</h1>
+      <Stats
+        title="Month to Warranty Registrations"
+        value={452}
+        percentage={0.03}
+      />
+
+      {!isLoading && !isError && !error && <WarrantyProducts data={data} />}
+      {!isLoading && isError && error && (
+        <NotFoundData
+          message={
+            error?.response.data.message
+              ? error.response.data.message
+              : error.message
+          }
+        />
+      )}
+      <PaginationUI
+        data={data}
+        page={page}
+        page_size={WARRANTY_PAGE_SIZE}
+        navigation="warranties"
+      />
+    </div>
+  );
+};
+
+export default WarrantiesPage;
