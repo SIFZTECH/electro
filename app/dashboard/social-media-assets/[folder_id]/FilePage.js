@@ -191,7 +191,16 @@ const FolderPage = ({ folder_id }) => {
                       <p>Cannot display this file type.</p>
                     </div>
                   )}
-                <DeleteFile file_path={file} folder_id={folder_id} />
+                <div className="flex gap-4 items-center justify-end mt-4">
+                  <a
+                    href={`${BASE_URL_IMAGE}${file}`}
+                    download
+                    className="btn-primary"
+                  >
+                    Download
+                  </a>
+                  <DeleteFile file_path={file} folder_id={folder_id} />
+                </div>
               </DialogContent>
             </Dialog>
           ))}

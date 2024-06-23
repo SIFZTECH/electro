@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { PiFoldersThin } from "react-icons/pi";
 
@@ -13,7 +14,13 @@ const FolderFiles = ({ data }) => {
             key={item}
             className="folder flex flex-col items-center flex-wrap"
           >
-            <PiFoldersThin size="100" color="#27272a" />
+            {/* <PiFoldersThin size="100" color="#27272a" /> */}
+            <Image
+              src="/icons8-folder.svg"
+              height={60}
+              width={60}
+              alt="Icon of"
+            />
             <span className="text-sm font-medium">{item.folder_name}</span>
           </Link>
         ))}
