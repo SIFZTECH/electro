@@ -1,8 +1,35 @@
 "use client";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
+import { ToggleGroup, ToggleGroupItem } from "@/app/components/ui/toggle-group";
 import ProductImage from "./ProductImage";
 
 const ProductTop = ({ product }) => {
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedPrice, setSelectedPrice] = useState(product.price);
+
+  // console.log("Variants", product?.variants);
+  // console.log(selectedSize, selectedColor);
+
+  useEffect(() => {
+    const variant = product.variants.find(
+      (variant) =>
+        (variant.attribute_value.attribute.name === "Color" &&
+          variant.attribute_value.value === selectedColor) ||
+        (variant.attribute_value.attribute.name === "Size" &&
+          variant.attribute_value.value === selectedSize)
+    );
+
+    console.log(selectedColor, selectedSize);
+    console.log(variant);
+    if (variant) {
+      setSelectedPrice(variant.price);
+    } else {
+      setSelectedPrice(product.price);
+    }
+  }, [selectedColor, selectedSize, product]);
+
   // Function to get the values based on attribute name
   function getValuesByAttributeName(variants, attributeName) {
     return variants
@@ -33,64 +60,54 @@ const ProductTop = ({ product }) => {
             {product.model_name}
           </span>
         </div>
-        <h1 className="font-serif text-xl font-semibold">${product.price}</h1>
+        <h1 className="font-serif text-xl font-semibold">${selectedPrice}</h1>
         {colorValues.length > 0 && (
           <div className="product__colors">
-            <h3 className="font-serif mb-1">Colors</h3>
-            <Tabs defaultValue={colorValues[0]}>
-              <TabsList>
-                <div className="flex items-center font-serif w-fit gap-2">
-                  {colorValues.map((color, i) => (
-                    <TabsTrigger
-                      key={i + 1}
-                      style={{ backgroundColor: color }}
-                      className="w-6 h-6 rounded-full data-[state='active']:ring-2 data-[state='active']:ring-offset-1 data-[state='active']:ring-color-primary"
-                      value={color}
-                    >
-                      &nbsp;
-                    </TabsTrigger>
-                  ))}
-                </div>
-                {colorValues.map((color, i) => (
-                  <TabsContent
-                    key={i + 1}
-                    className="hidden"
-                    value={color}
-                  ></TabsContent>
-                ))}
-              </TabsList>
-            </Tabs>
+            <h3 className="font-serif mb-2">Colors</h3>
+
+            <ToggleGroup
+              type="single"
+              onValueChange={(value) => {
+                setSelectedColor(value);
+              }}
+            >
+              {colorValues.map((color, i) => (
+                <ToggleGroupItem
+                  key={i + 1}
+                  style={{ backgroundColor: color }}
+                  className="w-6 h-6 rounded-full data-[state='on']:ring-2 data-[state='on']:ring-offset-1 data-[state='on']:ring-color-primary"
+                  value={color}
+                >
+                  &nbsp;
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
           </div>
         )}
         {sizeValues.length > 0 && (
           <div className="product__sizes">
-            <h3 className="font-serif mb-1">Sizes</h3>
-            <Tabs defaultValue={sizeValues[0]}>
-              <TabsList>
-                <div className="flex items-center font-serif border border-color-primary w-fit">
-                  {sizeValues.map((size, i) => (
-                    <TabsTrigger
-                      key={i + 1}
-                      value={size}
-                      className="px-3 cursor-pointer py-1 data-[state='active']:bg-color-primary font-serif"
-                    >
-                      {size}
-                    </TabsTrigger>
-                  ))}
-                </div>
-                {sizeValues.map((size, i) => (
-                  <TabsContent
-                    value={size}
-                    key={i + 1}
-                    className="hidden"
-                  ></TabsContent>
-                ))}
-              </TabsList>
-            </Tabs>
+            <h3 className="font-serif mb-2">Sizes</h3>
+
+            <ToggleGroup
+              type="single"
+              className="gap-1"
+              onValueChange={(value) => {
+                setSelectedSize(value);
+              }}
+            >
+              {sizeValues.map((size, i) => (
+                <ToggleGroupItem
+                  key={i + 1}
+                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state='on']:bg-color-primary font-serif text-base"
+                  value={size}
+                >
+                  {size}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
           </div>
         )}
-        {/* attribute_value : attribute : id : 9 name : "Test" [[Prototype]] :
-        Object attribute_id : 9 id : 21 value : "Normal" */}
+
         <div className="flex flex-col items-start gap-2">
           {filteredVariants.map((variant) => {
             return (

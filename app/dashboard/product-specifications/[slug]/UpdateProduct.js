@@ -104,6 +104,7 @@ const EditProduct = ({ product }) => {
     }
   }
 
+
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
       <DialogTrigger className="btn-primary transition-all py-1">

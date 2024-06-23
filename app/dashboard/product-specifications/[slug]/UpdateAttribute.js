@@ -3,7 +3,7 @@
 import { useAttributes } from "@/app/_features/attributes/useAttributes";
 import { deleteVariant } from "@/app/_services/apiAttributes";
 import React from "react";
-import { useFieldArray, Controller } from "react-hook-form";
+import { useFieldArray, Controller, useWatch } from "react-hook-form";
 import toast from "react-hot-toast";
 
 function UpdateAttribute({ control, productId }) {
@@ -16,6 +16,15 @@ function UpdateAttribute({ control, productId }) {
 
   const attributes = !isLoading && data?.attributes;
 
+  const watchVariants = useWatch({
+    control,
+    name: "variants",
+  });
+
+  const selectedVariantValues = watchVariants.map((item) =>
+    Number(item.attribute_value_id)
+  );
+
   function handleClick(attrubuteId) {
     deleteVariant({
       attribute_value_id: attrubuteId,
@@ -24,7 +33,7 @@ function UpdateAttribute({ control, productId }) {
       .then((data) => toast.success(data.message))
       .catch((err) => {
         console.error(err);
-        return toast.error("someting went wrong!");
+        // return toast.error("someting went wrong!");
       });
   }
 
@@ -48,11 +57,30 @@ function UpdateAttribute({ control, productId }) {
                   >
                     <option value="">Select Attribute Value</option>
                     {Object.keys(attributes).map((key) => {
-                      return attributes[key].map((item) => (
-                        <option key={item.id} value={item.id}>
-                          {key} - {item.value}
-                        </option>
-                      ));
+                      return attributes[key]
+                        .filter((attr) => {
+                          console.log(attr);
+                          return (
+                            !selectedVariantValues.includes(attr.id) ||
+                            attr.id === Number(field.value)
+                          );
+                        })
+                        .map((item) => (
+                          <option
+                            key={item.id}
+                            value={item.id}
+                            style={
+                              key === "Color"
+                                ? {
+                                    backgroundColor: item.value,
+                                    color: item.value,
+                                  }
+                                : {}
+                            }
+                          >
+                            {key} - {item.value}
+                          </option>
+                        ));
                     })}
                   </select>
                 )}
