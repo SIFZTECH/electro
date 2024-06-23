@@ -10,12 +10,10 @@ import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-const FilterByCategory = () => {
+const FilterByCategory = ({ selectedCategories, setSelectedCategories }) => {
   const { data, isLoading, isError, error } = useCategories();
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
   // Set initial state from URL query parameters
   useEffect(() => {

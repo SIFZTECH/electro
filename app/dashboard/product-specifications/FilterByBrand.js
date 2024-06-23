@@ -10,11 +10,10 @@ import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
-const FilterByBrand = () => {
+const FilterByBrand = ({ selectedBrands, setSelectedBrands }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data, isLoading, isError } = useBrands();
-  const [selectedBrands, setSelectedBrands] = useState([]);
 
   // Set initial state from URL query parameters
   useEffect(() => {
