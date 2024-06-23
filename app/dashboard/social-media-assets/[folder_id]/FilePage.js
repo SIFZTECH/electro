@@ -1,6 +1,5 @@
 "use client";
 
-import { useResource } from "@/app/_features/dealer-resources/useResource";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import Spinner from "@/app/components/ui/Spinner";
 import UploadFileModal from "../UploadFile";
@@ -17,8 +16,8 @@ import {
 } from "@/app/components/ui/dialog";
 import DeleteFile from "./DeleteFile";
 import DeleteFolder from "./DeleteFolder";
-import { useState } from "react";
 import { useSocialMediaAsset } from "@/app/_features/social_media/useMedia";
+import UpdateAssetsFolder from "./UpdateAssetsFolder";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -57,6 +56,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex gap-2 w-full justify-end mb-8">
+        <UpdateAssetsFolder folder_id={folder_id} folderData={data?.data} />
         <DeleteFolder folder_id={folder_id} />
         <UploadFileModal folder_id={folder_id} />
       </div>
@@ -81,7 +81,14 @@ const FolderPage = ({ folder_id }) => {
                   )}
                   {isPDF(file) && (
                     <div className="p-2 flex flex-col gap-2 items-center">
-                      <VscFilePdf size={100} />
+                      {/* <VscFilePdf size={100} /> */}
+                      <Image
+                        src={`/icons8-pdf-100.png`}
+                        alt={`Resources ${i + 1}`}
+                        width={150}
+                        height={150}
+                        className="p-2"
+                      />
                       <p className="font-serif">PDF Document</p>
                     </div>
                   )}

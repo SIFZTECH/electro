@@ -11,11 +11,11 @@ import {
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useUsers } from "@/app/_features/users/useUsers";
+import { CreateNewResource, EditFolder } from "@/app/_services/apiResources";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
-import { CreateNewSocialAssets } from "@/app/_services/apiMedia";
 
-const CreateNewAssets = () => {
+const UpdateFolder = ({ folder_id, folderData }) => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
   const { data, isLoading, isError, error } = useUsers();
@@ -23,21 +23,28 @@ const CreateNewAssets = () => {
   const {
     register,
     handleSubmit,
-    control,
     watch,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      access_users: [{ id: null }],
+      folder_name: folderData.folder_name || "",
+      visible_date: folderData.visible_date || "",
+
+      access_users: folderData.access_users.map((id) => {
+        return { id: id };
+      }) || [{ id: null }],
+
+      access_to_anyone: folderData.access_to_anyone || 0,
     },
   });
+
+  const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "access_users",
   });
-
-  const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   async function onSubmit({
     folder_name,
@@ -49,13 +56,13 @@ const CreateNewAssets = () => {
     const formattedDateStr = moment(visible_date).format("MM/DD/YYYY");
 
     try {
-      const res = await CreateNewSocialAssets({
+      const res = await EditFolder(folder_id, {
         folder_name,
         access_users: fotmattedUsers,
         access_to_anyone,
         visible_date: formattedDateStr,
       });
-      console.log(res);
+
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("resources");
@@ -75,16 +82,16 @@ const CreateNewAssets = () => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary">
-        Add New Social Media Assets
+      <DialogTrigger className="btn-primary bg-emerald-300">
+        Edit Folder
       </DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">
-            Create new Resources
+            Edit {folderData.folder_name} Folder
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Resources. Click create when you're done.
+            Edit {folderData.folder_name} Folder. Click create when you're done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -184,6 +191,9 @@ const CreateNewAssets = () => {
                 id="access_to_anyone"
                 disabled={isSubmitting}
                 type="checkbox"
+                defaultChecked={
+                  folderData.access_to_anyone === 1 ? true : false
+                }
               />
 
               <label
@@ -200,7 +210,7 @@ const CreateNewAssets = () => {
                 disabled={isSubmitting}
                 className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
-                {isSubmitting ? <SpinnerMini /> : "Create"}
+                {isSubmitting ? <SpinnerMini /> : "Update"}
               </button>
             </div>
           </form>
@@ -210,4 +220,4 @@ const CreateNewAssets = () => {
   );
 };
 
-export default CreateNewAssets;
+export default UpdateFolder;

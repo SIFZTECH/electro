@@ -90,6 +90,21 @@ export async function CreateNewResource(formData) {
 
   return data;
 }
+export async function EditFolder(id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(`${BASE_URL}/update-folder/${id}`, {
+    method: "put",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  });
+
+  return data;
+}
 
 export async function deleteFolder(id) {
   const token = localStorage.getItem("access-token");

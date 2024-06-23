@@ -11,7 +11,7 @@ const FolderFiles = ({ data }) => {
         {data.map((item) => (
           <Link
             href={`/dashboard/social-media-assets/${item.id}`}
-            key={item}
+            key={item.id}
             className="folder flex flex-col items-center flex-wrap"
           >
             {/* <PiFoldersThin size="100" color="#27272a" /> */}

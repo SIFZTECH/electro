@@ -1,4 +1,3 @@
-import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -24,6 +23,7 @@ const CreateNewResources = () => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -35,6 +35,8 @@ const CreateNewResources = () => {
     control,
     name: "access_users",
   });
+
+  const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   async function onSubmit({
     folder_name,
@@ -122,55 +124,57 @@ const CreateNewResources = () => {
                 )}
               </div>
             </div>
-            <div>
-              {fields.map((item, index) => (
-                <div className="flex gap-8 items-center w-full" key={item.id}>
-                  <div className="flex-1">
-                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                      Access Users
-                    </label>
-                    <Controller
-                      render={({ field }) => (
-                        <select
-                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
-                          {...field}
-                        >
-                          <option value="">--Select User--</option>
-                          {!isLoading &&
-                            !isError &&
-                            !error &&
-                            data?.data.map((user) => (
-                              <option
-                                className="capitalize"
-                                value={user.id}
-                                key={user.id}
-                              >
-                                {user.firstname} {user.lastname}
-                              </option>
-                            ))}
-                        </select>
-                      )}
-                      name={`access_users[${index}].id`}
-                      control={control}
-                      defaultValue={item.id}
-                    />
-                  </div>
+            {!checkedAnyoneAccessBox && (
+              <div>
+                {fields.map((item, index) => (
+                  <div className="flex gap-8 items-center w-full" key={item.id}>
+                    <div className="flex-1">
+                      <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
+                        Access Users
+                      </label>
+                      <Controller
+                        render={({ field }) => (
+                          <select
+                            className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
+                            {...field}
+                          >
+                            <option value="">--Select User--</option>
+                            {!isLoading &&
+                              !isError &&
+                              !error &&
+                              data?.data.map((user) => (
+                                <option
+                                  className="capitalize"
+                                  value={user.id}
+                                  key={user.id}
+                                >
+                                  {user.firstname} {user.lastname}
+                                </option>
+                              ))}
+                          </select>
+                        )}
+                        name={`access_users[${index}].id`}
+                        control={control}
+                        defaultValue={item.id}
+                      />
+                    </div>
 
-                  <span
-                    className="btn-primary texl-sm bg-gray-200 py-[8px] self-end cursor-pointer"
-                    onClick={() => remove(index)}
-                  >
-                    Remove
-                  </span>
-                </div>
-              ))}
-              <span
-                className="btn-primary font-serif text-sm inline-block mt-3"
-                onClick={() => append({ id: null })}
-              >
-                Add More Users
-              </span>
-            </div>
+                    <span
+                      className="btn-primary texl-sm bg-gray-200 py-[8px] self-end cursor-pointer"
+                      onClick={() => remove(index)}
+                    >
+                      Remove
+                    </span>
+                  </div>
+                ))}
+                <span
+                  className="btn-primary font-serif text-sm inline-block mt-3"
+                  onClick={() => append({ id: null })}
+                >
+                  Add More Users
+                </span>
+              </div>
+            )}
             <div className="flex gap-1 items-center">
               <input
                 {...register("access_to_anyone")}

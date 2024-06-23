@@ -2,8 +2,8 @@
 
 import { TableCell, TableRow } from "@/app/components/ui/table";
 
-import EditCategory from "./EditAttribute";
 import DeleteAttribute from "./DeleteAttribute";
+import DeleteAttributeValue from "./DeleteAttributeValue";
 
 const AttributesList = ({ attribute, attribute_value }) => {
   return (
@@ -32,9 +32,10 @@ const AttributesList = ({ attribute, attribute_value }) => {
           </small>
         ))}
       </TableCell>
-      <TableCell className="w-6">
+      <TableCell className="max-w-6">
         <div className="flex gap-3">
           {/* <EditCategory attribute={attribute} />  */}
+          <DeleteAttributeValue attribute={attribute_value} />
           <DeleteAttribute attribute={attribute} />
         </div>
       </TableCell>

@@ -82,6 +82,25 @@ export async function CreateNewMediaFile(formData) {
   return data;
 }
 
+export async function EditFolder(id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(
+    `${BASE_URL}/social-media-assets/update-folder/${id}`,
+    {
+      method: "put",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: formData,
+    }
+  );
+
+  return data;
+}
+
 export async function deleteMediaFolder(id) {
   const token = localStorage.getItem("access-token");
 

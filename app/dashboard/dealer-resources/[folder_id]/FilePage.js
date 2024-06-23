@@ -19,6 +19,7 @@ import DeleteFile from "./DeleteFile";
 import DeleteFolder from "./DeleteFolder";
 import { useState } from "react";
 import Link from "next/link";
+import UpdateFolder from "./UpdateFolder";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -55,6 +56,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex gap-2 w-full justify-end mb-8">
+        <UpdateFolder folder_id={folder_id} folderData={data?.data} />
         <DeleteFolder folder_id={folder_id} />
         <UploadFileModal folder_id={folder_id} />
       </div>

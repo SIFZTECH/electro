@@ -8,6 +8,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import DeleteProduct from "./DeleteProduct";
 import EditProduct from "./UpdateProduct";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import Image from "next/image";
 
 const ProductDetailsPage = ({ params }) => {
   const isProductUpdatePermission = useCheckPermission("product_update");
@@ -36,7 +37,12 @@ const ProductDetailsPage = ({ params }) => {
           </h2>
           <div className="product__introduction">
             <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
-              <BsPatchExclamation />
+              <Image
+                src="/Info.png"
+                height={25}
+                width={25}
+                alt="Key Features"
+              />
               <span>Introduction</span>
             </h2>
             <p className="text-center my-3 shadow-sm pb-3">
@@ -46,7 +52,12 @@ const ProductDetailsPage = ({ params }) => {
 
           <div className="product__features">
             <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
-              <BsPatchExclamation />
+              <Image
+                src="/key_features.png"
+                height={25}
+                width={25}
+                alt="Key Features"
+              />
               <span>Key Features</span>
             </h2>
             <div className="my-3 shadow-sm pb-3">
@@ -63,7 +74,12 @@ const ProductDetailsPage = ({ params }) => {
         {product.compare && (
           <div className="product__specifications">
             <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
-              <BsPatchExclamation />
+              <Image
+                src="/Specs.png"
+                height={25}
+                width={25}
+                alt="Specifications"
+              />
               <span>Specifications</span>
             </h2>
             <ProductSpecifications specification={product?.compare} />
