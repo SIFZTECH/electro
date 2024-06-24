@@ -60,7 +60,9 @@ const ProductTop = ({ product }) => {
             {product.model_name}
           </span>
         </div>
-        <h1 className="font-serif text-xl font-semibold">${selectedPrice}</h1>
+        <h1 className="font-serif text-xl font-semibold">
+          ${selectedPrice === "0.00" ? product.price : selectedPrice}
+        </h1>
         {colorValues.length > 0 && (
           <div className="product__colors">
             <h3 className="font-serif mb-2">Colors</h3>
