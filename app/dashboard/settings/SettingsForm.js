@@ -315,6 +315,69 @@ const SettingsForm = () => {
             </div>
           </div>
           <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Your Google Map Address url
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("location", {
+                  required: "This is required field",
+                })}
+                type="url"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Opening Hours
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("opening_hours", {
+                  required: "This is required field",
+                })}
+                type="url"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Closing Hours
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("closing_hours", {
+                  required: "This is required field",
+                })}
+                type="url"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Holiday
+            </label>
+            <div className="mt-1">
+              <select
+                {...register("holyday", {
+                  required: "This is required field",
+                })}
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              >
+                <option value="sun">Sun</option>
+                <option value="mon">Mon</option>
+                <option value="tue">Tue</option>
+                <option value="wed">Wed</option>
+                <option value="thu">Thu</option>
+                <option value="fri">Fri</option>
+                <option value="sat">Sat</option>
+              </select>
+            </div>
+          </div>
+          <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Upload your logo
             </label>
