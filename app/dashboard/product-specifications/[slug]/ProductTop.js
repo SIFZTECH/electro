@@ -98,7 +98,7 @@ const ProductTop = ({ product }) => {
               {sizeValues.map((size, i) => (
                 <ToggleGroupItem
                   key={i + 1}
-                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state='on']:bg-color-primary font-serif text-base"
+                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state=on]:bg-color-primary font-serif text-base"
                   value={size}
                 >
                   {size}
