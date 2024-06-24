@@ -56,11 +56,17 @@ const FolderPage = ({ folder_id }) => {
 
   return (
     <div>
-      <div className="flex gap-2 w-full justify-end mb-8">
-        <UpdateAssetsFolder folder_id={folder_id} folderData={data?.data} />
-        <DeleteFolder folder_id={folder_id} />
-        <UploadFileModal folder_id={folder_id} />
+      <div className="flex justify-between flex-wrap">
+        <h1 className="font-serif text-xl mb-6 font-semibold">
+          {data.data.folder_name}
+        </h1>
+        <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
+          <UpdateAssetsFolder folder_id={folder_id} folderData={data?.data} />
+          <DeleteFolder folder_id={folder_id} />
+          <UploadFileModal folder_id={folder_id} />
+        </div>
       </div>
+
       {!isLoading &&
       !isError &&
       (!data?.data?.files || data?.data?.files?.length === 0) ? (
