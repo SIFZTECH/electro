@@ -21,15 +21,15 @@ const BrandTable = ({ data }) => {
         <Table className="">
           <TableHeader>
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
-              <TableHead>ID</TableHead>
+              <TableHead>SN</TableHead>
               <TableHead>Brand Name</TableHead>
               <TableHead>-</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="">
-            {brands.map((brand) => (
-              <BrandsList key={brand.id} brand={brand} />
+            {brands.map((brand, i) => (
+              <BrandsList key={brand.id} index={i} brand={brand} />
             ))}
           </TableBody>
         </Table>

@@ -1,4 +1,3 @@
-import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
@@ -10,7 +9,7 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useUsers } from "@/app/_features/users/useUsers";
+import { useAllUsers } from "@/app/_features/users/useUsers";
 import { CreateNewResource, EditFolder } from "@/app/_services/apiResources";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
@@ -18,7 +17,7 @@ import moment from "moment";
 const UpdateFolder = ({ folder_id, folderData }) => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useUsers();
+  const { data, isLoading, isError, error } = useAllUsers();
 
   const {
     register,
@@ -158,7 +157,8 @@ const UpdateFolder = ({ folder_id, folderData }) => {
                                   value={user.id}
                                   key={user.id}
                                 >
-                                  {user.firstname} {user.lastname}
+                                  {user.firstname} {user.lastname} ({user.email}
+                                  )
                                 </option>
                               ))}
                           </select>

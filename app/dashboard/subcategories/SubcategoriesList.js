@@ -6,7 +6,7 @@ import EditSubCategory from "./EditSubCategory";
 import DeleteSubCategory from "./DeleteSubCategory";
 import useCheckPermission from "@/app/_hooks/usePermission";
 
-const SubCategoriesList = ({ subcategory }) => {
+const SubCategoriesList = ({ index, subcategory }) => {
   const isSubcategoryUpdatePermission =
     useCheckPermission("subcategory_update");
   const isSubcategoryDeletePermission =
@@ -15,7 +15,7 @@ const SubCategoriesList = ({ subcategory }) => {
   return (
     <>
       <TableRow>
-        <TableCell data-label="Sub-Category Id">{subcategory.id}</TableCell>
+        <TableCell data-label="SN">{index + 1}</TableCell>
         <TableCell data-label="Sub-Category Name">{subcategory.name}</TableCell>
         <TableCell data-label="Category Name">
           <span className="btn-primary bg-transparent mr-3 bg-green-200">

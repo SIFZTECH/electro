@@ -21,7 +21,7 @@ const CategoryTable = ({ data }) => {
         <Table className="">
           <TableHeader>
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
-              <TableHead data-label="ID">ID</TableHead>
+              <TableHead data-label="SN">SN</TableHead>
               <TableHead data-label="Category Name">Category Name</TableHead>
               <TableHead data-label="Sub-Category Name">
                 Sub-Categories Name
@@ -30,9 +30,10 @@ const CategoryTable = ({ data }) => {
             </TableRow>
           </TableHeader>
           <TableBody className="">
-            {categories.map((category) => (
+            {categories.map((category, i) => (
               <CategoriesList
                 key={category.id}
+                index={i}
                 category={category}
                 subCategories={category.subcategories}
               />

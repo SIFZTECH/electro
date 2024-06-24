@@ -6,13 +6,13 @@ import EditBrand from "./EditBrand";
 import DeleteCategory from "./DeleteBrand";
 import useCheckPermission from "@/app/_hooks/usePermission";
 
-const BrandsList = ({ brand }) => {
+const BrandsList = ({ index, brand }) => {
   const isUpdateBrandPermission = useCheckPermission("brand_update");
   const isDeleteBrandPermission = useCheckPermission("brand_delete");
 
   return (
     <TableRow>
-      <TableCell data-label="Brand Id">{brand.id}</TableCell>
+      <TableCell data-label="SN">{index + 1}</TableCell>
       <TableCell data-label="Brand Name">{brand.name}</TableCell>
       <TableCell>-</TableCell>
       <TableCell data-label="Actions">

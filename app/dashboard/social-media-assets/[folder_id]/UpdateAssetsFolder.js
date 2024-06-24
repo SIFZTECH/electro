@@ -9,7 +9,7 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useUsers } from "@/app/_features/users/useUsers";
+import { useAllUsers } from "@/app/_features/users/useUsers";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
 import { EditFolder } from "@/app/_services/apiMedia";
@@ -17,7 +17,7 @@ import { EditFolder } from "@/app/_services/apiMedia";
 const UpdateAssetsFolder = ({ folder_id, folderData }) => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useUsers();
+  const { data, isLoading, isError, error } = useAllUsers();
 
   const {
     register,
@@ -157,7 +157,8 @@ const UpdateAssetsFolder = ({ folder_id, folderData }) => {
                                   value={user.id}
                                   key={user.id}
                                 >
-                                  {user.firstname} {user.lastname}
+                                  {user.firstname} {user.lastname} ({user.email}
+                                  )
                                 </option>
                               ))}
                           </select>
