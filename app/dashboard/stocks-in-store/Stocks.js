@@ -1,3 +1,6 @@
+import { useProducts } from "@/app/_features/products/useProducts";
+import Spinner from "@/app/components/ui/Spinner";
+
 const dummyData = [
   {
     id: "dyyds735363",
@@ -43,7 +46,9 @@ const dummyData = [
   },
 ];
 
-const Stocks = () => {
+const Stocks = ({ products }) => {
+  const data = products.data.data;
+
   return (
     <table className="mt-10 table_modify">
       <thead>
@@ -54,12 +59,12 @@ const Stocks = () => {
         </tr>
       </thead>
       <tbody>
-        {dummyData.map((data, i) => {
+        {products?.data.data.map((data, i) => {
           return (
             <tr key={i + 1}>
-              <td data-label="Products">{data.products}</td>
-              <td data-label="MyEBikes">{data.myEBikes}</td>
-              <td data-label="Clicks">{data.clicks}</td>
+              <td data-label="Products">{data.name}</td>
+              <td data-label="MyEBikes">{data.stock}</td>
+              <td data-label="Clicks">-</td>
             </tr>
           );
         })}

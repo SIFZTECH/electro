@@ -133,9 +133,7 @@ const UploadModal = ({ title, btn }) => {
               </div>
             </div>
           )}
-          <DialogClose>
-            <button className="mr-2">Close</button>
-          </DialogClose>
+          <DialogClose className="mr-2">Close</DialogClose>
           <button type="submit" className="btn-primary">
             Upload
           </button>
