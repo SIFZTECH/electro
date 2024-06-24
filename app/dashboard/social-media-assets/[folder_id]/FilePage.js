@@ -18,6 +18,7 @@ import DeleteFile from "./DeleteFile";
 import DeleteFolder from "./DeleteFolder";
 import { useSocialMediaAsset } from "@/app/_features/social_media/useMedia";
 import UpdateAssetsFolder from "./UpdateAssetsFolder";
+import DownloadButton from "@/app/components/ui/DownloadFile";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -199,13 +200,9 @@ const FolderPage = ({ folder_id }) => {
                     </div>
                   )}
                 <div className="flex gap-4 items-center justify-end mt-4">
-                  <a
-                    href={`${BASE_URL_IMAGE}${file}`}
-                    download
-                    className="btn-primary"
-                  >
-                    Download
-                  </a>
+                  <DownloadButton
+                    fileUrl={`${BASE_URL}/download?path=${file}`}
+                  />
                   <DeleteFile file_path={file} folder_id={folder_id} />
                 </div>
               </DialogContent>

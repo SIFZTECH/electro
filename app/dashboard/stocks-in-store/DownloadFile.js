@@ -42,7 +42,7 @@ const DownloadFile = () => {
       link.click();
       setDownloading(false);
 
-      toast.success("CSV file downloaded successfully!");
+      // toast.success("CSV file downloaded successfully!");
     } catch (err) {
       console.error(err);
       setDownloading(false);

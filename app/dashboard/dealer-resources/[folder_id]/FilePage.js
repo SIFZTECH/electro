@@ -5,7 +5,7 @@ import NotFoundData from "@/app/components/ui/NotFoundData";
 import Spinner from "@/app/components/ui/Spinner";
 import UploadFileModal from "../UploadFile";
 import Image from "next/image";
-import { BASE_URL_IMAGE } from "@/app/lib/utils";
+import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
 import { VscFilePdf } from "react-icons/vsc";
 import { GrDocumentText } from "react-icons/gr";
 import { AiFillFileUnknown } from "react-icons/ai";
@@ -20,6 +20,7 @@ import DeleteFolder from "./DeleteFolder";
 import { useState } from "react";
 import Link from "next/link";
 import UpdateFolder from "./UpdateFolder";
+import DownloadButton from "@/app/components/ui/DownloadFile";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -192,13 +193,9 @@ const FolderPage = ({ folder_id }) => {
                     </div>
                   )}
                 <div className="flex gap-4 items-center justify-end mt-4">
-                  <a
-                    href={`${BASE_URL_IMAGE}${file}`}
-                    download
-                    className="btn-primary"
-                  >
-                    Download
-                  </a>
+                  <DownloadButton
+                    fileUrl={`${BASE_URL}/download?path=${file}`}
+                  />
                   <DeleteFile file_path={file} folder_id={folder_id} />
                 </div>
               </DialogContent>
