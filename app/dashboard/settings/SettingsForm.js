@@ -95,7 +95,7 @@ const SettingsForm = () => {
 
   return (
     <>
-      <h1 className="font-serif text-center text-2xl font-semibold">
+      <h1 className="md:px-6 font-serif text-2xl font-semibold">
         Dealer Profile Settings
       </h1>
       <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>

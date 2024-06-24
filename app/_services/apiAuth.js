@@ -110,6 +110,45 @@ export async function profileSettings({
 
   return data;
 }
+export async function profileSettingsForNonDealer({
+  firstname,
+  lastname,
+  profile,
+}) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  if (profile.length > 0) {
+    const { data } = await axios({
+      url: `${BASE_URL}/admin/update-profile`,
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "multipart/form-data",
+      },
+      data: {
+        profile: profile[0],
+      },
+    });
+
+    return data;
+  } else if (firstname && lastname) {
+    const { data } = await axios({
+      url: `${BASE_URL}/admin/update-me`,
+      method: "put",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        firstname,
+        lastname,
+      },
+    });
+
+    return data;
+  }
+}
 
 export async function enableTwoFactorAuth({ two_fa_email, channel, phone }) {
   const token = localStorage.getItem("access-token");

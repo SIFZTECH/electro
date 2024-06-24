@@ -9,6 +9,7 @@ import NoPermission from "@/app/components/ui/NoPermission";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import { useSearchParams } from "next/navigation";
 import { useSocialMediaResources } from "@/app/_features/social_media/useMediaAssets";
+import { useUser } from "@/app/_features/authentication/useUser";
 
 const MediaPage = () => {
   const params = useSearchParams();
@@ -19,6 +20,7 @@ const MediaPage = () => {
     query
   );
 
+  const { isAdmin } = useUser();
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isMediaPermission = useCheckPermission("social_media_assets");
 
@@ -36,7 +38,7 @@ const MediaPage = () => {
       <div className="flex justify-between items-center mb-10">
         <h1 className="heading-h1">Social Media Assets</h1>
         {/* {isDealerAddPermission && <CreateNewAssets />} */}
-        <CreateNewAssets />
+        {isAdmin && <CreateNewAssets />}
       </div>
       {!isLoading && isError && error && (
         <NotFoundData

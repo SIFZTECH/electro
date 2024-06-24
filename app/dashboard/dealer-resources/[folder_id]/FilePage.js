@@ -21,6 +21,7 @@ import { useState } from "react";
 import Link from "next/link";
 import UpdateFolder from "./UpdateFolder";
 import DownloadButton from "@/app/components/ui/DownloadFile";
+import { useUser } from "@/app/_features/authentication/useUser";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -49,7 +50,7 @@ const isSpreadsheet = (file) => {
 
 const FolderPage = ({ folder_id }) => {
   const { data, isLoading, isError, error } = useResource(Number(folder_id));
-
+  const { isAdmin } = useUser();
   if (isLoading) {
     return <Spinner />;
   }
@@ -61,11 +62,13 @@ const FolderPage = ({ folder_id }) => {
         <h1 className="font-serif text-xl mb-6 font-semibold">
           {data.data.folder_name}
         </h1>
-        <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
-          <UpdateFolder folder_id={folder_id} folderData={data?.data} />
-          <DeleteFolder folder_id={folder_id} />
-          <UploadFileModal folder_id={folder_id} />
-        </div>
+        {isAdmin && (
+          <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
+            <UpdateFolder folder_id={folder_id} folderData={data?.data} />
+            <DeleteFolder folder_id={folder_id} />
+            <UploadFileModal folder_id={folder_id} />
+          </div>
+        )}
       </div>
 
       {!isLoading &&

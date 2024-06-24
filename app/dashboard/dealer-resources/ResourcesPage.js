@@ -9,12 +9,14 @@ import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import { useSearchParams } from "next/navigation";
+import { useUser } from "@/app/_features/authentication/useUser";
 
 const ResourcesPage = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
   const query = params.get("query");
   const { data, isLoading, isError, error } = useDealerResources(page, query);
+  const { isAdmin } = useUser();
 
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isDealerListPermission = useCheckPermission("dealer_list");
@@ -33,7 +35,7 @@ const ResourcesPage = () => {
       <div className="flex justify-between items-center mb-10">
         <h1 className="heading-h1">Dealer Resources</h1>
         {/* {isDealerAddPermission && <CreateNewResources />} */}
-        <CreateNewResources />
+        {isAdmin && <CreateNewResources />}
       </div>
       {!isLoading && isError && error && (
         <NotFoundData

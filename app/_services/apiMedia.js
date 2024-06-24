@@ -58,16 +58,29 @@ export async function CreateNewSocialAssets(formData) {
 
 export async function getMediaAsset(id) {
   const token = localStorage.getItem("access-token");
+  const user = await getCurrentUser();
+  if (!token || !user) return null;
 
-  if (!token) return null;
+  if (user.roles[0].name === "admin") {
+    const { data } = await axios(
+      `${BASE_URL}/social-media-assets/folder/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-  const { data } = await axios(`${BASE_URL}/social-media-assets/folder/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+    return data;
+  } else {
+    const { data } = await axios(`${BASE_URL}/social/folder/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  return data;
+    return data;
+  }
 }
 
 export async function CreateNewMediaFile(formData) {
