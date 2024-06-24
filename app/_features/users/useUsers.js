@@ -1,7 +1,11 @@
 "use client";
 
 import { getAllAdminUsers } from "@/app/_services/apiAuth";
-import { getAllUsers, getUsersAll } from "@/app/_services/apiUsers";
+import {
+  getAllDealerUsers,
+  getAllUsers,
+  getUsersAll,
+} from "@/app/_services/apiUsers";
 import { useQuery } from "@tanstack/react-query";
 
 export function useUsers(page = 1, block, query) {
@@ -26,6 +30,14 @@ export function useAllUsers() {
   const { data, isLoading, error, isError } = useQuery({
     queryKey: ["all-users"],
     queryFn: () => getUsersAll(),
+  });
+
+  return { data, isLoading, error, isError, total_num: data?.data?.total };
+}
+export function useAllDealerUsers() {
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ["dealer-users"],
+    queryFn: () => getAllDealerUsers(),
   });
 
   return { data, isLoading, error, isError, total_num: data?.data?.total };

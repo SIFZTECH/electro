@@ -27,7 +27,9 @@ const SettingsForm = () => {
       company_name: user.company_name || "",
       weburl: user.weburl || "",
       abn: user.abn || "",
-      purchase_date: user.purchase_date || "",
+      purchase_date: user.purchase_date
+        ? new Date(user.purchase_date).toISOString().split("T")[0]
+        : "",
       invoice_number: user.invoice_number || "",
       description: user.description || "",
       street_address: user.street_address || "",

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -25,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
         router.replace("/login");
       }
     },
-    [token, router, queryClient]
+    [token]
   );
 
   // 2. If there is NO authenticated user, redirect to the /login
@@ -36,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
         router.replace("/login");
       }
     },
-    [user, isLoading, isError, error, router, queryClient]
+    [user, isLoading, isError, error]
   );
 
   // 3. IF LOADING IS TRUE

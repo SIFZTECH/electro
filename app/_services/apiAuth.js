@@ -88,6 +88,7 @@ export async function profileSettings({
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
+      "content-type": "multipart/form-data",
     },
     data: {
       firstname,
@@ -103,7 +104,7 @@ export async function profileSettings({
       city,
       postal_code,
       state,
-      logo,
+      logo: logo[0],
       stockfeedurl,
     },
   });

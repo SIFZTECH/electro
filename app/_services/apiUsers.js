@@ -35,6 +35,21 @@ export async function getAllUsers(page, block, query) {
   }
 }
 
+export async function getAllDealerUsers() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users-and-admin?role=dealer`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function getUsersAll() {
   const token = localStorage.getItem("access-token");
 

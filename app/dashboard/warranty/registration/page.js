@@ -26,7 +26,7 @@ const WarrantyRegistrationPage = () => {
         toast.success(res.message);
 
         queryClient.invalidateQueries("warranties");
-        router.replace("/dashboard/warranty");
+        router.back(-1);
       }
     } catch (err) {
       console.error(err);

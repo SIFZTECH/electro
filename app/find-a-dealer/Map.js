@@ -99,11 +99,18 @@ import { RiDirectionLine } from "react-icons/ri";
 import { AiOutlineGlobal, AiOutlineMail } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useAllDealerUsers, useUsers } from "../_features/users/useUsers";
+import { SkeletonFiler } from "../components/ui/SkeletonFilter";
+import Link from "next/link";
+import { BASE_URL_IMAGE } from "../lib/utils";
 
 export default function MyMap() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const router = useRouter();
   const { register, handleSubmit } = useForm();
+  const { data, isLoading } = useAllDealerUsers();
+
+  console.log(data);
 
   const {
     isLoading: isLoadingPosition,
@@ -135,7 +142,7 @@ export default function MyMap() {
   return (
     <>
       <div className="flex flex-col h-dvh w-dvw">
-        <div className="find-store p-4 bg-white absolute left-6 top-6 z-[99999]">
+        <div className="find-store p-4 bg-white absolute max-w-[30rem]  left-6 top-6 z-[99999]">
           <div>
             <button
               className="btn-primary mb-2 bg-gray-200"
@@ -200,54 +207,123 @@ export default function MyMap() {
               <h1 className="font-serif font-semibold mb-3">
                 Your closest store
               </h1>
-              {stores.map((store) => (
-                <div
-                  key={store.id}
-                  className="store flex items-start gap-1 border-b border-gray-200 pt-3"
-                  onClick={() =>
-                    router.push(
-                      `/find-a-dealer?lat=${store.position.lat}&lng=${store.position.lng}`
-                    )
-                  }
-                >
-                  <Image
-                    src="/cycle-4.jpg"
-                    width={60}
-                    height={60}
-                    className="rounded-full object-contain"
-                    alt="name"
-                  />
-                  <div>
-                    <h1 className="font-serif font-semibold">
-                      {store.storeName}
-                    </h1>
-                    <p className="text-sm ">{store.distance}</p>
-                    <p className="my-2">{store.openAndCloseStore}</p>
-                    <p>{store.address2}</p>
-                    <p>LAVERTON NORTH VIC. 3026, AU</p>
-                    <div className="my-2 text-sm">
-                      <p className="flex items-center gap-2">
-                        <MdOutlineLocalPhone />
-                        {store.phone}
+              {isLoading && (
+                <div>
+                  <SkeletonFiler />
+                  <SkeletonFiler />
+                  <SkeletonFiler />
+                  <SkeletonFiler />
+                  <SkeletonFiler />
+                  <SkeletonFiler />
+                </div>
+              )}
+              {!isLoading &&
+                data.data.data.map((store) => (
+                  <div
+                    key={store.id}
+                    className="store flex items-start gap-1 border-b border-gray-200 pt-3"
+                    // onClick={() =>
+                    //   router.push(
+                    //     `/find-a-dealer?lat=${store.position.lat}&lng=${store.position.lng}`
+                    //   )
+                    // }
+                  >
+                    <Image
+                      src={
+                        store.logo
+                          ? `${BASE_URL_IMAGE}${store.logo}`
+                          : "/cycle-4.jpg"
+                      }
+                      width={60}
+                      height={60}
+                      className="rounded-full object-contain"
+                      alt="name"
+                    />
+                    <div>
+                      <h1 className="font-serif font-semibold">
+                        {store.company_name || "Company Name Not Found"}
+                      </h1>
+                      <p className="text-sm ">0.02km</p>
+                      {/* <p className="my-2">{store.openAndCloseStore}</p> */}
+                      <p>{store.state}</p>
+                      <p>
+                        {store.street_address || "Unavailable Street Address"}.{" "}
+                        {store.postal_code || "Unavailable Postal code"},
+                        {store.city || "Unavailable City"}
                       </p>
-                      <p className="flex items-center gap-2">
-                        <AiOutlineMail />
-                        {store.email}
-                      </p>
-                    </div>
-                    <div className="flex gap-4 my-4 text-[15px]">
-                      <button className="flex items-center gap-1 font-serif">
-                        <RiDirectionLine />
-                        DIRECTIONS
-                      </button>
-                      <button className="flex items-center gap-1 font-serif">
-                        <AiOutlineGlobal />
-                        VIEW WEBSITE
-                      </button>
+                      <div className="my-2 text-sm">
+                        <p className="flex items-center gap-2">
+                          <MdOutlineLocalPhone />
+                          {store.phone_number || "Not Available"}
+                        </p>
+                        <p className="flex items-center gap-2">
+                          <AiOutlineMail />
+                          {store.email}
+                        </p>
+                      </div>
+                      <div className="flex gap-4 my-4 text-[15px]">
+                        <button className="flex items-center gap-1 font-serif">
+                          <RiDirectionLine />
+                          DIRECTIONS
+                        </button>
+                        <Link
+                          href={store.weburl || "#"}
+                          className="flex items-center gap-1 font-serif"
+                        >
+                          <AiOutlineGlobal />
+                          VIEW WEBSITE
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+
+                  // <div
+                  //   key={store.id}
+                  //   className="store flex items-start gap-1 border-b border-gray-200 pt-3"
+                  //   onClick={() =>
+                  //     router.push(
+                  //       `/find-a-dealer?lat=${store.position.lat}&lng=${store.position.lng}`
+                  //     )
+                  //   }
+                  // >
+                  //   <Image
+                  //     src="/cycle-4.jpg"
+                  //     width={60}
+                  //     height={60}
+                  //     className="rounded-full object-contain"
+                  //     alt="name"
+                  //   />
+                  //   <div>
+                  //     <h1 className="font-serif font-semibold">
+                  //       {store.storeName}
+                  //     </h1>
+                  //     <p className="text-sm ">{store.distance}</p>
+                  //     <p className="my-2">{store.openAndCloseStore}</p>
+                  //     <p>{store.address2}</p>
+                  //     <p>LAVERTON NORTH VIC. 3026, AU</p>
+                  //     <div className="my-2 text-sm">
+                  //       <p className="flex items-center gap-2">
+                  //         <MdOutlineLocalPhone />
+                  //         {store.phone}
+                  //       </p>
+                  //       <p className="flex items-center gap-2">
+                  //         <AiOutlineMail />
+                  //         {store.email}
+                  //       </p>
+                  //     </div>
+                  //     <div className="flex gap-4 my-4 text-[15px]">
+                  //       <button className="flex items-center gap-1 font-serif">
+                  //         <RiDirectionLine />
+                  //         DIRECTIONS
+                  //       </button>
+                  //       <button className="flex items-center gap-1 font-serif">
+                  //         <AiOutlineGlobal />
+                  //         VIEW WEBSITE
+                  //       </button>
+                  //     </div>
+                  //   </div>
+                  // </div>
+                ))}
             </div>
           </div>
         </div>

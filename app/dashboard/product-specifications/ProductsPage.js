@@ -36,8 +36,6 @@ const ProductsPage = () => {
     );
   }
 
-  if (isLoading) return <Spinner />;
-
   return (
     <>
       {isPermission && <ProductCategories />}
@@ -47,6 +45,7 @@ const ProductsPage = () => {
           <FilterByProduct />
 
           {/* {!isLoading && !isError && !error && <Products products={products} />} */}
+          {isLoading && <Spinner />}
           {!isLoading && !isError && products.data.data.length > 0 ? (
             <Products products={products} />
           ) : (
