@@ -4,24 +4,30 @@ import axios from "axios";
 import { BASE_URL, SOCIALMEDIAASSESTS_PAGE_SIZE } from "../lib/utils";
 import { getCurrentUser } from "./apiAuth";
 
-export async function getAllSocialMediaAssets(page) {
+export async function getAllSocialMediaAssets(page, query) {
   const token = localStorage.getItem("access-token");
   const user = await getCurrentUser();
 
   if (!token || !user) return null;
+
+  let url = `${BASE_URL}/social-media-assets/get-folders?per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
+  let url2 = `${BASE_URL}/social-assets?per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
+
+  if (query) {
+    url = `${BASE_URL}/search-social-media-assets?search=${query}&per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
+    url2 = `${BASE_URL}/search-social-media-assets?search=${query}&per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
+  }
+
   if (user && user.roles[0].name === "admin") {
-    const { data } = await axios.get(
-      `${BASE_URL}/social-media-assets/get-folders`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return data.data;
   } else if (user && user.roles[0].name === "dealer") {
-    const { data } = await axios.get(`${BASE_URL}/social-assets`, {
+    const { data } = await axios.get(url2, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

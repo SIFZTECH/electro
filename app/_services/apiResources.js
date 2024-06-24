@@ -31,24 +31,30 @@ export async function getCurrentUser() {
   return data.data;
 }
 
-export async function getAllResourcesForAdmin(page) {
+export async function getAllResourcesForAdmin(page, query) {
   const token = localStorage.getItem("access-token");
   const user = await getCurrentUser();
 
   if (!token || !user) return null;
+
+  let url = `${BASE_URL}/get-folders?per_page=${RESOURCE_PAGE_SIZE}&page=${page}`;
+  let url2 = `${BASE_URL}/dealer-resources?per_page=${RESOURCE_PAGE_SIZE}&page=${page}`;
+
+  if (query) {
+    url = `${BASE_URL}/search-dealer-resource?search=${query}&per_page=${RESOURCE_PAGE_SIZE}&page=${page}`;
+    url2 = `${BASE_URL}/search-dealer-resource?search=${query}&per_page=${RESOURCE_PAGE_SIZE}&page=${page}`;
+  }
+
   if (user && user.roles[0].name === "admin") {
-    const { data } = await axios.get(
-      `${BASE_URL}/get-folders?per_page=${RESOURCE_PAGE_SIZE}&page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const { data } = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return data.data;
   } else if (user && user.roles[0].name === "dealer") {
-    const { data } = await axios.get(`${BASE_URL}/dealer-resources`, {
+    const { data } = await axios.get(url2, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

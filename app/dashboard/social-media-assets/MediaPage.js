@@ -13,7 +13,11 @@ import { useSocialMediaResources } from "@/app/_features/social_media/useMediaAs
 const MediaPage = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
-  const { data, isLoading, isError, error } = useSocialMediaResources(page);
+  const query = params.get("query");
+  const { data, isLoading, isError, error } = useSocialMediaResources(
+    page,
+    query
+  );
 
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isMediaPermission = useCheckPermission("social_media_assets");
@@ -25,6 +29,7 @@ const MediaPage = () => {
   }
 
   if (isLoading) return <Spinner />;
+  const folders = data?.data ? data.data : data;
 
   return (
     <div className="dealer-resources">
@@ -47,11 +52,7 @@ const MediaPage = () => {
         {!isLoading && !isError && !error && (
           <>
             {/* <FilterBy /> */}
-            <AllSocialMediaAssets
-              data={data.data}
-              metaData={data}
-              page={page}
-            />
+            <AllSocialMediaAssets data={folders} metaData={data} page={page} />
           </>
         )}
       </div>

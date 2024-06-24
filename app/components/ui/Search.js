@@ -1,6 +1,32 @@
-const Search = () => {
+"use client";
+import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+const SearchFolder = ({ navigateTo }) => {
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const {
+    register,
+    handleSubmit,
+
+    formState: { isSubmitting, errors },
+  } = useForm({
+    defaultValues: {
+      query: params.get("query"),
+    },
+  });
+
+  function onSubmit({ query }) {
+    router.push(`${navigateTo}?query=${query}`);
+    if (!query) {
+      router.push(`${navigateTo}`);
+    }
+  }
+
   return (
-    <form className="flex items-center gap-4">
+    <form className="flex items-center gap-4" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="search" className="sr-only">
         Search
       </label>
@@ -23,11 +49,9 @@ const Search = () => {
           </svg>
         </div>
         <input
-          type="search"
-          id="search"
+          {...register("query")}
           className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
           placeholder="Search..."
-          required
         />
       </div>
       <button
@@ -49,10 +73,10 @@ const Search = () => {
             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
           />
         </svg>
-        Search
+        {isSubmitting ? <SpinnerMini /> : "Search"}
       </button>
     </form>
   );
 };
 
-export default Search;
+export default SearchFolder;

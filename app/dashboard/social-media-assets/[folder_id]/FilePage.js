@@ -4,7 +4,7 @@ import NotFoundData from "@/app/components/ui/NotFoundData";
 import Spinner from "@/app/components/ui/Spinner";
 import UploadFileModal from "../UploadFile";
 import Image from "next/image";
-import { BASE_URL_IMAGE } from "@/app/lib/utils";
+import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
 import { VscFilePdf } from "react-icons/vsc";
 import { GrDocumentText } from "react-icons/gr";
 import { AiFillFileUnknown } from "react-icons/ai";

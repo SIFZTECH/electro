@@ -1,13 +1,14 @@
 import NotFoundData from "@/app/components/ui/NotFoundData";
-import Search from "@/app/components/ui/Search";
 import FolderFiles from "./FolderFiles";
 import PaginationUI from "@/app/components/ui/PaginationUI";
-import { RESOURCE_PAGE_SIZE } from "@/app/lib/utils";
+import { SOCIALMEDIAASSESTS_PAGE_SIZE } from "@/app/lib/utils";
+import SearchFolder from "@/app/components/ui/Search";
 
 const AllSocialMediaAssets = ({ data, metaData, page }) => {
   return (
     <div className="flex-1">
-      <Search />
+      <SearchFolder navigateTo="/dashboard/social-media-assets" />
+
       {data.length === 0 ? (
         <NotFoundData message="There is no Social Media Assets available" />
       ) : (
@@ -17,8 +18,8 @@ const AllSocialMediaAssets = ({ data, metaData, page }) => {
         <PaginationUI
           data={metaData}
           page={page}
-          page_size={RESOURCE_PAGE_SIZE}
-          navigation="dealer-resources"
+          page_size={SOCIALMEDIAASSESTS_PAGE_SIZE}
+          navigation="social-media-assets"
         />
       </div>
     </div>

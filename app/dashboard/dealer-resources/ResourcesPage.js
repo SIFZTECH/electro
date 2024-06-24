@@ -13,7 +13,8 @@ import { useSearchParams } from "next/navigation";
 const ResourcesPage = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
-  const { data, isLoading, isError, error } = useDealerResources(page);
+  const query = params.get("query");
+  const { data, isLoading, isError, error } = useDealerResources(page, query);
 
   // const isDealerAddPermission = useCheckPermission("dealer_add");
   const isDealerListPermission = useCheckPermission("dealer_list");
@@ -25,6 +26,7 @@ const ResourcesPage = () => {
   }
 
   if (isLoading) return <Spinner />;
+  const folders = data?.data ? data.data : data;
 
   return (
     <div className="dealer-resources">
@@ -47,7 +49,7 @@ const ResourcesPage = () => {
         {!isLoading && !isError && !error && (
           <>
             {/* <FilterBy /> */}
-            <AllResources data={data.data} metaData={data} page={page} />
+            <AllResources data={folders} metaData={data} page={page} />
           </>
         )}
       </div>
