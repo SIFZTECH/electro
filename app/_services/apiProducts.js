@@ -73,8 +73,6 @@ export async function updateProduct(id, formData) {
 
   if (!token) return null;
 
-  console.log("payload", formData);
-
   const productIds = formData.compare.map((product) => +product.id);
 
   const { data } = await axios(`${BASE_URL}/update-product/${id}`, {

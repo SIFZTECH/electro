@@ -54,7 +54,6 @@ const CreateNewAssets = () => {
         access_to_anyone,
         visible_date: formattedDateStr,
       });
-      console.log(res);
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("resources");
