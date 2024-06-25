@@ -110,6 +110,7 @@ export async function profileSettings({
 
   return data;
 }
+
 export async function profileSettingsForNonDealer({
   firstname,
   lastname,
@@ -119,8 +120,10 @@ export async function profileSettingsForNonDealer({
 
   if (!token) return null;
 
+  let profileResponse, nameResponse;
+
   if (profile.length > 0) {
-    const { data } = await axios({
+    profileResponse = await axios({
       url: `${BASE_URL}/admin/update-profile`,
       method: "post",
       headers: {
@@ -131,10 +134,10 @@ export async function profileSettingsForNonDealer({
         profile: profile[0],
       },
     });
+  }
 
-    return data;
-  } else if (firstname && lastname) {
-    const { data } = await axios({
+  if (firstname && lastname) {
+    nameResponse = await axios({
       url: `${BASE_URL}/admin/update-me`,
       method: "put",
       headers: {
@@ -145,9 +148,12 @@ export async function profileSettingsForNonDealer({
         lastname,
       },
     });
-
-    return data;
   }
+
+  return {
+    profileResponse: profileResponse?.data,
+    nameResponse: nameResponse?.data,
+  };
 }
 
 export async function enableTwoFactorAuth({ two_fa_email, channel, phone }) {

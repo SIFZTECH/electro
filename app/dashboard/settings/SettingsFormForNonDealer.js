@@ -10,7 +10,7 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { useQueryClient } from "@tanstack/react-query";
 
-const SettingsAdminForm = () => {
+const SettingsFormForNonDealer = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { user, isTwoAuthEnable } = useUser();
@@ -36,8 +36,9 @@ const SettingsAdminForm = () => {
         profile,
       });
 
+      console.log(res);
       if (res) {
-        toast.success(res.message);
+        toast.success("Profile updated Successfully");
         queryClient.invalidateQueries("user");
       }
     } catch (err) {
@@ -173,4 +174,4 @@ const SettingsAdminForm = () => {
   );
 };
 
-export default SettingsAdminForm;
+export default SettingsFormForNonDealer;
