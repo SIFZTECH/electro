@@ -87,6 +87,7 @@ export async function CreateNewMediaFile(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+  console.log("Payload", formData);
 
   const { data } = await axios(`${BASE_URL}/social-media-assets/upload-files`, {
     method: "post",

@@ -50,6 +50,7 @@ function SelectAttribute({ control }) {
                     {Object.keys(attributes).map((key) => {
                       return attributes[key]
                         .filter((attr) => {
+                          console.log(attr);
                           return (
                             !selectedVariantValues.includes(attr.id) ||
                             attr.id === Number(field.value)

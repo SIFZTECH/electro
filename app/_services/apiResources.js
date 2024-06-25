@@ -131,6 +131,7 @@ export async function CreateNewFile(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+  console.log("Payload", formData);
 
   const { data } = await axios(`${BASE_URL}/upload-files`, {
     method: "post",

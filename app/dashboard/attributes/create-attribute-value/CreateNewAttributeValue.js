@@ -139,6 +139,7 @@ const CreateNewAttributeValue = () => {
                 >
                   <option value="">--Please choose one--</option>
                   {data?.data?.map((attribute) => {
+                    console.log(attribute);
                     return (
                       <option
                         className="capitalize"

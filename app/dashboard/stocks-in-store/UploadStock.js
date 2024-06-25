@@ -97,6 +97,7 @@ const UploadStock = () => {
     }
     resetField("csv_file");
     setPreviews([]);
+    console.log(csv_file);
   }
 
   return (

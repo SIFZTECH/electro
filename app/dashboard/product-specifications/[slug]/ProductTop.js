@@ -21,6 +21,8 @@ const ProductTop = ({ product }) => {
           variant.attribute_value.value === selectedSize)
     );
 
+    console.log(selectedColor, selectedSize);
+    console.log(variant);
     if (variant) {
       setSelectedPrice(variant.price);
     } else {

@@ -55,6 +55,7 @@ const FolderPage = ({ folder_id }) => {
     return <Spinner />;
   }
 
+  console.log(data);
   return (
     <div>
       <div className="flex justify-between flex-wrap">

@@ -30,6 +30,7 @@ const StocksPage = () => {
     query
   );
 
+  // console.log();
   if (isLoading) {
     return <Spinner />;
   }

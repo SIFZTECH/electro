@@ -17,6 +17,8 @@ const Categories = () => {
   const isCreateAttributePermission = useCheckPermission("add_attribute");
   const isAttributeListPermission = useCheckPermission("attribute_list");
 
+  console.log(data2);
+
   if (!isAttributeListPermission) {
     return (
       <NoPermission message="You don't have permission to access this route" />

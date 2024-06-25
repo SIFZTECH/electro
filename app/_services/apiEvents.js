@@ -37,6 +37,8 @@ export async function getAllEvents() {
     },
   });
 
+  console.log(data);
+
   return data;
 }
 
