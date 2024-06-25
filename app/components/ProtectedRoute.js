@@ -7,8 +7,9 @@ import Spinner from "./ui/Spinner";
 import Confirmation from "../register/confirmation/page";
 
 const ProtectedRoute = ({ children }) => {
+  let token;
   if (typeof window !== "undefined") {
-    var token = localStorage?.getItem("access-token");
+    token = localStorage?.getItem("access-token");
   }
 
   // const token = localStorage?.getItem("access-token");
@@ -36,21 +37,13 @@ const ProtectedRoute = ({ children }) => {
     [user, isLoading, isError, error, router]
   );
 
-  // useEffect(
-  //   function () {
-  //     if (!token) {
-  //       router.replace("/login");
-  //     }
-  //   },
-  //   [token, router]
-  // );
   // 3. IF LOADING IS TRUE
   if (isLoading) return <Spinner />;
 
   // If there is user and not verified
-  // if (user && !isVerified) {
-  //   return <Confirmation />;
-  // }
+  if (user && !isVerified) {
+    return <Confirmation />;
+  }
 
   // 4. If there IS a admin user, render the app
   if (!isLoading && user && !isBlocked) {
