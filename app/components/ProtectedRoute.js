@@ -48,9 +48,9 @@ const ProtectedRoute = ({ children }) => {
   if (isLoading) return <Spinner />;
 
   // If there is user and not verified
-  // if (user && !isVerified) {
-  //   return <Confirmation />;
-  // }
+  if (user && !isVerified) {
+    return <Confirmation />;
+  }
 
   // 4. If there IS a admin user, render the app
   if (!isLoading && user && !isBlocked) {
