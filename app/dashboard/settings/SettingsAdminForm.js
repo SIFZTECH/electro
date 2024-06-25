@@ -3,10 +3,7 @@
 import { useUser } from "@/app/_features/authentication/useUser";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useForm } from "react-hook-form";
-import {
-  profileSettings,
-  profileSettingsForNonDealer,
-} from "@/app/_services/apiAuth";
+import { profileSettingsForNonDealer } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import ChangePasswordForm from "./ChangePasswordForm";
@@ -16,7 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 const SettingsAdminForm = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { user, isLoading, isTwoAuthEnable } = useUser();
+  const { user, isTwoAuthEnable } = useUser();
 
   const {
     register,

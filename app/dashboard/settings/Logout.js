@@ -2,12 +2,14 @@
 
 import { logout } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { GrLogout } from "react-icons/gr";
 
 const Logout = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const {
@@ -22,6 +24,7 @@ const Logout = () => {
         toast.success(res.message);
 
         localStorage.removeItem("access-token");
+        queryClient.clear();
         router.replace("/login");
       }
     } catch (err) {

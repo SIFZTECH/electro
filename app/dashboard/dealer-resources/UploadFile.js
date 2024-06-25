@@ -80,7 +80,7 @@ const UploadFileModal = ({ folder_id }) => {
         folder_id,
         files,
       });
-      console.log(res);
+
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("folder");

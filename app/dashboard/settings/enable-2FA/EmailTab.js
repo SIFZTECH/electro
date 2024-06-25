@@ -58,7 +58,7 @@ const EmailTab = () => {
         </div>
       ) : (
         <>
-          <p>Click enable when you're done.</p>
+          <p>Click enable when you&apos;re done.</p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">

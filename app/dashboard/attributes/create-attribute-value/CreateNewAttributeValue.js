@@ -77,7 +77,7 @@ const CreateNewAttributeValue = () => {
             Create new Attribute Value
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Attribute Value. Click create when you're done.
+            Create new Attribute Value. Click create when you&lsquo;re done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
@@ -138,20 +138,17 @@ const CreateNewAttributeValue = () => {
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 >
                   <option value="">--Please choose one--</option>
-                  {data?.data?.map((attribute) => {
-                    console.log(attribute);
-                    return (
-                      <option
-                        className="capitalize"
-                        key={attribute?.id}
-                        defaultValue={attribute?.id}
-                        value={attribute?.id}
-                        data-name={attribute.name}
-                      >
-                        {attribute.name}
-                      </option>
-                    );
-                  })}
+                  {data?.data?.map((attribute) => (
+                    <option
+                      className="capitalize"
+                      key={attribute?.id}
+                      defaultValue={attribute?.id}
+                      value={attribute?.id}
+                      data-name={attribute.name}
+                    >
+                      {attribute.name}
+                    </option>
+                  ))}
                 </select>
                 {errors?.attribute_id && (
                   <span className="text-red-500 text-sm">

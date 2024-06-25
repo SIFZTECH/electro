@@ -80,7 +80,6 @@ const UploadFileModal = ({ folder_id }) => {
         folder_id,
         files,
       });
-      console.log(res);
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("folder");
@@ -99,8 +98,6 @@ const UploadFileModal = ({ folder_id }) => {
     resetField("files");
     setPreviews([]);
   }
-
-  console.log(errors);
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>

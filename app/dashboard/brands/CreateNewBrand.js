@@ -49,7 +49,7 @@ const CreateNewBrand = () => {
         <div>
           <h2 className="font-serif text-lg font-semibold">Create new Brand</h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Brand. Click create when you're done.
+            Create new Brand. Click create when you&apos;re done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>

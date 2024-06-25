@@ -55,7 +55,7 @@ const EditSubCategory = ({ subcategory }) => {
         <div>
           <h2 className="font-serif text-lg">Edit Sub-Category</h2>
           <p className="text-sm text-gray-800 mt-3">
-            Make changes to your subcategory here. Click change when you're
+            Make changes to your subcategory here. Click change when you&apos;re
             done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>

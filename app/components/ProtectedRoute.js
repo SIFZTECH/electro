@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useUser } from "../_features/authentication/useUser";
 import Spinner from "./ui/Spinner";
 import Confirmation from "../register/confirmation/page";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ProtectedRoute = ({ children }) => {
   if (typeof window !== "undefined") {
@@ -13,37 +14,31 @@ const ProtectedRoute = ({ children }) => {
 
   // const token = localStorage?.getItem("access-token");
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   // 1. Get currentUser and check user is admin or dealer
   const { isLoading, isError, error, user, isVerified, isBlocked } = useUser();
 
   useEffect(
     function () {
       if (!token) {
+        queryClient.clear();
         router.replace("/login");
       }
     },
-    [token, router]
+    [token, router, queryClient]
   );
 
   // 2. If there is NO authenticated user, redirect to the /login
   useEffect(
     function () {
       if (!isLoading && isError && error && !user) {
+        queryClient.clear();
         router.replace("/login");
       }
     },
-    [user, isLoading, isError, error, router]
+    [user, isLoading, isError, error, router, queryClient]
   );
 
-  // useEffect(
-  //   function () {
-  //     if (!token) {
-  //       router.replace("/login");
-  //     }
-  //   },
-  //   [token, router]
-  // );
   // 3. IF LOADING IS TRUE
   if (isLoading) return <Spinner />;
 

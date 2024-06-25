@@ -64,7 +64,8 @@ const EditWarranty = ({ warranty }) => {
         <div>
           <h2 className="font-serif text-lg">Edit Warranty</h2>
           <p className="text-sm text-gray-800 mt-3">
-            Make changes to your Warranty here. Click save when you're done.
+            Make changes to your Warranty here. Click save when you&apos;re
+            done.
           </p>
         </div>
         <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>

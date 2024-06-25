@@ -90,7 +90,8 @@ const UpdateAssetsFolder = ({ folder_id, folderData }) => {
             Edit {folderData.folder_name} Folder
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Edit {folderData.folder_name} Folder. Click create when you're done.
+            Edit {folderData.folder_name} Folder. Click create when you&apos;re
+            done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>

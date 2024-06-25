@@ -17,7 +17,7 @@ const Confirmation = () => {
           <span className="text-color-primary font-semibold mb-2 font-serif">
             We have sent email to you
           </span>
-          <p>If you didn't get any email. Please check your junk mails</p>
+          <p>If you didn&apos;t get any email. Please check your junk mails</p>
           {/* <button
             onClick={handleClick}
             className="font-medium mt-4 text-[14px] text-color-primary hover:underline"

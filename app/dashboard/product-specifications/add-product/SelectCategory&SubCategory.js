@@ -29,7 +29,7 @@ const SelectCategoryFormComponent = ({ control, watch }) => {
     } else {
       setSubcategories([]);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, subcategoriess]);
 
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-8 col-span-2">

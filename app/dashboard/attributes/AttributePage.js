@@ -13,11 +13,8 @@ import NoPermission from "@/app/components/ui/NoPermission";
 
 const Categories = () => {
   const { data, isLoading, isError } = useAttributes();
-  const { data: data2, isLoading: isLoading2 } = useAttributeNames();
   const isCreateAttributePermission = useCheckPermission("add_attribute");
   const isAttributeListPermission = useCheckPermission("attribute_list");
-
-  console.log(data2);
 
   if (!isAttributeListPermission) {
     return (

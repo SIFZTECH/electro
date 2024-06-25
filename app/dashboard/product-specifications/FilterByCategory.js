@@ -21,7 +21,7 @@ const FilterByCategory = ({ selectedCategories, setSelectedCategories }) => {
     if (categoryQuery) {
       setSelectedCategories(categoryQuery.split(",").map(Number));
     }
-  }, [searchParams]);
+  }, [searchParams, setSelectedCategories]);
 
   const handleCheckboxChange = (categoryId) => {
     const updatedSelectedCategories = selectedCategories.includes(categoryId)

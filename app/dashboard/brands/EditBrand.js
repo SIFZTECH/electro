@@ -48,7 +48,8 @@ const EditBrand = ({ brand }) => {
         <div>
           <h2 className="font-serif text-lg">Edit Brand</h2>
           <p className="text-sm text-gray-800 mt-3">
-            Make changes to your brands here. Click update when you're done.
+            Make changes to your brands here. Click update when you&apos;re
+            done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>

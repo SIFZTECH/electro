@@ -54,7 +54,7 @@ const CreateNewResources = () => {
         access_to_anyone,
         visible_date: formattedDateStr,
       });
-      console.log(res);
+
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("resources");
@@ -81,7 +81,7 @@ const CreateNewResources = () => {
             Create new Resources
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Resources. Click create when you're done.
+            Create new Resources. Click create when you&apos;re done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>

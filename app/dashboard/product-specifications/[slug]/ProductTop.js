@@ -9,9 +9,6 @@ const ProductTop = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedPrice, setSelectedPrice] = useState(product.price);
 
-  // console.log("Variants", product?.variants);
-  // console.log(selectedSize, selectedColor);
-
   useEffect(() => {
     const variant = product.variants.find(
       (variant) =>
@@ -21,8 +18,6 @@ const ProductTop = ({ product }) => {
           variant.attribute_value.value === selectedSize)
     );
 
-    console.log(selectedColor, selectedSize);
-    console.log(variant);
     if (variant) {
       setSelectedPrice(variant.price);
     } else {

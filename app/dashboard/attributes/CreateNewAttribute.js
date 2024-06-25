@@ -1,4 +1,3 @@
-import { createCategory } from "@/app/_services/apiCategories";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -53,7 +52,7 @@ const CreateNewAttribute = () => {
             Create new Attribute
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Attribute. Click create when you're done.
+            Create new Attribute. Click create when you&apos;re done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>

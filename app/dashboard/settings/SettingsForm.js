@@ -7,9 +7,11 @@ import { profileSettings } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import ChangePasswordForm from "./ChangePasswordForm";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SettingsForm = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { user, isLoading, isTwoAuthEnable } = useUser();
 
   const {
@@ -18,29 +20,23 @@ const SettingsForm = () => {
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
-      firstname: user?.dealer?.firstname ? user?.dealer?.firstname : "",
-      email: user ? user.email : "",
-      lastname: user.dealer?.lastname ? user.dealer?.lastname : "",
-      phone: user.dealer?.phone ? user.dealer?.phone : "",
-      company_name: user.dealer?.company_name ? user.dealer?.company_name : "",
-      weburl: user.dealer?.weburl ? user.dealer?.weburl : "",
-      abn: user.dealer?.abn ? user.dealer?.abn : "",
-      purchase_date: user.dealer?.purchase_date
-        ? user.dealer?.purchase_date
-        : "",
-      invoice_number: user.dealer?.invoice_number
-        ? user.dealer?.invoice_number
-        : "",
-      description: user.dealer?.description ? user.dealer?.description : "",
-      street_address: user.dealer?.street_address
-        ? user.dealer?.street_address
-        : "",
-      description: user.dealer?.description ? user.dealer?.description : "",
-      city: user.dealer?.city ? user.dealer?.city : "",
-      postal_code: user.dealer?.postal_code ? user.dealer?.postal_code : "",
-      state: user.dealer?.state ? user.dealer?.state : "",
-      logo: user.dealer?.logo ? user.dealer?.logo : "",
-      stockfeedurl: user.dealer?.stockfeedurl ? user.dealer?.stockfeedurl : "",
+      firstname: user.firstname || "",
+      email: user.email || "",
+      lastname: user.lastname || "",
+      phone: user.phone || "",
+      company_name: user.company_name || "",
+      weburl: user.weburl || "",
+      abn: user.abn || "",
+      purchase_date: user.purchase_date || "",
+      invoice_number: user.invoice_number || "",
+      description: user.description || "",
+      street_address: user.street_address || "",
+      description: user.description || "",
+      city: user.city || "",
+      postal_code: user.postal_code || "",
+      state: user.state || "",
+      logo: user.logo || "",
+      stockfeedurl: user.stockfeedurl || "",
     },
   });
 
@@ -82,6 +78,7 @@ const SettingsForm = () => {
 
       if (res) {
         toast.success(res.message);
+        queryClient.invalidateQueries("user");
       }
     } catch (err) {
       console.error(err);
@@ -260,48 +257,56 @@ const SettingsForm = () => {
             </div>
           </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Street Address
             </label>
             <div className="mt-1">
               <input
-                {...register("street_address")}
+                {...register("street_address", {
+                  required: "This is required field",
+                })}
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               City
             </label>
             <div className="mt-1">
               <input
-                {...register("city")}
+                {...register("city", {
+                  required: "This is required field",
+                })}
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Postal Code
             </label>
             <div className="mt-1">
               <input
-                {...register("postal_code")}
+                {...register("postal_code", {
+                  required: "This is required field",
+                })}
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               State
             </label>
             <div className="mt-1">
               <input
-                {...register("state")}
+                {...register("state", {
+                  required: "This is required field",
+                })}
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />

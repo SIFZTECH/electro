@@ -81,32 +81,6 @@ const DeleteAttributeValue = ({ attribute }) => {
                     {item.value}
                   </option>
                 ))}
-                {/* {attribute.map((key) => {
-                  return attributes[key]
-                    .filter((attr) => {
-                      console.log(attr);
-                      return (
-                        !selectedVariantValues.includes(attr.id) ||
-                        attr.id === Number(field.value)
-                      );
-                    })
-                    .map((item) => (
-                      <option
-                        key={item.id}
-                        value={item.id}
-                        style={
-                          key === "Color"
-                            ? {
-                                backgroundColor: item.value,
-                                color: item.value,
-                              }
-                            : {}
-                        }
-                      >
-                        {key} - {item.value}
-                      </option>
-                    ));
-                })} */}
               </select>
               <DialogClose className="btn-primary bg-transparent border border-gray-900">
                 Cencel

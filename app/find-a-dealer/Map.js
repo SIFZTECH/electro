@@ -123,7 +123,7 @@ export default function MyMap() {
 
   useEffect(function () {
     getPosition();
-  }, []);
+  }, [getPosition]);
 
   useEffect(
     function () {

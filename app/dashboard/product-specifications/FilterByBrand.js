@@ -21,7 +21,7 @@ const FilterByBrand = ({ selectedBrands, setSelectedBrands }) => {
     if (brandQuery) {
       setSelectedBrands(brandQuery.split(",").map(Number));
     }
-  }, [searchParams]);
+  }, [searchParams, setSelectedBrands]);
 
   const handleCheckboxChange = (brandId) => {
     const updatedSelectedBrands = selectedBrands.includes(brandId)
