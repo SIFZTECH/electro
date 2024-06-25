@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 const stores = [
@@ -89,12 +90,10 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { useUrlPosition } from "../_hooks/useUrlPosition";
 import { useEffect, useState } from "react";
-import { useGeolocation } from "../_hooks/useGeoLocation";
-import { Dialog, DialogContent } from "../components/ui/dialog";
-import Search from "../components/ui/Search";
+import { useGeolocation } from "../_hooks/useMGeolocation";
+
 import Image from "next/image";
-import { Phone } from "lucide-react";
-import { MdEmail, MdOutlineLocalPhone, MdWebStories } from "react-icons/md";
+import { MdOutlineLocalPhone } from "react-icons/md";
 import { RiDirectionLine } from "react-icons/ri";
 
 import { AiOutlineGlobal, AiOutlineMail } from "react-icons/ai";
@@ -123,7 +122,7 @@ export default function MyMap() {
 
   useEffect(function () {
     getPosition();
-  }, [getPosition]);
+  }, []);
 
   useEffect(
     function () {
