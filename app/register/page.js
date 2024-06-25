@@ -7,9 +7,11 @@ import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { BASE_URL } from "../lib/utils";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Page() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -38,6 +40,8 @@ export default function Page() {
         toast.success(data.message);
 
         localStorage.setItem("access-token", data.data.auth);
+        queryClient.invalidateQueries("user");
+
         router.replace("/register/confirmation");
       }
     } catch (err) {

@@ -9,8 +9,10 @@ import Link from "next/link";
 import { login } from "../_services/apiAuth";
 import toast from "react-hot-toast";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Login() {
+  const queryClient = useQueryClient();
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const togglePasswordVisibility = () => {
@@ -18,6 +20,7 @@ export default function Login() {
   };
 
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -36,6 +39,7 @@ export default function Login() {
         );
       } else {
         localStorage.setItem("access-token", res.data.auth);
+        queryClient.invalidateQueries("user");
         router.replace("/dashboard");
       }
       toast.success(res.message);

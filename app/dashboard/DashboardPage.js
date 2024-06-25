@@ -6,6 +6,7 @@ import Stats from "@/app/components/ui/Stats";
 import useCheckPermission from "../_hooks/usePermission";
 import NotFoundData from "../components/ui/NotFoundData";
 import NoPermission from "../components/ui/NoPermission";
+import { useUser } from "../_features/authentication/useUser";
 
 const DashboardPage = () => {
   const isPermission = useCheckPermission("dashboard");
