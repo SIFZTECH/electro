@@ -33,14 +33,17 @@ const getFormattedOpeningHours = (weeks) => {
       ? new Date(`1970-01-01T${week.opening_hours}Z`).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
+          timeZone: "UTC", // Ensure this matches your data's timezone if needed
         })
       : "Closed";
     const closingHours = week.closing_hours
       ? new Date(`1970-01-01T${week.closing_hours}Z`).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
+          timeZone: "UTC", // Ensure this matches your data's timezone if needed
         })
       : "Closed";
+
     const isHoliday = week.is_holiday;
 
     return {
@@ -57,6 +60,8 @@ const getFormattedOpeningHours = (weeks) => {
       week.openingHours !== "Closed" &&
       week.closingHours !== "Closed"
   );
+
+  const holydays = formattedWeeks.filter((week) => week.isHoliday === "1");
 
   const openDaysGrouped = openDays.reduce((acc, curr) => {
     if (!acc.length || acc[acc.length - 1].endDay !== curr.day) {
