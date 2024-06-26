@@ -68,18 +68,21 @@ export async function profileSettings(formData) {
 
   const processedData = {
     ...formData,
+    logo: formData.logo[0],
     weeks: formData.weeks.map((week) => ({
       ...week,
-      is_holiday: week.is_holiday === "true" || week.is_holiday === true,
+      is_holiday: week.is_holiday === "true" ? 1 : 0,
     })),
   };
+
+  console.log("process data", processedData);
 
   const { data } = await axios({
     url: `${BASE_URL}/dealer/settings`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
-      "content-type": "application/json",
+      "content-type": "multipart/form-data",
     },
     data: processedData,
   });
