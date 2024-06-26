@@ -168,6 +168,22 @@ input[type="checkbox"] {
 
 .product__thumbnails img {
   height: 70px;
+  width: auto !important;
+}
+
+.leaflet-popup-content p {
+  margin: 10px 0 !important;
+}
+
+.leaflet-container a {
+  color: #444 !important;
+}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+  width: auto !important;
 }
 
 .rbc-today {

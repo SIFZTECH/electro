@@ -2,7 +2,7 @@
 
 import { getAllAdminUsers } from "@/app/_services/apiAuth";
 import {
-  getAllDealerUsers,
+  getAllDealerInfo,
   getAllUsers,
   getUsersAll,
 } from "@/app/_services/apiUsers";
@@ -34,10 +34,10 @@ export function useAllUsers() {
 
   return { data, isLoading, error, isError, total_num: data?.data?.total };
 }
-export function useAllDealerUsers() {
+export function useAllDealerUsersInfo() {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["dealer-users"],
-    queryFn: () => getAllDealerUsers(),
+    queryKey: ["find_dealers"],
+    queryFn: () => getAllDealerInfo(),
   });
 
   return { data, isLoading, error, isError, total_num: data?.data?.total };

@@ -1,116 +1,128 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-
-const stores = [
-  {
-    storeLogo: "",
-    storeName: "Leon Cycle Melbourne - Head Office",
-    distance: "0.01 km away",
-    country: "Australia",
-    address1: "45 Leaks Road",
-    address1: "LAVERTON NORTH VIC. 3026, AU",
-    phone: "0123384383",
-    email: "support.au@leoncycle.com",
-    openAndCloseStore: "Open Monday to Friday 9am-5pm",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    position: {
-      lat: 38.727881642324164,
-      lng: -9.140900099907554,
-    },
-    id: 73930385,
-  },
-  {
-    storeLogo: "",
-    storeName: "Leon Cycle Melbourne - Head Office 2",
-    distance: "0.01 km away",
-    country: "Australia",
-    address1: "45 Leaks Road",
-    address1: "LAVERTON NORTH VIC. 3026, AU",
-    phone: "0123384383",
-    email: "support.au@leoncycle.com",
-    openAndCloseStore: "Open Monday to Friday 9am-5pm",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-
-    position: {
-      lat: 40.46635901755316,
-      lng: -3.7133789062500004,
-    },
-    id: 17806751,
-  },
-  {
-    storeLogo: "",
-    storeName: "Leon Cycle Melbourne - Head Office 3",
-    distance: "0.01 km away",
-    country: "Australia",
-    address1: "45 Leaks Road",
-    address1: "LAVERTON NORTH VIC. 3026, AU",
-    phone: "0123384383",
-    email: "support.au@leoncycle.com",
-    openAndCloseStore: "Open Monday to Friday 9am-5pm",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    position: {
-      lat: 52.53586782505711,
-      lng: 13.376933665713324,
-    },
-    id: 98443197,
-  },
-  {
-    storeLogo: "",
-    storeName: "Leon Cycle Melbourne - Head Office 4",
-    distance: "0.01 km away",
-    country: "Australia",
-    address1: "45 Leaks Road",
-    address1: "LAVERTON NORTH VIC. 3026, AU",
-    phone: "0123384383",
-    email: "support.au@leoncycle.com",
-    openAndCloseStore: "Open Monday to Friday 9am-5pm",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    position: {
-      lat: 36.967508314568164,
-      lng: -2.13128394200588,
-    },
-    id: 98443198,
-  },
-];
-
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  Tooltip,
-  useMap,
-} from "react-leaflet";
+import React, { useEffect, useState } from "react";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { useUrlPosition } from "../_hooks/useUrlPosition";
-import { useEffect, useState } from "react";
 import { useGeolocation } from "../_hooks/useMGeolocation";
-
 import Image from "next/image";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { RiDirectionLine } from "react-icons/ri";
-
 import { AiOutlineGlobal, AiOutlineMail } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useAllDealerUsers, useUsers } from "../_features/users/useUsers";
+import { useAllDealerUsersInfo } from "../_features/users/useUsers";
 import { SkeletonFiler } from "../components/ui/SkeletonFilter";
 import Link from "next/link";
-import { BASE_URL_IMAGE } from "../lib/utils";
+import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
+
+const getFormattedOpeningHours = (weeks) => {
+  const dayMap = {
+    mon: "Monday",
+    tue: "Tuesday",
+    wed: "Wednesday",
+    thu: "Thursday",
+    fri: "Friday",
+    sat: "Saturday",
+    sun: "Sunday",
+  };
+
+  const formattedWeeks = weeks.map((week) => {
+    const day = dayMap[week.day.toLowerCase()];
+    const openingHours = week.opening_hours
+      ? new Date(`1970-01-01T${week.opening_hours}Z`).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : "Closed";
+    const closingHours = week.closing_hours
+      ? new Date(`1970-01-01T${week.closing_hours}Z`).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      : "Closed";
+    const isHoliday = week.is_holiday;
+
+    return {
+      day,
+      openingHours,
+      closingHours,
+      isHoliday,
+    };
+  });
+
+  const openDays = formattedWeeks.filter(
+    (week) =>
+      !week.isHoliday &&
+      week.openingHours !== "Closed" &&
+      week.closingHours !== "Closed"
+  );
+
+  const openDaysGrouped = openDays.reduce((acc, curr) => {
+    if (!acc.length || acc[acc.length - 1].endDay !== curr.day) {
+      acc.push({
+        startDay: curr.day,
+        endDay: curr.day,
+        openingHours: curr.openingHours,
+        closingHours: curr.closingHours,
+      });
+    } else if (
+      acc[acc.length - 1].openingHours === curr.openingHours &&
+      acc[acc.length - 1].closingHours === curr.closingHours
+    ) {
+      acc[acc.length - 1].endDay = curr.day;
+    } else {
+      acc.push({
+        startDay: curr.day,
+        endDay: curr.day,
+        openingHours: curr.openingHours,
+        closingHours: curr.closingHours,
+      });
+    }
+    return acc;
+  }, []);
+
+  const formattedString = openDaysGrouped
+    .map((group) =>
+      group.startDay === group.endDay
+        ? `${group.startDay} ${group.openingHours} - ${group.closingHours}`
+        : `${group.startDay}-${group.endDay} ${group.openingHours} - ${group.closingHours}`
+    )
+    .join(", ");
+
+  return formattedString;
+};
+
+const haversineDistance = (coords1, coords2, isMiles = false) => {
+  const toRadian = (angle) => (Math.PI / 180) * angle;
+  const distance = (a, b) => (Math.PI / 180) * (a - b);
+  const RADIUS_OF_EARTH_IN_KM = 6371;
+
+  const dLat = distance(coords2.latitude, coords1.latitude);
+  const dLon = distance(coords2.longitude, coords1.longitude);
+
+  const lat1 = toRadian(coords1.latitude);
+  const lat2 = toRadian(coords2.latitude);
+
+  const a =
+    Math.pow(Math.sin(dLat / 2), 2) +
+    Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+  const c = 2 * Math.asin(Math.sqrt(a));
+
+  let finalDistance = RADIUS_OF_EARTH_IN_KM * c;
+
+  if (isMiles) {
+    finalDistance /= 1.60934;
+  }
+
+  return finalDistance.toFixed(2);
+};
 
 export default function MyMap() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const router = useRouter();
   const { register, handleSubmit } = useForm();
-  const { data, isLoading } = useAllDealerUsers();
-
-  console.log(data);
+  const { data, isLoading, error } = useAllDealerUsersInfo();
 
   const {
     isLoading: isLoadingPosition,
@@ -139,10 +151,11 @@ export default function MyMap() {
     },
     [geolocationPosition]
   );
+
   return (
     <>
       <div className="flex flex-col h-dvh w-dvw">
-        <div className="find-store p-4 bg-white absolute max-w-[30rem]  left-6 top-6 z-[99999]">
+        <div className="find-store p-4 bg-white absolute max-w-[30rem] left-6 top-6 z-[99999]">
           <div>
             <button
               className="btn-primary mb-2 bg-gray-200"
@@ -218,207 +231,178 @@ export default function MyMap() {
                 </div>
               )}
               {!isLoading &&
-                data.data.data.map((store) => (
-                  <div
-                    key={store.id}
-                    className="store flex items-start gap-1 border-b border-gray-200 pt-3"
-                    // onClick={() =>
-                    //   router.push(
-                    //     `/find-a-dealer?lat=${store.position.lat}&lng=${store.position.lng}`
-                    //   )
-                    // }
-                  >
-                    <Image
-                      src={
-                        store.logo
-                          ? `${BASE_URL_IMAGE}${store.logo}`
-                          : "/cycle-4.jpg"
-                      }
-                      width={60}
-                      height={60}
-                      className="rounded-full object-contain"
-                      alt="name"
-                    />
-                    <div>
-                      <h1 className="font-serif font-semibold">
-                        {store.company_name || "Company Name Not Found"}
-                      </h1>
-                      <p className="text-sm ">0.02km</p>
-                      {/* <p className="my-2">{store.openAndCloseStore}</p> */}
-                      <p>{store.state}</p>
-                      <p>
-                        {store.street_address || "Unavailable Street Address"}.{" "}
-                        {store.postal_code || "Unavailable Postal code"},
-                        {store.city || "Unavailable City"}
-                      </p>
-                      <div className="my-2 text-sm">
-                        <p className="flex items-center gap-2">
-                          <MdOutlineLocalPhone />
-                          {store.phone_number || "Not Available"}
+                data.data.map((store, i) => {
+                  const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+                  const distance = haversineDistance(
+                    { latitude: mapLat, longitude: mapLng },
+                    storeCoordinates
+                  );
+
+                  return (
+                    <div
+                      key={i + 1}
+                      className="store flex items-start gap-1 border-b border-gray-200 py-3"
+                    >
+                      <Image
+                        src={
+                          store.logo
+                            ? `${BASE_URL_IMAGE}${store.logo}`
+                            : "/cycle-4.jpg"
+                        }
+                        width={60}
+                        height={60}
+                        className="rounded-full object-contain"
+                        alt="name"
+                      />
+                      <div className="pl-2">
+                        <h1 className="font-serif font-semibold">
+                          {store.company_name || "Company Name Not Found"}
+                        </h1>
+                        <p className="text-sm ">{distance} km</p>
+                        <p className="my-2">
+                          {getFormattedOpeningHours(store.weeks)}
                         </p>
-                        <p className="flex items-center gap-2">
-                          <AiOutlineMail />
-                          {store.email}
+                        <p>{store.state}</p>
+                        <p>
+                          {store.street_address || "Unavailable Street Address"}
+                          .{store.postal_code || "Unavailable Postal code"},{" "}
+                          {store.city || "Unavailable City"}
                         </p>
-                      </div>
-                      <div className="flex gap-4 my-4 text-[15px]">
-                        <button className="flex items-center gap-1 font-serif">
-                          <RiDirectionLine />
-                          DIRECTIONS
-                        </button>
+                        <div className="my-2 text-sm">
+                          <p className="flex items-center gap-2">
+                            <MdOutlineLocalPhone className="text-color-primary" />{" "}
+                            <span>
+                              <Link
+                                href={`tel:${store.phone}`}
+                                className="hover:text-yellow-500"
+                              >
+                                {store.phone || "Unavailable"}
+                              </Link>
+                            </span>
+                          </p>
+                          <p className="flex items-center gap-2">
+                            <AiOutlineMail className="text-color-primary" />{" "}
+                            <span>
+                              <Link
+                                href={`mailto:${store.email}`}
+                                className="hover:text-yellow-500"
+                              >
+                                {store.email || "Unavailable Email"}
+                              </Link>
+                            </span>
+                          </p>
+                          {store?.web_url && (
+                            <p className="flex items-center gap-2">
+                              <AiOutlineGlobal className="text-color-primary" />{" "}
+                              <span>
+                                <Link
+                                  href={store.web_url}
+                                  className="hover:text-yellow-500"
+                                >
+                                  {store.website || "Unavailable Website"}
+                                </Link>
+                              </span>
+                            </p>
+                          )}
+                        </div>
                         <Link
-                          href={store.weburl || "#"}
-                          className="flex items-center gap-1 font-serif"
+                          href={`/find-a-dealer?lat=${storeCoordinates.latitude}&lng=${storeCoordinates.longitude}`}
+                          className="btn-primary inline-flex items-center"
                         >
-                          <AiOutlineGlobal />
-                          VIEW WEBSITE
+                          <RiDirectionLine className="text-xl me-1" />
+                          Get direction
                         </Link>
                       </div>
                     </div>
-                  </div>
-
-                  // <div
-                  //   key={store.id}
-                  //   className="store flex items-start gap-1 border-b border-gray-200 pt-3"
-                  //   onClick={() =>
-                  //     router.push(
-                  //       `/find-a-dealer?lat=${store.position.lat}&lng=${store.position.lng}`
-                  //     )
-                  //   }
-                  // >
-                  //   <Image
-                  //     src="/cycle-4.jpg"
-                  //     width={60}
-                  //     height={60}
-                  //     className="rounded-full object-contain"
-                  //     alt="name"
-                  //   />
-                  //   <div>
-                  //     <h1 className="font-serif font-semibold">
-                  //       {store.storeName}
-                  //     </h1>
-                  //     <p className="text-sm ">{store.distance}</p>
-                  //     <p className="my-2">{store.openAndCloseStore}</p>
-                  //     <p>{store.address2}</p>
-                  //     <p>LAVERTON NORTH VIC. 3026, AU</p>
-                  //     <div className="my-2 text-sm">
-                  //       <p className="flex items-center gap-2">
-                  //         <MdOutlineLocalPhone />
-                  //         {store.phone}
-                  //       </p>
-                  //       <p className="flex items-center gap-2">
-                  //         <AiOutlineMail />
-                  //         {store.email}
-                  //       </p>
-                  //     </div>
-                  //     <div className="flex gap-4 my-4 text-[15px]">
-                  //       <button className="flex items-center gap-1 font-serif">
-                  //         <RiDirectionLine />
-                  //         DIRECTIONS
-                  //       </button>
-                  //       <button className="flex items-center gap-1 font-serif">
-                  //         <AiOutlineGlobal />
-                  //         VIEW WEBSITE
-                  //       </button>
-                  //     </div>
-                  //   </div>
-                  // </div>
-                ))}
+                  );
+                })}
             </div>
           </div>
         </div>
         <MapContainer
           center={mapPosition}
-          zoom={13}
+          zoom={14}
           scrollWheelZoom={true}
-          className="h-full flex-1 w-full"
+          className="h-dvh w-dvw"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           />
-          {stores.map((store) => (
-            <Marker
-              key={store.id}
-              position={[store.position.lat, store.position.lng]}
-            >
-              <Popup>
-                {store.storeName} {store.country}
-              </Popup>
-            </Marker>
-          ))}
+          <Marker position={mapPosition}>
+            <Popup>Your location</Popup>
+          </Marker>
+          {data &&
+            data.data.map((store, index) => {
+              const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+              return (
+                <Marker
+                  key={index}
+                  position={[
+                    storeCoordinates.latitude,
+                    storeCoordinates.longitude,
+                  ]}
+                >
+                  <Popup>
+                    <div className="text-base">
+                      <h1 className="font-serif font-semibold text-lg">
+                        {store.company_name || "Company Name Not Found"}
+                      </h1>
+                      <p>
+                        {store.street_address || "Unavailable Street Address"}.
+                        {store.postal_code || "Unavailable Postal code"},{" "}
+                        {store.city || "Unavailable City"}
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <MdOutlineLocalPhone className="text-color-primary" />{" "}
+                        <span>
+                          <Link
+                            href={`tel:${store.phone}`}
+                            className="text-gray-900 hover:underline"
+                          >
+                            {store.phone || "Unavailable"}
+                          </Link>
+                        </span>
+                      </p>
+                      <p className="flex items-center gap-2">
+                        <AiOutlineMail className="text-color-primary" />{" "}
+                        <span>
+                          <Link
+                            href={`mailto:${store.email}`}
+                            className="text-gray-900 hover:underline"
+                          >
+                            {store.email || "Unavailable Email"}
+                          </Link>
+                        </span>
+                      </p>
+                      {store.web_url && (
+                        <p className="flex items-center gap-2">
+                          <AiOutlineGlobal className="text-color-primary" />{" "}
+                          <span>
+                            <Link
+                              href={store.web_url}
+                              className="text-gray-900 hover:underline"
+                            >
+                              {store.website}
+                            </Link>
+                          </span>
+                        </p>
+                      )}
+
+                      <Link
+                        href={store.map_url}
+                        className="btn-primary inline-flex items-center mt-2"
+                      >
+                        <RiDirectionLine className="text-xl me-1" />
+                        Get direction
+                      </Link>
+                    </div>
+                  </Popup>
+                </Marker>
+              );
+            })}
           <ChangeCenter position={mapPosition} />
         </MapContainer>
-        <div className="flex justify-center gap-4">
-          <div className="dealer-info px-4 py-6 text-center">
-            <h1 className="font-serif text-lg mb-1 items-center justify-center">
-              Adrenalin Cycling
-            </h1>
-            <div className="flex flex-col">
-              <p>Monday-Friday 8:30am - 5am</p>
-              <p>Saturday 8:30am - 5am</p>
-              <p>Sunday Close</p>
-
-              <p className="mt-4">68 Tarquay Rd.</p>
-              <p>PIALBA, QLD 4655, AU</p>
-              <p className="flex items-center justify-center gap-2 mt-4">
-                <MdOutlineLocalPhone />
-                0123384383
-              </p>
-            </div>
-          </div>
-          <div className="dealer-info px-4 py-6 text-center">
-            <h1 className="font-serif text-lg mb-1 items-center justify-center">
-              Adrenalin Cycling
-            </h1>
-            <div className="flex flex-col">
-              <p>Monday-Friday 8:30am - 5am</p>
-              <p>Saturday 8:30am - 5am</p>
-              <p>Sunday Close</p>
-
-              <p className="mt-4">68 Tarquay Rd.</p>
-              <p>PIALBA, QLD 4655, AU</p>
-              <p className="flex items-center justify-center gap-2 mt-4">
-                <MdOutlineLocalPhone />
-                0123384383
-              </p>
-            </div>
-          </div>
-          <div className="dealer-info px-4 py-6 text-center">
-            <h1 className="font-serif text-lg mb-1 items-center justify-center">
-              Adrenalin Cycling
-            </h1>
-            <div className="flex flex-col">
-              <p>Monday-Friday 8:30am - 5am</p>
-              <p>Saturday 8:30am - 5am</p>
-              <p>Sunday Close</p>
-
-              <p className="mt-4">68 Tarquay Rd.</p>
-              <p>PIALBA, QLD 4655, AU</p>
-              <p className="flex items-center justify-center gap-2 mt-4">
-                <MdOutlineLocalPhone />
-                0123384383
-              </p>
-            </div>
-          </div>
-          <div className="dealer-info px-4 py-6 text-center">
-            <h1 className="font-serif text-lg mb-1 items-center justify-center">
-              Adrenalin Cycling
-            </h1>
-            <div className="flex flex-col">
-              <p>Monday-Friday 8:30am - 5am</p>
-              <p>Saturday 8:30am - 5am</p>
-              <p>Sunday Close</p>
-
-              <p className="mt-4">68 Tarquay Rd.</p>
-              <p>PIALBA, QLD 4655, AU</p>
-              <p className="flex items-center justify-center gap-2 mt-4">
-                <MdOutlineLocalPhone />
-                0123384383
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </>
   );
