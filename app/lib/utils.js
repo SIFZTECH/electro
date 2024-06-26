@@ -15,6 +15,21 @@ export const SOCIALMEDIAASSESTS_PAGE_SIZE = 20;
 export const STOCKS_PAGE_SIZE = 20;
 export const BASE_URL_IMAGE = "https://electro-api.sifztech.com";
 
+export function getCoordinatesFromUrl(url) {
+  const regex = /@(.*?),(.*?),(.*?)(z|m|a)/;
+  const match = url.match(regex);
+
+  if (match) {
+    const [latitude, longitude] = match.slice(1, 3).map(Number);
+
+    if (!isNaN(latitude) && !isNaN(longitude)) {
+      return { latitude, longitude };
+    }
+  }
+
+  return null;
+}
+
 export const permissions = [
   {
     id: 1,

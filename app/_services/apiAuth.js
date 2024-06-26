@@ -61,27 +61,20 @@ export async function changePassword({
   return data;
 }
 
-export async function profileSettings({
-  user_id,
-  firstname,
-  lastname,
-  phone,
-  company_name,
-  weburl,
-  abn,
-  purchase_date,
-  invoice_number,
-  description,
-  street_address,
-  city,
-  postal_code,
-  state,
-  logo,
-  stockfeedurl,
-}) {
+export async function profileSettings(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+
+  const processedData = {
+    ...formData,
+    weeks: formData.weeks.map((week) => ({
+      ...week,
+      is_holiday: week.is_holiday === "true" || week.is_holiday === true,
+    })),
+  };
+
+  console.log("pro", processedData);
 
   const { data } = await axios({
     url: `${BASE_URL}/dealer/settings`,
@@ -90,23 +83,7 @@ export async function profileSettings({
       Authorization: `Bearer ${token}`,
       "content-type": "multipart/form-data",
     },
-    data: {
-      firstname,
-      lastname,
-      phone,
-      company_name,
-      weburl,
-      abn,
-      purchase_date,
-      invoice_number,
-      description,
-      street_address,
-      city,
-      postal_code,
-      state,
-      logo: logo[0],
-      stockfeedurl,
-    },
+    data: processedData,
   });
 
   return data;

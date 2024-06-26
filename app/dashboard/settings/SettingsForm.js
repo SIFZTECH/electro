@@ -2,21 +2,28 @@
 
 import { useUser } from "@/app/_features/authentication/useUser";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { profileSettings } from "@/app/_services/apiAuth";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import ChangePasswordForm from "./ChangePasswordForm";
 import { useQueryClient } from "@tanstack/react-query";
+import { getCoordinatesFromUrl } from "@/app/lib/utils";
+import { useState } from "react";
 
 const SettingsForm = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { user, isLoading, isTwoAuthEnable } = useUser();
+  const [coordinates, setCoordinates] = useState(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
+    setError,
+    clearErrors,
+    control,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
@@ -39,12 +46,26 @@ const SettingsForm = () => {
       state: user.state || "",
       logo: user.logo || "",
       stockfeedurl: user.stockfeedurl || "",
+      weeks: [
+        {
+          day: "",
+          opening_hours: "0:00",
+          closing_hours: "0:00",
+          is_holiday: false,
+        },
+      ],
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "weeks",
   });
 
   async function onSubmit({
     firstname,
     lastname,
+    email,
     phone,
     company_name,
     weburl,
@@ -58,7 +79,24 @@ const SettingsForm = () => {
     state,
     logo,
     stockfeedurl,
+
+    map_url,
+    weeks,
   }) {
+    const coords = getCoordinatesFromUrl(map_url);
+
+    if (coords) {
+      setCoordinates(coords);
+      clearErrors("map_url");
+    } else {
+      setCoordinates(null);
+      setError("map_url", {
+        type: "manual",
+        message: "The URL does not contain valid latitude and longitude.",
+      });
+      return;
+    }
+
     try {
       const res = await profileSettings({
         firstname,
@@ -76,8 +114,9 @@ const SettingsForm = () => {
         state,
         logo,
         stockfeedurl,
+        map_url,
+        weeks,
       });
-
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("user");
@@ -270,6 +309,11 @@ const SettingsForm = () => {
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.street_address && (
+                <span className="text-red-500 text-sm">
+                  {errors.street_address.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="">
@@ -284,6 +328,11 @@ const SettingsForm = () => {
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.city && (
+                <span className="text-red-500 text-sm">
+                  {errors.city.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="">
@@ -298,6 +347,11 @@ const SettingsForm = () => {
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.postal_code && (
+                <span className="text-red-500 text-sm">
+                  {errors.postal_code.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="">
@@ -312,6 +366,11 @@ const SettingsForm = () => {
                 type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.state && (
+                <span className="text-red-500 text-sm">
+                  {errors.state.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="">
@@ -320,62 +379,202 @@ const SettingsForm = () => {
             </label>
             <div className="mt-1">
               <input
-                {...register("location", {
+                {...register("map_url", {
                   required: "This is required field",
                 })}
                 type="url"
+                placeholder="Paste Google Maps URL here"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.map_url && (
+                <span className="text-red-500 text-sm">
+                  {errors.map_url.message}
+                </span>
+              )}
             </div>
           </div>
-          <div className="">
+          {/* <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Opening Hours
             </label>
             <div className="mt-1">
               <input
-                {...register("opening_hours", {
+                {...register("openingHours", {
                   required: "This is required field",
                 })}
-                type="url"
+                type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.openingHours && (
+                <span className="text-red-500 text-sm">
+                  {errors.openingHours.message}
+                </span>
+              )}
             </div>
-          </div>
-          <div className="">
+          </div> */}
+          {/* <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Closing Hours
             </label>
             <div className="mt-1">
               <input
-                {...register("closing_hours", {
+                {...register("closingHours", {
                   required: "This is required field",
                 })}
-                type="url"
+                type="text"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.closingHours && (
+                <span className="text-red-500 text-sm">
+                  {errors.closingHours.message}
+                </span>
+              )}
             </div>
-          </div>
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Holiday
-            </label>
-            <div className="mt-1">
-              <select
-                {...register("holyday", {
-                  required: "This is required field",
-                })}
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+          </div> */}
+          <div className="col-span-2">
+            {fields.map((item, index) => (
+              <div
+                key={item.id}
+                className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full "
               >
-                <option value="sun">Sun</option>
-                <option value="mon">Mon</option>
-                <option value="tue">Tue</option>
-                <option value="wed">Wed</option>
-                <option value="thu">Thu</option>
-                <option value="fri">Fri</option>
-                <option value="sat">Sat</option>
-              </select>
-            </div>
+                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                      Days
+                    </label>
+                    <Controller
+                      name={`weeks[${index}].day`}
+                      control={control}
+                      rules={{ required: "Day field is required" }}
+                      defaultValue={item.day}
+                      render={({ field }) => (
+                        <select
+                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed "
+                          {...field}
+                        >
+                          <option value="">Select Days</option>
+                          <option value="sun">Sun</option>
+                          <option value="mon">Mon</option>
+                          <option value="tue">Tue</option>
+                          <option value="wed">Wed</option>
+                          <option value="thu">Thu</option>
+                          <option value="fri">Fri</option>
+                          <option value="sat">Sat</option>
+                        </select>
+                      )}
+                    />
+                    {errors?.day?.[index]?.day && (
+                      <span className="text-red-500 text-sm self-center">
+                        {errors.day[index].day.message}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* <span
+                  className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
+                  onClick={() => remove(index)}
+                >
+                  Remove
+                </span> */}
+                </div>
+                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                      Is Holiday
+                    </label>
+                    <Controller
+                      name={`weeks[${index}].is_holiday`}
+                      control={control}
+                      defaultValue={`${item.is_holiday}`}
+                      render={({ field }) => (
+                        <select
+                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed "
+                          {...field}
+                        >
+                          <option value="">--Select--</option>
+                          <option value="true">Yes</option>
+                          <option value="false">No</option>
+                        </select>
+                      )}
+                    />
+                    {errors?.weeks?.[index]?.is_holiday && (
+                      <span className="text-red-500 text-sm self-center">
+                        {errors.weeks[index].is_holiday.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                      Opening Hours
+                    </label>
+                    <Controller
+                      name={`weeks[${index}].opening_hours`}
+                      control={control}
+                      rules={{ required: "This field is required" }}
+                      defaultValue={item.opening_hours}
+                      render={({ field }) => (
+                        <input
+                          type="time"
+                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
+                          {...field}
+                        />
+                      )}
+                    />
+                    {errors?.opening_hours?.[index]?.opening_hours && (
+                      <span className="text-red-500 text-sm self-center">
+                        {errors.opening_hours[index].opening_hours.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                      Closing Hours
+                    </label>
+                    <Controller
+                      name={`weeks[${index}].closing_hours`}
+                      control={control}
+                      rules={{ required: "closing_hours field is required" }}
+                      defaultValue={item.closing_hours}
+                      render={({ field }) => (
+                        <input
+                          type="time"
+                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
+                          {...field}
+                        />
+                      )}
+                    />
+                    {errors?.opening_hours?.[index]?.opening_hours && (
+                      <span className="text-red-500 text-sm self-center">
+                        {errors.opening_hours[index].opening_hours.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <span
+                  className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
+                  onClick={() => remove(index)}
+                >
+                  Remove
+                </span>
+              </div>
+            ))}
+            <span
+              className="btn-primary font-serif text-sm mt-3 inline-block"
+              onClick={() =>
+                append({
+                  day: "",
+                  is_holiday: false,
+                  opening_hours: "0:00",
+                  closing_hours: "0:00",
+                })
+              }
+            >
+              Add More Holydays
+            </span>
           </div>
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
