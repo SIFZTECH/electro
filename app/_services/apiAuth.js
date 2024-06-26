@@ -71,11 +71,11 @@ export async function profileSettings(formData) {
     logo: formData.logo[0],
     weeks: formData.weeks.map((week) => ({
       ...week,
-      is_holiday: week.is_holiday === "true" ? 1 : 0,
+      is_holiday: week.is_holiday === "0" ? 1 : 0,
     })),
   };
 
-  console.log("process data", processedData);
+  console.log("process", processedData);
 
   const { data } = await axios({
     url: `${BASE_URL}/dealer/settings`,

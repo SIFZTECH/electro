@@ -53,7 +53,7 @@ const getFormattedOpeningHours = (weeks) => {
 
   const openDays = formattedWeeks.filter(
     (week) =>
-      !week.isHoliday &&
+      week.isHoliday === "0" &&
       week.openingHours !== "Closed" &&
       week.closingHours !== "Closed"
   );
@@ -234,7 +234,10 @@ export default function MyMap() {
                 data.data.map((store, i) => {
                   const storeCoordinates = getCoordinatesFromUrl(store.map_url);
                   const distance = haversineDistance(
-                    { latitude: mapLat, longitude: mapLng },
+                    {
+                      latitude: geolocationPosition.lat,
+                      longitude: geolocationPosition.lng,
+                    },
                     storeCoordinates
                   );
 

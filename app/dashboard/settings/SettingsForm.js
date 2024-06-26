@@ -53,7 +53,7 @@ const SettingsForm = () => {
           day: "",
           opening_hours: "0:00",
           closing_hours: "0:00",
-          is_holiday: false,
+          is_holiday: 0,
         },
       ],
     },
@@ -397,44 +397,7 @@ const SettingsForm = () => {
               )}
             </div>
           </div>
-          {/* <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Opening Hours
-            </label>
-            <div className="mt-1">
-              <input
-                {...register("openingHours", {
-                  required: "This is required field",
-                })}
-                type="text"
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-              {errors?.openingHours && (
-                <span className="text-red-500 text-sm">
-                  {errors.openingHours.message}
-                </span>
-              )}
-            </div>
-          </div> */}
-          {/* <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Closing Hours
-            </label>
-            <div className="mt-1">
-              <input
-                {...register("closingHours", {
-                  required: "This is required field",
-                })}
-                type="text"
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-              {errors?.closingHours && (
-                <span className="text-red-500 text-sm">
-                  {errors.closingHours.message}
-                </span>
-              )}
-            </div>
-          </div> */}
+
           <div className="col-span-2">
             {fields.map((item, index) => (
               <div
@@ -473,13 +436,6 @@ const SettingsForm = () => {
                       </span>
                     )}
                   </div>
-
-                  {/* <span
-                  className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
-                  onClick={() => remove(index)}
-                >
-                  Remove
-                </span> */}
                 </div>
                 <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
                   <div className="flex-1">
@@ -496,8 +452,8 @@ const SettingsForm = () => {
                           {...field}
                         >
                           <option value="">--Select--</option>
-                          <option value="true">Yes</option>
-                          <option value="false">No</option>
+                          <option value={0}>Yes</option>
+                          <option value={1}>No</option>
                         </select>
                       )}
                     />
