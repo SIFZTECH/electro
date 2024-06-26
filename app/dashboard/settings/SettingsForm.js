@@ -10,6 +10,7 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import { useQueryClient } from "@tanstack/react-query";
 import { getCoordinatesFromUrl } from "@/app/lib/utils";
 import { useState } from "react";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
 const SettingsForm = () => {
   const router = useRouter();
@@ -46,7 +47,8 @@ const SettingsForm = () => {
       state: user.state || "",
       logo: user.logo || "",
       stockfeedurl: user.stockfeedurl || "",
-      weeks: [
+      map_url: user.map_url || "",
+      weeks: user.weeks || [
         {
           day: "",
           opening_hours: "0:00",
@@ -124,7 +126,9 @@ const SettingsForm = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response?.data?.data
+          ? handleValidationError(err.response.data.data)
+          : toast.error(err.response.data.message);
       } else {
         toast.error("Something went wrong!");
       }

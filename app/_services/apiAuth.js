@@ -74,7 +74,7 @@ export async function profileSettings(formData) {
     })),
   };
 
-  console.log("pro", processedData);
+  console.log("pro", typeof processedData.weeks[0].is_holiday);
 
   const { data } = await axios({
     url: `${BASE_URL}/dealer/settings`,
@@ -82,6 +82,7 @@ export async function profileSettings(formData) {
     headers: {
       Authorization: `Bearer ${token}`,
       "content-type": "multipart/form-data",
+      "Content-Type": "Application/json",
     },
     data: processedData,
   });
