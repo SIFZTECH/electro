@@ -6,7 +6,7 @@ import { Controller, useWatch } from "react-hook-form";
 
 function SelectAttribute({ control }) {
   const { data, isLoading } = useAttributes();
-  const attributes = !isLoading && data?.attributes;
+  const attributes = data ? data?.attributes : [];
 
   const watchVariant = useWatch({
     control,

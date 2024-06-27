@@ -2,7 +2,6 @@
 
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import Spinner from "@/app/components/ui/Spinner";
-import UploadFileModal from "../UploadFile";
 import Image from "next/image";
 import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
 import { VscFilePdf } from "react-icons/vsc";
@@ -20,6 +19,8 @@ import { useSocialMediaAsset } from "@/app/_features/social_media/useMedia";
 import UpdateAssetsFolder from "./UpdateAssetsFolder";
 import DownloadButton from "@/app/components/ui/DownloadFile";
 import { useUser } from "@/app/_features/authentication/useUser";
+import UploadFileModal from "@/app/components/ui/UploadFileModal";
+import { CreateNewMediaFile } from "@/app/_services/apiMedia";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -67,7 +68,11 @@ const FolderPage = ({ folder_id }) => {
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
             <UpdateAssetsFolder folder_id={folder_id} folderData={data?.data} />
             <DeleteFolder folder_id={folder_id} />
-            <UploadFileModal folder_id={folder_id} />
+            <UploadFileModal
+              folder_id={folder_id}
+              sendTo={CreateNewMediaFile}
+              queryKey="media-folder"
+            />
           </div>
         )}
       </div>
@@ -152,7 +157,7 @@ const FolderPage = ({ folder_id }) => {
                     )}
                 </div>
               </DialogTrigger>
-              <DialogContent className=" pt-9">
+              <DialogContent className="max-w-2xl pt-9">
                 {isImage(file) && (
                   <Image
                     src={`${BASE_URL_IMAGE}${file}`}

@@ -1,8 +1,8 @@
 import NotFoundData from "@/app/components/ui/NotFoundData";
-import FolderFiles from "./FolderFiles";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import { SOCIALMEDIAASSESTS_PAGE_SIZE } from "@/app/lib/utils";
 import SearchFolder from "@/app/components/ui/Search";
+import Folders from "@/app/components/ui/Folders";
 
 const AllSocialMediaAssets = ({ data, metaData, page }) => {
   return (
@@ -12,7 +12,7 @@ const AllSocialMediaAssets = ({ data, metaData, page }) => {
       {data.length === 0 ? (
         <NotFoundData message="There is no Social Media Assets available" />
       ) : (
-        <FolderFiles data={data} />
+        <Folders data={data} />
       )}
       <div className="mt-6">
         <PaginationUI

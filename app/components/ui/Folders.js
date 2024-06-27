@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PiFoldersThin } from "react-icons/pi";
 
-const FolderFiles = ({ data }) => {
+const Folders = ({ data }) => {
   return (
     <div>
       {/* <h1 className="heading-h1 mt-12">NCM Moscow</h1> */}
@@ -14,7 +13,6 @@ const FolderFiles = ({ data }) => {
             key={item.id}
             className="folder flex flex-col items-center flex-wrap"
           >
-            {/* <PiFoldersThin size="100" color="#27272a" /> */}
             <Image
               src="/icons8-folder.svg"
               height={60}
@@ -29,4 +27,4 @@ const FolderFiles = ({ data }) => {
   );
 };
 
-export default FolderFiles;
+export default Folders;

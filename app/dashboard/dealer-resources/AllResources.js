@@ -1,19 +1,17 @@
 import NotFoundData from "@/app/components/ui/NotFoundData";
-import FolderFiles from "./FolderFiles";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import { RESOURCE_PAGE_SIZE } from "@/app/lib/utils";
 import SearchFolder from "@/app/components/ui/Search";
+import Folders from "@/app/components/ui/Folders";
 
 const AllResources = ({ data, metaData, page }) => {
-  
-
   return (
     <div className="flex-1">
       <SearchFolder navigateTo="/dashboard/dealer-resources" />
       {data.length === 0 ? (
         <NotFoundData message="There is no resources available" />
       ) : (
-        <FolderFiles data={data} />
+        <Folders data={data} />
       )}
       <div className="mt-6">
         <PaginationUI
