@@ -78,6 +78,10 @@
   .btn-primary {
     @apply bg-color-primary text-sm px-2 py-1 font-serif rounded-sm cursor-pointer;
   }
+
+  .required-field {
+    @apply after:content-['*'] after:ml-0.5 after:text-red-600;
+  }
 }
 
 /* width */
