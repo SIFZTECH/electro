@@ -8,7 +8,7 @@ export async function getAllProducts({ categoryId, brandId, page, query }) {
 
   if (!token) return null;
 
-  let url = `${BASE_URL}/products?per_page=${PRODUCT_PAGE_SIZE}`;
+  let url = `${BASE_URL}/products`;
 
   if (page) {
     url = `${BASE_URL}/products?per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;

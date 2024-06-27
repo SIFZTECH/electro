@@ -26,7 +26,7 @@ const Filter = ({
             {isLoading && !isError ? (
               <SkeletonFiler />
             ) : (
-              data.map((item) => (
+              data?.map((item) => (
                 <div
                   key={item.id}
                   className="flex gap-2 items-center cursor-pointer"

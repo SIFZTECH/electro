@@ -2,9 +2,7 @@ import { useProducts } from "@/app/_features/products/useProducts";
 import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { Controller, useFieldArray, useWatch } from "react-hook-form";
 
-const SelectProduct = ({ register }) => {
-  const { products, isError, isLoading, error } = useProducts();
-
+const SelectProduct = ({ register, products, isLoading, isError }) => {
   return (
     <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
       <div className="w-full">

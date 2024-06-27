@@ -1,17 +1,50 @@
 "use client";
 
-import React from "react";
-import { useAttributes } from "@/app/_features/attributes/useAttributes";
+import React, { useEffect, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
+import { useProducts } from "@/app/_features/products/useProducts";
 
-function SelectAttribute({ control }) {
-  const { data, isLoading } = useAttributes();
-  const attributes = data ? data?.attributes : [];
+function SelectAttribute({ control, setValue }) {
+  const { products } = useProducts();
+  const selectedProductId = useWatch({ control, name: "product_id" });
+  const [productAttributes, setProductAttributes] = useState({});
+  const [selectedAttribute, setSelectedAttribute] = useState("");
+
+  useEffect(() => {
+    if (products && selectedProductId) {
+      const product = products.data.data.find(
+        (p) => p.id === parseInt(selectedProductId)
+      );
+      if (product) {
+        const attributes = product.variants.reduce((acc, variant) => {
+          const attrName = variant.attribute_value.attribute.name;
+          const attrValue = variant.attribute_value;
+          if (!acc[attrName]) {
+            acc[attrName] = [];
+          }
+          acc[attrName].push(attrValue);
+          return acc;
+        }, {});
+        setProductAttributes(attributes);
+        setSelectedAttribute("");
+        setValue("variant.attribute", "");
+        setValue("variant.attribute_value", "");
+      } else {
+        setProductAttributes({});
+      }
+    }
+  }, [selectedProductId, products, setValue]);
 
   const watchVariant = useWatch({
     control,
     name: "variant",
   });
+
+  useEffect(() => {
+    if (watchVariant?.attribute) {
+      setSelectedAttribute(watchVariant.attribute);
+    }
+  }, [watchVariant?.attribute]);
 
   return (
     <div className="flex flex-col col-span-2 items-start gap-4 md:basis-[100%] flex-wrap">
@@ -28,9 +61,14 @@ function SelectAttribute({ control }) {
               <select
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
                 {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  setSelectedAttribute(e.target.value);
+                  setValue("variant.attribute_value", "");
+                }}
               >
                 <option value="">Select Attribute</option>
-                {Object.keys(attributes).map((key) => (
+                {Object.keys(productAttributes).map((key) => (
                   <option key={key} value={key}>
                     {key}
                   </option>
@@ -54,12 +92,12 @@ function SelectAttribute({ control }) {
                 {...field}
               >
                 <option value="">Select Value</option>
-                {attributes[watchVariant?.attribute]?.map((attr) => (
+                {productAttributes[selectedAttribute]?.map((attr) => (
                   <option
                     key={attr.id}
-                    value={attr.value}
+                    value={attr.id}
                     style={
-                      watchVariant.attribute === "Color"
+                      selectedAttribute === "Color"
                         ? {
                             backgroundColor: attr.value,
                             color: attr.value,

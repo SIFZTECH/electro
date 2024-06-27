@@ -19,7 +19,7 @@ const ProductTop = ({ product }) => {
     );
 
     if (variant) {
-      setSelectedPrice(variant.price);
+      setSelectedPrice(parseFloat(product.price) + parseFloat(variant.price));
     } else {
       setSelectedPrice(product.price);
     }

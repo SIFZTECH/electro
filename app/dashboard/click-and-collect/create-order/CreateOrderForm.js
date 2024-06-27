@@ -1,7 +1,7 @@
 "use client";
 
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
@@ -9,25 +9,51 @@ import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import SelectProduct from "./SelectProduct";
 import SelectAttribute from "./SelectAttribute";
 import { createOrder } from "@/app/_services/apiOrders";
+import { useProducts } from "@/app/_features/products/useProducts";
+import { useEffect, useState } from "react";
 
 const CreateOrderForm = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { products, isError, isLoading } = useProducts();
+  const [productPrice, setProductPrice] = useState(0);
 
   const {
     register,
     handleSubmit,
     setValue,
-    setError,
-    clearErrors,
-
     control,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
+      product_id: "",
       variants: [{ attribute: "", attribute_value: "" }],
     },
   });
+
+  const selectedProductId = useWatch({ control, name: "product_id" });
+  const selectedVariant = useWatch({ control, name: "variant" });
+
+  useEffect(() => {
+    if (products && selectedProductId) {
+      const product = products.data.data.find(
+        (p) => p.id === parseInt(selectedProductId)
+      );
+      setProductPrice(product ? parseFloat(product.price) : 0);
+      const variant = product?.variants.find((v) => {
+        return (
+          v.attribute_value_id === parseInt(selectedVariant?.attribute_value)
+        );
+      });
+
+      setValue(
+        "total",
+        variant
+          ? parseFloat(product.price) + parseFloat(variant.price)
+          : product.price
+      );
+    }
+  }, [selectedProductId, selectedVariant, products, setValue]);
 
   async function onSubmit(formData) {
     try {
@@ -57,8 +83,13 @@ const CreateOrderForm = () => {
       </h1>
       <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-x-9 gap-y-6">
-          <SelectProduct register={register} />
-          <SelectAttribute register={register} control={control} />
+          <SelectProduct
+            register={register}
+            products={products}
+            isLoading={isLoading}
+            isError={isError}
+          />
+          <SelectAttribute control={control} setValue={setValue} />
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Customer Name
@@ -199,12 +230,11 @@ const CreateOrderForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="btn-primary mt-5 font-semibold rounded-sm px-6 py-2"
+          className="btn-primary my-8"
         >
-          {isSubmitting ? <SpinnerMini /> : "Save"}
+          {isSubmitting ? <SpinnerMini /> : "Create Order"}
         </button>
       </form>
-      <div className="md:py-8 p-2 md:px-6"></div>
     </>
   );
 };
