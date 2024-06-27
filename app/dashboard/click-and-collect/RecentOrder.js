@@ -93,9 +93,12 @@ const RecentOrder = () => {
                           </Link>
                         </td>
                         <td data-label="Invoice" className="text-center">
-                          <a href="#" className="btn-primary">
+                          <Link
+                            href={`click-and-collect/invoice/${data.id}`}
+                            className="btn-primary"
+                          >
                             View
-                          </a>
+                          </Link>
                         </td>
                       </tr>
                     );

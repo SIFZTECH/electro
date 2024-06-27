@@ -23,6 +23,22 @@ export async function getAllOrders(page, query) {
   return data.data;
 }
 
+export async function getInvoice(id) {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  console.log(id);
+  let url = `${BASE_URL}/click-and-collect/invoice/${id}`;
+
+  const { data } = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function createOrder(formData) {
   const token = localStorage.getItem("access-token");
 
