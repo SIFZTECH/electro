@@ -34,7 +34,9 @@ const CreateOrderForm = () => {
       const res = await createOrder(formData);
 
       if (res) {
-        toast.success(res.data.message);
+        toast.success(res.message);
+        queryClient.invalidateQueries("orders");
+        router.back(-1);
       }
     } catch (err) {
       console.error(err);
@@ -56,7 +58,7 @@ const CreateOrderForm = () => {
       <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 gap-x-9 gap-y-6">
           <SelectProduct register={register} />
-          <SelectAttribute control={control} />
+          <SelectAttribute register={register} control={control} />
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Customer Name
