@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const Folders = ({ data }) => {
+const Folders = ({ data, page }) => {
   return (
     <div>
       {/* <h1 className="heading-h1 mt-12">NCM Moscow</h1> */}
@@ -9,7 +9,7 @@ const Folders = ({ data }) => {
       <div className="folders grid grid-cols-2 md:grid-cols-5 2xl:grid-cols-5 gap-4 flex-wrap mt-12">
         {data.map((item) => (
           <Link
-            href={`/dashboard/dealer-resources/${item.id}`}
+            href={`/dashboard/${page}/${item.id}`}
             key={item.id}
             className="folder flex flex-col items-center flex-wrap"
           >

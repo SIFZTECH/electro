@@ -11,7 +11,7 @@ const AllResources = ({ data, metaData, page }) => {
       {data.length === 0 ? (
         <NotFoundData message="There is no resources available" />
       ) : (
-        <Folders data={data} />
+        <Folders data={data} page="dealer-resources" />
       )}
       <div className="mt-6">
         <PaginationUI

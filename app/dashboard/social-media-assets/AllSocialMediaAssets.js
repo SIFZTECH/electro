@@ -12,7 +12,7 @@ const AllSocialMediaAssets = ({ data, metaData, page }) => {
       {data.length === 0 ? (
         <NotFoundData message="There is no Social Media Assets available" />
       ) : (
-        <Folders data={data} />
+        <Folders data={data} page={"social-media-assets"} />
       )}
       <div className="mt-6">
         <PaginationUI
