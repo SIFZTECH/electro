@@ -1,6 +1,10 @@
 import { useOrders } from "@/app/_features/orders/useOrders";
+import NotFoundData from "@/app/components/ui/NotFoundData";
+import PaginationUI from "@/app/components/ui/PaginationUI";
 import Spinner from "@/app/components/ui/Spinner";
+import { PAGE_SIZE } from "@/app/lib/utils";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const dummyData = [
   {
@@ -38,7 +42,11 @@ const dummyData = [
 ];
 
 const RecentOrder = () => {
-  const { data, isError, isLoading, error } = useOrders();
+  const params = useSearchParams();
+  const page = params.get("page") ? +params.get("page") : 1;
+  const query = params.get("query") && params.get("query");
+
+  const { data, isError, isLoading, error } = useOrders(page, query);
 
   if (isLoading) {
     return <Spinner />;
@@ -46,43 +54,64 @@ const RecentOrder = () => {
 
   return (
     <>
-      <table className="mt-10 table_modify">
-        <thead>
-          <tr>
-            <th scope="col">Order ID</th>
-            <th scope="col">Dealer Name</th>
-            <th scope="col">Customer Name</th>
-            <th scope="col">Status</th>
-            <th scope="col">View Details</th>
-            <th scope="col">Invoice</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.data.map((data, i) => {
-            return (
-              <tr key={i + 1}>
-                <td data-label="Order ID">{data.order_id}</td>
-                <td data-label="Dealer Name">{data.dealer_name || "-"}</td>
-                <td data-label="Customer Name">{data.customer_name}</td>
-                <td data-label="Status">{data.status}</td>
-                <td data-label="View Details" className="text-center">
-                  <Link
-                    href={`click-and-collect/${data.id}`}
-                    className="btn-primary"
-                  >
-                    View
-                  </Link>
-                </td>
-                <td data-label="Invoice" className="text-center">
-                  <a href="#" className="btn-primary">
-                    View
-                  </a>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {isError && error && (
+        <NotFoundData message={error.response.data.message} />
+      )}
+      {!isError && !error && (
+        <>
+          {data?.data?.length === 0 ? (
+            <NotFoundData message="There is no order!" />
+          ) : (
+            <>
+              <table className="mt-10 table_modify">
+                <thead>
+                  <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Dealer Name</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">View Details</th>
+                    <th scope="col">Invoice</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.data.map((data, i) => {
+                    return (
+                      <tr key={i + 1}>
+                        <td data-label="Order ID">{data.order_id}</td>
+                        <td data-label="Dealer Name">
+                          {data.dealer_name || "-"}
+                        </td>
+                        <td data-label="Customer Name">{data.customer_name}</td>
+                        <td data-label="Status">{data.status}</td>
+                        <td data-label="View Details" className="text-center">
+                          <Link
+                            href={`click-and-collect/${data.id}`}
+                            className="btn-primary"
+                          >
+                            View
+                          </Link>
+                        </td>
+                        <td data-label="Invoice" className="text-center">
+                          <a href="#" className="btn-primary">
+                            View
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <PaginationUI
+                data={data}
+                page={page}
+                page_size={PAGE_SIZE}
+                navigation="click-and-collect"
+              />
+            </>
+          )}
+        </>
+      )}
       <div className="flex justify-end mt-8 px-3">
         <Link
           className="btn-primary"

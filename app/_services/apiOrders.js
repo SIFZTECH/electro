@@ -1,13 +1,15 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, PAGE_SIZE } from "../lib/utils";
 
-export async function getAllOrders() {
+export async function getAllOrders(page, query) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/click-and-collect`, {
+  let url = `${BASE_URL}/click-and-collect?per_page=${PAGE_SIZE}&page=${page}`;
+
+  const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

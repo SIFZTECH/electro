@@ -1,0 +1,65 @@
+.invoiceBox {
+  background-color: #f4f4f4;
+  margin: 50px auto;
+  padding: 30px;
+  border: 1px solid #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+
+.header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #333;
+}
+
+.companyInfo {
+  margin-top: 20px;
+}
+
+.companyInfo h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.clientInfo,
+.invoiceDetails,
+.paymentInfo {
+  margin-bottom: 20px;
+}
+
+.clientInfo h2,
+.invoiceDetails h2,
+.paymentInfo h2 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f4f4f4;
+}
+
+.paymentInfo p {
+  margin: 5px 0;
+}
