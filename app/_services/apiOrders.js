@@ -3,11 +3,15 @@
 import axios from "axios";
 import { BASE_URL, PAGE_SIZE } from "../lib/utils";
 
-export async function getAllOrders(page, query) {
+export async function getAllOrders(page, query, status) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
   let url = `${BASE_URL}/click-and-collect?per_page=${PAGE_SIZE}&page=${page}`;
+
+  if (status) {
+    url = `${BASE_URL}/click-and-collect?status=${status}&per_page=${PAGE_SIZE}&page=${page}`;
+  }
 
   console.log(query);
   if (query) {

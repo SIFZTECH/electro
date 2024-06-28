@@ -15,8 +15,8 @@ const Folders = ({ data, page }) => {
           >
             <Image
               src="/icons8-folder.svg"
-              height={60}
-              width={60}
+              height={80}
+              width={80}
               alt="Icon of"
             />
             <span className="text-sm font-medium">{item.folder_name}</span>

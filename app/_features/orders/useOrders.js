@@ -3,10 +3,10 @@
 import { getAllOrders, getOrder } from "@/app/_services/apiOrders";
 import { useQuery } from "@tanstack/react-query";
 
-export function useOrders(page = 1, query) {
+export function useOrders(page = 1, query, status) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["orders", { page, query }],
-    queryFn: () => getAllOrders(page, query),
+    queryKey: ["orders", { status, page, query }],
+    queryFn: () => getAllOrders(page, query, status),
   });
 
   return { data, isLoading, error, isError, total_num: data?.total };

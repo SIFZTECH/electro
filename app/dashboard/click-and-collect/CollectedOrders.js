@@ -6,47 +6,16 @@ import { PAGE_SIZE } from "@/app/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-const dummyData = [
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 1",
-    customerName: "Jane Smith",
-    status: "New",
-    deatils: "test",
-    invoice: "test",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 2",
-    customerName: "Jane Smith",
-    status: "Prev",
-    deatils: "test",
-    invoice: "test",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 3",
-    customerName: "Jane Smith 2",
-    status: "Instrasit",
-    deatils: "test",
-    invoice: "test",
-  },
-  {
-    id: "dyyds735363",
-    dealerName: "E-Bike Retailer 4",
-    customerName: "Jane Smith",
-    status: "New",
-    deatils: "#",
-    invoice: "#",
-  },
-];
-
-const RecentOrder = () => {
+const CollectedOrders = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
   const query = params.get("query") && params.get("query");
 
-  const { data, isError, isLoading, error } = useOrders(page, query);
+  const { data, isError, isLoading, error } = useOrders(
+    page,
+    query,
+    "collected"
+  );
 
   if (isLoading) {
     return <Spinner />;
@@ -147,4 +116,4 @@ const RecentOrder = () => {
     </>
   );
 };
-export default RecentOrder;
+export default CollectedOrders;

@@ -4,12 +4,24 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/components/ui/tabs";
-import RecentOrder from "./RecentOrder";
+import RecentOrder from "./AllOrders";
 import { useOrders } from "@/app/_features/orders/useOrders";
+import AllOrders from "./AllOrders";
+import CollectedOrders from "./CollectedOrders";
+import IntransitOrders from "./IntransitOrders";
 
 const Orders = () => {
   const { total_num, isLoading } = useOrders();
-  console.log(total_num);
+  const { total_num: total_num2, isLoading: isLoading2 } = useOrders(
+    1,
+    null,
+    "collected"
+  );
+  const { total_num: total_num3, isLoading: isLoading3 } = useOrders(
+    1,
+    null,
+    "pending"
+  );
 
   return (
     <Tabs defaultValue="allOrders" className="font-serif">
@@ -26,19 +38,34 @@ const Orders = () => {
         </TabsTrigger>
         <TabsTrigger value="collectedOrder">
           Collected Order{" "}
-          <p className="ml-2 bg-red-500 rounded-full text-white  w-[1.40rem] h-[1.40rem] flex items-center justify-center">
-            <span className=" text-[10px] leading-3">9</span>
-          </p>
+          {!isLoading2 && total_num2 && (
+            <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
+              <span className="p-1 text-[10px] leading-3">
+                {total_num2 ? total_num2 : 0}
+              </span>
+            </p>
+          )}
         </TabsTrigger>
-        <TabsTrigger value="intransitOrders">Intransit Orders </TabsTrigger>
+        <TabsTrigger value="intransitOrders">
+          Intransit Orders{" "}
+          {!isLoading3 && total_num3 && (
+            <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
+              <span className="p-1 text-[10px] leading-3">
+                {total_num3 ? total_num3 : 0}
+              </span>
+            </p>
+          )}
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="allOrders">
-        <RecentOrder />
+        <AllOrders />
       </TabsContent>
       <TabsContent value="collectedOrder">
-        <RecentOrder />
+        <CollectedOrders />
       </TabsContent>
-      <TabsContent value="intransitOrders">Transit order</TabsContent>
+      <TabsContent value="intransitOrders">
+        <IntransitOrders />
+      </TabsContent>
     </Tabs>
   );
 };
