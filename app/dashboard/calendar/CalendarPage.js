@@ -26,6 +26,7 @@ export default function CalendarPage() {
 
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
   const [date, setDate] = useState("");
   const [id, setId] = useState(null);
   const [title, setTitle] = useState("null");
@@ -38,6 +39,7 @@ export default function CalendarPage() {
   };
   const handleManage = (e) => {
     setOpen2((open) => !open);
+    setOpen3((open) => !open);
 
     setId(e.id);
     setTitle(e.title);
@@ -78,11 +80,20 @@ export default function CalendarPage() {
     <div className="py-3">
       <div className="flex items-center justify-between mb-3">
         <h1 className="heading-h1 mb-6">Promotional Calendar</h1>
-        {isCreateEventPermission && (
+
+        {isCreateEventPermission ? (
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
             {/* <DialogTrigger className="btn-primary">Add New Event</DialogTrigger> */}
             <DialogContent>
               <CreateNewEvent date={date} setOpen={setOpen} />
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <Dialog open={open3} onOpenChange={() => setOpen3((open) => !open)}>
+            {/* <DialogTrigger className="btn-primary">Add New Event</DialogTrigger> */}
+            <DialogContent>
+              <h1 className="font-serif font-semibold text-xl">{title}</h1>
+              <p>{description}</p>
             </DialogContent>
           </Dialog>
         )}
