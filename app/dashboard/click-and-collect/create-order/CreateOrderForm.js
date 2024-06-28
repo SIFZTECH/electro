@@ -27,33 +27,47 @@ const CreateOrderForm = () => {
   } = useForm({
     defaultValues: {
       product_id: "",
+      quantity: 1,
       variants: [{ attribute: "", attribute_value: "" }],
     },
   });
 
   const selectedProductId = useWatch({ control, name: "product_id" });
   const selectedVariant = useWatch({ control, name: "variant" });
+  const selectedQuantity = useWatch({ control, name: "quantity" });
 
   useEffect(() => {
     if (products && selectedProductId) {
       const product = products.data.data.find(
         (p) => p.id === parseInt(selectedProductId)
       );
-      setProductPrice(product ? parseFloat(product.price) : 0);
-      const variant = product?.variants.find((v) => {
-        return (
-          v.attribute_value_id === parseInt(selectedVariant?.attribute_value)
-        );
-      });
+      if (product) {
+        const basePrice = parseFloat(product.price);
+        setProductPrice(basePrice);
 
-      setValue(
-        "total",
-        variant
-          ? parseFloat(product.price) + parseFloat(variant.price)
-          : product.price
-      );
+        const variant = product.variants.find(
+          (v) =>
+            v.attribute_value_id === parseInt(selectedVariant?.attribute_value)
+        );
+
+        const variantPrice = variant ? parseFloat(variant.price) : 0;
+        setValue("product_price", basePrice + variantPrice);
+        const totalPrice =
+          (basePrice + variantPrice) * Number(selectedQuantity);
+        setValue("total", totalPrice);
+      } else {
+        setProductPrice(0);
+        setValue("product_price", 0);
+        setValue("total", 0);
+      }
     }
-  }, [selectedProductId, selectedVariant, products, setValue]);
+  }, [
+    selectedProductId,
+    selectedVariant,
+    selectedQuantity,
+    products,
+    setValue,
+  ]);
 
   async function onSubmit(formData) {
     try {
@@ -90,6 +104,46 @@ const CreateOrderForm = () => {
             isError={isError}
           />
           <SelectAttribute control={control} setValue={setValue} />
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Product Price
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("product_price", {
+                  required: "This is required field",
+                })}
+                type="number"
+                placeholder="Product Price"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+              {errors?.product_price && (
+                <span className="text-red-500 text-sm">
+                  {errors.product_price.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Quantity
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("quantity", {
+                  required: "This is required field",
+                })}
+                type="number"
+                placeholder="Quantity"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+              {errors?.quantity && (
+                <span className="text-red-500 text-sm">
+                  {errors.quantity.message}
+                </span>
+              )}
+            </div>
+          </div>
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Customer Name
@@ -130,7 +184,6 @@ const CreateOrderForm = () => {
               )}
             </div>
           </div>
-
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Customer Address
@@ -150,7 +203,6 @@ const CreateOrderForm = () => {
               )}
             </div>
           </div>
-
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Customer City
@@ -187,7 +239,6 @@ const CreateOrderForm = () => {
               )}
             </div>
           </div>
-
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Customer Phone
@@ -203,6 +254,42 @@ const CreateOrderForm = () => {
               {errors?.customer_phone && (
                 <span className="text-red-500 text-sm">
                   {errors.customer_phone.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Courier Name
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("courier_name")}
+                type="text"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+              {/* {errors?.courier_name && (
+                <span className="text-red-500 text-sm">
+                  {errors.courier_name.message}
+                </span>
+              )} */}
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Country
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("country", {
+                  required: "This is required field",
+                })}
+                type="text"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+              {errors?.country && (
+                <span className="text-red-500 text-sm">
+                  {errors.country.message}
                 </span>
               )}
             </div>

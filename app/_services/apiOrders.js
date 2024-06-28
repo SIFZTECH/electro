@@ -9,6 +9,10 @@ export async function getAllOrders(page, query) {
 
   let url = `${BASE_URL}/click-and-collect?per_page=${PAGE_SIZE}&page=${page}`;
 
+  console.log(query);
+  if (query) {
+    url = `${BASE_URL}/click-and-collect/search?search=${query}&per_page=${PAGE_SIZE}&page=${page}`;
+  }
   const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -39,6 +43,39 @@ export async function getInvoice(id) {
   return data;
 }
 
+export async function getOrder(id) {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  console.log(id);
+  let url = `${BASE_URL}/click-and-collect/order/${id}`;
+
+  const { data } = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
+export async function updateOrderStatus(id, formData) {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  let url = `${BASE_URL}/click-and-collect/update-status/${id}`;
+
+  const { data } = await axios(url, {
+    method: "put",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  });
+
+  return data;
+}
+
 export async function createOrder(formData) {
   const token = localStorage.getItem("access-token");
 
@@ -57,6 +94,24 @@ export async function createOrder(formData) {
     },
     data: processData,
   });
+
+  return data;
+}
+
+export async function deleteOrder(id) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(
+    `${BASE_URL}/click-and-collect/order/delete/${id}`,
+    {
+      method: "delete",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   return data;
 }

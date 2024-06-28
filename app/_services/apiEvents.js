@@ -93,7 +93,7 @@ export async function deleteEvent(id) {
   return data;
 }
 
-export async function createEvent({ date, title, visible_to }) {
+export async function createEvent(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
@@ -104,7 +104,7 @@ export async function createEvent({ date, title, visible_to }) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { date, title, visible_to },
+    data: formData,
   });
 
   return data;

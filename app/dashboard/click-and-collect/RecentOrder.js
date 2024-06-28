@@ -80,10 +80,31 @@ const RecentOrder = () => {
                       <tr key={i + 1}>
                         <td data-label="Order ID">{data.order_id}</td>
                         <td data-label="Dealer Name">
-                          {data.dealer_name || "-"}
+                          {data.user.firstname} {data.user.lastname}
                         </td>
                         <td data-label="Customer Name">{data.customer_name}</td>
-                        <td data-label="Status">{data.status}</td>
+                        <td data-label="Status">
+                          {data.status === "pending" && (
+                            <span className="font-semibold text-yellow-400 capitalize">
+                              {data.status}
+                            </span>
+                          )}
+                          {data.status === "collected" && (
+                            <span className="font-semibold text-green-400 capitalize">
+                              {data.status}
+                            </span>
+                          )}
+                          {data.status === "delivered" && (
+                            <span className="font-semibold text-purple-400 capitalize">
+                              {data.status}
+                            </span>
+                          )}
+                          {data.status === "intransit" && (
+                            <span className="font-semibold text-sky-400 capitalize">
+                              {data.status}
+                            </span>
+                          )}
+                        </td>
                         <td data-label="View Details" className="text-center">
                           <Link
                             href={`click-and-collect/${data.id}`}

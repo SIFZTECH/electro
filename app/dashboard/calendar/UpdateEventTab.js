@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const UpdateEventTab = ({ id, date, title, visible, setOpen }) => {
+const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
   const queryClient = useQueryClient();
   const { data, isLoading } = useRoles();
 
@@ -18,12 +18,13 @@ const UpdateEventTab = ({ id, date, title, visible, setOpen }) => {
   } = useForm({
     defaultValues: {
       title: title,
+      description: description,
       visible_to: visible,
       date: date,
     },
   });
 
-  async function onSubmit({ title, visible_to, date }) {
+  async function onSubmit({ title, description, visible_to, date }) {
     const specificDate = new Date(date);
 
     const options = {
@@ -37,6 +38,7 @@ const UpdateEventTab = ({ id, date, title, visible, setOpen }) => {
     try {
       const res = await updateEvent(id, {
         title,
+        description,
         visible_to,
         date: formattedDate,
       });
@@ -74,6 +76,25 @@ const UpdateEventTab = ({ id, date, title, visible, setOpen }) => {
             {errors?.title && (
               <span className="text-red-500 text-sm">
                 {errors.title.message}
+              </span>
+            )}
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900">
+            Event Description
+          </label>
+          <div className="mt-2">
+            <textarea
+              {...register("description", {
+                required: "This is required field",
+              })}
+              disabled={isSubmitting}
+              className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+            {errors?.description && (
+              <span className="text-red-500 text-sm">
+                {errors.description.message}
               </span>
             )}
           </div>

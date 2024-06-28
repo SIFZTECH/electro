@@ -8,7 +8,14 @@ import {
 import UpdateEventTab from "./UpdateEventTab";
 import DeleteEventTab from "./DeleteEventTab";
 
-const UpdateAndDeleteEvent = ({ id, date, title, visible, setOpen }) => {
+const UpdateAndDeleteEvent = ({
+  id,
+  date,
+  title,
+  description,
+  visible,
+  setOpen,
+}) => {
   return (
     <DialogContent>
       <Tabs
@@ -29,6 +36,7 @@ const UpdateAndDeleteEvent = ({ id, date, title, visible, setOpen }) => {
             id={id}
             date={date}
             title={title}
+            description={description}
             visible={visible}
             setOpen={setOpen}
           />

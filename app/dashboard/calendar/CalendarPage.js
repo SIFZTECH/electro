@@ -29,6 +29,7 @@ export default function CalendarPage() {
   const [date, setDate] = useState("");
   const [id, setId] = useState(null);
   const [title, setTitle] = useState("null");
+  const [description, setDescription] = useState("null");
   const [visible, setVisible] = useState(null);
 
   const handleSelect = ({ start }) => {
@@ -40,6 +41,7 @@ export default function CalendarPage() {
 
     setId(e.id);
     setTitle(e.title);
+    setDescription(e.description);
     setDate(e.start);
     setVisible(e.visible_to);
   };
@@ -58,6 +60,7 @@ export default function CalendarPage() {
     ? data?.data?.data?.map((event) => ({
         id: event.id,
         title: event.title,
+        description: event.description,
         start: new Date(event.date),
         end: new Date(event.date),
         visible_to: event.visible_to,
@@ -65,6 +68,7 @@ export default function CalendarPage() {
     : data?.data?.map((event) => ({
         id: event.id,
         title: event.title,
+        description: event.description,
         start: new Date(event.date),
         end: new Date(event.date),
         visible_to: event.visible_to,
@@ -100,6 +104,7 @@ export default function CalendarPage() {
             id={id}
             date={date}
             title={title}
+            description={description}
             visible={visible}
             setOpen={setOpen2}
           />

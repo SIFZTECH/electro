@@ -1,20 +1,34 @@
-const OrderDetails = () => {
+const OrderDetails = ({ data }) => {
   return (
     <div>
       <div className="order__details grid md:grid-cols-2 gap-x-2 gap-y-1 font-serif">
-        <p className="">Order ID: 18dgydnyd74</p>
-        <p className="">Order Status: Dispacted</p>
-        <p className="">Order Dispacted: 02/20/2021 3.08am</p>
-        <p className="">Pick up: Click and Collect: MyEBike</p>
-        <p className="">Traking Number: 18dgydnyd74</p>
-        <p className="">Courier: Ali Extress</p>
-        <p className="">Collected Status: Not Collected</p>
-        <p className="">Customer Name: 18dgydnyd74</p>
-        <p className="">Address: 3/45 Leakers North</p>
-        <p className="">City: Laverton North</p>
-        <p className="">Post Code: 3400</p>
-        <p className="">Phone: 746487484</p>
-        <p className="">Email: customer@example.com</p>
+        <p className="">Order ID: {data.order_id}</p>
+        <p className="">Order Status: {data.status}</p>
+        <p className="">Order Dispacted: {data.created_at}</p>
+        <p className="">
+          Pick up: {data.customer_address}, {data.city} {data.country}
+        </p>
+        {/* <p className="">Traking Number: 18dgydnyd74</p> */}
+        <p className="">Courier: {data.courier_name}</p>
+        <p className="">
+          Collected Status:{" "}
+          {data.status === "collected" ? (
+            <span className="font-semibold text-green-400">Collected</span>
+          ) : (
+            <span className="font-semibold text-yellow-400">Not Collected</span>
+          )}
+        </p>
+        <p className="">Customer Name: {data.customer_name}</p>
+        <p className="">Address: {data.customer_address}</p>
+        <p className="">City: {data.customer_city || "Not Avialable"}</p>
+        <p className="">Country: {data.country || "Not Avialable"}</p>
+        <p className="">
+          Post Code: {data.customer_post_code || "Not Avialable"}
+        </p>
+        <p className="">
+          Phone: {data.customer_phone_number || "Not Avialable"}
+        </p>
+        <p className="">Email: {data.email || "Not Found"}</p>
       </div>
     </div>
   );

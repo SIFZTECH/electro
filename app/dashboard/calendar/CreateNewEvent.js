@@ -21,7 +21,7 @@ const CreateNewEvent = ({ date, setOpen }) => {
   });
   const { isLoading, data } = useRoles();
 
-  async function onSubmit({ date, title, visible_to }) {
+  async function onSubmit({ date, title, description, visible_to }) {
     const specificDate = new Date(date);
 
     const options = {
@@ -33,7 +33,12 @@ const CreateNewEvent = ({ date, setOpen }) => {
     const formattedDate = specificDate.toLocaleDateString("en-CA", options);
 
     try {
-      const res = await createEvent({ date: formattedDate, title, visible_to });
+      const res = await createEvent({
+        date: formattedDate,
+        title,
+        description,
+        visible_to,
+      });
 
       if (res) {
         toast.success("New Event Created Successfully");
@@ -69,6 +74,26 @@ const CreateNewEvent = ({ date, setOpen }) => {
           />
           {errors?.title && (
             <span className="text-red-500 text-sm">{errors.title.message}</span>
+          )}
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+          Event Description
+        </label>
+        <div className="mt-2">
+          <textarea
+            {...register("description", {
+              required: "This is required field",
+            })}
+            disabled={isSubmitting}
+            type="text"
+            className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+          />
+          {errors?.description && (
+            <span className="text-red-500 text-sm">
+              {errors.description.message}
+            </span>
           )}
         </div>
       </div>

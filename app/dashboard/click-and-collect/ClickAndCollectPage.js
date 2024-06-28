@@ -16,7 +16,7 @@ const ClickAndCollectPage = () => {
   return (
     <div>
       <h1 className="heading-h1 mb-8 mt-4">Click and Collect</h1>
-      <Search />
+      <Search navigateTo="click-and-collect" />
       <Orders />
     </div>
   );
