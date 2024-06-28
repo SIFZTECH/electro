@@ -5,47 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice</title>
     <style>
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
       .invoiceBox {
         background-color: #f4f4f4;
-        margin: 50px auto;
-        padding: 30px;
-        border: 1px solid #eee;
+        margin: 0 auto;
+        padding: 20px;
+        max-width: 800px; /* Adjusted max-width for readability and fitting on page */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         background-color: #fff;
-        font-family: sans-serif;
+      }
+
+      img {
+        margin-bottom: 10px;
+        max-width: 100%;
+        height: auto;
       }
 
       .header {
         border-bottom: 1px solid #eee;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       .header h1 {
         margin: 0;
-        font-size: 2.5em;
-        color: #333;
+        font-size: 2em;
+        color: #facc15; /* Brand color */
       }
 
-      .companyInfo {
-        margin-top: 20px;
-      }
-
-      .companyInfo h2 {
-        margin: 0;
-        font-size: 1.5em;
-        color: #333;
-      }
-
-      .clientInfo,
-      .invoiceDetails,
-      .paymentInfo {
+      .companyInfo,
+      .clientInfo {
+        flex: 1;
         margin-bottom: 20px;
       }
 
-      .clientInfo h2,
-      .invoiceDetails h2,
-      .paymentInfo h2 {
+      .companyInfo h2,
+      .clientInfo h2 {
+        margin: 0;
+        font-size: 1.5em;
+        color: #333;
         border-bottom: 1px solid #eee;
         padding-bottom: 10px;
         margin-bottom: 10px;
@@ -55,6 +63,7 @@
       .table {
         width: 100%;
         border-collapse: collapse;
+        margin-top: 20px;
       }
 
       .table th,
@@ -65,7 +74,12 @@
       }
 
       .table th {
-        background-color: #f4f4f4;
+        background-color: #facc15;
+        color: #333;
+      }
+
+      .table td {
+        text-align: right;
       }
 
       .paymentInfo p {
@@ -76,19 +90,20 @@
   <body>
     <div class="invoiceBox">
       <header class="header">
-        <img src="/logo.png" alt="logo" />
+        <img src="logo.svg" alt="logo" />
         <h1>Invoice</h1>
-        <div class="companyInfo">
-          <h2>Your Company Name</h2>
-          <p>123 Your Street</p>
-          <p>Your City, ST 12345</p>
-          <p>Email: info@yourcompany.com</p>
-          <p>Phone: (555) 555-5555</p>
-        </div>
       </header>
 
+      <div class="companyInfo">
+        <h2>Your Company Name</h2>
+        <p>123 Your Street</p>
+        <p>Your City, ST 12345</p>
+        <p>Email: info@yourcompany.com</p>
+        <p>Phone: (555) 555-5555</p>
+      </div>
+
       <section class="clientInfo">
-        <h2>Bill To:</h2>
+        <h2>Client Information</h2>
         <p>Client Name</p>
         <p>Client Address</p>
         <p>Client City, ST ZIP</p>
