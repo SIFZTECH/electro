@@ -6,7 +6,7 @@ const Folders = ({ data, page }) => {
     <div>
       {/* <h1 className="heading-h1 mt-12">NCM Moscow</h1> */}
 
-      <div className="folders grid grid-cols-2 md:grid-cols-5 2xl:grid-cols-5 gap-4 flex-wrap mt-12">
+      <div className="folders grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4 flex-wrap mt-12">
         {data.map((item) => (
           <Link
             href={`/dashboard/${page}/${item.id}`}
@@ -15,8 +15,8 @@ const Folders = ({ data, page }) => {
           >
             <Image
               src="/icons8-folder.svg"
-              height={80}
-              width={80}
+              height={100}
+              width={100}
               alt="Icon of"
             />
             <span className="text-sm font-medium">{item.folder_name}</span>
