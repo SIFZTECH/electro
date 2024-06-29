@@ -1,13 +1,10 @@
-import Search from "@/app/components/ui/Search";
 import Product from "./Product";
-import SearchProduct from "./SearchProduct";
 
 const Products = ({ products }) => {
   const data = products.data.data;
 
   return (
     <div>
-      <SearchProduct />
       <div className="grid grid-cols-1 sm:grid-cold-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 pt-8">
         {data.map((product) => (
           <Product

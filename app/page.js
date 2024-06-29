@@ -6,6 +6,7 @@ import {
   TabsTrigger,
 } from "@/app/components/ui/tabs";
 import ProductsPage from "@/app/_root_ui/ProductsPage";
+import CompareProducts from "./_root_ui/CompareProducts";
 
 const page = () => {
   return (
@@ -30,7 +31,9 @@ const page = () => {
             <TabsContent value="e-bikes">
               <ProductsPage />
             </TabsContent>
-            <TabsContent value="compare-bikes">Compare</TabsContent>
+            <TabsContent value="compare-bikes">
+              <CompareProducts />
+            </TabsContent>
           </Tabs>
         </div>
       </div>

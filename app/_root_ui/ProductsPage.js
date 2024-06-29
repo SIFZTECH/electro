@@ -8,6 +8,7 @@ import NotFoundData from "@/app/components/ui/NotFoundData";
 import { useSearchParams } from "next/navigation";
 import { PRODUCT_PAGE_SIZE } from "@/app/lib/utils";
 import PaginationUI from "@/app/components/ui/PaginationUI";
+import SearchProduct from "./SearchProduct";
 
 const ProductsPage = () => {
   const params = useSearchParams();
@@ -36,7 +37,10 @@ const ProductsPage = () => {
           {!isLoading && !isError && products.data.data.length > 0 ? (
             <Products products={products} />
           ) : (
-            <NotFoundData message="There is no products!" />
+            <div>
+              <SearchProduct />
+              <NotFoundData message="There is no products!" />
+            </div>
           )}
           {!isLoading && isError && error && (
             <h1>
