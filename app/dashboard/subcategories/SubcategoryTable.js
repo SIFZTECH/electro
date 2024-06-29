@@ -9,9 +9,10 @@ import {
 } from "@/app/components/ui/table";
 
 import SubCategoriesList from "./SubCategoriesList";
-import CreateNewSubCategory from "./CreateNewSubCategory";
+import { useSearchParams } from "next/navigation";
+import PaginationUI from "@/app/components/ui/PaginationUI";
 
-const SubCategoryTable = ({ data }) => {
+const SubCategoryTable = ({ data, page }) => {
   const subcategories = data.data;
 
   return (

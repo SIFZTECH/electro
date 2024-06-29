@@ -3,9 +3,12 @@
 import axios from "axios";
 import { BASE_URL } from "../lib/utils";
 
-export async function getAllSubcategories() {
+export async function getAllSubcategories(page) {
   const JWT = localStorage.getItem("access-token");
-  const { data } = await axios.get(`${BASE_URL}/subcategories`, {
+
+  let url = `${BASE_URL}/subcategories?per_page=10&page=${page}`;
+
+  const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${JWT}`,
     },
