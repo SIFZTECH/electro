@@ -1,7 +1,8 @@
+import { BASE_URL_IMAGE } from "../lib/utils";
 import Product from "./Product";
 import SearchProduct from "./SearchProduct";
 
-const Products = ({ products, addToCompare }) => {
+const Products = ({ products, compareList, toggleCompare }) => {
   const data = products.data.data;
 
   return (
@@ -13,10 +14,11 @@ const Products = ({ products, addToCompare }) => {
             key={product.id}
             id={product.id}
             slug={product.slug}
-            image={`https://electro-api.sifztech.com/${product?.images[0]?.image_path}`}
+            image={`${BASE_URL_IMAGE}${product?.images[0]?.image_path}`}
             name={product.name}
             summary={product.introduction}
-            addToCompare={() => addToCompare(product)}
+            isCompared={compareList.some((p) => p.id === product.id)}
+            toggleCompare={() => toggleCompare(product)}
           />
         ))}
       </div>

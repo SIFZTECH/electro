@@ -13,7 +13,10 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const RootPage = () => {
+  const [value, setValue] = useState("e-bikes");
+
   const params = useSearchParams();
+
   const page = params.get("page") || 1;
   const categoryId = params.get("category");
   const brandId = params.get("brand");
@@ -28,10 +31,13 @@ const RootPage = () => {
 
   const [compareList, setCompareList] = useState([]);
 
-  const addToCompare = (product) => {
+  const toggleCompare = (product) => {
     setCompareList((prevList) => {
-      if (prevList.find((p) => p.id === product.id)) return prevList;
-      return [...prevList, product];
+      if (prevList.find((p) => p.id === product.id)) {
+        return prevList.filter((p) => p.id !== product.id);
+      } else {
+        return [...prevList, product];
+      }
     });
   };
 
@@ -46,12 +52,21 @@ const RootPage = () => {
           alt="Logo"
         />
         <div className="flex-1">
-          <Tabs defaultValue="e-bikes" className="font-serif">
+          <Tabs value={value} className="font-serif">
             <TabsList>
-              <TabsTrigger value="e-bikes" className="">
+              <TabsTrigger
+                value="e-bikes"
+                className=""
+                onClick={() => setValue("e-bikes")}
+              >
                 E Bikes
               </TabsTrigger>
-              <TabsTrigger value="compare-bikes">Compare Bikes</TabsTrigger>
+              <TabsTrigger
+                value="compare-bikes"
+                onClick={() => setValue("compare-bikes")}
+              >
+                Compare Bikes
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="e-bikes">
               <ProductsPage
@@ -59,8 +74,10 @@ const RootPage = () => {
                 isLoading={isLoading}
                 isError={isError}
                 error={error}
+                h
                 page={page}
-                addToCompare={addToCompare}
+                compareList={compareList}
+                toggleCompare={toggleCompare}
               />
             </TabsContent>
             <TabsContent value="compare-bikes">
@@ -70,8 +87,14 @@ const RootPage = () => {
         </div>
       </div>
       <div className="absolute right-10">
-        <div className="relative">
-          <Image src="/container.png" width={40} height={40} alt="container" />
+        <div className="relative" onClick={() => setValue("compare-bikes")}>
+          <Image
+            className="cursor-pointer"
+            src="/container.png"
+            width={40}
+            height={40}
+            alt="container"
+          />
           <p className="absolute right-0 top-0 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
             <span className="p-1 text-[10px] leading-3">
               {compareList.length}

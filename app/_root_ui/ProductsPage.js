@@ -18,7 +18,8 @@ const ProductsPage = ({
   isError,
   error,
   page,
-  addToCompare,
+  compareList,
+  toggleCompare,
 }) => {
   return (
     <>
@@ -30,7 +31,11 @@ const ProductsPage = ({
           {isLoading && <Spinner />}
           {!isLoading && !isError && products.data.data.length > 0 ? (
             <>
-              <Products products={products} addToCompare={addToCompare} />
+              <Products
+                products={products}
+                compareList={compareList}
+                toggleCompare={toggleCompare}
+              />
             </>
           ) : (
             <div>

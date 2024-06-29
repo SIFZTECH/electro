@@ -40,10 +40,6 @@ export async function getAllProductsForPublic({
   page,
   query,
 }) {
-  const token = localStorage.getItem("access-token");
-
-  if (!token) return null;
-
   let url = `${BASE_URL}/public/products`;
 
   if (page) {
@@ -61,11 +57,7 @@ export async function getAllProductsForPublic({
     url = `${BASE_URL}/public/search-products?search=${query}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
-  const { data } = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const { data } = await axios.get(url);
 
   return data;
 }
@@ -100,6 +92,12 @@ export async function getProduct(slug) {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return data.data;
+}
+
+export async function getProductForPublic(slug) {
+  const { data } = await axios.get(`${BASE_URL}/public/product/${slug}`);
 
   return data.data;
 }
