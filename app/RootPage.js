@@ -74,14 +74,16 @@ const RootPage = () => {
                 isLoading={isLoading}
                 isError={isError}
                 error={error}
-                h
                 page={page}
                 compareList={compareList}
                 toggleCompare={toggleCompare}
               />
             </TabsContent>
             <TabsContent value="compare-bikes">
-              <CompareProducts compareList={compareList} />
+              <CompareProducts
+                compareList={compareList}
+                toggleCompare={toggleCompare}
+              />
             </TabsContent>
           </Tabs>
         </div>
