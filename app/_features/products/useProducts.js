@@ -1,6 +1,9 @@
 "use client";
 
-import { getAllProducts } from "@/app/_services/apiProducts";
+import {
+  getAllProducts,
+  getAllProductsForPublic,
+} from "@/app/_services/apiProducts";
 import { useQuery } from "@tanstack/react-query";
 
 export function useProducts(categoryId, brandId, page, query) {
@@ -25,7 +28,8 @@ export function useProductsForPublic(categoryId, brandId, page, query) {
     error,
   } = useQuery({
     queryKey: ["productsForPublic", { categoryId, brandId, page, query }],
-    queryFn: () => getAllProducts({ categoryId, brandId, page, query }),
+    queryFn: () =>
+      getAllProductsForPublic({ categoryId, brandId, page, query }),
   });
 
   return { products, isError, isLoading, error };

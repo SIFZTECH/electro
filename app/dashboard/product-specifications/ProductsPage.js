@@ -27,28 +27,14 @@ const ProductsPage = ({
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6">
           <FilterByProduct />
 
-          {isLoading && <Spinner />}
-          {!isLoading && !isError && products.data.data.length > 0 ? (
-            <>
-              <Products
-                products={products}
-                compareList={compareList}
-                toggleCompare={toggleCompare}
-              />
-            </>
-          ) : (
-            <div>
-              <SearchProduct />
-              <NotFoundData message="There is no products!" />
-            </div>
-          )}
-          {!isLoading && isError && error && (
-            <h1>
-              {error?.response.data.message
-                ? error.response.data.message
-                : error.message}
-            </h1>
-          )}
+          <Products
+            isLoading={isLoading}
+            isError={isError}
+            error={error}
+            products={products}
+            compareList={compareList}
+            toggleCompare={toggleCompare}
+          />
         </div>
         <PaginationUI
           data={products?.data}

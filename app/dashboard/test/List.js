@@ -91,6 +91,9 @@ const UsersTable = () => {
                             <button className="btn-primary bg-emerald-200">
                               Edit
                             </button>
+                            <button className="btn-primary bg-red-500">
+                              Delete
+                            </button>
                             {/* {isAssignRolePermission && (
                               <AssignUserRole user={data} />
                             )}

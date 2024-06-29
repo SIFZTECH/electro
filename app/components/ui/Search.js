@@ -26,7 +26,10 @@ const SearchFolder = ({ navigateTo }) => {
   }
 
   return (
-    <form className="flex items-center gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="flex-1 flex items-center gap-4"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <label htmlFor="search" className="sr-only">
         Search
       </label>
