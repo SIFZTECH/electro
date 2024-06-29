@@ -1,6 +1,6 @@
 import Image from "next/image";
 import ProductSpecifications from "./ProductSpecifications";
-import NotFoundData from "../components/ui/NotFoundData";
+import NotFoundData from "../ui/NotFoundData";
 import { CiSquareMinus } from "react-icons/ci";
 
 const CompareProducts = ({ compareList, toggleCompare }) => {

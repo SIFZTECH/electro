@@ -11,15 +11,7 @@ import Image from "next/image";
 import featuresWithKeyAndIcon from "@/app/lib/features.json";
 
 const ProductSpecifications = ({ specification }) => {
-  console.log(specification);
-  // Extract all unique features across all products
-  const allFeatures = [
-    ...new Set(
-      specification.flatMap((product) =>
-        product.specification.map((spec) => spec.key)
-      )
-    ),
-  ];
+  const allFeatures = featuresWithKeyAndIcon.map((feature) => feature.key);
 
   return (
     <Table>
@@ -40,12 +32,14 @@ const ProductSpecifications = ({ specification }) => {
           return (
             <TableRow key={i}>
               <TableCell className="font-serif font-semibold flex flex-col text-center gap-2 items-center">
-                <Image
-                  src={matchedFeature && `${matchedFeature?.icon}`}
-                  alt={feature}
-                  width={30}
-                  height={30}
-                />
+                {matchedFeature && (
+                  <Image
+                    src={matchedFeature.icon}
+                    alt={feature}
+                    width={30}
+                    height={30}
+                  />
+                )}
                 <span className="ml-2 capitalize">{feature}</span>
               </TableCell>
               {specification.map((product) => {

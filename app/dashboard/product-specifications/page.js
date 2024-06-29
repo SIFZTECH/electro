@@ -1,11 +1,11 @@
-import ProductsPage from "./ProductsPage";
+import ProductsRootPage from "./ProductsRootPage";
 
 export const metadata = {
   title: "Leon Cycle | Product Specifications",
 };
 
 const page = () => {
-  return <ProductsPage />;
+  return <ProductsRootPage />;
 };
 
 export default page;

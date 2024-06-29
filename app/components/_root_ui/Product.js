@@ -14,10 +14,11 @@ const Product = ({
   summary,
   isCompared,
   toggleCompare,
+  navigateTo,
 }) => {
   return (
     <Link
-      href={`/${slug}`}
+      href={navigateTo ? `/${navigateTo}/${slug}` : `/${slug}`}
       className="product flex flex-col gap-2 border border-gray-200 p-5 pt-3"
     >
       <div className="h-[180px] w-[180px] self-center relative">

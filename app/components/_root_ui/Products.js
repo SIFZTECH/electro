@@ -1,4 +1,4 @@
-import { BASE_URL_IMAGE } from "../lib/utils";
+import { BASE_URL_IMAGE } from "../../lib/utils";
 import Product from "./Product";
 import SearchProduct from "./SearchProduct";
 

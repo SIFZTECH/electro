@@ -6,11 +6,13 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/app/components/ui/tabs";
-import ProductsPage from "@/app/components/_root_ui/ProductsPage";
-import CompareProducts from "./components/_root_ui/CompareProducts";
-import { useProductsForPublic } from "./_features/products/useProducts";
+import ProductsPage from "./ProductsPage";
+import CompareProducts from "@/app/components/_root_ui/CompareProducts";
+import { useProducts } from "@/app/_features/products/useProducts";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import ProductCategories from "./ProductCategories";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const RootPage = () => {
   const [value, setValue] = useState("e-bikes");
@@ -21,8 +23,9 @@ const RootPage = () => {
   const categoryId = params.get("category");
   const brandId = params.get("brand");
   const query = params.get("query");
+  const isPermission = useCheckPermission("product_add");
 
-  const { products, isLoading, isError, error } = useProductsForPublic(
+  const { products, isLoading, isError, error } = useProducts(
     categoryId,
     brandId,
     page,
@@ -43,31 +46,27 @@ const RootPage = () => {
 
   return (
     <div className="relative w-full min-h-dvh overflow-hidden">
-      <div className="py-4 px-6 flex gap-6 items-start">
-        <Image
-          className="pt-5"
-          src={"/logo.svg"}
-          height={40}
-          width={40}
-          alt="Logo"
-        />
+      <div className="flex gap-6 items-start">
         <div className="flex-1">
           <Tabs value={value} className="font-serif">
-            <TabsList>
-              <TabsTrigger
-                value="e-bikes"
-                className=""
-                onClick={() => setValue("e-bikes")}
-              >
-                E Bikes
-              </TabsTrigger>
-              <TabsTrigger
-                value="compare-bikes"
-                onClick={() => setValue("compare-bikes")}
-              >
-                Compare Bikes
-              </TabsTrigger>
-            </TabsList>
+            <div className="flex justify-between items-center">
+              <TabsList>
+                <TabsTrigger
+                  value="e-bikes"
+                  className=""
+                  onClick={() => setValue("e-bikes")}
+                >
+                  E Bikes
+                </TabsTrigger>
+                <TabsTrigger
+                  value="compare-bikes"
+                  onClick={() => setValue("compare-bikes")}
+                >
+                  Compare Bikes
+                </TabsTrigger>
+              </TabsList>
+              {isPermission && <ProductCategories />}
+            </div>
             <TabsContent value="e-bikes">
               <ProductsPage
                 products={products}
