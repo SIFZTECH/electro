@@ -33,6 +33,42 @@ export async function getAllProducts({ categoryId, brandId, page, query }) {
 
   return data;
 }
+
+export async function getAllProductsForPublic({
+  categoryId,
+  brandId,
+  page,
+  query,
+}) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  let url = `${BASE_URL}/public/products`;
+
+  if (page) {
+    url = `${BASE_URL}/public/products?per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (categoryId) {
+    url = `${BASE_URL}/public/products?category=${categoryId}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+  if (brandId) {
+    url = `${BASE_URL}/public/products?brand=${brandId}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (query) {
+    url = `${BASE_URL}/public/search-products?search=${query}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  const { data } = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
 export async function createProduct(formData) {
   const token = localStorage.getItem("access-token");
 

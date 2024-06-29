@@ -16,3 +16,17 @@ export function useProducts(categoryId, brandId, page, query) {
 
   return { products, isError, isLoading, error };
 }
+
+export function useProductsForPublic(categoryId, brandId, page, query) {
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["productsForPublic", { categoryId, brandId, page, query }],
+    queryFn: () => getAllProducts({ categoryId, brandId, page, query }),
+  });
+
+  return { products, isError, isLoading, error };
+}

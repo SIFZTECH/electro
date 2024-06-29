@@ -10,7 +10,8 @@ import Image from "next/image";
 
 import featuresWithKeyAndIcon from "@/app/lib/features.json";
 
-const ProductSpecifications = ({ specification = [] }) => {
+const ProductSpecifications = ({ specification }) => {
+  console.log(specification);
   // Extract all unique features across all products
   const allFeatures = [
     ...new Set(
@@ -21,7 +22,7 @@ const ProductSpecifications = ({ specification = [] }) => {
   ];
 
   return (
-    <Table className="mt-10">
+    <Table>
       <TableHeader>
         <TableRow className="bg-color-primary hover:bg-color-primary">
           <TableHead></TableHead>

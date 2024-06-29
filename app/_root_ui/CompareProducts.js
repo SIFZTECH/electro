@@ -1,12 +1,12 @@
+import Image from "next/image";
 import ProductSpecifications from "./ProductSpecifications";
-import SpecificationForm from "./SpecificationForm";
 
-const CompareProducts = () => {
+const CompareProducts = ({ compareList }) => {
   return (
-    <div>
-      <h1 className="heading-h1 mb-10 mt-6">Compare Products By Model</h1>
-      <SpecificationForm />
-      <ProductSpecifications />
+    <div className="compare-products">
+      <h1 className="heading-h1 mb-10 mt-6">Compare Bikes</h1>
+
+      <ProductSpecifications specification={compareList} />
     </div>
   );
 };

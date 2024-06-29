@@ -6,7 +6,7 @@ const imageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
 };
 
-const Product = ({ id, slug, image, name, summary }) => {
+const Product = ({ id, slug, image, name, summary, addToCompare }) => {
   return (
     <Link
       href={`product-specifications/${slug}`}
@@ -21,7 +21,13 @@ const Product = ({ id, slug, image, name, summary }) => {
           objectFit="contain"
         />
       </div>
-      <button className="flex justify-between items-center gap-3 mb-2 text-start ">
+      <button
+        className="flex justify-between items-center gap-3 mb-2 text-start "
+        onClick={(e) => {
+          e.preventDefault();
+          addToCompare();
+        }}
+      >
         <span className="font-semibold mt-2 font-serif line-clamp-2">
           {name}
         </span>
