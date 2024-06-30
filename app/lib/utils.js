@@ -13,6 +13,7 @@ export const WARRANTY_PAGE_SIZE = 10;
 export const RESOURCE_PAGE_SIZE = 20;
 export const SOCIALMEDIAASSESTS_PAGE_SIZE = 20;
 export const STOCKS_PAGE_SIZE = 20;
+export const STORES_PAGE_SIZE = 20;
 export const BASE_URL_IMAGE = "https://electro-api.sifztech.com";
 
 export function getCoordinatesFromUrl(url) {

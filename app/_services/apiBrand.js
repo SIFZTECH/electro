@@ -20,6 +20,16 @@ export async function getAllBrands() {
 
   return data.data;
 }
+export async function getAllBrandsForPublic() {
+  const { data } = await axios.get(`${BASE_URL}/public/brands`);
+
+  if (!data.data)
+    throw new Error(
+      "There is no brand at that momment! Please add a new Brand"
+    );
+
+  return data.data;
+}
 
 export async function getBrand(id) {
   const token = localStorage.getItem("access-token");

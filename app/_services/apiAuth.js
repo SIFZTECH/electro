@@ -75,8 +75,6 @@ export async function profileSettings(formData) {
     })),
   };
 
-  console.log("process", processedData);
-
   const { data } = await axios({
     url: `${BASE_URL}/dealer/settings`,
     method: "post",

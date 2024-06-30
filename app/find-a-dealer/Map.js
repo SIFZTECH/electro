@@ -33,18 +33,18 @@ const getFormattedOpeningHours = (weeks) => {
       ? new Date(`1970-01-01T${week.opening_hours}Z`).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
-          timeZone: "UTC", // Ensure this matches your data's timezone if needed
+          timeZone: "UTC",
         })
       : "Closed";
     const closingHours = week.closing_hours
       ? new Date(`1970-01-01T${week.closing_hours}Z`).toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
-          timeZone: "UTC", // Ensure this matches your data's timezone if needed
+          timeZone: "UTC",
         })
       : "Closed";
 
-    const isHoliday = week.is_holiday;
+    const isHoliday = week.is_holiday === "1";
 
     return {
       day,
@@ -56,12 +56,12 @@ const getFormattedOpeningHours = (weeks) => {
 
   const openDays = formattedWeeks.filter(
     (week) =>
-      week.isHoliday === "0" &&
+      !week.isHoliday &&
       week.openingHours !== "Closed" &&
       week.closingHours !== "Closed"
   );
 
-  const holydays = formattedWeeks.filter((week) => week.isHoliday === "1");
+  const holydays = formattedWeeks.filter((week) => week.isHoliday);
 
   const openDaysGrouped = openDays.reduce((acc, curr) => {
     if (!acc.length || acc[acc.length - 1].endDay !== curr.day) {
@@ -95,7 +95,36 @@ const getFormattedOpeningHours = (weeks) => {
     )
     .join(", ");
 
-  return formattedString;
+  const holidaysString = holydays
+    .map((holiday) => `${holiday.day} (Holiday)`)
+    .join(", ");
+
+  return { formattedString, holidaysString };
+};
+
+const isStoreOpenToday = (weeks) => {
+  const dayMap = {
+    0: "sun",
+    1: "mon",
+    2: "tue",
+    3: "wed",
+    4: "thu",
+    5: "fri",
+    6: "sat",
+  };
+  const today = new Date().getDay();
+  const todayName = dayMap[today];
+  const todayWeek = weeks.find((week) => week.day.toLowerCase() === todayName);
+
+  if (todayWeek) {
+    return todayWeek.is_holiday === "0" &&
+      todayWeek.opening_hours !== null &&
+      todayWeek.closing_hours !== null
+      ? "Open Today"
+      : "Closed Today";
+  } else {
+    return "Closed Today";
+  }
 };
 
 const haversineDistance = (coords1, coords2, isMiles = false) => {
@@ -126,8 +155,14 @@ const haversineDistance = (coords1, coords2, isMiles = false) => {
 export default function MyMap() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { isSubmitting },
+  } = useForm();
   const { data, isLoading, error } = useAllDealerUsersInfo();
+  const [filteredStores, setFilteredStores] = useState([]);
 
   const {
     isLoading: isLoadingPosition,
@@ -151,11 +186,30 @@ export default function MyMap() {
   useEffect(
     function () {
       if (geolocationPosition) {
-        setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+        setMapPosition([geolocationPosition?.lat, geolocationPosition?.lng]);
       }
     },
     [geolocationPosition]
   );
+  useEffect(() => {
+    if (data) {
+      setFilteredStores(data.data);
+    }
+  }, [data]);
+
+  const onSubmit = (query) => {
+    const searchQuery = query.search.toLowerCase();
+    const filtered = data?.data?.filter(
+      (store) =>
+        store.company_name.toLowerCase().includes(searchQuery) ||
+        store.city.toLowerCase().includes(searchQuery) ||
+        store.state.toLowerCase().includes(searchQuery)
+    );
+    setFilteredStores(filtered);
+    console.log(filtered);
+  };
+
+  console.log(filteredStores);
 
   return (
     <>
@@ -169,7 +223,10 @@ export default function MyMap() {
               Go back to Dashboard
             </button>
             <h1 className="font-serif text-lg mb-2 uppercase">Find a store</h1>
-            <form className="flex items-center gap-4">
+            <form
+              className="flex items-center gap-4"
+              onSubmit={handleSubmit(onSubmit)}
+            >
               <label htmlFor="search" className="sr-only">
                 Search
               </label>
@@ -194,9 +251,9 @@ export default function MyMap() {
                 <input
                   type="search"
                   id="search"
+                  {...register("search")}
                   className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
                   placeholder="Search..."
-                  required
                 />
               </div>
               <button
@@ -236,15 +293,18 @@ export default function MyMap() {
                 </div>
               )}
               {!isLoading &&
-                data.data.map((store, i) => {
+                filteredStores?.map((store, i) => {
                   const storeCoordinates = getCoordinatesFromUrl(store.map_url);
                   const distance = haversineDistance(
                     {
-                      latitude: geolocationPosition.lat,
-                      longitude: geolocationPosition.lng,
+                      latitude: geolocationPosition?.lat,
+                      longitude: geolocationPosition?.lng,
                     },
                     storeCoordinates
                   );
+                  const { formattedString, holidaysString } =
+                    getFormattedOpeningHours(store.weeks);
+                  const openStatus = isStoreOpenToday(store.weeks);
 
                   return (
                     <div
@@ -267,8 +327,20 @@ export default function MyMap() {
                           {store.company_name || "Company Name Not Found"}
                         </h1>
                         <p className="text-sm ">{distance} km</p>
-                        <p className="my-2">
-                          {getFormattedOpeningHours(store.weeks)}
+                        <p className="my-2">{formattedString}</p>
+                        {/* <p className="text-red-500">
+                          Holidays: {holidaysString}
+                        </p> */}
+                        <p className="font-semibold font-serif text-sm mb-2">
+                          {openStatus.startsWith("Open") ? (
+                            <span className="bg-green-400 text-gray-50 py-1 px-2 rounded-full">
+                              Open Today
+                            </span>
+                          ) : (
+                            <span className="bg-red-400 text-gray-100 py-1 px-2 rounded-full">
+                              Closed Today
+                            </span>
+                          )}
                         </p>
                         <p>{store.state}</p>
                         <p>
@@ -314,7 +386,7 @@ export default function MyMap() {
                           )}
                         </div>
                         <Link
-                          href={`/find-a-dealer?lat=${storeCoordinates.latitude}&lng=${storeCoordinates.longitude}`}
+                          href={`/find-a-dealer?lat=${storeCoordinates?.latitude}&lng=${storeCoordinates?.longitude}`}
                           className="btn-primary inline-flex items-center"
                         >
                           <RiDirectionLine className="text-xl me-1" />

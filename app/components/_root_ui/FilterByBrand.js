@@ -1,19 +1,13 @@
-import { useBrands } from "@/app/_features/brands/useBrands";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/app/components/ui/accordion";
+import { useBrandsForPublic } from "@/app/_features/brands/useBrands";
+
 import Filter from "@/app/components/ui/Filter";
-import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const FilterByBrand = ({ selectedBrands, setSelectedBrands }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data, isLoading, isError } = useBrands();
+  const { data, isLoading, isError } = useBrandsForPublic();
 
   // Set initial state from URL query parameters
   useEffect(() => {

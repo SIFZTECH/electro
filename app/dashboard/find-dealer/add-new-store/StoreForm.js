@@ -1,12 +1,12 @@
 "use client";
 
 import toast from "react-hot-toast";
-import { createWarranty } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { Controller, useForm } from "react-hook-form";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
+import { useForm } from "react-hook-form";
+import { createStore } from "@/app/_services/apiStores";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
 const AddNewStore = () => {
   const queryClient = useQueryClient();
@@ -18,29 +18,33 @@ const AddNewStore = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  // async function onSubmit(data) {
-  //   try {
-  //     const res = await createWarranty(data);
+  async function onSubmit(data) {
+    try {
+      console.log(data);
+      const res = await createStore(data);
 
-  //     if (res) {
-  //       toast.success(res.message);
+      console.log(res);
+      if (res) {
+        toast.success(res.message);
 
-  //       queryClient.invalidateQueries("warranties");
-  //       router.back(-1);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     if (err.response) {
-  //       toast.error(err.response.data.message);
-  //     } else {
-  //       toast.error("Something went wrong");
-  //     }
-  //   }
-  // }
+        queryClient.invalidateQueries("stores");
+        router.back(-1);
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        err.response.data?.data
+          ? handleValidationError(err.response.data.data)
+          : toast.error(err.response.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  }
 
   return (
     <>
-      <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit()}>
+      <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
         <h2 className="flex items-center  gap-2 justify-center my-3 mb-6">
           <svg
             width="28"
@@ -150,7 +154,6 @@ const AddNewStore = () => {
               <input
                 {...register("email")}
                 type="email"
-                readOnly
                 placeholder="Your Email"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
@@ -196,7 +199,17 @@ const AddNewStore = () => {
               )}
             </div>
           </div>
-
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Web Url
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("weburl")}
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               ABN
@@ -210,6 +223,7 @@ const AddNewStore = () => {
               <option value="abn">TV5</option>
             </select>
           </div>
+
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date
@@ -501,6 +515,18 @@ const AddNewStore = () => {
               file:text-sm file:font-semibold
               file:bg-color-primary/20 file:text-color-gray-200
               hover:file:bg-color-primary/30"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Stock in Stock feed url
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("stockfeedurl")}
+                type="url"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
           </div>

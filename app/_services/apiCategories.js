@@ -15,6 +15,11 @@ export async function getAllCategories() {
 
   return data.data;
 }
+export async function getAllCategoriesForPublic() {
+  const { data } = await axios.get(`${BASE_URL}/public/categories`);
+
+  return data.data;
+}
 
 export async function getCategory(categoryId) {
   const token = localStorage.getItem("access-token");
