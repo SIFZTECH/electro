@@ -60,16 +60,17 @@ export async function updateStore(id, formData) {
 
   const { data } = await axios({
     url: `${BASE_URL}/find/dealer/update/${id}`,
-    method: "put",
+    method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
       "content-type": "multipart/form-data",
     },
-    data: formData,
+    data: { ...formData, logo: formData.logo[0], _method: "PUT" },
   });
 
   return data;
 }
+
 export async function deleteStore(id) {
   const token = localStorage.getItem("access-token");
 

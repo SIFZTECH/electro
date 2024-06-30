@@ -36,7 +36,7 @@ const EditStore = ({ store }) => {
       city: store?.city,
       postal_code: store?.postal_code,
       state: store?.state,
-      logo: store?.logo,
+
       stockfeedurl: store?.stockfeedurl,
       map_url: store?.map_url,
       status: store?.status,
