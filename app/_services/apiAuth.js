@@ -221,6 +221,20 @@ export async function resendOtp(formData) {
 
   return data;
 }
+export async function resendEmail() {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/user/email/verification-notification`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
 
 export async function logout() {
   const token = localStorage.getItem("access-token");

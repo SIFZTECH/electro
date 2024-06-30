@@ -461,7 +461,7 @@ const AddNewStore = () => {
                   </div>
                 </div>
                 <span
-                  className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
+                  className="btn-primary bg-red-400 texl-sm text-gray-50 py-[9px] self-end cursor-pointer"
                   onClick={() => remove(index)}
                 >
                   Remove
