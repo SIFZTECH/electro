@@ -24,6 +24,7 @@ const StoresTable = () => {
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
   const query = params.get("query") && params.get("query");
+
   const { data, isLoading, isError, error } = useStores(page, query);
 
   if (isLoading) {

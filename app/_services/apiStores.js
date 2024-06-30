@@ -1,24 +1,24 @@
 import axios from "axios";
 import { BASE_URL, PAGE_SIZE, STORES_PAGE_SIZE } from "../lib/utils";
 
-export async function getAllStores(page, block, query) {
+export async function getAllStores(page, query) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
+  console.log(query);
   let url = `${BASE_URL}/find/dealer/get-all?per_page=${STORES_PAGE_SIZE}&page=${page}`;
 
   if (query) {
     const { data } = await axios({
-      url: `${BASE_URL}/find/dealer/get-all/search`,
-      method: "post",
+      url: `${BASE_URL}/find/dealer/search?search=${query}`,
+      method: "get",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      data: { query },
     });
 
-    return data;
+    return data?.data;
   } else {
     const { data } = await axios({
       url,
