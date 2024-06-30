@@ -423,7 +423,7 @@ export default function MyMap() {
                     storeCoordinates.longitude,
                   ]}
                 >
-                  <Popup>
+                  <Popup autoPan>
                     <div className="text-base">
                       <h1 className="font-serif font-semibold text-lg">
                         {store.company_name || "Company Name Not Found"}
@@ -474,7 +474,7 @@ export default function MyMap() {
                         className="btn-primary inline-flex items-center mt-2"
                       >
                         <RiDirectionLine className="text-xl me-1" />
-                        Get direction
+                        Get direction From Google Map
                       </Link>
                     </div>
                   </Popup>
