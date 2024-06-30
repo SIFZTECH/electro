@@ -24,8 +24,10 @@ const SelectBrand = ({ register, errors }) => {
                 </option>
               ))}
           </select>
-          {errors?.brand && (
-            <span className="text-red-500 text-sm">{errors.brand.message}</span>
+          {errors?.brand_id && (
+            <span className="text-red-500 text-sm">
+              {errors.brand_id.message}
+            </span>
           )}
         </div>
       </div>

@@ -71,7 +71,7 @@ const ProductDetailsPage = ({ params }) => {
                     (item) => item.key === feature
                   );
                   const productFeature =
-                    product.specification.find(
+                    product?.specification?.find(
                       (spec) => spec.key === feature
                     ) || {};
 

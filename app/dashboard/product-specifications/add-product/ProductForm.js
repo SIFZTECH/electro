@@ -23,7 +23,7 @@ const ProductForm = () => {
     control,
     handleSubmit,
     setValue,
-
+    clearErrors,
     watch,
     formState: { isSubmitting, errors },
   } = useForm({
@@ -181,14 +181,19 @@ const ProductForm = () => {
           </div>
         </div>
         <SelectBrand register={register} errors={errors} />
-        <SelectCategoryFormComponent control={control} watch={watch} />
+        <SelectCategoryFormComponent
+          control={control}
+          watch={watch}
+          errors={errors}
+        />
         <SelectKeyFeatures control={control} />
 
-        <SelectAttribute control={control} />
+        <SelectAttribute control={control} errors={errors} />
         <ImageUploader
           register={register}
           errors={errors}
           setValue={setValue}
+          clearErrors={clearErrors}
         />
       </div>
       <button

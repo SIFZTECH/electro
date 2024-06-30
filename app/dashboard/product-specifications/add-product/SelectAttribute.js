@@ -7,7 +7,7 @@ import {
 } from "@/app/_features/attributes/useAttributes";
 import { useFieldArray, Controller, useWatch } from "react-hook-form";
 
-function SelectAttribute({ control }) {
+function SelectAttribute({ control, errors }) {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "variants",
@@ -32,13 +32,14 @@ function SelectAttribute({ control }) {
           <div className="w-full" key={item.id}>
             <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8 w-full">
               <div className="flex-1">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 required-field">
                   Attribute Value
                 </label>
                 <Controller
                   name={`variants[${index}].attribute_value_id`}
                   control={control}
                   defaultValue={item.attribute_value_id}
+                  rules={{ required: "This is required field!" }}
                   render={({ field }) => (
                     <select
                       className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
@@ -98,6 +99,11 @@ function SelectAttribute({ control }) {
             >
               Remove
             </span>
+            {errors?.variants?.[index]?.attribute_value_id && (
+              <p className="text-red-500 text-sm self-center">
+                {errors.variants[index].attribute_value_id.message}
+              </p>
+            )}
           </div>
         ))}
 
