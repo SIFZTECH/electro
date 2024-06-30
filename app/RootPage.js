@@ -11,8 +11,11 @@ import CompareProducts from "./components/_root_ui/CompareProducts";
 import { useProductsForPublic } from "./_features/products/useProducts";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
+import { useUser } from "./_features/authentication/useUser";
 
 const RootPage = () => {
+  const { user, isLoading: isLoading2, isVerified } = useUser();
   const [value, setValue] = useState("e-bikes");
 
   const params = useSearchParams();
@@ -43,14 +46,25 @@ const RootPage = () => {
 
   return (
     <div className="relative w-full min-h-dvh overflow-hidden">
-      <div className="py-4 px-6 flex gap-6 items-start">
-        <Image
-          className="pt-5"
-          src={"/logo.svg"}
-          height={40}
-          width={40}
-          alt="Logo"
-        />
+      <div className="py-4 px-6 flex flex-col items-start">
+        <div className="w-full flex justify-between items-center">
+          <Image
+            className="pt-5"
+            src={"/logo.svg"}
+            height={40}
+            width={40}
+            alt="Logo"
+          />
+          {!isLoading2 && user && isVerified ? (
+            <Link className="btn-primary" href="/dashboard">
+              Dashboard
+            </Link>
+          ) : (
+            <Link className="btn-primary" href="/login">
+              Log in
+            </Link>
+          )}
+        </div>
         <div className="flex-1">
           <Tabs value={value} className="font-serif">
             <TabsList>

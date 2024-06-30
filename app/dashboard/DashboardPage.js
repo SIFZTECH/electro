@@ -7,6 +7,7 @@ import useCheckPermission from "../_hooks/usePermission";
 import NotFoundData from "../components/ui/NotFoundData";
 import NoPermission from "../components/ui/NoPermission";
 import { useUser } from "../_features/authentication/useUser";
+import DealerPortalChart from "../components/ui/DealerPortalChart";
 
 const DashboardPage = () => {
   const isPermission = useCheckPermission("dashboard");
@@ -17,6 +18,7 @@ const DashboardPage = () => {
         <Stats />
 
         <PieCharts />
+
         <RecentOrder />
       </div>
     );

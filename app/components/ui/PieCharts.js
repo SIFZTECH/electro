@@ -1,6 +1,7 @@
 "use client";
 
 import Chart from "./Chart";
+import DealerPortalChart from "./DealerPortalChart";
 
 const startData1 = [
   {
@@ -50,9 +51,10 @@ const startData2 = [
 
 const PieCharts = () => {
   return (
-    <div className="mt-14 flex flex-col lg:grid lg:grid-cols-2 gap-10">
+    <div className="mt-14 flex flex-col lg:grid lg:grid-cols-4 gap-10">
       <Chart startData={startData1} title="Click and Collect orders" />
-      <Chart startData={startData2} title="Click and Collect orders" />
+      <Chart startData={startData2} title="Orders By Brand" />
+      <DealerPortalChart title="Dealer Portal" />
     </div>
   );
 };

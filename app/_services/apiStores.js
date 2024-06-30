@@ -11,7 +11,7 @@ export async function getAllStores(page, query) {
 
   if (query) {
     const { data } = await axios({
-      url: `${BASE_URL}/find/dealer/search?search=${query}?per_page=${STORES_PAGE_SIZE}&page=${page}`,
+      url: `${BASE_URL}/find/dealer/search?search=${query}`,
       method: "get",
       headers: {
         Authorization: `Bearer ${token}`,
