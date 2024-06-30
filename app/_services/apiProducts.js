@@ -65,7 +65,6 @@ export async function createProduct(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
-  const productIds = formData.compare.map((product) => +product.id);
 
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
@@ -73,10 +72,7 @@ export async function createProduct(formData) {
       Authorization: `Bearer ${token}`,
       "content-type": "multipart/form-data",
     },
-    data: {
-      ...formData,
-      compare: productIds,
-    },
+    data: formData,
   });
 
   return data;
@@ -107,8 +103,6 @@ export async function updateProduct(id, formData) {
 
   if (!token) return null;
 
-  const productIds = formData.compare.map((product) => +product.id);
-
   const { data } = await axios(`${BASE_URL}/update-product/${id}`, {
     method: "POST",
     headers: {
@@ -117,7 +111,6 @@ export async function updateProduct(id, formData) {
     },
     data: {
       ...formData,
-      compare: productIds,
       _method: "PUT",
     },
   });
