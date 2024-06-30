@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, PAGE_SIZE, STORES_PAGE_SIZE } from "../lib/utils";
+import { BASE_URL, STORES_PAGE_SIZE } from "../lib/utils";
 
 export async function getAllStores(page, query) {
   const token = localStorage.getItem("access-token");
@@ -11,7 +11,7 @@ export async function getAllStores(page, query) {
 
   if (query) {
     const { data } = await axios({
-      url: `${BASE_URL}/find/dealer/search?search=${query}`,
+      url: `${BASE_URL}/find/dealer/search?search=${query}?per_page=${STORES_PAGE_SIZE}&page=${page}`,
       method: "get",
       headers: {
         Authorization: `Bearer ${token}`,
