@@ -66,7 +66,7 @@ const RootPage = () => {
           )}
         </div>
         <div className="flex-1">
-          <Tabs value={value} className="font-serif">
+          <Tabs value={value} className="font-serif w-dvw">
             <TabsList>
               <TabsTrigger
                 value="e-bikes"

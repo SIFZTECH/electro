@@ -1,19 +1,22 @@
 "use client";
 
 import { BsPatchExclamation } from "react-icons/bs";
-import ProductSpecifications from "./ProductSpecifications";
 import ProductTop from "./ProductTop";
 import { useProduct } from "@/app/_features/products/useProduct";
 import Spinner from "@/app/components/ui/Spinner";
 import DeleteProduct from "./DeleteProduct";
 import EditProduct from "./UpdateProduct";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import featuresWithKeyAndIcon from "@/app/lib/features.json";
+
 import Image from "next/image";
+import ProductSpecifications from "@/app/components/_root_ui/ProductSpecifications";
 
 const ProductDetailsPage = ({ params }) => {
   const isProductUpdatePermission = useCheckPermission("product_update");
   const isProductDeletePermission = useCheckPermission("product_delete");
   const { isLoading, product, error, isError } = useProduct(params.slug);
+  const allFeatures = featuresWithKeyAndIcon.map((feature) => feature.key);
 
   if (isLoading) return <Spinner />;
   if (isError && error) return;
@@ -60,14 +63,63 @@ const ProductDetailsPage = ({ params }) => {
               />
               <span>Key Features</span>
             </h2>
+
             <div className="my-3 shadow-sm pb-3">
-              <ul className="md:list-disc pl-1 md:pl-10 space-y-2">
-                {product?.specification?.map((feature, i) => (
-                  <li key={i + 1}>
-                    <span>{feature.value}</span>
-                  </li>
-                ))}
+              <ul className="md:list-disc pl-1 md:pl-10 space-y-6">
+                {allFeatures.map((feature) => {
+                  const matchedFeature = featuresWithKeyAndIcon.find(
+                    (item) => item.key === feature
+                  );
+                  const productFeature =
+                    product.specification.find(
+                      (spec) => spec.key === feature
+                    ) || {};
+
+                  return (
+                    <li className="flex items-center gap-8" key={feature}>
+                      <div className="flex items-center text-center">
+                        {matchedFeature && (
+                          <Image
+                            src={matchedFeature.icon}
+                            alt={feature}
+                            width={30}
+                            height={30}
+                          />
+                        )}
+                        <span className="ml-2 capitalize">{feature}:</span>
+                      </div>
+                      <p className="font-semibold font-serif lg:text-start text-[#645208">
+                        {productFeature.value || "N/A"}
+                      </p>
+                    </li>
+                  );
+                })}
               </ul>
+              {/* <ul className="md:list-disc pl-1 md:pl-10 space-y-2">
+                {product?.specification?.map((feature, i) => {
+                  const matchedFeature = featuresWithKeyAndIcon.find(
+                    (item) => item.key === feature.key
+                  );
+
+                  console.log(matchedFeature);
+
+                  return (
+                    <li key={i + 1}>
+                      <span>
+                        {matchedFeature && (
+                          <Image
+                            src={matchedFeature.icon}
+                            alt={feature}
+                            width={30}
+                            height={30}
+                          />
+                        )}
+                        <span>{feature.key}</span> {feature.value}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul> */}
             </div>
           </div>
         </div>

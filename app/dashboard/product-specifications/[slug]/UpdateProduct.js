@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import SelectCategoryFormComponent from "../add-product/SelectCategory&SubCategory";
-import SpecificationForm from "../add-product/SpecificationForm";
 import UpdateImageUploader from "./UpdateImage";
 import SelectBrand from "../add-product/SelectBrand";
 import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
@@ -44,7 +43,6 @@ const EditProduct = ({ product }) => {
       brand_id: product ? product?.brand_id : "",
       key_features: product ? product?.specification : [],
       variants: product ? product?.variants : [],
-      products: product?.compare ? product.compare : [{ id: "" }],
       images: product ? product?.images : [],
     },
   });
@@ -60,9 +58,8 @@ const EditProduct = ({ product }) => {
     brand_id,
     key_features,
     variants,
-    specification,
+
     images,
-    products,
   }) {
     const formattedVariants = variants.map((variant) => {
       return {
@@ -84,7 +81,6 @@ const EditProduct = ({ product }) => {
         variants: formattedVariants,
         specification: key_features,
         images,
-        compare: products,
       });
 
       if (res) {
@@ -103,7 +99,6 @@ const EditProduct = ({ product }) => {
       }
     }
   }
-
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
@@ -231,13 +226,12 @@ const EditProduct = ({ product }) => {
               errors={errors}
               setValue={setValue}
             />
-            <SpecificationForm control={control} />
           </div>
           <button
             type="submit"
             className="btn-primary mt-5 font-semibold rounded-sm px-6 py-2"
           >
-            {isSubmitting ? <SpinnerMini /> : `Update ${product.name}`}
+            {isSubmitting ? <SpinnerMini /> : `Update`}
           </button>
         </form>
       </DialogContent>

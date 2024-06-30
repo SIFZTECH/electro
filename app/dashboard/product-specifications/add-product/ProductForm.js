@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import SelectAttribute from "./SelectAttribute";
 
 import SelectCategoryFormComponent from "./SelectCategory&SubCategory";
-import SpecificationForm from "./SpecificationForm";
 import toast from "react-hot-toast";
 import { createProduct } from "@/app/_services/apiProducts";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
@@ -31,7 +30,6 @@ const ProductForm = () => {
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
       key_features: [{ key: "", value: "" }],
-      products: [{ id: "" }],
     },
   });
 
@@ -48,7 +46,6 @@ const ProductForm = () => {
     variants,
     specification,
     images,
-    products,
   }) {
     try {
       const res = await createProduct({
@@ -63,7 +60,6 @@ const ProductForm = () => {
         variants,
         specification: key_features,
         images,
-        compare: products,
       });
 
       if (res) {
@@ -194,7 +190,6 @@ const ProductForm = () => {
           errors={errors}
           setValue={setValue}
         />
-        <SpecificationForm control={control} />
       </div>
       <button
         type="submit"

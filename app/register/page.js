@@ -8,10 +8,17 @@ import { BASE_URL } from "../lib/utils";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 export default function Page() {
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle state
+  };
 
   const {
     register,
@@ -140,7 +147,7 @@ export default function Page() {
                   Password
                 </label>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   {...register("password", {
                     required: "Please enter your password",
@@ -149,16 +156,25 @@ export default function Page() {
                       message: "Password needs a minimum of 8 characters",
                     },
                   })}
-                  disable={isSubmitting}
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Toggle input type based on showPassword state
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.password && (
-                  <span className="text-red-500 text-sm">
-                    {errors.password.message}
-                  </span>
-                )}
+                <span
+                  onClick={togglePasswordVisibility} // Toggle password visibility on click
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                >
+                  {showPassword ? (
+                    <EyeOffIcon className="h-5 w-5 text-gray-400" />
+                  ) : (
+                    <EyeIcon className="h-5 w-5 text-gray-400" />
+                  )}
+                </span>
               </div>
+              {errors?.password && (
+                <span className="text-red-500 text-sm">
+                  {errors.password.message}
+                </span>
+              )}
             </div>
             <div>
               <div className="flex items-center justify-between">
