@@ -144,7 +144,7 @@ const Navigation = () => {
                   <AccordionTrigger>
                     <div className="flex items-center gap-2">
                       <svg
-                        fill="#fff"
+                        fill="#DEE1E6"
                         width="25"
                         height="25"
                         viewBox="0 0 24 24"
@@ -220,7 +220,7 @@ const Navigation = () => {
                 href={"/dashboard/attributes"}
               >
                 <svg
-                  fill="#fff"
+                  fill="#DEE1E6"
                   width="25"
                   height="25"
                   viewBox="0 0 14 14"
@@ -246,7 +246,7 @@ const Navigation = () => {
                 href={"/dashboard/brands"}
               >
                 <svg
-                  fill="#fff"
+                  fill="#DEE1E6"
                   width="25"
                   height="25"
                   viewBox="0 0 14 14"

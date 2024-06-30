@@ -46,6 +46,22 @@ const RootPage = () => {
 
   return (
     <div className="relative w-full min-h-dvh overflow-hidden">
+      <div className="fixed right-5 bottom-8">
+        <div className="relative" onClick={() => setValue("compare-bikes")}>
+          <Image
+            className="cursor-pointer"
+            src="/container.png"
+            width={40}
+            height={40}
+            alt="container"
+          />
+          <p className="absolute right-0 top-0 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
+            <span className="p-1 text-[10px] leading-3">
+              {compareList.length}
+            </span>
+          </p>
+        </div>
+      </div>
       <div className="py-4 px-6 flex flex-col items-start">
         <div className="w-full flex justify-between items-center">
           <Image
@@ -65,8 +81,8 @@ const RootPage = () => {
             </Link>
           )}
         </div>
-        <div className="flex-1">
-          <Tabs value={value} className="font-serif w-dvw">
+        <div className="flex-1 w-full">
+          <Tabs value={value} className="font-serif w-full">
             <TabsList>
               <TabsTrigger
                 value="e-bikes"
@@ -100,22 +116,6 @@ const RootPage = () => {
               />
             </TabsContent>
           </Tabs>
-        </div>
-      </div>
-      <div className="absolute right-10">
-        <div className="relative" onClick={() => setValue("compare-bikes")}>
-          <Image
-            className="cursor-pointer"
-            src="/container.png"
-            width={40}
-            height={40}
-            alt="container"
-          />
-          <p className="absolute right-0 top-0 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
-            <span className="p-1 text-[10px] leading-3">
-              {compareList.length}
-            </span>
-          </p>
         </div>
       </div>
     </div>
