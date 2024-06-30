@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { createStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
@@ -14,13 +14,29 @@ const AddNewStore = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      weeks: [
+        {
+          day: "",
+          opening_hours: "0:00",
+          closing_hours: "0:00",
+          is_holiday: 0,
+        },
+      ],
+    },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "weeks",
+  });
 
   async function onSubmit(data) {
     try {
-      console.log(data);
       const res = await createStore(data);
 
       console.log(res);
@@ -147,16 +163,23 @@ const AddNewStore = () => {
             </div>
           </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 required-field">
               Email
             </label>
             <div className="mt-1">
               <input
-                {...register("email")}
+                {...register("email", {
+                  required: "This is required field",
+                })}
                 type="email"
                 placeholder="Your Email"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {errors?.email && (
+                <span className="text-red-500 text-sm">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="">
@@ -210,48 +233,7 @@ const AddNewStore = () => {
               />
             </div>
           </div>
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-              ABN
-            </label>
-            <select
-              name="abn"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            >
-              <option value="">--Please choose an option--</option>
-              <option value="abn">ABN</option>
-              <option value="abn">TV5</option>
-            </select>
-          </div>
 
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Purchase Date
-            </label>
-            <input
-              {...register("purchase_date", {
-                required: "Please pick your purchase date",
-              })}
-              type="date"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-            {errors?.purchase_date && (
-              <span className="text-red-500 text-sm">
-                {errors.purchase_date.message}
-              </span>
-            )}
-          </div>
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-              Invoice Number
-            </label>
-            <div className="mt-1">
-              <input
-                {...register("invoice_number")}
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Description
@@ -362,7 +344,7 @@ const AddNewStore = () => {
             </div>
           </div>
 
-          {/* <div className="col-span-2">
+          <div className="col-span-2">
             {fields.map((item, index) => (
               <div
                 key={item.id}
@@ -499,14 +481,16 @@ const AddNewStore = () => {
             >
               Add More Holydays
             </span>
-          </div> */}
+          </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 required-field">
               Upload your logo
             </label>
             <div className="mt-1">
               <input
-                {...register("logo")}
+                {...register("logo", {
+                  required: "This is required field",
+                })}
                 type="file"
                 placeholder="Upload"
                 accept="image/*"
@@ -516,18 +500,11 @@ const AddNewStore = () => {
               file:bg-color-primary/20 file:text-color-gray-200
               hover:file:bg-color-primary/30"
               />
-            </div>
-          </div>
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-              Stock in Stock feed url
-            </label>
-            <div className="mt-1">
-              <input
-                {...register("stockfeedurl")}
-                type="url"
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
+              {errors?.logo && (
+                <span className="text-red-500 text-sm">
+                  {errors.logo.message}
+                </span>
+              )}
             </div>
           </div>
         </div>
