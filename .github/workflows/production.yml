@@ -1,9 +1,10 @@
-name: Deploy Next.js
+
+name: Deploy Laravel Project on push
+
 on:
   push:
     branches:
-      - production 
-
+      - production
 jobs:
   web-deploy:
     name: Deploy
@@ -12,23 +13,19 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
-          node-version: '20'
-      - name: Install dependencies
+          node-version: 20
+      - name: Install node dependencies
         run: npm ci
-      - name: Build Next.js app
-        run: npm run build
-
-      # Optional - install PM2 (for production)
-      - name: Install PM2
-        uses: wow-actions/setup-pm2@v1
-
-      # --- FTP Deployment with PM2 ---
-      - name: 📂 Sync files with PM2
+      - name: Setup Project
+        run: |
+          npm run build
+      - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          
           server-dir: /public_html/electro.sifztech.com # Specify the correct path
           sync-glob: |
             **/*
