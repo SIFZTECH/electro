@@ -1,4 +1,6 @@
+
 name: Deploy Laravel Project on push
+
 on:
   push:
     branches:
@@ -23,4 +25,15 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /
+          
+          server-dir: /public_html/electro.sifztech.com # Specify the correct path
+          sync-glob: |
+            **/*
+            !.git/**
+            !node_modules/**
+
+          # PM2 Commands 
+          run-command: |
+             cd public_html
+             cd electro.sifztech.com
+             pm2 startOrRestart ecosystem.config.js
