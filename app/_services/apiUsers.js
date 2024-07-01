@@ -41,7 +41,7 @@ export async function getAllDealerInfo() {
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/dealer/find`,
+    url: `${BASE_URL}/find/dealer/get-all`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
