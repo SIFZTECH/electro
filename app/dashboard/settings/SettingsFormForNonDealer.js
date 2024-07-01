@@ -36,7 +36,6 @@ const SettingsFormForNonDealer = () => {
         profile,
       });
 
-      console.log(res);
       if (res) {
         toast.success("Profile updated Successfully");
         queryClient.invalidateQueries("user");

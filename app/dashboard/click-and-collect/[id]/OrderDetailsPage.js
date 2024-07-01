@@ -14,8 +14,6 @@ const OrderDetailsPage = ({ id }) => {
     return <Spinner />;
   }
 
-  console.log(data?.data?.order?.status);
-
   return (
     <div>
       <h1 className="heading-h1 mb-8 mt-4">Click and Collect</h1>

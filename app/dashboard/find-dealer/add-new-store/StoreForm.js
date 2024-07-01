@@ -39,7 +39,7 @@ const AddNewStore = () => {
     try {
       const res = await createStore(data);
 
-      console.log(res);
+  
       if (res) {
         toast.success(res.message);
 

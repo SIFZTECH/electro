@@ -17,7 +17,7 @@ function ImageUploader({ register, errors, setValue }) {
     event.preventDefault();
     const files = Array.from(event.dataTransfer.files);
     const validFiles = files.filter((file) => file.type.startsWith("image"));
-    console.log(validFiles);
+
     if (validFiles.length === 0) {
       toast.error("Only Image files are allowed.");
     }

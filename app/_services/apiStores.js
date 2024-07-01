@@ -6,7 +6,6 @@ export async function getAllStores(page, query) {
 
   if (!token) return null;
 
-  console.log(query);
   let url = `${BASE_URL}/find/dealer/get-all?per_page=${STORES_PAGE_SIZE}&page=${page}`;
 
   if (query) {

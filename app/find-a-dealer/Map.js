@@ -206,10 +206,7 @@ export default function MyMap() {
         store.state.toLowerCase().includes(searchQuery)
     );
     setFilteredStores(filtered);
-    console.log(filtered);
   };
-
-  console.log(filteredStores);
 
   return (
     <>
