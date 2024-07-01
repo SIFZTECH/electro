@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import SubCategoriesList from "./SubCategoriesList";
+import SubCategoriesList from "@/app/dashboard/subcategories/SubcategoriesList";
 import { useSearchParams } from "next/navigation";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 
