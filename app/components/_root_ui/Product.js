@@ -30,17 +30,17 @@ const Product = ({
           objectFit="contain"
         />
       </div>
-      <button
-        className="flex justify-between items-center gap-3 mb-2 text-start"
-        onClick={(e) => {
-          e.preventDefault();
-          toggleCompare();
-        }}
-      >
+      <button className="flex justify-between items-center gap-3 mb-2 text-start">
         <span className="font-semibold mt-2 font-serif line-clamp-2">
           {name}
         </span>
-        <span className="icon-heart border border-gray-200 p-1 bg-gray-100">
+        <span
+          onClick={(e) => {
+            e.preventDefault();
+            toggleCompare();
+          }}
+          className="icon-heart border border-gray-200 p-1 bg-gray-100"
+        >
           {isCompared ? (
             <CiSquareCheck size="18" />
           ) : (

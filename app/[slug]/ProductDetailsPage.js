@@ -6,6 +6,7 @@ import Spinner from "@/app/components/ui/Spinner";
 
 import Image from "next/image";
 import Link from "next/link";
+import ProductSpecifications from "../dashboard/product-specifications/[slug]/ProductSpecifications";
 
 const ProductDetailsPage = ({ params }) => {
   const { isLoading, product, error, isError } = useProductForPublic(
@@ -54,15 +55,7 @@ const ProductDetailsPage = ({ params }) => {
               />
               <span>Key Features</span>
             </h2>
-            <div className="my-3 shadow-sm pb-3">
-              <ul className="md:list-disc pl-1 md:pl-10 space-y-2">
-                {product?.specification?.map((feature, i) => (
-                  <li key={i + 1}>
-                    <span>{feature.value}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ProductSpecifications product={product} />
           </div>
         </div>
       </div>
