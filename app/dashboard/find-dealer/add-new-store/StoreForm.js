@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { createStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { getCoordinatesFromUrl } from "@/app/lib/utils";
+import { useState } from "react";
 
 const AddNewStore = () => {
   const queryClient = useQueryClient();
@@ -15,6 +17,8 @@ const AddNewStore = () => {
   const {
     register,
     control,
+    setError,
+    clearErrors,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -30,16 +34,31 @@ const AddNewStore = () => {
     },
   });
 
+  const [coordinates, setCoordinates] = useState(null);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "weeks",
   });
 
   async function onSubmit(data) {
+    const coords = getCoordinatesFromUrl(data.map_url);
+
+    if (coords) {
+      setCoordinates(data.coords);
+      clearErrors("map_url");
+    } else {
+      setCoordinates(null);
+      setError("map_url", {
+        type: "manual",
+        message: "The URL does not contain valid latitude and longitude.",
+      });
+      return;
+    }
+
     try {
       const res = await createStore(data);
 
-  
       if (res) {
         toast.success(res.message);
 

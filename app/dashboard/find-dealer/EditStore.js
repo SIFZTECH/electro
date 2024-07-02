@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { updateStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { getCoordinatesFromUrl } from "@/app/lib/utils";
 
 const EditStore = ({ store }) => {
   const [open, setOpen] = useState();
@@ -20,6 +21,8 @@ const EditStore = ({ store }) => {
     register,
     handleSubmit,
     control,
+    setError,
+    clearErrors,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
@@ -28,7 +31,7 @@ const EditStore = ({ store }) => {
       email: store?.email,
       phone: store?.phone,
       company_name: store?.company_name,
-      web_url: store?.web_url,
+      weburl: store?.weburl,
 
       description: store?.description,
       street_address: store?.street_address,
@@ -49,12 +52,26 @@ const EditStore = ({ store }) => {
     },
   });
 
+  const [coordinates, setCoordinates] = useState(null);
   const { fields, append, remove } = useFieldArray({
     control,
     name: "weeks",
   });
 
   async function onSubmit(formData) {
+    const coords = getCoordinatesFromUrl(formData.map_url);
+
+    if (coords) {
+      setCoordinates(formData.coords);
+      clearErrors("map_url");
+    } else {
+      setCoordinates(null);
+      setError("map_url", {
+        type: "manual",
+        message: "The URL does not contain valid latitude and longitude.",
+      });
+      return;
+    }
     try {
       const res = await updateStore(store.id, formData);
 

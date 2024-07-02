@@ -17,6 +17,7 @@ import Link from "next/link";
 import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
 import { useStores } from "../_features/stores/useStores";
 import NotFoundData from "../components/ui/NotFoundData";
+import { CLIENT_PUBLIC_FILES_PATH } from "next/dist/shared/lib/constants";
 
 const getFormattedOpeningHours = (weeks) => {
   const dayMap = {
@@ -163,8 +164,10 @@ export default function MyMap() {
     watch,
     formState: { isSubmitting },
   } = useForm();
-  const { data, isLoading } = useStores();
+  const { data, isLoading, isError } = useStores();
   const [filteredStores, setFilteredStores] = useState([]);
+
+  console.log(data);
 
   const {
     isLoading: isLoadingPosition,
@@ -174,13 +177,21 @@ export default function MyMap() {
 
   const [mapLat, mapLng] = useUrlPosition();
 
+  useEffect(() => {
+    console.log("isLoading:", isLoading);
+    console.log("data:", data);
+    if (!isLoading && data) {
+      setFilteredStores(data.data);
+    }
+  }, [data, isLoading]);
+
   useEffect(
     function () {
       if (mapLat && mapLng) setMapPosition([mapLat, mapLng]);
     },
     [mapLat, mapLng]
   );
-
+  console.log("data:", data);
   useEffect(function () {
     getPosition();
   }, []);
@@ -193,11 +204,9 @@ export default function MyMap() {
     },
     [geolocationPosition]
   );
-  useEffect(() => {
-    if (data) {
-      setFilteredStores(data.data);
-    }
-  }, [data]);
+
+  console.log(data);
+  console.log("filter", filteredStores);
 
   const onSubmit = (query) => {
     const searchQuery = query.search.toLowerCase();
@@ -312,15 +321,16 @@ export default function MyMap() {
                       key={i + 1}
                       className="store flex items-start gap-1 border-b border-gray-200 py-3"
                     >
-                      <div className="h-[60px] w-[60px] rounded-full relative border overflow-hidden border-gray-200">
+                      <div className="">
                         <Image
                           src={
                             store.logo
                               ? `${BASE_URL_IMAGE}${store.logo}`
                               : "/cycle-4.jpg"
                           }
-                          fill
-                          className="object-cover"
+                          width={60}
+                          height={60}
+                          className="object-contain"
                           alt="name"
                         />
                       </div>
@@ -373,15 +383,15 @@ export default function MyMap() {
                               </Link>
                             </span>
                           </p>
-                          {store?.web_url && (
+                          {store?.weburl && (
                             <p className="flex items-center gap-2">
                               <AiOutlineGlobal className="text-color-primary" />{" "}
                               <span>
                                 <Link
-                                  href={store.web_url}
+                                  href={store.weburl}
                                   className="hover:text-yellow-500"
                                 >
-                                  {store.website || "Unavailable Website"}
+                                  {store.weburl || "Unavailable Website"}
                                 </Link>
                               </span>
                             </p>
@@ -420,6 +430,7 @@ export default function MyMap() {
             data.data.map((store, index) => {
               const storeCoordinates = getCoordinatesFromUrl(store.map_url);
 
+              console.log("store", store);
               return (
                 <Marker
                   key={index}
