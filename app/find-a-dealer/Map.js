@@ -15,6 +15,7 @@ import { useAllDealerUsersInfo } from "../_features/users/useUsers";
 import { SkeletonFiler } from "../components/ui/SkeletonFilter";
 import Link from "next/link";
 import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
+import { useStores } from "../_features/stores/useStores";
 
 const getFormattedOpeningHours = (weeks) => {
   const dayMap = {
@@ -162,7 +163,13 @@ export default function MyMap() {
     formState: { isSubmitting },
   } = useForm();
   const { data, isLoading, error } = useAllDealerUsersInfo();
+  const { data: data2, isLoading: isLoading2 } = useStores();
   const [filteredStores, setFilteredStores] = useState([]);
+
+  console.log(data);
+
+  console.log(data2);
+  console.log(filteredStores);
 
   const {
     isLoading: isLoadingPosition,
@@ -192,10 +199,10 @@ export default function MyMap() {
     [geolocationPosition]
   );
   useEffect(() => {
-    if (data) {
-      setFilteredStores(data.data);
+    if (data2) {
+      setFilteredStores(data2.data);
     }
-  }, [data]);
+  }, [data2]);
 
   const onSubmit = (query) => {
     const searchQuery = query.search.toLowerCase();
@@ -308,17 +315,18 @@ export default function MyMap() {
                       key={i + 1}
                       className="store flex items-start gap-1 border-b border-gray-200 py-3"
                     >
-                      <Image
-                        src={
-                          store.logo
-                            ? `${BASE_URL_IMAGE}${store.logo}`
-                            : "/cycle-4.jpg"
-                        }
-                        width={60}
-                        height={60}
-                        className="rounded-full object-contain"
-                        alt="name"
-                      />
+                      <div className="h-[60px] w-[60px] rounded-full relative border overflow-hidden border-gray-200">
+                        <Image
+                          src={
+                            store.logo
+                              ? `${BASE_URL_IMAGE}${store.logo}`
+                              : "/cycle-4.jpg"
+                          }
+                          fill
+                          className="object-cover"
+                          alt="name"
+                        />
+                      </div>
                       <div className="pl-2">
                         <h1 className="font-serif font-semibold">
                           {store.company_name || "Company Name Not Found"}
@@ -409,15 +417,17 @@ export default function MyMap() {
           <Marker position={mapPosition}>
             <Popup>Your location</Popup>
           </Marker>
-          {data &&
-            data.data.map((store, index) => {
+          {!isLoading2 &&
+            data2 &&
+            data2.data.map((store, index) => {
               const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+              console.log("coords", storeCoordinates);
               return (
                 <Marker
                   key={index}
                   position={[
-                    storeCoordinates.latitude,
-                    storeCoordinates.longitude,
+                    storeCoordinates?.latitude,
+                    storeCoordinates?.longitude,
                   ]}
                 >
                   <Popup autoPan>

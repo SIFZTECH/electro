@@ -9,7 +9,7 @@ import {
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { updateStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
@@ -19,6 +19,7 @@ const EditStore = ({ store }) => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
@@ -46,6 +47,11 @@ const EditStore = ({ store }) => {
         },
       ],
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "weeks",
   });
 
   async function onSubmit(formData) {
@@ -453,9 +459,7 @@ const EditStore = ({ store }) => {
                 </label>
                 <div className="mt-1">
                   <input
-                    {...register("logo", {
-                      required: "This is required field",
-                    })}
+                    {...register("logo")}
                     type="file"
                     placeholder="Upload"
                     accept="image/*"
@@ -465,11 +469,6 @@ const EditStore = ({ store }) => {
               file:bg-color-primary/20 file:text-color-gray-200
               hover:file:bg-color-primary/30"
                   />
-                  {errors?.logo && (
-                    <span className="text-red-500 text-sm">
-                      {errors.logo.message}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>
