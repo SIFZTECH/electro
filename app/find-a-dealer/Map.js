@@ -16,6 +16,7 @@ import { SkeletonFiler } from "../components/ui/SkeletonFilter";
 import Link from "next/link";
 import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
 import { useStores } from "../_features/stores/useStores";
+import NotFoundData from "../components/ui/NotFoundData";
 
 const getFormattedOpeningHours = (weeks) => {
   const dayMap = {
@@ -162,14 +163,8 @@ export default function MyMap() {
     watch,
     formState: { isSubmitting },
   } = useForm();
-  const { data, isLoading, error } = useAllDealerUsersInfo();
-  const { data: data2, isLoading: isLoading2 } = useStores();
+  const { data, isLoading } = useStores();
   const [filteredStores, setFilteredStores] = useState([]);
-
-  console.log(data);
-
-  console.log(data2);
-  console.log(filteredStores);
 
   const {
     isLoading: isLoadingPosition,
@@ -199,10 +194,12 @@ export default function MyMap() {
     [geolocationPosition]
   );
   useEffect(() => {
-    if (data2) {
-      setFilteredStores(data2.data);
+    if (data) {
+      setFilteredStores(data.data);
     }
-  }, [data2]);
+  }, [data]);
+
+  console.log(filteredStores);
 
   const onSubmit = (query) => {
     const searchQuery = query.search.toLowerCase();
@@ -296,7 +293,9 @@ export default function MyMap() {
                   <SkeletonFiler />
                 </div>
               )}
-              {!isLoading &&
+              {!isLoading && filteredStores.length === 0 ? (
+                <NotFoundData message="There is no stores at that momment!" />
+              ) : (
                 filteredStores?.map((store, i) => {
                   const storeCoordinates = getCoordinatesFromUrl(store.map_url);
                   const distance = haversineDistance(
@@ -400,7 +399,8 @@ export default function MyMap() {
                       </div>
                     </div>
                   );
-                })}
+                })
+              )}
             </div>
           </div>
         </div>
@@ -417,9 +417,9 @@ export default function MyMap() {
           <Marker position={mapPosition}>
             <Popup>Your location</Popup>
           </Marker>
-          {!isLoading2 &&
-            data2 &&
-            data2.data.map((store, index) => {
+          {!isLoading &&
+            data &&
+            data.data.map((store, index) => {
               const storeCoordinates = getCoordinatesFromUrl(store.map_url);
               console.log("coords", storeCoordinates);
               return (
