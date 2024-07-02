@@ -15,7 +15,7 @@ import { useAllDealerUsersInfo } from "../_features/users/useUsers";
 import { SkeletonFiler } from "../components/ui/SkeletonFilter";
 import Link from "next/link";
 import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
-import { useStores } from "../_features/stores/useStores";
+import { useStorelocations, useStores } from "../_features/stores/useStores";
 import NotFoundData from "../components/ui/NotFoundData";
 import { CLIENT_PUBLIC_FILES_PATH } from "next/dist/shared/lib/constants";
 
@@ -165,9 +165,15 @@ export default function MyMap() {
     formState: { isSubmitting },
   } = useForm();
   const { data, isLoading, isError } = useStores();
+  const {
+    data: data2,
+    isLoading: isLoading2,
+    isError: isError2,
+  } = useStorelocations();
+
   const [filteredStores, setFilteredStores] = useState([]);
 
-  console.log(data);
+  console.log(data2);
 
   const {
     isLoading: isLoadingPosition,
@@ -178,8 +184,6 @@ export default function MyMap() {
   const [mapLat, mapLng] = useUrlPosition();
 
   useEffect(() => {
-    console.log("isLoading:", isLoading);
-    console.log("data:", data);
     if (!isLoading && data) {
       setFilteredStores(data.data);
     }
@@ -191,7 +195,7 @@ export default function MyMap() {
     },
     [mapLat, mapLng]
   );
-  console.log("data:", data);
+
   useEffect(function () {
     getPosition();
   }, []);
@@ -204,9 +208,6 @@ export default function MyMap() {
     },
     [geolocationPosition]
   );
-
-  console.log(data);
-  console.log("filter", filteredStores);
 
   const onSubmit = (query) => {
     const searchQuery = query.search.toLowerCase();
@@ -430,7 +431,6 @@ export default function MyMap() {
             data.data.map((store, index) => {
               const storeCoordinates = getCoordinatesFromUrl(store.map_url);
 
-              console.log("store", store);
               return (
                 <Marker
                   key={index}

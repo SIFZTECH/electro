@@ -33,6 +33,20 @@ export async function getAllWarrantiesForAdmin(page) {
   return data.data;
 }
 
+export async function getWarrantyStats() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/warranty/get-statistics`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function getWarranty(id) {
   const token = localStorage.getItem("access-token");
 
