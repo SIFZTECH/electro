@@ -58,7 +58,7 @@ const getFormattedOpeningHours = (weeks) => {
 
   const openDays = formattedWeeks.filter(
     (week) =>
-      !week.isHoliday &&
+      week.isHoliday !== "0" &&
       week.openingHours !== "Closed" &&
       week.closingHours !== "Closed"
   );
@@ -119,7 +119,7 @@ const isStoreOpenToday = (weeks) => {
   const todayWeek = weeks.find((week) => week.day.toLowerCase() === todayName);
 
   if (todayWeek) {
-    return todayWeek.is_holiday === "0" &&
+    return todayWeek.is_holiday === "1" &&
       todayWeek.opening_hours !== null &&
       todayWeek.closing_hours !== null
       ? "Open Today"
@@ -198,8 +198,6 @@ export default function MyMap() {
       setFilteredStores(data.data);
     }
   }, [data]);
-
-  console.log(filteredStores);
 
   const onSubmit = (query) => {
     const searchQuery = query.search.toLowerCase();
@@ -421,7 +419,7 @@ export default function MyMap() {
             data &&
             data.data.map((store, index) => {
               const storeCoordinates = getCoordinatesFromUrl(store.map_url);
-              console.log("coords", storeCoordinates);
+
               return (
                 <Marker
                   key={index}
