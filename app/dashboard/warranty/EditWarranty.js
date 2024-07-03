@@ -22,18 +22,18 @@ const EditWarranty = ({ warranty }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      firstname: warranty.firstname,
-      lastname: warranty.lastname,
-      email: warranty.email,
-      phone: warranty.phone,
-      company_name: warranty.company_name,
-      address: warranty.address,
-      purchase_from: warranty.from,
-      purchase_date: warranty.purchase_date,
-      invoice_number: warranty.purchase_date,
-      bike_frame_serial_no: warranty.bike_frame_serial_no,
-      bike_battery_serial_no: warranty.bike_battery_serial_no,
-      bike_motor_serial_no: warranty.bike_motor_serial_no,
+      firstname: warranty?.firstname || "",
+      lastname: warranty.lastname || "",
+      email: warranty.email || "",
+      phone: warranty.phone || "",
+      company_name: warranty.company_name || "",
+      address: warranty.address || "",
+      purchase_from: warranty.purchase_from || "",
+      purchase_date: warranty.purchase_date || "",
+      invoice_number: warranty.invoice_number || "",
+      bike_frame_serial_no: warranty.bike_frame_serial_no || "",
+      bike_battery_serial_no: warranty.bike_battery_serial_no || "",
+      bike_motor_serial_no: warranty.bike_motor_serial_no || "",
     },
   });
 
@@ -57,7 +57,7 @@ const EditWarranty = ({ warranty }) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="btn-primary transition-all py-1">
+      <DialogTrigger className="btn-primary bg-emerald-200 transition-all py-1">
         Edit
       </DialogTrigger>
       <DialogContent className="!max-w-[60rem] max-h-dvh overflow-y-scroll">

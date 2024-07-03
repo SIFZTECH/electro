@@ -17,6 +17,8 @@ const WarrantiesPage = () => {
   const { data, isLoading, error, isError } = useWarrantiesForAdmin(page);
   const isCreateWarrantyPermission = useCheckPermission("create_warranty");
 
+  console.log(data);
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -37,7 +39,9 @@ const WarrantiesPage = () => {
         )}
       </div>
 
-      {!isLoading && !isError && !error && <WarrantyProducts data={data} />}
+      {!isLoading && !isError && !error && (
+        <WarrantyProducts data={data?.warranties} />
+      )}
       {!isLoading && isError && error && (
         <NotFoundData
           message={
@@ -48,7 +52,7 @@ const WarrantiesPage = () => {
         />
       )}
       <PaginationUI
-        data={data}
+        data={data?.warranties}
         page={page}
         page_size={WARRANTY_PAGE_SIZE}
         navigation="warranties"
