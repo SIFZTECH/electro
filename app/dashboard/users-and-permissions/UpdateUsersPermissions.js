@@ -13,7 +13,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import UpdateList from "./UpdateListPermissions";
-import { permissions } from "@/app/lib/utils";
+import { useRoles } from "@/app/_features/roles/useRoles";
 
 const UpdateUsersPermissions = ({
   roleName,
@@ -21,6 +21,8 @@ const UpdateUsersPermissions = ({
   permissions: permissionsName,
 }) => {
   const [open, setOpen] = useState(false);
+  const { permissions = [], isLoading } = useRoles();
+
   const queryClient = useQueryClient();
 
   const groupedPermissions = {
@@ -35,63 +37,74 @@ const UpdateUsersPermissions = ({
     findDealer: [],
     warranty: [],
     calendar: [],
+    store: [],
     stock: [],
     user: [],
     other: [],
   };
 
-  permissions.forEach((permission) => {
-    if (permission.name.startsWith("product")) {
-      groupedPermissions.product.push(permission);
-    } else if (permission.name.startsWith("category")) {
-      groupedPermissions.category.push(permission);
-    } else if (permission.name.startsWith("subcategory")) {
-      groupedPermissions.subcategory.push(permission);
-    } else if (
-      permission.name.startsWith("attribute") ||
-      permission.name.startsWith("add_attribute")
-    ) {
-      groupedPermissions.attribute.push(permission);
-    } else if (permission.name.startsWith("brand")) {
-      groupedPermissions.brand.push(permission);
-    } else if (permission.name.startsWith("dealer")) {
-      groupedPermissions.dealer.push(permission);
-    } else if (permission.name.startsWith("social")) {
-      groupedPermissions.social.push(permission);
-    } else if (
-      permission.name.startsWith("calendar") ||
-      permission.name.startsWith("create_event")
-    ) {
-      groupedPermissions.calendar.push(permission);
-    } else if (
-      permission.name.startsWith("stock") ||
-      permission.name.startsWith("upload_stock") ||
-      permission.name.startsWith("edit_stock")
-    ) {
-      groupedPermissions.stock.push(permission);
-    } else if (permission.name.startsWith("click")) {
-      groupedPermissions.clickAndCollect.push(permission);
-    } else if (
-      permission.name.startsWith("warranty") ||
-      permission.name.startsWith("create_warranty")
-    ) {
-      groupedPermissions.warranty.push(permission);
-    } else if (permission.name.startsWith("find")) {
-      groupedPermissions.findDealer.push(permission);
-    } else if (
-      permission.name.startsWith("user") ||
-      permission.name.startsWith("assign_role") ||
-      permission.name.startsWith("block_user") ||
-      permission.name.startsWith("all_users") ||
-      permission.name.startsWith("roles_and_permissions") ||
-      permission.name.startsWith("edit_user") ||
-      permission.name.startsWith("block_list")
-    ) {
-      groupedPermissions.user.push(permission);
-    } else {
-      groupedPermissions.other.push(permission);
-    }
-  });
+  if (!isLoading && permissions) {
+    permissions.forEach((permission) => {
+      if (permission.name.startsWith("product")) {
+        groupedPermissions.product.push(permission);
+      } else if (permission.name.startsWith("category")) {
+        groupedPermissions.category.push(permission);
+      } else if (permission.name.startsWith("subcategory")) {
+        groupedPermissions.subcategory.push(permission);
+      } else if (
+        permission.name.startsWith("attribute") ||
+        permission.name.startsWith("add_attribute")
+      ) {
+        groupedPermissions.attribute.push(permission);
+      } else if (permission.name.startsWith("brand")) {
+        groupedPermissions.brand.push(permission);
+      } else if (permission.name.startsWith("dealer")) {
+        groupedPermissions.dealer.push(permission);
+      } else if (permission.name.startsWith("social")) {
+        groupedPermissions.social.push(permission);
+      } else if (
+        permission.name.startsWith("calendar") ||
+        permission.name.startsWith("create_event")
+      ) {
+        groupedPermissions.calendar.push(permission);
+      } else if (
+        permission.name.startsWith("stock") ||
+        permission.name.startsWith("upload_stock") ||
+        permission.name.startsWith("edit_stock")
+      ) {
+        groupedPermissions.stock.push(permission);
+      } else if (permission.name.startsWith("click")) {
+        groupedPermissions.clickAndCollect.push(permission);
+      } else if (
+        permission.name.startsWith("warranty") ||
+        permission.name.startsWith("create_warranty")
+      ) {
+        groupedPermissions.warranty.push(permission);
+      } else if (permission.name.startsWith("find")) {
+        groupedPermissions.findDealer.push(permission);
+      } else if (
+        permission.name.startsWith("search_dealer") ||
+        permission.name.startsWith("update_dealer") ||
+        permission.name.startsWith("edit_dealer") ||
+        permission.name.startsWith("delete_dealer") ||
+        permission.name.startsWith("create_dealer")
+      ) {
+        groupedPermissions.store.push(permission);
+      } else if (
+        permission.name.startsWith("user") ||
+        permission.name.startsWith("assign_role") ||
+        permission.name.startsWith("block_user") ||
+        permission.name.startsWith("all_users") ||
+        permission.name.startsWith("roles_and_permissions") ||
+        permission.name.startsWith("edit_user") ||
+        permission.name.startsWith("block_list")
+      ) {
+        groupedPermissions.user.push(permission);
+      } else {
+        groupedPermissions.other.push(permission);
+      }
+    });
+  }
 
   const {
     register,
@@ -227,6 +240,12 @@ const UpdateUsersPermissions = ({
               <UpdateList
                 title="Find Dealer Management"
                 permissions={groupedPermissions.findDealer}
+                permissionsName={permissionsName}
+                register={register}
+              />
+              <UpdateList
+                title="Store Management"
+                permissions={groupedPermissions.store}
                 permissionsName={permissionsName}
                 register={register}
               />
