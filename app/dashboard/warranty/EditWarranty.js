@@ -10,11 +10,13 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const EditWarranty = ({ warranty }) => {
+  const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const {
@@ -77,6 +79,7 @@ const EditWarranty = ({ warranty }) => {
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("warranties");
+        setOpen((open) => !open);
       }
     } catch (err) {
       console.error(err);
@@ -91,7 +94,7 @@ const EditWarranty = ({ warranty }) => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
       <DialogTrigger className="btn-primary bg-emerald-200 transition-all py-1">
         Edit
       </DialogTrigger>

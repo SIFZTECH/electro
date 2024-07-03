@@ -102,6 +102,7 @@ export async function updateWarranty(id, formData) {
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
+      "content-type": "multipart/form-data",
     },
     data: {
       ...formData,
