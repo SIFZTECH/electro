@@ -191,7 +191,7 @@ input[type="checkbox"] {
 }
 
 .rbc-today {
-  background-color: #fde68a !important;
+  background-color: #f1f3f5 !important;
 }
 .rbc-day-bg + .rbc-day-bg {
   cursor: pointer;

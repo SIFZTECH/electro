@@ -32,12 +32,23 @@ const WarrantyProducts = ({ data }) => {
                   </td>
                   <td data-label="Customer Name">{data.company_name}</td>
                   <td data-label="Status">
-                    {data.status === "active" ? (
+                    {data.status === "approve" && (
                       <span className="btn-primary bg-emerald-200">
                         {data.status}
                       </span>
-                    ) : (
+                    )}
+                    {data.status === "active" && (
+                      <span className="btn-primary bg-purple-400 text-white">
+                        {data.status}
+                      </span>
+                    )}
+                    {data.status === "pending" && (
                       <span className="btn-primary bg-yellow-200">
+                        {data.status}
+                      </span>
+                    )}
+                    {data.status === "decline" && (
+                      <span className="btn-primary bg-red-400 text-white">
                         {data.status}
                       </span>
                     )}
