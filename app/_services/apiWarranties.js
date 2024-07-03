@@ -93,17 +93,20 @@ export async function updateWarrantyStatus(id, status) {
 }
 
 export async function updateWarranty(id, formData) {
-  console.log(formData);
+  console.log("paypad", formData);
   const token = localStorage.getItem("access-token");
 
   if (!token && !id) return null;
 
   const { data } = await axios(`${BASE_URL}/my-warranty-update/${id}`, {
-    method: "put",
+    method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: formData,
+    data: {
+      ...formData,
+      _method: "PUT",
+    },
   });
 
   return data;

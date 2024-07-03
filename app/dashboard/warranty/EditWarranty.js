@@ -38,11 +38,41 @@ const EditWarranty = ({ warranty }) => {
     },
   });
 
-  console.log(warranty);
-
-  async function onSubmit(data) {
+  async function onSubmit({
+    firstname,
+    lastname,
+    email,
+    phone,
+    company_name,
+    address,
+    purchase_from,
+    purchase_date,
+    invoice_number,
+    bike_battery_serial_no,
+    bike_motor_serial_no,
+    invoice_image,
+    frame_serial_no_image,
+    battery_serial_no_image,
+    motor_serial_no_image,
+  }) {
     try {
-      const res = await updateWarranty(warranty.id, data);
+      const res = await updateWarranty(warranty.id, {
+        firstname,
+        lastname,
+        email,
+        phone,
+        company_name,
+        address,
+        purchase_from,
+        purchase_date,
+        invoice_number,
+        bike_battery_serial_no,
+        bike_motor_serial_no,
+        invoice_image: invoice_image[0],
+        frame_serial_no_image: frame_serial_no_image[0],
+        battery_serial_no_image: battery_serial_no_image[0],
+        motor_serial_no_image: motor_serial_no_image[0],
+      });
 
       if (res) {
         toast.success(res.message);
