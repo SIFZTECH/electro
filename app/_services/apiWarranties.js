@@ -76,17 +76,26 @@ export async function deleteWarranty(id) {
   return data;
 }
 
-export async function updateWarrantyStatus(id, status) {
+export async function updateWarrantyStatus(id, { status, message }) {
   const token = localStorage.getItem("access-token");
 
   if (!token && !id) return null;
+
+  let bodyData = { status };
+
+  if (message) {
+    bodyData = {
+      status,
+      message,
+    };
+  }
 
   const { data } = await axios(`${BASE_URL}/warranty/update/${id}`, {
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { status },
+    data: bodyData,
   });
 
   return data;

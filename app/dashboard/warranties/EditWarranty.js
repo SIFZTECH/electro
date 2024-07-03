@@ -20,6 +20,7 @@ const EditWarranty = ({ warranty }) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -27,9 +28,11 @@ const EditWarranty = ({ warranty }) => {
     },
   });
 
-  async function onSubmit({ status }) {
+  const watchStatus = watch("status");
+
+  async function onSubmit({ status, message }) {
     try {
-      const res = await updateWarrantyStatus(warranty.id, status);
+      const res = await updateWarrantyStatus(warranty.id, { status, message });
 
       if (res) {
         toast.success(res.message);
@@ -70,6 +73,13 @@ const EditWarranty = ({ warranty }) => {
                 <option value="approve">Approve</option>
                 <option value="decline">Decline</option>
               </select>
+              {watchStatus === "approve" && (
+                <textarea
+                  {...register("message")}
+                  className="mt-4 block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  placeholder="Send message..."
+                />
+              )}
             </div>
           </div>
           <button
