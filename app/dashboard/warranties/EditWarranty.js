@@ -12,7 +12,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const EditWarranty = ({ warranty }) => {
   const [open, setOpen] = useState(false);

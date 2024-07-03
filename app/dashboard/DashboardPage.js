@@ -8,12 +8,20 @@ import NotFoundData from "../components/ui/NotFoundData";
 import NoPermission from "../components/ui/NoPermission";
 import { useUser } from "../_features/authentication/useUser";
 import DealerPortalChart from "../components/ui/DealerPortalChart";
+import WarrantyProducts from "./warranties/WarrantyProducts";
+import Spinner from "../components/ui/Spinner";
+import { useWarranties } from "../_features/warranties/useWarranties";
+import RecentWarranties from "./RecentWarranties";
 
 const DashboardPage = () => {
-  const { isAdmin } = useUser();
-  const isPermission = useCheckPermission("dashboard");
+  const { isAdmin, user } = useUser();
+  const { data, isLoading, error, isError } = useWarranties();
 
-  if (isPermission && isAdmin) {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isAdmin) {
     return (
       <div>
         <Stats />
@@ -23,7 +31,20 @@ const DashboardPage = () => {
     );
   } else {
     return (
-      <NoPermission message="You don't have permission to access that route!" />
+      <>
+        <h1 className="text-2xl font-medium font-serif">
+          Welcome to Dashboard,{" "}
+          <span className="font-semibold">
+            {user?.firstname} {user?.lastname}
+          </span>
+        </h1>
+        <div className="mt-12">
+          <h1 className="text-xl font-medium mt-6 font-serif">
+            Your Recent Warranty Registrations
+          </h1>
+          {!isLoading && !isError && !error && <RecentWarranties data={data} />}
+        </div>
+      </>
     );
   }
 };

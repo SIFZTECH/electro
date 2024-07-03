@@ -20,8 +20,10 @@ import { useStores } from "@/app/_features/stores/useStores";
 import EditStore from "./EditStore";
 import DeleteStore from "./DeleteStore";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import NoPermission from "@/app/components/ui/NoPermission";
 
 const StoresTable = () => {
+  const isListPermission = useCheckPermission("find_dealer");
   const isCreatePermission = useCheckPermission("create_dealer");
   const isDeletePermission = useCheckPermission("delete_dealer");
   const isUpdatePermission = useCheckPermission("update_dealer");
@@ -36,7 +38,7 @@ const StoresTable = () => {
     return <Spinner />;
   }
 
-  return (
+  return isListPermission ? (
     <>
       <div className="flex justify-end items-center gap-4 my-4 mb-8">
         <Search navigateTo={"find-dealer"} />
@@ -125,6 +127,8 @@ const StoresTable = () => {
         </>
       )}
     </>
+  ) : (
+    <NoPermission message="You don't have permission to access this route" />
   );
 };
 export default StoresTable;
