@@ -109,12 +109,15 @@ const CreateNewEvent = ({ date, setOpen }) => {
             className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
           >
             {!isLoading &&
-              data?.data?.rolesWithPermissions.map((role) => (
-                <option key={role.name} value={role.name}>
-                  {role.name === "admin" ? "only me" : role.name}
-                </option>
-              ))}
+              data?.data?.rolesWithPermissions
+                .filter((role) => role.name !== "admin")
+                .map((role) => (
+                  <option key={role.name} value={role.name}>
+                    {role.name}
+                  </option>
+                ))}
             <option value="anyone">anyone</option>
+            <option value="onlyme">only me</option>
           </select>
         </div>
       </div>

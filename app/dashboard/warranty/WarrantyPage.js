@@ -23,14 +23,10 @@ const WarrantyPage = () => {
     return <Spinner />;
   }
 
+  console.log(data, error);
   return (
     <div>
       <h1 className="heading-h1 my-6">SEB Customer Warranty Registration</h1>
-      <Stats
-        title="Month to Warranty Registrations"
-        value={452}
-        percentage={0.03}
-      />
       <div className="w-full flex justify-end">
         {isCreateWarrantyPermission && (
           <Link href="warranty/registration" className="btn-primary my-6 mb-14">

@@ -16,6 +16,7 @@ export async function getAllWarranties() {
 
   return data.data;
 }
+
 export async function getAllWarrantiesForAdmin(page) {
   const token = localStorage.getItem("access-token");
 

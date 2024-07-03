@@ -10,15 +10,14 @@ import { useUser } from "../_features/authentication/useUser";
 import DealerPortalChart from "../components/ui/DealerPortalChart";
 
 const DashboardPage = () => {
+  const { isAdmin } = useUser();
   const isPermission = useCheckPermission("dashboard");
 
-  if (isPermission) {
+  if (isPermission && isAdmin) {
     return (
       <div>
         <Stats />
-
         <PieCharts />
-
         <RecentOrder />
       </div>
     );

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const WarrantyProducts = ({ data }) => {
-  const warranties = data.data;
+  const warranties = data?.data;
 
   return (
     <>
