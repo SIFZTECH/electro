@@ -18,7 +18,7 @@ const SelectBrand = ({ register, errors }) => {
           >
             <option value="">--Please choose an option--</option>
             {!isLoading &&
-              brands.data.map((brand) => (
+              brands?.data?.map((brand) => (
                 <option key={brand.id} value={brand.id}>
                   {brand.name}
                 </option>

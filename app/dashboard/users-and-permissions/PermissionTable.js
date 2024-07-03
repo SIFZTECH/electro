@@ -73,7 +73,11 @@ const PermissionTable = () => {
                       permissions={data.permissions}
                     />
 
-                    <DeleteRole roleName={data.name} />
+                    {data.name !== "dealer" &&
+                      data.name !== "admin" &&
+                      data.name !== "customer" && (
+                        <DeleteRole roleName={data.name} />
+                      )}
                   </div>
                 </TableCell>
               </TableRow>

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import UpdateStatus from "./UpdateStatus";
 import DeleteOrder from "./DeleteOrder";
+import Link from "next/link";
 
 const DownloadDocket = ({ id, status }) => {
   return (
@@ -14,6 +15,9 @@ const DownloadDocket = ({ id, status }) => {
       </h2>
       <div className="flex items-center gap-3 mt-3">
         <button className="btn-primary">Download Docket</button>
+        <Link href="/dashboard/click-and-collect/email" className="btn-primary">
+          Send Email
+        </Link>
 
         <UpdateStatus id={id} status={status} />
         <DeleteOrder id={id} />

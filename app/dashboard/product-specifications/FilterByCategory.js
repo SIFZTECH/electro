@@ -1,4 +1,7 @@
-import { useCategories } from "@/app/_features/categories/useCategory";
+import {
+  useCategories,
+  useCategoriesForPublic,
+} from "@/app/_features/categories/useCategory";
 import {
   Accordion,
   AccordionContent,
@@ -11,7 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const FilterByCategory = ({ selectedCategories, setSelectedCategories }) => {
-  const { data, isLoading, isError, error } = useCategories();
+  const { data, isLoading, isError, error } = useCategoriesForPublic();
   const router = useRouter();
   const searchParams = useSearchParams();
 

@@ -72,7 +72,8 @@ const CreateNewRoleWithPermissions = () => {
         groupedPermissions.clickAndCollect.push(permission);
       } else if (
         permission.name.startsWith("warranty") ||
-        permission.name.startsWith("create_warranty")
+        permission.name.startsWith("create_warranty") ||
+        permission.name.startsWith("edit_warranty")
       ) {
         groupedPermissions.warranty.push(permission);
       } else if (permission.name.startsWith("find")) {
