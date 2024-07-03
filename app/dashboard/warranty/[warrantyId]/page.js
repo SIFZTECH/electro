@@ -82,62 +82,70 @@ const WarrantyPageInfo = ({ params }) => {
           </p>
 
           <div className="flex gap-4 flex-wrap items-start !mt-6">
-            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-              <p>
-                Bike Battary serial no:
-                <span className="font-medium">
-                  {warranty.bike_battery_serial_no}
-                </span>
-              </p>
-              <Image
-                src={`${BASE_URL_IMAGE}${warranty.battery_serial_no_image}`}
-                width={400}
-                height={320}
-                alt={`${warranty.company_name}`}
-              />
-            </div>
-            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-              <p>
-                Bike Frame serial no:
-                <span className="font-medium">
-                  &nbsp;{warranty.bike_frame_serial_no}
-                </span>
-              </p>
-              <Image
-                src={`${BASE_URL_IMAGE}${warranty.frame_serial_no_image}`}
-                width={400}
-                height={320}
-                alt={warranty.company_name}
-              />
-            </div>
-            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-              <p>
-                Bike Motor serial no:
-                <span className="font-medium">
-                  &nbsp;{warranty.bike_motor_serial_no}
-                </span>
-              </p>
-              <Image
-                src={`${BASE_URL_IMAGE}${warranty.motor_serial_no_image}`}
-                width={400}
-                height={320}
-                alt={warranty.company_name}
-              />
-            </div>
-            <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
-              <p>
-                Invoice no:
-                <span className="font-medium">
-                  &nbsp;{warranty.invoice_number}
-                </span>
-              </p>
-              <Image
-                src={`${BASE_URL_IMAGE}${warranty.invoice_image}`}
-                width={400}
-                height={320}
-                alt={warranty.company_name}
-              />
-            </div>
+            {warranty.battery_serial_no_image && (
+              <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+                <p>
+                  Bike Battary serial no:
+                  <span className="font-medium">
+                    {warranty.bike_battery_serial_no}
+                  </span>
+                </p>
+                <Image
+                  src={`${BASE_URL_IMAGE}${warranty.battery_serial_no_image}`}
+                  width={400}
+                  height={320}
+                  alt={`${warranty.company_name}`}
+                />
+              </div>
+            )}
+            {warranty.frame_serial_no_image && (
+              <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+                <p>
+                  Bike Frame serial no:
+                  <span className="font-medium">
+                    &nbsp;{warranty.bike_frame_serial_no}
+                  </span>
+                </p>
+                <Image
+                  src={`${BASE_URL_IMAGE}${warranty.frame_serial_no_image}`}
+                  width={400}
+                  height={320}
+                  alt={warranty.company_name}
+                />
+              </div>
+            )}
+            {warranty.invoice_image && (
+              <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+                <p>
+                  Bike Motor serial no:
+                  <span className="font-medium">
+                    &nbsp;{warranty.bike_motor_serial_no}
+                  </span>
+                </p>
+                <Image
+                  src={`${BASE_URL_IMAGE}${warranty.motor_serial_no_image}`}
+                  width={400}
+                  height={320}
+                  alt={warranty.company_name}
+                />
+              </div>
+            )}
+            {warranty.invoice_image && (
+              <div className="border border-gray-100 shadow-sm rounded-sm w-fit p-3">
+                <p>
+                  Invoice no:
+                  <span className="font-medium">
+                    &nbsp;{warranty.invoice_number}
+                  </span>
+                </p>
+                <Image
+                  src={`${BASE_URL_IMAGE}${warranty.invoice_image}`}
+                  width={400}
+                  height={320}
+                  alt={warranty.company_name}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
