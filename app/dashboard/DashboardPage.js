@@ -37,6 +37,7 @@ const DashboardPage = () => {
           <span className="font-semibold">
             {user?.firstname} {user?.lastname}
           </span>
+          <span className="wave">👋</span>
         </h1>
         <div className="mt-12">
           <h1 className="text-xl font-medium mt-6 font-serif">

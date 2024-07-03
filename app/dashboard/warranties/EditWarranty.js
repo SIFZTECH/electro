@@ -1,6 +1,6 @@
 "use client";
 
-import { updateWarranty } from "@/app/_services/apiWarranties";
+import { updateWarrantyStatus } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
 import {
@@ -29,7 +29,7 @@ const EditWarranty = ({ warranty }) => {
 
   async function onSubmit({ status }) {
     try {
-      const res = await updateWarranty(warranty.id, status);
+      const res = await updateWarrantyStatus(warranty.id, status);
 
       if (res) {
         toast.success(res.message);

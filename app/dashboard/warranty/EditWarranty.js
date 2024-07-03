@@ -1,5 +1,6 @@
 "use client";
 
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { updateWarranty } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
@@ -22,7 +23,7 @@ const EditWarranty = ({ warranty }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      firstname: warranty?.firstname || "",
+      firstname: warranty.firstname || "",
       lastname: warranty.lastname || "",
       email: warranty.email || "",
       phone: warranty.phone || "",
@@ -37,6 +38,8 @@ const EditWarranty = ({ warranty }) => {
     },
   });
 
+  console.log(warranty);
+
   async function onSubmit(data) {
     try {
       const res = await updateWarranty(warranty.id, data);
@@ -48,7 +51,9 @@ const EditWarranty = ({ warranty }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response?.data?.message
+          ? handleValidationError(err.response.data.message)
+          : toast.error(err.response.message);
       } else {
         toast.error("Something went wrong!");
       }
