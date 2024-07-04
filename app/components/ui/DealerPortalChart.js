@@ -51,7 +51,9 @@ const data = [
   },
 ];
 
-export default function DealerPortalChart({ title }) {
+export default function DealerPortalChart({ title, engagements }) {
+  console.log(engagements);
+
   return (
     <>
       <div className="col-span-2 flex items-center justify-center flex-col">
@@ -61,7 +63,7 @@ export default function DealerPortalChart({ title }) {
             layout="vertical"
             width={500}
             height={400}
-            data={data}
+            data={engagements}
             margin={{
               top: 20,
               right: 20,
@@ -71,11 +73,11 @@ export default function DealerPortalChart({ title }) {
           >
             <CartesianGrid stroke="#f5f5f5" />
             <XAxis type="number" />
-            <YAxis dataKey="name" type="category" scale="band" />
+            <YAxis dataKey="user" type="category" scale="band" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" barSize={20} fill="#FFB500" />
-            <Line dataKey="uv" stroke="#ff7300" />
+            <Bar dataKey="engagements" barSize={20} fill="#FFB500" />
+            <Line dataKey="user" stroke="#ff7300" />
           </ComposedChart>
         </ResponsiveContainer>
       </div>

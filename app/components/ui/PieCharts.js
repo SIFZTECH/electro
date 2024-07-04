@@ -40,8 +40,6 @@ const PieCharts = ({ data }) => {
     };
   });
 
-  console.log(data);
-
   return (
     <div className="mt-14 flex flex-col lg:grid lg:grid-cols-4 gap-10">
       {data?.click_and_collect &&
@@ -56,7 +54,12 @@ const PieCharts = ({ data }) => {
       {data?.order_by_brand.length > 0 && (
         <Chart startData={mappedBrandArray} title="Orders By Brand" />
       )}
-      {isAdmin && <DealerPortalChart title="Dealer Portal" />}
+      {isAdmin && (
+        <DealerPortalChart
+          title="Dealer Portal"
+          engagements={data?.engagements}
+        />
+      )}
     </div>
   );
 };
