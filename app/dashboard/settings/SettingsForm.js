@@ -69,16 +69,14 @@ const SettingsForm = () => {
         phone,
         company_name,
         weburl,
-        abn,
-        purchase_date,
-        invoice_number,
+
         description,
         street_address,
         city,
         postal_code,
         state,
         logo,
-        stockfeedurl,
+
         map_url,
         weeks,
       });
