@@ -104,14 +104,6 @@ const AllOrders = () => {
           )}
         </>
       )}
-      <div className="flex justify-end mt-8 px-3">
-        <Link
-          className="btn-primary"
-          href="/dashboard/click-and-collect/create-order"
-        >
-          Create Order
-        </Link>
-      </div>
     </>
   );
 };

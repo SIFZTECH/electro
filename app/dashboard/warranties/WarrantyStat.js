@@ -8,9 +8,9 @@ const Stat = ({ title, value }) => {
       </div>
       <div className="flex flex-col">
         <h2 className="font-serif text-3xl font-semibold">{value}</h2>
-        {/* <div className="stat__percentage text-sm">
+        <div className="stat__percentage text-sm">
           <IoMdArrowDropdown />
-        </div> */}
+        </div>
       </div>
     </div>
   );
