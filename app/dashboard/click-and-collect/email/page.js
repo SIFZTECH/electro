@@ -1,4 +1,11 @@
-const page = () => {
+"use client";
+import { useSearchParams } from "next/navigation";
+
+const SendMail = () => {
+  const params = useSearchParams();
+  const email = params.get("email");
+  const phone = params.get("phone");
+
   return (
     <div>
       <h1 className="heading-h1">Email: 18INV34570</h1>
@@ -11,6 +18,7 @@ const page = () => {
             placeholder="example@email.com"
             className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             type="email"
+            defaultValue={email}
           />
         </div>
         <div className="flex items-center gap-6">
@@ -39,6 +47,11 @@ const page = () => {
             Send SMS:
           </label>
           <input type="checkbox" />
+          <input
+            className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            type="tel"
+            defaultValue={phone}
+          />
         </div>
         <div className="flex mx-3">
           <textarea
@@ -52,4 +65,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SendMail;

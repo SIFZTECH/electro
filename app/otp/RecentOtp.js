@@ -79,13 +79,13 @@ const ResendOtp = () => {
             >
               <ToggleGroupItem
                 value="number"
-                className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:!text-[#fcc419] p-0"
+                className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:!text-[#FFB500] p-0"
               >
                 {channel.number}
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="email"
-                className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:text-![#fcc419] p-0"
+                className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:!text-[#FFB500] p-0"
               >
                 {channel.email}
               </ToggleGroupItem>
@@ -103,7 +103,7 @@ const ResendOtp = () => {
         {!isRunning && (
           <button
             type="submit"
-            className="underline text-[#e1b813] font-semibold"
+            className="underline text-[#FFB500] font-semibold"
           >
             {isSubmitting ? <SpinnerMini /> : "Resend"}
           </button>

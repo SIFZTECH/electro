@@ -245,15 +245,15 @@ const CreateOrderForm = () => {
             </label>
             <div className="mt-1">
               <input
-                {...register("customer_phone", {
+                {...register("customer_phone_number", {
                   required: "This is required field",
                 })}
                 type="tel"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
-              {errors?.customer_phone && (
+              {errors?.customer_phone_number && (
                 <span className="text-red-500 text-sm">
-                  {errors.customer_phone.message}
+                  {errors.customer_phone_number.message}
                 </span>
               )}
             </div>

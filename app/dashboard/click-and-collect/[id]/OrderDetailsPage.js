@@ -23,7 +23,12 @@ const OrderDetailsPage = ({ id }) => {
         <>
           <OrderDetails data={data?.data?.order} />
           <ProductOrders data={data?.data?.order} />
-          <Actions id={id} status={data?.data?.order?.status} />
+          <Actions
+            email={data?.data?.order.customer_email}
+            phone={data?.data?.order.customer_phone_number}
+            id={id}
+            status={data?.data?.order?.status}
+          />
         </>
       )}
     </div>
