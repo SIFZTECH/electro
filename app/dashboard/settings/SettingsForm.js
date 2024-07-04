@@ -62,20 +62,6 @@ const SettingsForm = () => {
     state,
     logo,
   }) {
-    const coords = getCoordinatesFromUrl(map_url);
-
-    if (coords) {
-      setCoordinates(coords);
-      clearErrors("map_url");
-    } else {
-      setCoordinates(null);
-      setError("map_url", {
-        type: "manual",
-        message: "The URL does not contain valid latitude and longitude.",
-      });
-      return;
-    }
-
     try {
       const res = await profileSettings({
         firstname,
