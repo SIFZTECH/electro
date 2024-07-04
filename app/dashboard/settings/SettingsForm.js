@@ -53,8 +53,6 @@ const SettingsForm = () => {
     company_name,
     weburl,
 
-    purchase_date,
-    invoice_number,
     description,
     street_address,
     city,
@@ -76,9 +74,6 @@ const SettingsForm = () => {
         postal_code,
         state,
         logo,
-
-        map_url,
-        weeks,
       });
       if (res) {
         toast.success(res.message);
