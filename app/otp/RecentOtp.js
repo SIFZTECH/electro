@@ -63,29 +63,34 @@ const ResendOtp = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4 text-center">
       <div className="text-center">
-        <h2 className="font-semibold font-serif mt-2">Did't get your OTP?</h2>
-        <p className="text-muted-foreground text-sm">
-          Choose where you want to get your OTP.
-        </p>
         {channel && channel?.number && channel?.email && (
-          <ToggleGroup
-            type="single"
-            className="mt-2 flex flex-wrap gap-2"
-            onValueChange={(value) => setValue("channel", value)}
-          >
-            <ToggleGroupItem
-              value="number"
-              className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:bg-transparent data-[state='on']:underline data-[state='on']:text-[#fcc419] p-0"
+          <>
+            <h2 className="font-semibold font-serif mt-2">
+              Did't get your OTP?
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              Choose where you want to get your OTP.
+            </p>
+
+            <ToggleGroup
+              type="single"
+              className="mt-2 flex flex-wrap gap-2"
+              onValueChange={(value) => setValue("channel", value)}
             >
-              +88016******03
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="email"
-              className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:bg-transparent data-[state='on']:underline data-[state='on']:text-[#fcc419] p-0"
-            >
-              gr*****@gmail.com
-            </ToggleGroupItem>
-          </ToggleGroup>
+              <ToggleGroupItem
+                value="number"
+                className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:!text-[#fcc419] p-0"
+              >
+                +88016******03
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="email"
+                className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:text-![#fcc419] p-0"
+              >
+                gr*****@gmail.com
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </>
         )}
       </div>
       <p className="text-sm font-serif">
