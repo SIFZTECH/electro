@@ -18,7 +18,7 @@ export async function getAllSocialMediaAssets(page, query) {
     url2 = `${BASE_URL}/search-social-media-assets?search=${query}&per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
   }
 
-  if (user && user.roles[0].name === "admin") {
+  if (user && user.roles[0].id === 1) {
     const { data } = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ export async function getMediaAsset(id) {
   const user = await getCurrentUser();
   if (!token || !user) return null;
 
-  if (user.roles[0].name === "admin") {
+  if (user.roles[0].id === 1) {
     const { data } = await axios(
       `${BASE_URL}/social-media-assets/folder/${id}`,
       {

@@ -112,7 +112,7 @@ const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
             >
               {!isLoading &&
                 data?.data?.rolesWithPermissions
-                  .filter((role) => role.name !== "admin")
+                  .filter((role) => role.id !== 1)
                   .map((role) => (
                     <option key={role.name} value={role.name}>
                       {role.name}

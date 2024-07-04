@@ -14,35 +14,18 @@ import Image from "next/image";
 import { BASE_URL_IMAGE } from "../lib/utils";
 import { SkeletonFiler } from "../components/ui/SkeletonFilter";
 import { SkeletonWarranty } from "../components/ui/SkeletonWarranty";
+import DashboardForNonCustomer from "./DashboardForNonCustomer";
 
 const DashboardPage = () => {
   const { isAdmin, isDealer, user } = useUser();
   const { data, isLoading, error, isError } = useWarranties();
-
-  const {
-    data: data2,
-    isLoading: isLoading2,
-    isError: isError2,
-    error: error2,
-  } = useDashboardStats();
 
   if (isLoading) {
     return <Spinner />;
   }
 
   if (isAdmin || isDealer) {
-    return (
-      <div>
-        <Stats
-          isError={isError2}
-          isLoading={isLoading2}
-          error={error2}
-          data={data2}
-        />
-        <PieCharts data={data2?.data} />
-        <RecentOrder />
-      </div>
-    );
+    return <DashboardForNonCustomer />;
   } else {
     return (
       <>
@@ -57,7 +40,7 @@ const DashboardPage = () => {
             </h2>
           </div>
         </div>
-        {isLoading2 ? (
+        {isLoading ? (
           <div className="mt-12">
             <SkeletonWarranty />
           </div>

@@ -4,6 +4,7 @@ import { useUser } from "@/app/_features/authentication/useUser";
 import Chart from "./Chart";
 import DealerPortalChart from "./DealerPortalChart";
 import { useBrandsForPublic } from "@/app/_features/brands/useBrands";
+import Spinner from "./Spinner";
 
 const defaultBrandColors = {
   NCM: "#495057",
@@ -12,13 +13,13 @@ const defaultBrandColors = {
 };
 
 const PieCharts = ({ data }) => {
-  const { isAdmin } = useUser();
+  const { isAdmin, isLoading: isLoading2 } = useUser();
   const { data: data2, isLoading } = useBrandsForPublic();
 
   const colors = {
     pending: "#FFB500",
     collected: "#2B2B2B",
-    delivered: "#323232",
+    delivered: "#495057",
   };
 
   const clickAndCollectStats =
@@ -42,23 +43,29 @@ const PieCharts = ({ data }) => {
 
   return (
     <div className="mt-14 flex flex-col lg:grid lg:grid-cols-4 gap-10">
-      {data?.click_and_collect &&
-        data?.click_and_collect.pending !== 0 &&
-        data?.click_and_collect.collected !== 0 &&
-        data?.click_and_collect.delivered !== 0 && (
-          <Chart
-            startData={clickAndCollectStats}
-            title="Click and Collect orders"
-          />
-        )}
-      {data?.order_by_brand.length > 0 && (
-        <Chart startData={mappedBrandArray} title="Orders By Brand" />
-      )}
-      {isAdmin && (
-        <DealerPortalChart
-          title="Dealer Portal"
-          engagements={data?.engagements}
-        />
+      {isLoading || isLoading2 ? (
+        ""
+      ) : (
+        <>
+          {data?.click_and_collect &&
+            data?.click_and_collect.pending !== 0 &&
+            data?.click_and_collect.collected !== 0 &&
+            data?.click_and_collect.delivered !== 0 && (
+              <Chart
+                startData={clickAndCollectStats}
+                title="Click and Collect orders"
+              />
+            )}
+          {data?.order_by_brand.length > 0 && (
+            <Chart startData={mappedBrandArray} title="Orders By Brand" />
+          )}
+          {isAdmin && (
+            <DealerPortalChart
+              title="Dealer Portal"
+              engagements={data?.engagements}
+            />
+          )}
+        </>
       )}
     </div>
   );
