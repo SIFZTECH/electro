@@ -7,8 +7,8 @@ import { useBrandsForPublic } from "@/app/_features/brands/useBrands";
 
 const defaultBrandColors = {
   NCM: "#495057",
-  "ET.Cycle": "#ffe066",
-  FOO: "#69db7c",
+  "ET.Cycle": "#FFB500",
+  FOO: "#323232",
 };
 
 const PieCharts = ({ data }) => {
@@ -16,9 +16,9 @@ const PieCharts = ({ data }) => {
   const { data: data2, isLoading } = useBrandsForPublic();
 
   const colors = {
-    pending: "#495057",
-    collected: "#ffe066",
-    delivered: "#69db7c",
+    pending: "#FFB500",
+    collected: "#2B2B2B",
+    delivered: "#323232",
   };
 
   const clickAndCollectStats = Object.keys(data?.click_and_collect).map(

@@ -27,7 +27,6 @@ const DashboardPage = () => {
     return <Spinner />;
   }
 
-  console.log(data2);
   if (isAdmin) {
     return (
       <div>

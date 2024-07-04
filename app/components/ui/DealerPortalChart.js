@@ -74,7 +74,7 @@ export default function DealerPortalChart({ title }) {
             <YAxis dataKey="name" type="category" scale="band" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" barSize={20} fill="#facc15" />
+            <Bar dataKey="pv" barSize={20} fill="#FFB500" />
             <Line dataKey="uv" stroke="#ff7300" />
           </ComposedChart>
         </ResponsiveContainer>

@@ -50,7 +50,7 @@ const IntransitOrders = () => {
                         <td data-label="Customer Name">{data.customer_name}</td>
                         <td data-label="Status">
                           {data.status === "pending" && (
-                            <span className="font-semibold text-yellow-400 capitalize">
+                            <span className="font-semibold text-[#FFB500] capitalize">
                               {data.status}
                             </span>
                           )}
@@ -101,7 +101,6 @@ const IntransitOrders = () => {
           )}
         </>
       )}
-     
     </>
   );
 };
