@@ -440,7 +440,7 @@ export default function MyMap() {
                   storeCoordinates?.longitude,
                 ]}
               >
-                <Popup autoPan>
+                <Popup>
                   <div className="text-base">
                     <h1 className="font-serif font-semibold text-lg">
                       {store.company_name || "Company Name Not Found"}
