@@ -1,4 +1,5 @@
 "use client";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { sendEmail } from "@/app/_services/apiOrders";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -32,9 +33,9 @@ const SendMail = () => {
   async function onSubmit({ channel, message, phone, to, cc, subject }) {
     let formData;
     if (channel) {
-      formData = { channel: "sms", message, phone };
+      formData = { channel: "sms", message, phone, to, cc, subject };
     } else {
-      formData = { channel: "email", message, to, cc, subject };
+      formData = { channel: "email", message, to, cc, subject, email };
     }
 
     try {
