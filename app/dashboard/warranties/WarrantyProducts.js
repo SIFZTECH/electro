@@ -55,6 +55,12 @@ const WarrantyProducts = ({ data }) => {
                   </td>
                   <td data-label="Actions">
                     <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
+                      <Link
+                        className="btn-primary"
+                        href={`/dashboard/warranties/${data.id}`}
+                      >
+                        View Details
+                      </Link>
                       <EditWarranty warranty={data} />
                       <DeleteWarranty warrantyId={data.id} />
                     </div>

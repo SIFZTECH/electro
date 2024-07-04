@@ -51,7 +51,7 @@ const EditWarranty = ({ warranty }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1">
+      <DialogTrigger className="btn-primary bg-green-400 transition-all py-1">
         Edit status
       </DialogTrigger>
       <DialogContent className="">
