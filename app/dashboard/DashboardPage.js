@@ -48,7 +48,6 @@ const DashboardPage = () => {
       <>
         <div className="bg-white shadow-sm rounded-lg py-4 flex items-center">
           <div className="ml-2">
-            <Image src="/banner.jpeg" height={100} width={200} alt="Banner" />
             <h2 className="text-2xl font-semibold mt-3">
               Welcome to Dashboard{" "}
               <span className="text-color-primary">
