@@ -64,6 +64,9 @@ const ResendOtp = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4 text-center">
       <div className="text-center">
         <h2 className="font-semibold font-serif mt-2">Did't get your OTP?</h2>
+        <p className="text-muted-foreground text-sm">
+          Choose where you want to get your OTP.
+        </p>
         {channel && channel?.number && channel?.email && (
           <ToggleGroup
             type="single"
