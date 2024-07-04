@@ -7,7 +7,7 @@ const RecentWarranties = ({ data }) => {
   return (
     <>
       {warranties.length === 0 ? (
-        <h1 className="font-serif text-center text-xl">
+        <h1 className="mt-2 p-3 bg-white shadow-md inline-block border border-gray-100">
           There is no warranties at that momment! Please add new Warranty
         </h1>
       ) : (

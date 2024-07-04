@@ -51,24 +51,24 @@ const AllOrders = () => {
                           {data.user.firstname} {data.user.lastname}
                         </td>
                         <td data-label="Customer Name">{data.customer_name}</td>
-                        <td data-label="Status">
+                        <td data-label="Status" className="font-sans">
                           {data.status === "pending" && (
-                            <span className="font-semibold text-yellow-400 capitalize">
+                            <span className="font-semibold text-[15px] text-yellow-400 capitalize">
                               {data.status}
                             </span>
                           )}
                           {data.status === "collected" && (
-                            <span className="font-semibold text-green-400 capitalize">
+                            <span className="font-semibold text-[15px] text-green-400 capitalize">
                               {data.status}
                             </span>
                           )}
                           {data.status === "delivered" && (
-                            <span className="font-semibold text-purple-400 capitalize">
+                            <span className="font-semibold text-[15px] text-purple-400 capitalize">
                               {data.status}
                             </span>
                           )}
                           {data.status === "intransit" && (
-                            <span className="font-semibold text-sky-400 capitalize">
+                            <span className="font-semibold text-[15px] text-sky-400 capitalize">
                               {data.status}
                             </span>
                           )}

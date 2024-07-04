@@ -26,14 +26,15 @@ const WarrantyPage = () => {
   console.log(data, error);
   return (
     <div>
-      <h1 className="heading-h1 my-6">SEB Customer Warranty Registration</h1>
-      <div className="w-full flex justify-end">
+      <div className="flex items-center justify-between my-4 mb-8">
+        <h1 className="heading-h1">SEB Customer Warranty Registration</h1>
         {isCreateWarrantyPermission && (
-          <Link href="warranty/registration" className="btn-primary my-6 mb-14">
+          <Link href="warranty/registration" className="btn-primary">
             Add New Warranty
           </Link>
         )}
       </div>
+
       {!isLoading && isError && error && (
         <NoPermission className="font-serif text-center text-xl mt-6">
           {error?.response.data.message

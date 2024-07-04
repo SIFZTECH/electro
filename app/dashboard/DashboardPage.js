@@ -3,12 +3,9 @@
 import PieCharts from "@/app/components/ui/PieCharts";
 import RecentOrder from "@/app/components/ui/RecentOrder";
 import Stats from "@/app/components/ui/Stats";
-import useCheckPermission from "../_hooks/usePermission";
-import NotFoundData from "../components/ui/NotFoundData";
-import NoPermission from "../components/ui/NoPermission";
+
 import { useUser } from "../_features/authentication/useUser";
-import DealerPortalChart from "../components/ui/DealerPortalChart";
-import WarrantyProducts from "./warranties/WarrantyProducts";
+
 import Spinner from "../components/ui/Spinner";
 import { useWarranties } from "../_features/warranties/useWarranties";
 import RecentWarranties from "./RecentWarranties";
@@ -16,6 +13,7 @@ import { useDashboardStats } from "../_features/stats/useDashboardStats";
 
 const DashboardPage = () => {
   const { isAdmin, isDealer, user } = useUser();
+
   const {
     data: data2,
     isLoading: isLoading2,
@@ -30,7 +28,7 @@ const DashboardPage = () => {
   }
 
   console.log(data2);
-  if (isAdmin || isDealer) {
+  if (isAdmin) {
     return (
       <div>
         <Stats
@@ -48,7 +46,7 @@ const DashboardPage = () => {
       <>
         <h1 className="text-2xl font-medium font-serif">
           Welcome to Dashboard,{" "}
-          <span className="font-semibold">
+          <span className="font-semibold text-[#322904]">
             {user?.firstname} {user?.lastname}
           </span>
           <span className="wave">👋</span>
