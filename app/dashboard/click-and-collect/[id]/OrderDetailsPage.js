@@ -27,6 +27,7 @@ const OrderDetailsPage = ({ id }) => {
             email={data?.data?.order.customer_email}
             phone={data?.data?.order.customer_phone_number}
             id={id}
+            data={data?.data?.order}
             status={data?.data?.order?.status}
           />
         </>

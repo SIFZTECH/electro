@@ -4,7 +4,7 @@ import DeleteOrder from "./DeleteOrder";
 import Link from "next/link";
 import DownloadFile from "./Download-doclet";
 
-const Actions = ({ email, phone, id, status }) => {
+const Actions = ({ email, phone, id, data, status }) => {
   return (
     <div className="mt-12">
       <h2 className="font-serif text-lg">
@@ -13,7 +13,7 @@ const Actions = ({ email, phone, id, status }) => {
       <div className="flex items-center gap-3 mt-3">
         <DownloadFile id={id} />
         <Link
-          href={`/dashboard/click-and-collect/email?&id=${id}&email=${email}&phone=${phone}`}
+          href={`/dashboard/click-and-collect/email?email=${email}&phone=${phone}&order_id=${data?.order_id}`}
           className="btn-primary"
         >
           Send Email

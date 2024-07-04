@@ -10,7 +10,10 @@ const SendMail = () => {
   const params = useSearchParams();
   const email = params.get("email");
   const phone = params.get("phone");
-  const id = params.get("id");
+  const order_id = params.get("order_id");
+
+  console.log(params);
+  console.log(order_id);
   const {
     register,
     reset,
@@ -53,70 +56,68 @@ const SendMail = () => {
 
   return (
     <div>
-      <h1 className="heading-h1">Email: {id}</h1>
+      <h1 className="heading-h1">Email: {order_id}</h1>
       <form className="mt-4 space-y-5" onSubmit={handleSubmit(onSubmit)}>
-        {!watchChannel && (
-          <div className="flex items-center gap-6">
-            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-              To:
-            </label>
-            <input
-              {...register("to", {
-                required: "This is required field",
-              })}
-              placeholder="example@email.com"
-              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              type="email"
-            />
-            {errors?.to && (
-              <span className="text-red-500 text-sm">{errors.to.message}</span>
-            )}
-          </div>
-        )}
-        {!watchChannel && (
-          <div className="flex items-center gap-6">
-            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-              CC:
-            </label>
-            <input
-              {...register("cc", {
-                required: "This is required field",
-              })}
-              placeholder="Your cc"
-              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              type="text"
-            />
-            {errors?.cc && (
-              <span className="text-red-500 text-sm">{errors.cc.message}</span>
-            )}
-          </div>
-        )}
-        {!watchChannel && (
-          <div className="flex items-center gap-6">
-            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-              Subject:
-            </label>
-            <input
-              {...register("subject", {
-                required: "This is required field",
-              })}
-              placeholder="Enter your subject"
-              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              type="text"
-            />
-            {errors?.subject && (
-              <span className="text-red-500 text-sm">
-                {errors.subject.message}
-              </span>
-            )}
-          </div>
-        )}
-
-        <div className="flex items-center gap-2">
+        <div className="flex items-start gap-2 flex-col">
           <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-            Send SMS:
+            To:
           </label>
-          <input {...register("channel")} type="checkbox" />
+          <input
+            {...register("to", {
+              required: "This is required field",
+            })}
+            placeholder="example@email.com"
+            className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            type="email"
+          />
+          {errors?.to && (
+            <span className="text-red-500 text-sm">{errors.to.message}</span>
+          )}
+        </div>
+
+        <div className="flex items-start gap-2 flex-col">
+          <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
+            CC:
+          </label>
+          <input
+            {...register("cc", {
+              required: "This is required field",
+            })}
+            placeholder="Your cc"
+            className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            type="text"
+          />
+          {errors?.cc && (
+            <span className="text-red-500 text-sm">{errors.cc.message}</span>
+          )}
+        </div>
+
+        <div className="flex items-start gap-2 flex-col">
+          <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
+            Subject:
+          </label>
+          <input
+            {...register("subject", {
+              required: "This is required field",
+            })}
+            placeholder="Enter your subject"
+            className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            type="text"
+          />
+          {errors?.subject && (
+            <span className="text-red-500 text-sm">
+              {errors.subject.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-start gap-2 flex-col">
+          <div className="flex gap-3 items-center">
+            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
+              Send SMS:
+            </label>
+            <input {...register("channel")} type="checkbox" />
+          </div>
           {watchChannel && (
             <input
               {...register("phone", {
@@ -131,7 +132,7 @@ const SendMail = () => {
             <span className="text-red-500 text-sm">{errors.phone.message}</span>
           )}
         </div>
-        <div className="flex lg:mx-3">
+        <div className="flex">
           <textarea
             {...register("message", {
               required: "This is required field",
