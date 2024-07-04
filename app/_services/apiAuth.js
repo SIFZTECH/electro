@@ -68,8 +68,10 @@ export async function profileSettings(formData) {
 
   const processedData = {
     ...formData,
-    logo: formData.logo[0],
+    profile: formData.profile[0],
   };
+
+  console.log(processedData);
 
   const { data } = await axios({
     url: `${BASE_URL}/dealer/settings`,
