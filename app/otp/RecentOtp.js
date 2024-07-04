@@ -81,13 +81,13 @@ const ResendOtp = () => {
                 value="number"
                 className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:!text-[#fcc419] p-0"
               >
-                +88016******03
+                {channel.number}
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="email"
                 className="font-medium text-muted-foreground hover:underline hover:bg-transparent text-[15px] data-[state='on']:!bg-transparent data-[state='on']:!underline data-[state='on']:text-![#fcc419] p-0"
               >
-                gr*****@gmail.com
+                {channel.email}
               </ToggleGroupItem>
             </ToggleGroup>
           </>

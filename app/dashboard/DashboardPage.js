@@ -12,20 +12,34 @@ import WarrantyProducts from "./warranties/WarrantyProducts";
 import Spinner from "../components/ui/Spinner";
 import { useWarranties } from "../_features/warranties/useWarranties";
 import RecentWarranties from "./RecentWarranties";
+import { useDashboardStats } from "../_features/stats/useDashboardStats";
 
 const DashboardPage = () => {
-  const { isAdmin, user } = useUser();
+  const { isAdmin, isDealer, user } = useUser();
+  const {
+    data: data2,
+    isLoading: isLoading2,
+    isError: isError2,
+    error: error2,
+  } = useDashboardStats();
+
   const { data, isLoading, error, isError } = useWarranties();
 
-  if (isLoading) {
+  if (isLoading || isLoading2) {
     return <Spinner />;
   }
 
-  if (isAdmin) {
+  console.log(data2);
+  if (isAdmin || isDealer) {
     return (
       <div>
-        <Stats />
-        <PieCharts />
+        <Stats
+          isError={isError2}
+          isLoading={isLoading2}
+          error={error2}
+          data={data2}
+        />
+        <PieCharts data={data2?.data} />
         <RecentOrder />
       </div>
     );

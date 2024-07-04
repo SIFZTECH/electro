@@ -3,11 +3,7 @@ import Stat from "./Stat";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { useDashboardStats } from "@/app/_features/stats/useDashboardStats";
 
-const Stats = () => {
-  const { data, isLoading, isError, error } = useDashboardStats();
-
-  console.log(data);
-
+const Stats = ({ isLoading, isError, error, data }) => {
   return (
     <>
       {!isLoading && !isError && !error && data && (
