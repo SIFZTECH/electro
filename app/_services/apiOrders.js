@@ -116,3 +116,22 @@ export async function deleteOrder(id) {
 
   return data;
 }
+
+export async function sendEmail(formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(
+    `${BASE_URL}/click-and-collect/order/send-notification`,
+    {
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: formData,
+    }
+  );
+
+  return data;
+}
