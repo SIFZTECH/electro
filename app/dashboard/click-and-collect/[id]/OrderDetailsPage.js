@@ -1,11 +1,11 @@
 "use client";
 
 import { useOrder } from "@/app/_features/orders/useOrders";
-import DownloadDocket from "./Download-Docket";
 import OrderDetails from "./OrderDetails";
 import ProductOrders from "./ProductOrders";
 import Spinner from "@/app/components/ui/Spinner";
 import NotFoundData from "@/app/components/ui/NotFoundData";
+import Actions from "./Actions";
 
 const OrderDetailsPage = ({ id }) => {
   const { data, isLoading, isError, error } = useOrder(id);
@@ -23,7 +23,7 @@ const OrderDetailsPage = ({ id }) => {
         <>
           <OrderDetails data={data?.data?.order} />
           <ProductOrders data={data?.data?.order} />
-          <DownloadDocket id={id} status={data?.data?.order?.status} />
+          <Actions id={id} status={data?.data?.order?.status} />
         </>
       )}
     </div>

@@ -1,22 +1,6 @@
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Image from "next/image";
 
-const dummyData = [
-  {
-    sku: "dyyds735363",
-    name: "E-Bike Retailer 1",
-    quantity: 2,
-    commission: 150,
-    amount: 300,
-  },
-  {
-    sku: "d4ds735t363",
-    name: "E-Bike Retailer 2",
-    quantity: 1,
-    commission: 150,
-    amount: 999,
-  },
-];
 
 const ProductOrders = ({ data }) => {
   return (
