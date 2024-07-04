@@ -13,7 +13,7 @@ const Actions = ({ email, phone, id, status }) => {
       <div className="flex items-center gap-3 mt-3">
         <DownloadFile id={id} />
         <Link
-          href={`/dashboard/click-and-collect/email?email=${email}&phone=${phone}`}
+          href={`/dashboard/click-and-collect/email?&id=${id}&email=${email}&phone=${phone}`}
           className="btn-primary"
         >
           Send Email

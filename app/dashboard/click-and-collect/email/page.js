@@ -10,6 +10,7 @@ const SendMail = () => {
   const params = useSearchParams();
   const email = params.get("email");
   const phone = params.get("phone");
+  const id = params.get("id");
   const {
     register,
     reset,
@@ -52,7 +53,7 @@ const SendMail = () => {
 
   return (
     <div>
-      <h1 className="heading-h1">Email: 18INV34570</h1>
+      <h1 className="heading-h1">Email: {id}</h1>
       <form className="mt-4 space-y-5" onSubmit={handleSubmit(onSubmit)}>
         {!watchChannel && (
           <div className="flex items-center gap-6">
@@ -64,7 +65,7 @@ const SendMail = () => {
                 required: "This is required field",
               })}
               placeholder="example@email.com"
-              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               type="email"
             />
             {errors?.to && (
@@ -82,7 +83,7 @@ const SendMail = () => {
                 required: "This is required field",
               })}
               placeholder="Your cc"
-              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               type="text"
             />
             {errors?.cc && (
@@ -100,7 +101,7 @@ const SendMail = () => {
                 required: "This is required field",
               })}
               placeholder="Enter your subject"
-              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               type="text"
             />
             {errors?.subject && (
@@ -121,7 +122,7 @@ const SendMail = () => {
               {...register("phone", {
                 required: "This is required field",
               })}
-              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               type="tel"
               placeholder={"Enter your phone"}
             />
@@ -130,13 +131,13 @@ const SendMail = () => {
             <span className="text-red-500 text-sm">{errors.phone.message}</span>
           )}
         </div>
-        <div className="flex mx-3">
+        <div className="flex lg:mx-3">
           <textarea
             {...register("message", {
               required: "This is required field",
             })}
             placeholder="Message...."
-            className="w-[60%] rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            className="w-full lg:w-[60%] rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             rows={15}
           />
           {errors?.message && (
