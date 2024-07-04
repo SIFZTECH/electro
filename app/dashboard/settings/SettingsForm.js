@@ -41,7 +41,7 @@ const SettingsForm = () => {
       city: user.city || "",
       postal_code: user.postal_code || "",
       state: user.state || "",
-      profile: user.profile || "",
+      logo: user.logo || "",
     },
   });
 
@@ -58,7 +58,7 @@ const SettingsForm = () => {
     city,
     postal_code,
     state,
-    profile,
+    logo,
   }) {
     try {
       const res = await profileSettings({
@@ -73,7 +73,7 @@ const SettingsForm = () => {
         city,
         postal_code,
         state,
-        profile,
+        logo,
       });
       if (res) {
         toast.success(res.message);
@@ -300,7 +300,7 @@ const SettingsForm = () => {
             </label>
             <div className="mt-1">
               <input
-                {...register("profile")}
+                {...register("logo")}
                 type="file"
                 placeholder="Upload"
                 accept="image/*"
