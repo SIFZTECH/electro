@@ -23,12 +23,11 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useTimer } from "@gabrielyotoo/react-use-timer";
 import ResendOtp from "../RecentOtp";
+import { useQueryClient } from "@tanstack/react-query";
 
 function InputOTPForm() {
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const { currentTime, isRunning } = useTimer(120, {
-    autoStart: true,
-  });
 
   const form = useForm({
     defaultValues: {
@@ -42,7 +41,8 @@ function InputOTPForm() {
 
       if (res.data) {
         localStorage.setItem("access-token", res.data.auth);
-        router.replace("/dashboard");
+        router.push("/dashboard");
+        queryClient.invalidateQueries();
 
         toast.success("Verified Successfully");
       }

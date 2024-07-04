@@ -21,13 +21,13 @@ const PieCharts = ({ data }) => {
     delivered: "#323232",
   };
 
-  const clickAndCollectStats = Object.keys(data?.click_and_collect).map(
-    (key) => ({
+  const clickAndCollectStats =
+    data?.click_and_collect &&
+    Object.keys(data?.click_and_collect).map((key) => ({
       name: key.charAt(0).toUpperCase(),
       value: data?.click_and_collect[key],
       color: colors[key],
-    })
-  );
+    }));
 
   const mappedBrandArray = data?.order_by_brand.map((brandOrder) => {
     const brandInfo = data2?.data.find(
@@ -44,7 +44,8 @@ const PieCharts = ({ data }) => {
 
   return (
     <div className="mt-14 flex flex-col lg:grid lg:grid-cols-4 gap-10">
-      {data?.click_and_collect.pending !== 0 &&
+      {data?.click_and_collect &&
+        data?.click_and_collect.pending !== 0 &&
         data?.click_and_collect.collected !== 0 &&
         data?.click_and_collect.delivered !== 0 && (
           <Chart

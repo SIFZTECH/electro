@@ -10,9 +10,14 @@ import Spinner from "../components/ui/Spinner";
 import { useWarranties } from "../_features/warranties/useWarranties";
 import RecentWarranties from "./RecentWarranties";
 import { useDashboardStats } from "../_features/stats/useDashboardStats";
+import Image from "next/image";
+import { BASE_URL_IMAGE } from "../lib/utils";
+import { SkeletonFiler } from "../components/ui/SkeletonFilter";
+import { SkeletonWarranty } from "../components/ui/SkeletonWarranty";
 
 const DashboardPage = () => {
   const { isAdmin, isDealer, user } = useUser();
+  const { data, isLoading, error, isError } = useWarranties();
 
   const {
     data: data2,
@@ -21,9 +26,7 @@ const DashboardPage = () => {
     error: error2,
   } = useDashboardStats();
 
-  const { data, isLoading, error, isError } = useWarranties();
-
-  if (isLoading || isLoading2) {
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -43,19 +46,32 @@ const DashboardPage = () => {
   } else {
     return (
       <>
-        <h1 className="text-2xl font-medium font-serif">
-          Welcome to Dashboard,{" "}
-          <span className="font-semibold text-[#322904]">
-            {user?.firstname} {user?.lastname}
-          </span>
-          <span className="wave">👋</span>
-        </h1>
-        <div className="mt-12">
-          <h1 className="text-xl font-medium mt-6 font-serif">
-            Your Recent Warranty Registrations
-          </h1>
-          {!isLoading && !isError && !error && <RecentWarranties data={data} />}
+        <div className="bg-white shadow-sm rounded-lg py-4 flex items-center">
+          <div className="ml-2">
+            <Image src="/banner.jpeg" height={100} width={200} alt="Banner" />
+            <h2 className="text-2xl font-semibold mt-3">
+              Welcome to Dashboard{" "}
+              <span className="text-color-primary">
+                {user?.firstname} {user?.lastname}!
+              </span>{" "}
+              <span className="wave">👋🏾</span>
+            </h2>
+          </div>
         </div>
+        {isLoading2 ? (
+          <div className="mt-12">
+            <SkeletonWarranty />
+          </div>
+        ) : (
+          <div className="mt-12">
+            <h1 className="text-xl font-medium mt-6 font-serif">
+              Your Recent Warranty Registrations
+            </h1>
+            {!isLoading && !isError && !error && (
+              <RecentWarranties data={data} />
+            )}
+          </div>
+        )}
       </>
     );
   }
