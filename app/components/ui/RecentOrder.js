@@ -48,7 +48,14 @@ const RecentOrder = () => {
       {!isError && !error && data && (
         <>
           {data?.data?.length === 0 ? (
-            <NotFoundData message="There is no order!" />
+            <>
+              <h2 className="text-xl font-serif">
+                Recent clicks and Collect Orders
+              </h2>
+              <div className="p-3 border border-gray-200 shadow-md inline-block mt-4">
+                There is no order!
+              </div>
+            </>
           ) : (
             <>
               <table className="!mt-8 table_modify">

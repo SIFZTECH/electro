@@ -27,7 +27,7 @@ const DashboardPage = () => {
     return <Spinner />;
   }
 
-  if (isAdmin) {
+  if (isAdmin || isDealer) {
     return (
       <div>
         <Stats

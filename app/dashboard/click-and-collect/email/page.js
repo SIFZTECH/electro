@@ -15,22 +15,26 @@ const SendMail = () => {
     reset,
     formState: { isSubmitting, errors },
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
-      channel: "email",
+      to: email || "",
+      phone: phone === "null" ? "" : phone,
     },
   });
 
+  const watchChannel = watch("channel");
+
   async function onSubmit({ channel, message, phone, to, cc, subject }) {
+    let formData;
+    if (channel) {
+      formData = { channel: "sms", message, phone };
+    } else {
+      formData = { channel: "email", message, to, cc, subject };
+    }
+
     try {
-      const res = await sendEmail({
-        channel: channel ? "sms" : "email",
-        message,
-        phone,
-        to,
-        cc,
-        subject,
-      });
+      const res = await sendEmail(formData);
       if (res) {
         toast.success(res.message);
         // router.back(-1);
@@ -50,71 +54,78 @@ const SendMail = () => {
     <div>
       <h1 className="heading-h1">Email: 18INV34570</h1>
       <form className="mt-4 space-y-5" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex items-center gap-6">
-          <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-            To:
-          </label>
-          <input
-            {...register("to", {
-              required: "This is required field",
-            })}
-            placeholder="example@email.com"
-            className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            type="email"
-            defaultValue={email}
-          />
-          {errors?.to && (
-            <span className="text-red-500 text-sm">{errors.to.message}</span>
-          )}
-        </div>
-        <div className="flex items-center gap-6">
-          <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-            CC:
-          </label>
-          <input
-            {...register("cc", {
-              required: "This is required field",
-            })}
-            placeholder="Your cc"
-            className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            type="text"
-          />
-          {errors?.cc && (
-            <span className="text-red-500 text-sm">{errors.cc.message}</span>
-          )}
-        </div>
-        <div className="flex items-center gap-6">
-          <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
-            Subject:
-          </label>
-          <input
-            {...register("subject", {
-              required: "This is required field",
-            })}
-            placeholder="Enter your subject"
-            className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            type="text"
-          />
-          {errors?.subject && (
-            <span className="text-red-500 text-sm">
-              {errors.subject.message}
-            </span>
-          )}
-        </div>
+        {!watchChannel && (
+          <div className="flex items-center gap-6">
+            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
+              To:
+            </label>
+            <input
+              {...register("to", {
+                required: "This is required field",
+              })}
+              placeholder="example@email.com"
+              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              type="email"
+            />
+            {errors?.to && (
+              <span className="text-red-500 text-sm">{errors.to.message}</span>
+            )}
+          </div>
+        )}
+        {!watchChannel && (
+          <div className="flex items-center gap-6">
+            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
+              CC:
+            </label>
+            <input
+              {...register("cc", {
+                required: "This is required field",
+              })}
+              placeholder="Your cc"
+              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              type="text"
+            />
+            {errors?.cc && (
+              <span className="text-red-500 text-sm">{errors.cc.message}</span>
+            )}
+          </div>
+        )}
+        {!watchChannel && (
+          <div className="flex items-center gap-6">
+            <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
+              Subject:
+            </label>
+            <input
+              {...register("subject", {
+                required: "This is required field",
+              })}
+              placeholder="Enter your subject"
+              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              type="text"
+            />
+            {errors?.subject && (
+              <span className="text-red-500 text-sm">
+                {errors.subject.message}
+              </span>
+            )}
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           <label className="text-sm font-semibold font-serif leading-6 text-gray-900">
             Send SMS:
           </label>
           <input {...register("channel")} type="checkbox" />
-          <input
-            {...register("phone", {
-              required: "This is required field",
-            })}
-            className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            type="tel"
-            placeholder={phone === "null" ? "Enter your phone" : phone}
-          />
+          {watchChannel && (
+            <input
+              {...register("phone", {
+                required: "This is required field",
+              })}
+              className="w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              type="tel"
+              placeholder={"Enter your phone"}
+            />
+          )}
           {errors?.phone && (
             <span className="text-red-500 text-sm">{errors.phone.message}</span>
           )}
