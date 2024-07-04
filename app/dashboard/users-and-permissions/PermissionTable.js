@@ -47,7 +47,7 @@ const PermissionTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody className="font-sans">
-          {data.data.rolesWithPermissions.map((data, i) => {
+          {data?.data?.rolesWithPermissions?.map((data, i) => {
             return (
               <TableRow key={i + 1}>
                 <TableCell data-label="Id">{i + 1}</TableCell>
@@ -73,7 +73,7 @@ const PermissionTable = () => {
                       permissions={data.permissions}
                     />
 
-                    {data.id !== 1 && data.id !== 1 && data.id !== 1 && (
+                    {data.id !== 1 && data.id !== 2 && data.id !== 3 && (
                       <DeleteRole roleName={data.name} />
                     )}
                   </div>
