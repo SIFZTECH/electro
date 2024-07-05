@@ -54,31 +54,32 @@ function UpdateAttribute({ control, productId }) {
                       {...field}
                     >
                       <option value="">Select Attribute Value</option>
-                      {Object.keys(attributes).map((key) => {
-                        return attributes[key]
-                          .filter((attr) => {
-                            return (
-                              !selectedVariantValues.includes(attr.id) ||
-                              attr.id === Number(field.value)
-                            );
-                          })
-                          .map((item) => (
-                            <option
-                              key={item.id}
-                              value={item.id}
-                              style={
-                                key === "Color"
-                                  ? {
-                                      backgroundColor: item.value,
-                                      color: item.value,
-                                    }
-                                  : {}
-                              }
-                            >
-                              {key} - {item.value}
-                            </option>
-                          ));
-                      })}
+                      {attributes &&
+                        Object.keys(attributes).map((key) => {
+                          return attributes[key]
+                            .filter((attr) => {
+                              return (
+                                !selectedVariantValues.includes(attr.id) ||
+                                attr.id === Number(field.value)
+                              );
+                            })
+                            .map((item) => (
+                              <option
+                                key={item.id}
+                                value={item.id}
+                                style={
+                                  key === "Color"
+                                    ? {
+                                        backgroundColor: item.value,
+                                        color: item.value,
+                                      }
+                                    : {}
+                                }
+                              >
+                                {key} - {item.value}
+                              </option>
+                            ));
+                        })}
                     </select>
                   )}
                   name={`variants[${index}].attribute_value_id`}
