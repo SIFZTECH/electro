@@ -20,10 +20,7 @@ const DashboardPage = () => {
   const { isAdmin, isDealer, user } = useUser();
   const { data, isLoading, error, isError } = useWarranties();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
+  console.log(error);
   if (isAdmin || isDealer) {
     return <DashboardForNonCustomer />;
   } else {
@@ -49,6 +46,11 @@ const DashboardPage = () => {
             <h1 className="text-xl font-medium mt-6 font-serif">
               Your Recent Warranty Registrations
             </h1>
+            {!isLoading && isError && error && (
+              <h1 className="mt-2 p-3 bg-white shadow-md inline-block border border-gray-100">
+                {error?.response?.data?.message || error.message}
+              </h1>
+            )}
             {!isLoading && !isError && !error && (
               <RecentWarranties data={data} />
             )}
