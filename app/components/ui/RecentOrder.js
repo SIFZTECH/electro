@@ -106,7 +106,7 @@ const RecentOrder = () => {
                         </td>
                         <td data-label="View Details" className="text-center">
                           <Link
-                            href={`click-and-collect/${data.id}`}
+                            href={`/dashboard/click-and-collect/${data.id}`}
                             className="btn-primary"
                           >
                             View
@@ -114,7 +114,7 @@ const RecentOrder = () => {
                         </td>
                         <td data-label="Invoice" className="text-center">
                           <Link
-                            href={`click-and-collect/invoice/${data.id}`}
+                            href={`dashboard/click-and-collect/invoice/${data.id}`}
                             className="btn-primary"
                           >
                             View
