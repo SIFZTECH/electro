@@ -131,7 +131,7 @@ const SendMail = () => {
             <span className="text-red-500 text-sm">{errors.phone.message}</span>
           )}
         </div>
-        <div className="flex">
+        <div className="flex flex-col">
           <textarea
             {...register("message", {
               required: "This is required field",

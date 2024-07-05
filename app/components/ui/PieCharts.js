@@ -4,7 +4,6 @@ import { useUser } from "@/app/_features/authentication/useUser";
 import Chart from "./Chart";
 import DealerPortalChart from "./DealerPortalChart";
 import { useBrandsForPublic } from "@/app/_features/brands/useBrands";
-import Spinner from "./Spinner";
 
 const defaultBrandColors = {
   NCM: "#495057",
@@ -42,7 +41,7 @@ const PieCharts = ({ data }) => {
   });
 
   return (
-    <div className="mt-14 flex flex-col lg:grid lg:grid-cols-4 gap-10">
+    <div className="mt-14 flex flex-wrap flex-col xl:grid 2xl:grid-cols-4 xl:grid-cols-3 gap-10">
       {isLoading || isLoading2 ? (
         ""
       ) : (
