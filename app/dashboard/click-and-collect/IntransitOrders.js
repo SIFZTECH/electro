@@ -50,7 +50,7 @@ const IntransitOrders = () => {
                         <td data-label="Customer Name">{data.customer_name}</td>
                         <td data-label="Status">
                           {data.status === "pending" && (
-                            <span className="font-semibold text-yellow-400 capitalize">
+                            <span className="font-semibold text-[#FFB500] capitalize">
                               {data.status}
                             </span>
                           )}
@@ -101,14 +101,6 @@ const IntransitOrders = () => {
           )}
         </>
       )}
-      <div className="flex justify-end mt-8 px-3">
-        <Link
-          className="btn-primary"
-          href="/dashboard/click-and-collect/create-order"
-        >
-          Create Order
-        </Link>
-      </div>
     </>
   );
 };

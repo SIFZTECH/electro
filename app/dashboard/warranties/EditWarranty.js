@@ -1,6 +1,6 @@
 "use client";
 
-import { updateWarranty } from "@/app/_services/apiWarranties";
+import { updateWarrantyStatus } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
 import {
@@ -12,7 +12,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const EditWarranty = ({ warranty }) => {
   const [open, setOpen] = useState(false);
@@ -21,6 +20,7 @@ const EditWarranty = ({ warranty }) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -28,9 +28,11 @@ const EditWarranty = ({ warranty }) => {
     },
   });
 
-  async function onSubmit({ status }) {
+  const watchStatus = watch("status");
+
+  async function onSubmit({ status, message }) {
     try {
-      const res = await updateWarranty(warranty.id, status);
+      const res = await updateWarrantyStatus(warranty.id, { status, message });
 
       if (res) {
         toast.success(res.message);
@@ -49,7 +51,7 @@ const EditWarranty = ({ warranty }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1">
+      <DialogTrigger className="btn-primary bg-green-400 transition-all py-1">
         Edit status
       </DialogTrigger>
       <DialogContent className="">
@@ -66,9 +68,18 @@ const EditWarranty = ({ warranty }) => {
                 className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 {...register("status")}
               >
-                <option value="active">Active</option>
                 <option value="pending">Pending</option>
+                <option value="active">Active</option>
+                <option value="approve">Approve</option>
+                <option value="decline">Decline</option>
               </select>
+              {watchStatus === "approve" && (
+                <textarea
+                  {...register("message")}
+                  className="mt-4 block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  placeholder="Send message..."
+                />
+              )}
             </div>
           </div>
           <button

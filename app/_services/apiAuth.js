@@ -69,10 +69,6 @@ export async function profileSettings(formData) {
   const processedData = {
     ...formData,
     logo: formData.logo[0],
-    weeks: formData.weeks.map((week) => ({
-      ...week,
-      is_holiday: week.is_holiday === "0" ? 1 : 0,
-    })),
   };
 
   const { data } = await axios({

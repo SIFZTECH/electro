@@ -1,7 +1,8 @@
 import Link from "next/link";
+import EditWarranty from "./EditWarranty";
 
 const WarrantyProducts = ({ data }) => {
-  const warranties = data.data;
+  const warranties = data?.data;
 
   return (
     <>
@@ -17,7 +18,7 @@ const WarrantyProducts = ({ data }) => {
               <th scope="col">Dealer Name</th>
               <th scope="col">Customer Name</th>
               <th scope="col">Status</th>
-              <th scope="col">View Details</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -41,12 +42,17 @@ const WarrantyProducts = ({ data }) => {
                     )}
                   </td>
                   <td data-label="View Details" className="text-center">
-                    <Link
-                      href={`/dashboard/warranty/${data.id}`}
-                      className="btn-primary"
-                    >
-                      View
-                    </Link>
+                    <div className="flex gap-2 items-center flex-wrap">
+                      {data.status === "pending" && (
+                        <EditWarranty warranty={data} />
+                      )}
+                      <Link
+                        href={`/dashboard/warranty/${data.id}`}
+                        className="btn-primary"
+                      >
+                        View
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               );

@@ -18,8 +18,6 @@ const UpdateStatus = ({ id, status }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  console.log(status);
-
   const {
     handleSubmit,
     control,
@@ -30,7 +28,6 @@ const UpdateStatus = ({ id, status }) => {
   async function onSubmit({ status }) {
     try {
       const res = await updateOrderStatus(id, { status });
-      console.log(res);
 
       if (res) {
         toast.success(res.message);

@@ -1,6 +1,6 @@
 import { IoMdArrowDropdown } from "react-icons/io";
 
-const Stat = ({ title, value, percentage }) => {
+const Stat = ({ title, value }) => {
   return (
     <div className="bg-gray-100 p-3 rounded-xl cursor-pointer leading-5 hover:bg-yellow-50 hover:transition-all">
       <div className="flex items-center gap-8 xl:gap-10 justify-between">
@@ -10,7 +10,6 @@ const Stat = ({ title, value, percentage }) => {
         <h2 className="font-serif text-3xl font-semibold">{value}</h2>
         <div className="stat__percentage text-sm">
           <IoMdArrowDropdown />
-          {percentage}%
         </div>
       </div>
     </div>

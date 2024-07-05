@@ -15,7 +15,7 @@ const OrderDetails = ({ data }) => {
           {data.status === "collected" ? (
             <span className="font-semibold text-green-400">Collected</span>
           ) : (
-            <span className="font-semibold text-yellow-400">Not Collected</span>
+            <span className="font-semibold text-[#FFB500]">Not Collected</span>
           )}
         </p>
         <p className="">Customer Name: {data.customer_name}</p>

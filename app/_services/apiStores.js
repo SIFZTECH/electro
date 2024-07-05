@@ -6,7 +6,6 @@ export async function getAllStores(page, query) {
 
   if (!token) return null;
 
-  console.log(query);
   let url = `${BASE_URL}/find/dealer/get-all?per_page=${STORES_PAGE_SIZE}&page=${page}`;
 
   if (query) {
@@ -29,6 +28,22 @@ export async function getAllStores(page, query) {
 
     return data.data;
   }
+}
+
+export async function getAllStorelocations() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/dealer/find`,
+    method: "get",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data?.data;
 }
 
 export async function createStore(formData) {

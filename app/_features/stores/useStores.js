@@ -1,4 +1,4 @@
-import { getAllStores } from "@/app/_services/apiStores";
+import { getAllStorelocations, getAllStores } from "@/app/_services/apiStores";
 import { useQuery } from "@tanstack/react-query";
 
 export function useStores(page = 1, query) {
@@ -8,4 +8,12 @@ export function useStores(page = 1, query) {
   });
 
   return { data, isLoading, error, isError, total_num: data?.total };
+}
+export function useStorelocations() {
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ["storelocations"],
+    queryFn: () => getAllStorelocations(),
+  });
+
+  return { data, isLoading, error, isError };
 }

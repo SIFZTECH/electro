@@ -45,7 +45,7 @@ const PhoneTab = () => {
 
   return (
     <>
-      {isTwoAuthEnable && user?.channel === "number" ? (
+      {isTwoAuthEnable && user?.phone_number ? (
         <div className="flex items-center justify-between">
           <span>{user?.phone_number}</span>
           <span

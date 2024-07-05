@@ -52,7 +52,7 @@ const Confirmation = () => {
             <button
               type="submit"
               disabled={isSubmitSuccessful}
-              className="font-medium mt-4 text-[14px] text-[#e1b813] hover:underline cursor-pointer disabled:cursor-not-allowed"
+              className="font-medium mt-4 text-[14px] text-[#FFB500] hover:underline cursor-pointer disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Resending..." : "Resend"}
             </button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
@@ -15,6 +15,8 @@ import { useAllDealerUsersInfo } from "../_features/users/useUsers";
 import { SkeletonFiler } from "../components/ui/SkeletonFilter";
 import Link from "next/link";
 import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
+import { useStorelocations, useStores } from "../_features/stores/useStores";
+import NotFoundData from "../components/ui/NotFoundData";
 
 const getFormattedOpeningHours = (weeks) => {
   const dayMap = {
@@ -56,7 +58,7 @@ const getFormattedOpeningHours = (weeks) => {
 
   const openDays = formattedWeeks.filter(
     (week) =>
-      !week.isHoliday &&
+      week.isHoliday !== "0" &&
       week.openingHours !== "Closed" &&
       week.closingHours !== "Closed"
   );
@@ -117,7 +119,7 @@ const isStoreOpenToday = (weeks) => {
   const todayWeek = weeks.find((week) => week.day.toLowerCase() === todayName);
 
   if (todayWeek) {
-    return todayWeek.is_holiday === "0" &&
+    return todayWeek.is_holiday === "1" &&
       todayWeek.opening_hours !== null &&
       todayWeek.closing_hours !== null
       ? "Open Today"
@@ -161,7 +163,17 @@ export default function MyMap() {
     watch,
     formState: { isSubmitting },
   } = useForm();
-  const { data, isLoading, error } = useAllDealerUsersInfo();
+
+  const popupRef = useRef(null);
+
+  useEffect(() => {
+    if (popupRef.current) {
+      popupRef.current.openPopup();
+    }
+  }, []);
+
+  const { data, isLoading, isError } = useStores();
+
   const [filteredStores, setFilteredStores] = useState([]);
 
   const {
@@ -171,6 +183,12 @@ export default function MyMap() {
   } = useGeolocation();
 
   const [mapLat, mapLng] = useUrlPosition();
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setFilteredStores(data.data);
+    }
+  }, [data, isLoading]);
 
   useEffect(
     function () {
@@ -191,11 +209,6 @@ export default function MyMap() {
     },
     [geolocationPosition]
   );
-  useEffect(() => {
-    if (data) {
-      setFilteredStores(data.data);
-    }
-  }, [data]);
 
   const onSubmit = (query) => {
     const searchQuery = query.search.toLowerCase();
@@ -206,62 +219,30 @@ export default function MyMap() {
         store.state.toLowerCase().includes(searchQuery)
     );
     setFilteredStores(filtered);
-    console.log(filtered);
   };
 
-  console.log(filteredStores);
-
   return (
-    <>
-      <div className="flex flex-col h-dvh w-dvw">
-        <div className="find-store p-4 bg-white absolute max-w-[30rem] left-6 top-6 z-[99999]">
-          <div>
-            <button
-              className="btn-primary mb-2 bg-gray-200"
-              onClick={() => router.push("/dashboard")}
-            >
-              Go back to Dashboard
-            </button>
-            <h1 className="font-serif text-lg mb-2 uppercase">Find a store</h1>
-            <form
-              className="flex items-center gap-4"
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <label htmlFor="search" className="sr-only">
-                Search
-              </label>
-              <div className="relative w-full">
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 me-2 text-gray-500"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="search"
-                  id="search"
-                  {...register("search")}
-                  className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
-                  placeholder="Search..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary   hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300"
-              >
+    <div className="flex flex-col h-dvh w-dvw">
+      <div className="find-store p-4 bg-white absolute max-w-[30rem] left-6 top-6 z-[99999]">
+        <div>
+          <button
+            className="btn-primary mb-2 bg-gray-200"
+            onClick={() => router.push("/dashboard")}
+          >
+            Go back to Dashboard
+          </button>
+          <h1 className="font-serif text-lg mb-2 uppercase">Find a store</h1>
+          <form
+            className="flex items-center gap-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label htmlFor="search" className="sr-only">
+              Search
+            </label>
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
-                  className="w-4 h-4 me-2"
+                  className="w-4 h-4 me-2 text-gray-500"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -275,42 +256,73 @@ export default function MyMap() {
                     d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                   />
                 </svg>
-                Search
-              </button>
-            </form>
-            <div className="stores mt-4 h-[30rem] overflow-y-auto">
-              <h1 className="font-serif font-semibold mb-3">
-                Your closest store
-              </h1>
-              {isLoading && (
-                <div>
-                  <SkeletonFiler />
-                  <SkeletonFiler />
-                  <SkeletonFiler />
-                  <SkeletonFiler />
-                  <SkeletonFiler />
-                  <SkeletonFiler />
-                </div>
-              )}
-              {!isLoading &&
-                filteredStores?.map((store, i) => {
-                  const storeCoordinates = getCoordinatesFromUrl(store.map_url);
-                  const distance = haversineDistance(
-                    {
-                      latitude: geolocationPosition?.lat,
-                      longitude: geolocationPosition?.lng,
-                    },
-                    storeCoordinates
-                  );
-                  const { formattedString, holidaysString } =
-                    getFormattedOpeningHours(store.weeks);
-                  const openStatus = isStoreOpenToday(store.weeks);
+              </div>
+              <input
+                type="search"
+                id="search"
+                {...register("search")}
+                className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
+                placeholder="Search..."
+              />
+            </div>
+            <button
+              type="submit"
+              className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary   hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300"
+            >
+              <svg
+                className="w-4 h-4 me-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+              Search
+            </button>
+          </form>
+          <div className="stores mt-4 h-[30rem] overflow-y-auto">
+            <h1 className="font-serif font-semibold mb-3">
+              Your closest store
+            </h1>
+            {isLoading && (
+              <div>
+                <SkeletonFiler />
+                <SkeletonFiler />
+                <SkeletonFiler />
+                <SkeletonFiler />
+                <SkeletonFiler />
+                <SkeletonFiler />
+              </div>
+            )}
+            {!isLoading && filteredStores.length === 0 ? (
+              <NotFoundData message="There is no stores at that momment!" />
+            ) : (
+              filteredStores?.map((store, i) => {
+                const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+                const distance = haversineDistance(
+                  {
+                    latitude: geolocationPosition?.lat,
+                    longitude: geolocationPosition?.lng,
+                  },
+                  storeCoordinates
+                );
+                const { formattedString, holidaysString } =
+                  getFormattedOpeningHours(store.weeks);
+                const openStatus = isStoreOpenToday(store.weeks);
 
-                  return (
-                    <div
-                      key={i + 1}
-                      className="store flex items-start gap-1 border-b border-gray-200 py-3"
-                    >
+                return (
+                  <div
+                    key={i + 1}
+                    className="store flex items-start gap-1 border-b border-gray-200 py-3"
+                  >
+                    <div className="">
                       <Image
                         src={
                           store.logo
@@ -319,172 +331,175 @@ export default function MyMap() {
                         }
                         width={60}
                         height={60}
-                        className="rounded-full object-contain"
+                        className="object-contain"
                         alt="name"
                       />
-                      <div className="pl-2">
-                        <h1 className="font-serif font-semibold">
-                          {store.company_name || "Company Name Not Found"}
-                        </h1>
-                        <p className="text-sm ">{distance} km</p>
-                        <p className="my-2">{formattedString}</p>
-                        {/* <p className="text-red-500">
-                          Holidays: {holidaysString}
-                        </p> */}
-                        <p className="font-semibold font-serif text-sm mb-2">
-                          {openStatus.startsWith("Open") ? (
-                            <span className="bg-green-400 text-gray-50 py-1 px-2 rounded-full">
-                              Open Today
-                            </span>
-                          ) : (
-                            <span className="bg-red-400 text-gray-100 py-1 px-2 rounded-full">
-                              Closed Today
-                            </span>
-                          )}
-                        </p>
-                        <p>{store.state}</p>
-                        <p>
-                          {store.street_address || "Unavailable Street Address"}
-                          .{store.postal_code || "Unavailable Postal code"},{" "}
-                          {store.city || "Unavailable City"}
-                        </p>
-                        <div className="my-2 text-sm">
-                          <p className="flex items-center gap-2">
-                            <MdOutlineLocalPhone className="text-color-primary" />{" "}
-                            <span>
-                              <Link
-                                href={`tel:${store.phone}`}
-                                className="hover:text-yellow-500"
-                              >
-                                {store.phone || "Unavailable"}
-                              </Link>
-                            </span>
-                          </p>
-                          <p className="flex items-center gap-2">
-                            <AiOutlineMail className="text-color-primary" />{" "}
-                            <span>
-                              <Link
-                                href={`mailto:${store.email}`}
-                                className="hover:text-yellow-500"
-                              >
-                                {store.email || "Unavailable Email"}
-                              </Link>
-                            </span>
-                          </p>
-                          {store?.web_url && (
-                            <p className="flex items-center gap-2">
-                              <AiOutlineGlobal className="text-color-primary" />{" "}
-                              <span>
-                                <Link
-                                  href={store.web_url}
-                                  className="hover:text-yellow-500"
-                                >
-                                  {store.website || "Unavailable Website"}
-                                </Link>
-                              </span>
-                            </p>
-                          )}
-                        </div>
-                        <Link
-                          href={`/find-a-dealer?lat=${storeCoordinates?.latitude}&lng=${storeCoordinates?.longitude}`}
-                          className="btn-primary inline-flex items-center"
-                        >
-                          <RiDirectionLine className="text-xl me-1" />
-                          Get direction
-                        </Link>
-                      </div>
                     </div>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
-        <MapContainer
-          center={mapPosition}
-          zoom={14}
-          scrollWheelZoom={true}
-          className="h-dvh w-dvw"
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-          />
-          <Marker position={mapPosition}>
-            <Popup>Your location</Popup>
-          </Marker>
-          {data &&
-            data.data.map((store, index) => {
-              const storeCoordinates = getCoordinatesFromUrl(store.map_url);
-              return (
-                <Marker
-                  key={index}
-                  position={[
-                    storeCoordinates.latitude,
-                    storeCoordinates.longitude,
-                  ]}
-                >
-                  <Popup autoPan>
-                    <div className="text-base">
-                      <h1 className="font-serif font-semibold text-lg">
+                    <div className="pl-2">
+                      <h1 className="font-serif font-semibold">
                         {store.company_name || "Company Name Not Found"}
                       </h1>
+                      <p className="text-sm ">{distance} km</p>
+                      <p className="my-2">{formattedString}</p>
+                      {/* <p className="text-red-500">
+                          Holidays: {holidaysString}
+                        </p> */}
+                      <p className="font-semibold font-serif text-sm mb-2">
+                        {openStatus.startsWith("Open") ? (
+                          <span className="bg-green-400 text-gray-50 py-1 px-2 rounded-full">
+                            Open Today
+                          </span>
+                        ) : (
+                          <span className="bg-red-400 text-gray-100 py-1 px-2 rounded-full">
+                            Closed Today
+                          </span>
+                        )}
+                      </p>
+                      <p>{store.state}</p>
                       <p>
                         {store.street_address || "Unavailable Street Address"}.
                         {store.postal_code || "Unavailable Postal code"},{" "}
                         {store.city || "Unavailable City"}
                       </p>
-                      <p className="flex items-center gap-2">
-                        <MdOutlineLocalPhone className="text-color-primary" />{" "}
-                        <span>
-                          <Link
-                            href={`tel:${store.phone}`}
-                            className="text-gray-900 hover:underline"
-                          >
-                            {store.phone || "Unavailable"}
-                          </Link>
-                        </span>
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <AiOutlineMail className="text-color-primary" />{" "}
-                        <span>
-                          <Link
-                            href={`mailto:${store.email}`}
-                            className="text-gray-900 hover:underline"
-                          >
-                            {store.email || "Unavailable Email"}
-                          </Link>
-                        </span>
-                      </p>
-                      {store.web_url && (
+                      <div className="my-2 text-sm">
                         <p className="flex items-center gap-2">
-                          <AiOutlineGlobal className="text-color-primary" />{" "}
+                          <MdOutlineLocalPhone className="text-color-primary" />{" "}
                           <span>
                             <Link
-                              href={store.web_url}
-                              className="text-gray-900 hover:underline"
+                              href={`tel:${store.phone}`}
+                              className="hover:text-yellow-500"
                             >
-                              {store.website}
+                              {store.phone || "Unavailable"}
                             </Link>
                           </span>
                         </p>
-                      )}
-
+                        <p className="flex items-center gap-2">
+                          <AiOutlineMail className="text-color-primary" />{" "}
+                          <span>
+                            <Link
+                              href={`mailto:${store.email}`}
+                              className="hover:text-yellow-500"
+                            >
+                              {store.email || "Unavailable Email"}
+                            </Link>
+                          </span>
+                        </p>
+                        {store?.weburl && (
+                          <p className="flex items-center gap-2">
+                            <AiOutlineGlobal className="text-color-primary" />{" "}
+                            <span>
+                              <Link
+                                href={store.weburl}
+                                className="hover:text-yellow-500"
+                              >
+                                {store.weburl || "Unavailable Website"}
+                              </Link>
+                            </span>
+                          </p>
+                        )}
+                      </div>
                       <Link
-                        href={store.map_url}
-                        className="btn-primary inline-flex items-center mt-2"
+                        href={`/find-a-dealer?lat=${storeCoordinates?.latitude}&lng=${storeCoordinates?.longitude}`}
+                        className="btn-primary inline-flex items-center"
                       >
                         <RiDirectionLine className="text-xl me-1" />
-                        Get direction From Google Map
+                        Get direction
                       </Link>
                     </div>
-                  </Popup>
-                </Marker>
-              );
-            })}
-          <ChangeCenter position={mapPosition} />
-        </MapContainer>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
       </div>
-    </>
+      <MapContainer
+        center={mapPosition}
+        zoom={14}
+        scrollWheelZoom={true}
+        className="h-dvh w-dvw"
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+        />
+        <Marker position={mapPosition}>
+          <Popup>Your location</Popup>
+        </Marker>
+        {!isLoading &&
+          data &&
+          data.data.map((store, index) => {
+            const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+
+            return (
+              <Marker
+                key={index}
+                position={[
+                  storeCoordinates?.latitude,
+                  storeCoordinates?.longitude,
+                ]}
+              >
+                <Popup ref={popupRef}>
+                  <div className="text-base">
+                    <h1 className="font-serif font-semibold text-lg">
+                      {store.company_name || "Company Name Not Found"}
+                    </h1>
+                    <p>
+                      {store.street_address || "Unavailable Street Address"}.
+                      {store.postal_code || "Unavailable Postal code"},{" "}
+                      {store.city || "Unavailable City"}
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <MdOutlineLocalPhone className="text-color-primary" />{" "}
+                      <span>
+                        <Link
+                          href={`tel:${store.phone}`}
+                          className="text-gray-900 hover:underline"
+                        >
+                          {store.phone || "Unavailable"}
+                        </Link>
+                      </span>
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <AiOutlineMail className="text-color-primary" />{" "}
+                      <span>
+                        <Link
+                          href={`mailto:${store.email}`}
+                          className="text-gray-900 hover:underline"
+                        >
+                          {store.email || "Unavailable Email"}
+                        </Link>
+                      </span>
+                    </p>
+                    {store.web_url && (
+                      <p className="flex items-center gap-2">
+                        <AiOutlineGlobal className="text-color-primary" />{" "}
+                        <span>
+                          <Link
+                            href={store.web_url}
+                            className="text-gray-900 hover:underline"
+                          >
+                            {store.website}
+                          </Link>
+                        </span>
+                      </p>
+                    )}
+
+                    <Link
+                      href={store.map_url}
+                      className="btn-primary inline-flex items-center mt-2"
+                    >
+                      <RiDirectionLine className="text-xl me-1" />
+                      Get direction From Google Map
+                    </Link>
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+        <ChangeCenter position={mapPosition} />
+      </MapContainer>
+    </div>
   );
 }
 

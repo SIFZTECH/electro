@@ -1,5 +1,6 @@
 "use client";
 
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { updateWarranty } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 
@@ -9,11 +10,13 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 const EditWarranty = ({ warranty }) => {
+  const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const {
@@ -22,33 +25,68 @@ const EditWarranty = ({ warranty }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      firstname: warranty.firstname,
-      lastname: warranty.lastname,
-      email: warranty.email,
-      phone: warranty.phone,
-      company_name: warranty.company_name,
-      address: warranty.address,
-      purchase_from: warranty.from,
-      purchase_date: warranty.purchase_date,
-      invoice_number: warranty.purchase_date,
-      bike_frame_serial_no: warranty.bike_frame_serial_no,
-      bike_battery_serial_no: warranty.bike_battery_serial_no,
-      bike_motor_serial_no: warranty.bike_motor_serial_no,
+      firstname: warranty.firstname || "",
+      lastname: warranty.lastname || "",
+      email: warranty.email || "",
+      phone: warranty.phone || "",
+      company_name: warranty.company_name || "",
+      address: warranty.address || "",
+      purchase_from: warranty.purchase_from || "",
+      purchase_date: warranty.purchase_date || "",
+      invoice_number: warranty.invoice_number || "",
+      bike_frame_serial_no: warranty.bike_frame_serial_no || "",
+      bike_battery_serial_no: warranty.bike_battery_serial_no || "",
+      bike_motor_serial_no: warranty.bike_motor_serial_no || "",
     },
   });
 
-  async function onSubmit(data) {
+  async function onSubmit({
+    firstname,
+    lastname,
+    email,
+    phone,
+    company_name,
+    address,
+    purchase_from,
+    purchase_date,
+    invoice_number,
+    bike_battery_serial_no,
+    bike_motor_serial_no,
+    invoice_image,
+    frame_serial_no_image,
+    battery_serial_no_image,
+    motor_serial_no_image,
+  }) {
     try {
-      const res = await updateWarranty(warranty.id, data);
+      const res = await updateWarranty(warranty.id, {
+        firstname,
+        lastname,
+        email,
+        phone,
+        company_name,
+        address,
+        purchase_from,
+        purchase_date,
+        invoice_number,
+        bike_battery_serial_no,
+        bike_motor_serial_no,
+        invoice_image: invoice_image[0],
+        frame_serial_no_image: frame_serial_no_image[0],
+        battery_serial_no_image: battery_serial_no_image[0],
+        motor_serial_no_image: motor_serial_no_image[0],
+      });
 
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("warranties");
+        setOpen((open) => !open);
       }
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response?.data?.message
+          ? handleValidationError(err.response.data.message)
+          : toast.error(err.response.message);
       } else {
         toast.error("Something went wrong!");
       }
@@ -56,8 +94,8 @@ const EditWarranty = ({ warranty }) => {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger className="btn-primary transition-all py-1">
+    <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
+      <DialogTrigger className="btn-primary bg-emerald-200 transition-all py-1">
         Edit
       </DialogTrigger>
       <DialogContent className="!max-w-[60rem] max-h-dvh overflow-y-scroll">
@@ -229,171 +267,179 @@ const EditWarranty = ({ warranty }) => {
                 </span>
               )}
             </div>
-            <div className="">
-              <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                <span>Invoice Number</span>
-                <AiOutlineExclamationCircle size={18} />
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register("invoice_number", {
-                    required: "This field is required",
-                  })}
-                  type="text"
-                  placeholder="Invoice Number"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.invoice_number && (
-                  <span className="text-red-500 text-sm">
-                    {errors.invoice_number.message}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Upload your Invoice
-              </label>
-              <div className="mt-1">
-                <small className="text-sm mb-1">
-                  Your photo should be PNG or JPG format
-                </small>
-                <input
-                  {...register("invoice_image")}
-                  type="file"
-                  placeholder="Upload your Invoice"
-                  accept=".png,.jpg"
-                  className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
-                file:rounded file:border-0
-                file:text-sm file:font-semibold file:ring-1
-                file:ring-color-primary file:text-color-primary
-                file:hover:ring-2 file:bg-transparent"
-                />
-              </div>
-            </div>
 
-            <div className="">
-              <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                <span>Bike Frame Serial Number</span>
-                <AiOutlineExclamationCircle size={18} />
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register("bike_frame_serial_no", {
-                    required: "This field is required",
-                  })}
-                  type="text"
-                  placeholder="Bike Frame Serial Number"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.bike_frame_serial_no && (
-                  <span className="text-red-500 text-sm">
-                    {errors.bike_frame_serial_no.message}
-                  </span>
-                )}
+            <div className="border-[1.5px] border-gray-300 p-3 shadow-sm flex flex-col gap-3 rounded-md">
+              <div className="">
+                <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                  <span>Invoice Number</span>
+                  <AiOutlineExclamationCircle size={18} />
+                </label>
+                <div className="mt-1">
+                  <input
+                    {...register("invoice_number", {
+                      required: "This field is required",
+                    })}
+                    type="text"
+                    placeholder="Invoice Number"
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                  {errors?.invoice_number && (
+                    <span className="text-red-500 text-sm">
+                      {errors.invoice_number.message}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Upload your Bike Frame Serial Number
-              </label>
-              <div className="mt-1">
-                <small className="text-sm mb-1">
-                  Your photo should be PNG or JPG format
-                </small>
-                <input
-                  {...register("frame_serial_no_image")}
-                  type="file"
-                  accept=".png,.jpg"
-                  placeholder="Upload your Invoice"
-                  className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+              <div className="">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                  Upload your Invoice
+                </label>
+                <div className="mt-1">
+                  <small className="text-sm mb-1">
+                    Your photo should be PNG or JPG format
+                  </small>
+                  <input
+                    {...register("invoice_image")}
+                    type="file"
+                    placeholder="Upload your Invoice"
+                    accept=".png,.jpg,.jpeg"
+                    className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
                 file:ring-color-primary file:text-color-primary
                 file:hover:ring-2 file:bg-transparent"
-                />
+                  />
+                </div>
               </div>
             </div>
-            <div className="">
-              <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                <span>Bike Battary Serial Number </span>
-                <AiOutlineExclamationCircle size={18} />
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register("bike_battery_serial_no", {
-                    required: "This field is required",
-                  })}
-                  type="text"
-                  placeholder="Bike Battary Serial Number"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.bike_battery_serial_no && (
-                  <span className="text-red-500 text-sm">
-                    {errors.bike_battery_serial_no.message}
-                  </span>
-                )}
+            <div className="border-[1.5px] border-gray-300 p-3 shadow-sm flex flex-col gap-3 rounded-md">
+              <div className="">
+                <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                  <span>Bike Frame Serial Number</span>
+                  <AiOutlineExclamationCircle size={18} />
+                </label>
+                <div className="mt-1">
+                  <input
+                    {...register("bike_frame_serial_no", {
+                      required: "This field is required",
+                    })}
+                    type="text"
+                    placeholder="Bike Frame Serial Number"
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                  {errors?.bike_frame_serial_no && (
+                    <span className="text-red-500 text-sm">
+                      {errors.bike_frame_serial_no.message}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Upload your Bike Battary Serial Number
-              </label>
-              <div className="mt-1">
-                <small className="text-sm mb-1">
-                  Your photo should be PNG or JPG format
-                </small>
-                <input
-                  {...register("battery_serial_no_image")}
-                  type="file"
-                  accept=".png,.jpg"
-                  className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+              <div className="">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                  Upload your Bike Frame Serial Number
+                </label>
+                <div className="mt-1">
+                  <small className="text-sm mb-1">
+                    Your photo should be PNG or JPG format
+                  </small>
+                  <input
+                    {...register("frame_serial_no_image")}
+                    type="file"
+                    accept=".png,.jpg,.jpeg"
+                    placeholder="Upload your Invoice"
+                    className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
                 file:ring-color-primary file:text-color-primary
                 file:hover:ring-2 file:bg-transparent"
-                />
+                  />
+                </div>
               </div>
             </div>
-            <div className="">
-              <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                <span>Bike Motor Serial Number</span>
-                <AiOutlineExclamationCircle size={18} />
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  {...register("bike_motor_serial_no", {
-                    required: "This field is required",
-                  })}
-                  placeholder="Bike Motor Serial Number"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.bike_motor_serial_no && (
-                  <span className="text-red-500 text-sm">
-                    {errors.bike_motor_serial_no.message}
-                  </span>
-                )}
+            <div className="border-[1.5px] border-gray-300 p-3 shadow-sm flex flex-col gap-3 rounded-md">
+              <div className="">
+                <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                  <span>Bike Battary Serial Number </span>
+                  <AiOutlineExclamationCircle size={18} />
+                </label>
+                <div className="mt-1">
+                  <input
+                    {...register("bike_battery_serial_no", {
+                      required: "This field is required",
+                    })}
+                    type="text"
+                    placeholder="Bike Battary Serial Number"
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                  {errors?.bike_battery_serial_no && (
+                    <span className="text-red-500 text-sm">
+                      {errors.bike_battery_serial_no.message}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                Upload your Bike Motor Serial Number
-              </label>
-              <div className="mt-1">
-                <small className="text-sm mb-1">
-                  Your photo should be PNG or JPG format
-                </small>
-                <input
-                  {...register("motor_serial_no_image")}
-                  type="file"
-                  accept=".png,.jpg"
-                  className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+              <div className="">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                  Upload your Bike Battary Serial Number
+                </label>
+                <div className="mt-1">
+                  <small className="text-sm mb-1">
+                    Your photo should be PNG or JPG format
+                  </small>
+                  <input
+                    {...register("battery_serial_no_image")}
+                    type="file"
+                    accept=".png,.jpg,.jpeg"
+                    className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
                 file:ring-color-primary file:text-color-primary
                 file:hover:ring-2 file:bg-transparent"
-                />
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-[1.5px] border-gray-300 p-3 shadow-sm flex flex-col gap-3 rounded-md">
+              <div className="">
+                <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                  <span>Bike Motor Serial Number</span>
+                  <AiOutlineExclamationCircle size={18} />
+                </label>
+                <div className="mt-1">
+                  <input
+                    type="text"
+                    {...register("bike_motor_serial_no", {
+                      required: "This field is required",
+                    })}
+                    placeholder="Bike Motor Serial Number"
+                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                  />
+                  {errors?.bike_motor_serial_no && (
+                    <span className="text-red-500 text-sm">
+                      {errors.bike_motor_serial_no.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                  Upload your Bike Motor Serial Number
+                </label>
+                <div className="mt-1">
+                  <small className="text-sm mb-1">
+                    Your photo should be PNG or JPG format
+                  </small>
+                  <input
+                    {...register("motor_serial_no_image")}
+                    type="file"
+                    accept=".png,.jpg,.jpeg"
+                    className="block w-full rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
+                file:rounded file:border-0
+                file:text-sm file:font-semibold file:ring-1
+                file:ring-color-primary file:text-color-primary
+                file:hover:ring-2 file:bg-transparent"
+                  />
+                </div>
               </div>
             </div>
           </div>

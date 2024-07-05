@@ -8,7 +8,7 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    --color-primary: #facc15;
+    --color-primary: #ffb500;
     --color-primary-shade-1: #fefce8;
     --color-primary-tint-1: #e1b813;
 
@@ -191,7 +191,7 @@ input[type="checkbox"] {
 }
 
 .rbc-today {
-  background-color: #fde68a !important;
+  background-color: #f1f3f5 !important;
 }
 .rbc-day-bg + .rbc-day-bg {
   cursor: pointer;
@@ -291,6 +291,10 @@ table th {
   table td:last-child {
     border-bottom: 0;
   }
+}
+
+.leaflet-popup {
+  opacity: 1 !important;
 }
 
 .rbc-event,

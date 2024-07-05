@@ -25,7 +25,7 @@ export async function getAllEvents() {
 
   let url;
 
-  if (user?.roles[0].name === "admin") {
+  if (user?.roles[0].id === 1) {
     url = `${BASE_URL}/promotional/calendar/get-all`;
   } else {
     url = `${BASE_URL}/promotional/calendar/get`;

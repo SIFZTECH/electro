@@ -16,6 +16,7 @@ export async function getAllWarranties() {
 
   return data.data;
 }
+
 export async function getAllWarrantiesForAdmin(page) {
   const token = localStorage.getItem("access-token");
 
@@ -31,6 +32,20 @@ export async function getAllWarrantiesForAdmin(page) {
   );
 
   return data.data;
+}
+
+export async function getWarrantyStats() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/warranty/get-statistics`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
 }
 
 export async function getWarranty(id) {
@@ -61,17 +76,46 @@ export async function deleteWarranty(id) {
   return data;
 }
 
-export async function updateWarranty(id, status) {
+export async function updateWarrantyStatus(id, { status, message }) {
   const token = localStorage.getItem("access-token");
 
   if (!token && !id) return null;
+
+  let bodyData = { status };
+
+  if (message) {
+    bodyData = {
+      status,
+      message,
+    };
+  }
 
   const { data } = await axios(`${BASE_URL}/warranty/update/${id}`, {
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { status },
+    data: bodyData,
+  });
+
+  return data;
+}
+
+export async function updateWarranty(id, formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token && !id) return null;
+
+  const { data } = await axios(`${BASE_URL}/my-warranty-update/${id}`, {
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "content-type": "multipart/form-data",
+    },
+    data: {
+      ...formData,
+      _method: "PUT",
+    },
   });
 
   return data;

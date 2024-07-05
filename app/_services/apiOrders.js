@@ -13,7 +13,6 @@ export async function getAllOrders(page, query, status) {
     url = `${BASE_URL}/click-and-collect?status=${status}&per_page=${PAGE_SIZE}&page=${page}`;
   }
 
-  console.log(query);
   if (query) {
     url = `${BASE_URL}/click-and-collect/search?search=${query}&per_page=${PAGE_SIZE}&page=${page}`;
   }
@@ -35,7 +34,6 @@ export async function getInvoice(id) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  console.log(id);
   let url = `${BASE_URL}/click-and-collect/invoice/${id}`;
 
   const { data } = await axios.get(url, {
@@ -51,7 +49,6 @@ export async function getOrder(id) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  console.log(id);
   let url = `${BASE_URL}/click-and-collect/order/${id}`;
 
   const { data } = await axios.get(url, {
@@ -114,6 +111,25 @@ export async function deleteOrder(id) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+    }
+  );
+
+  return data;
+}
+
+export async function sendEmail(formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(
+    `${BASE_URL}/click-and-collect/order/send-notification`,
+    {
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: formData,
     }
   );
 

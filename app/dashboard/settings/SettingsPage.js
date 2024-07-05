@@ -10,14 +10,10 @@ const SettingsPage = () => {
   const isPermission = useCheckPermission("settings");
   const { user, isLoading, isError } = useUser();
 
-  const user_role = !isLoading && user.roles[0].name;
+  const user_role = !isLoading && user.roles[0].id === 2;
 
   if (isPermission) {
-    return user_role === "dealer" ? (
-      <SettingsForm />
-    ) : (
-      <SettingsFormForNonDealer />
-    );
+    return user_role ? <SettingsForm /> : <SettingsFormForNonDealer />;
   } else {
     return (
       <NoPermission message="You don't have permission to access that route!" />

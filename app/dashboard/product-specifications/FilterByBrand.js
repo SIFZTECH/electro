@@ -1,4 +1,4 @@
-import { useBrands } from "@/app/_features/brands/useBrands";
+import {  useBrandsForPublic } from "@/app/_features/brands/useBrands";
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +13,7 @@ import React, { useState, useEffect } from "react";
 const FilterByBrand = ({ selectedBrands, setSelectedBrands }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data, isLoading, isError } = useBrands();
+  const { data, isLoading, isError } = useBrandsForPublic();
 
   // Set initial state from URL query parameters
   useEffect(() => {

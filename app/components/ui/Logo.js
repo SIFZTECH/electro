@@ -7,19 +7,13 @@ const Logo = () => {
 
   return (
     <div className="flex items-center gap-3">
-      <Image
-        src={user?.logo ? `${BASE_URL_IMAGE}${user.logo}` : "/logo.svg"}
-        height={40}
-        width={40}
-        alt="Logo"
-      />
+      <Image src={"/logo.svg"} height={40} width={40} alt="Logo" />
       {!isLoading && user && (
         <div className="flex flex-col gap-1 text-[1.35rem] font-serif font-semibold leading-5">
-          <span>{user?.company_name || "Leon"} Cycle</span>
+          <span>Leon Cycle</span>
           <span>Dealer Portal</span>
         </div>
       )}
-      {/*  */}
     </div>
   );
 };

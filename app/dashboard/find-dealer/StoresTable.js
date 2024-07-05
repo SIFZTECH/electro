@@ -19,8 +19,15 @@ import Link from "next/link";
 import { useStores } from "@/app/_features/stores/useStores";
 import EditStore from "./EditStore";
 import DeleteStore from "./DeleteStore";
+import useCheckPermission from "@/app/_hooks/usePermission";
+import NoPermission from "@/app/components/ui/NoPermission";
 
 const StoresTable = () => {
+  const isListPermission = useCheckPermission("find_dealer");
+  const isCreatePermission = useCheckPermission("create_dealer");
+  const isDeletePermission = useCheckPermission("delete_dealer");
+  const isUpdatePermission = useCheckPermission("update_dealer");
+
   const params = useSearchParams();
   const page = params.get("page") ? +params.get("page") : 1;
   const query = params.get("query") && params.get("query");
@@ -31,7 +38,7 @@ const StoresTable = () => {
     return <Spinner />;
   }
 
-  return (
+  return isListPermission ? (
     <>
       <div className="flex justify-end items-center gap-4 my-4 mb-8">
         <Search navigateTo={"find-dealer"} />
@@ -39,12 +46,14 @@ const StoresTable = () => {
           <Link href="/find-a-dealer" className="btn-primary">
             View Store Finder
           </Link>
-          <Link
-            href="/dashboard/find-dealer/add-new-store"
-            className="btn-primary"
-          >
-            Add New Store
-          </Link>
+          {isCreatePermission && (
+            <Link
+              href="/dashboard/find-dealer/add-new-store"
+              className="btn-primary"
+            >
+              Add New Store
+            </Link>
+          )}
         </div>
       </div>
       {isError && error && (
@@ -98,8 +107,8 @@ const StoresTable = () => {
 
                         <TableCell data-label="Actions">
                           <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
-                            <EditStore store={data} />
-                            <DeleteStore store={data} />
+                            {isUpdatePermission && <EditStore store={data} />}
+                            {isDeletePermission && <DeleteStore store={data} />}
                           </div>
                         </TableCell>
                       </TableRow>
@@ -118,6 +127,8 @@ const StoresTable = () => {
         </>
       )}
     </>
+  ) : (
+    <NoPermission message="You don't have permission to access this route" />
   );
 };
 export default StoresTable;

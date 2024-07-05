@@ -9,9 +9,10 @@ import {
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { updateStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { getCoordinatesFromUrl } from "@/app/lib/utils";
 
 const EditStore = ({ store }) => {
   const [open, setOpen] = useState();
@@ -19,6 +20,9 @@ const EditStore = ({ store }) => {
   const {
     register,
     handleSubmit,
+    control,
+    setError,
+    clearErrors,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
@@ -27,23 +31,47 @@ const EditStore = ({ store }) => {
       email: store?.email,
       phone: store?.phone,
       company_name: store?.company_name,
-      web_url: store?.web_url,
-      abn: store?.abn,
-      purchase_date: store?.purchase_date,
-      invoice_number: store?.invoice_number,
+      weburl: store?.weburl,
+
       description: store?.description,
       street_address: store?.street_address,
       city: store?.city,
       postal_code: store?.postal_code,
       state: store?.state,
 
-      stockfeedurl: store?.stockfeedurl,
       map_url: store?.map_url,
       status: store?.status,
+      weeks: store?.weeks || [
+        {
+          day: "",
+          opening_hours: "0:00",
+          closing_hours: "0:00",
+          is_holiday: 0,
+        },
+      ],
     },
   });
 
+  const [coordinates, setCoordinates] = useState(null);
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "weeks",
+  });
+
   async function onSubmit(formData) {
+    const coords = getCoordinatesFromUrl(formData.map_url);
+
+    if (coords) {
+      setCoordinates(formData.coords);
+      clearErrors("map_url");
+    } else {
+      setCoordinates(null);
+      setError("map_url", {
+        type: "manual",
+        message: "The URL does not contain valid latitude and longitude.",
+      });
+      return;
+    }
     try {
       const res = await updateStore(store.id, formData);
 
@@ -121,16 +149,23 @@ const EditStore = ({ store }) => {
                 </div>
               </div>
               <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 required-field">
                   Email
                 </label>
                 <div className="mt-1">
                   <input
-                    {...register("email")}
+                    {...register("email", {
+                      required: "This is required field",
+                    })}
                     type="email"
                     placeholder="Your Email"
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
+                  {errors?.email && (
+                    <span className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="">
@@ -184,48 +219,7 @@ const EditStore = ({ store }) => {
                   />
                 </div>
               </div>
-              <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                  ABN
-                </label>
-                <select
-                  name="abn"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                >
-                  <option value="">--Please choose an option--</option>
-                  <option value="abn">ABN</option>
-                  <option value="abn">TV5</option>
-                </select>
-              </div>
 
-              <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                  Purchase Date
-                </label>
-                <input
-                  {...register("purchase_date", {
-                    required: "Please pick your purchase date",
-                  })}
-                  type="date"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.purchase_date && (
-                  <span className="text-red-500 text-sm">
-                    {errors.purchase_date.message}
-                  </span>
-                )}
-              </div>
-              <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                  Invoice Number
-                </label>
-                <div className="mt-1">
-                  <input
-                    {...register("invoice_number")}
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
               <div className="">
                 <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
                   Description
@@ -336,146 +330,148 @@ const EditStore = ({ store }) => {
                 </div>
               </div>
 
-              {/* <div className="col-span-2">
-            {fields.map((item, index) => (
-              <div
-                key={item.id}
-                className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full "
-              >
-                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
-                  <div className="flex-1">
-                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
-                      Days
-                    </label>
-                    <Controller
-                      name={`weeks[${index}].day`}
-                      control={control}
-                      rules={{ required: "Day field is required" }}
-                      defaultValue={item.day}
-                      render={({ field }) => (
-                        <select
-                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed "
-                          {...field}
-                        >
-                          <option value="">Select Days</option>
-                          <option value="sun">Sun</option>
-                          <option value="mon">Mon</option>
-                          <option value="tue">Tue</option>
-                          <option value="wed">Wed</option>
-                          <option value="thu">Thu</option>
-                          <option value="fri">Fri</option>
-                          <option value="sat">Sat</option>
-                        </select>
-                      )}
-                    />
-                    {errors?.day?.[index]?.day && (
-                      <span className="text-red-500 text-sm self-center">
-                        {errors.day[index].day.message}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
-                  <div className="flex-1">
-                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
-                      Is Holiday
-                    </label>
-                    <Controller
-                      name={`weeks[${index}].is_holiday`}
-                      control={control}
-                      defaultValue={`${item.is_holiday}`}
-                      render={({ field }) => (
-                        <select
-                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed "
-                          {...field}
-                        >
-                          <option value="">--Select--</option>
-                          <option value={0}>Yes</option>
-                          <option value={1}>No</option>
-                        </select>
-                      )}
-                    />
-                    {errors?.weeks?.[index]?.is_holiday && (
-                      <span className="text-red-500 text-sm self-center">
-                        {errors.weeks[index].is_holiday.message}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
-                  <div className="flex-1">
-                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
-                      Opening Hours
-                    </label>
-                    <Controller
-                      name={`weeks[${index}].opening_hours`}
-                      control={control}
-                      rules={{ required: "This field is required" }}
-                      defaultValue={item.opening_hours}
-                      render={({ field }) => (
-                        <input
-                          type="time"
-                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
-                          {...field}
+              <div className="col-span-2">
+                {fields.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full "
+                  >
+                    <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                      <div className="flex-1">
+                        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                          Days
+                        </label>
+                        <Controller
+                          name={`weeks[${index}].day`}
+                          control={control}
+                          rules={{ required: "Day field is required" }}
+                          defaultValue={item.day}
+                          render={({ field }) => (
+                            <select
+                              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed "
+                              {...field}
+                            >
+                              <option value="">Select Days</option>
+                              <option value="sun">Sun</option>
+                              <option value="mon">Mon</option>
+                              <option value="tue">Tue</option>
+                              <option value="wed">Wed</option>
+                              <option value="thu">Thu</option>
+                              <option value="fri">Fri</option>
+                              <option value="sat">Sat</option>
+                            </select>
+                          )}
                         />
-                      )}
-                    />
-                    {errors?.opening_hours?.[index]?.opening_hours && (
-                      <span className="text-red-500 text-sm self-center">
-                        {errors.opening_hours[index].opening_hours.message}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
-                  <div className="flex-1">
-                    <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
-                      Closing Hours
-                    </label>
-                    <Controller
-                      name={`weeks[${index}].closing_hours`}
-                      control={control}
-                      rules={{ required: "closing_hours field is required" }}
-                      defaultValue={item.closing_hours}
-                      render={({ field }) => (
-                        <input
-                          type="time"
-                          className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
-                          {...field}
+                        {errors?.day?.[index]?.day && (
+                          <span className="text-red-500 text-sm self-center">
+                            {errors.day[index].day.message}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                      <div className="flex-1">
+                        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                          Is Holiday
+                        </label>
+                        <Controller
+                          name={`weeks[${index}].is_holiday`}
+                          control={control}
+                          defaultValue={`${item.is_holiday}`}
+                          render={({ field }) => (
+                            <select
+                              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed "
+                              {...field}
+                            >
+                              <option value="">--Select--</option>
+                              <option value={0}>Yes</option>
+                              <option value={1}>No</option>
+                            </select>
+                          )}
                         />
-                      )}
-                    />
-                    {errors?.opening_hours?.[index]?.opening_hours && (
-                      <span className="text-red-500 text-sm self-center">
-                        {errors.opening_hours[index].opening_hours.message}
-                      </span>
-                    )}
+                        {errors?.weeks?.[index]?.is_holiday && (
+                          <span className="text-red-500 text-sm self-center">
+                            {errors.weeks[index].is_holiday.message}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                      <div className="flex-1">
+                        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                          Opening Hours
+                        </label>
+                        <Controller
+                          name={`weeks[${index}].opening_hours`}
+                          control={control}
+                          rules={{ required: "This field is required" }}
+                          defaultValue={item.opening_hours}
+                          render={({ field }) => (
+                            <input
+                              type="time"
+                              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
+                              {...field}
+                            />
+                          )}
+                        />
+                        {errors?.opening_hours?.[index]?.opening_hours && (
+                          <span className="text-red-500 text-sm self-center">
+                            {errors.opening_hours[index].opening_hours.message}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-3 md:gap-8 md:items-center w-full">
+                      <div className="flex-1">
+                        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                          Closing Hours
+                        </label>
+                        <Controller
+                          name={`weeks[${index}].closing_hours`}
+                          control={control}
+                          rules={{
+                            required: "closing_hours field is required",
+                          }}
+                          defaultValue={item.closing_hours}
+                          render={({ field }) => (
+                            <input
+                              type="time"
+                              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
+                              {...field}
+                            />
+                          )}
+                        />
+                        {errors?.opening_hours?.[index]?.opening_hours && (
+                          <span className="text-red-500 text-sm self-center">
+                            {errors.opening_hours[index].opening_hours.message}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className="btn-primary bg-red-400 texl-sm text-gray-50 py-[9px] self-end cursor-pointer"
+                      onClick={() => remove(index)}
+                    >
+                      Remove
+                    </span>
                   </div>
-                </div>
+                ))}
                 <span
-                  className="btn-primary texl-sm bg-gray-200 py-[9px] self-end cursor-pointer"
-                  onClick={() => remove(index)}
+                  className="btn-primary font-serif text-sm mt-3 inline-block"
+                  onClick={() =>
+                    append({
+                      day: "",
+                      is_holiday: false,
+                      opening_hours: "0:00",
+                      closing_hours: "0:00",
+                    })
+                  }
                 >
-                  Remove
+                  Add More Holydays
                 </span>
               </div>
-            ))}
-            <span
-              className="btn-primary font-serif text-sm mt-3 inline-block"
-              onClick={() =>
-                append({
-                  day: "",
-                  is_holiday: false,
-                  opening_hours: "0:00",
-                  closing_hours: "0:00",
-                })
-              }
-            >
-              Add More Holydays
-            </span>
-          </div> */}
               <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 required-field">
                   Upload your logo
                 </label>
                 <div className="mt-1">
@@ -489,18 +485,6 @@ const EditStore = ({ store }) => {
               file:text-sm file:font-semibold
               file:bg-color-primary/20 file:text-color-gray-200
               hover:file:bg-color-primary/30"
-                  />
-                </div>
-              </div>
-              <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                  Stock in Stock feed url
-                </label>
-                <div className="mt-1">
-                  <input
-                    {...register("stockfeedurl")}
-                    type="url"
-                    className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>

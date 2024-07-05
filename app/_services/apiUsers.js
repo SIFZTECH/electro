@@ -50,6 +50,21 @@ export async function getAllDealerInfo() {
   return data;
 }
 
+export async function getAllStores() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/find/dealer/get-all`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function getUsersAll() {
   const token = localStorage.getItem("access-token");
 

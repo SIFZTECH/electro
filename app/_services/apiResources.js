@@ -45,7 +45,7 @@ export async function getAllResourcesForAdmin(page, query) {
     url2 = `${BASE_URL}/search-dealer-resource?search=${query}&per_page=${RESOURCE_PAGE_SIZE}&page=${page}`;
   }
 
-  if (user && user.roles[0].name === "admin") {
+  if (user && user.roles[0].id === 1) {
     const { data } = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -149,7 +149,7 @@ export async function getResource(id) {
 
   const user = await getCurrentUser();
   if (!token || !user) return null;
-  if (user.roles[0].name === "admin") {
+  if (user.roles[0].id === 1) {
     const { data } = await axios(`${BASE_URL}/folder/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
