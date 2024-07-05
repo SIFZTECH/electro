@@ -1,7 +1,6 @@
 "use client";
 
 import { resendEmail } from "@/app/_services/apiAuth";
-import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
