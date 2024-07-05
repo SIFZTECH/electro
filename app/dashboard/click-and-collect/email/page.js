@@ -13,8 +13,6 @@ const SendMail = () => {
   const phone = params.get("phone");
   const order_id = params.get("order_id");
 
-  console.log(params);
-  console.log(order_id);
   const {
     register,
     reset,

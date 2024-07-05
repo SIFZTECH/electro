@@ -15,8 +15,6 @@ const WarrantyPageInfo = ({ params }) => {
   const { warrantyId } = params;
   const { data, isLoading, isError, error } = useWarranty(warrantyId);
 
-  console.log(data);
-
   if (isLoading) return <Spinner />;
 
   const warranty = data.data;

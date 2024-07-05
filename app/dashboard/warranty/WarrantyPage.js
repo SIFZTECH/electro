@@ -23,7 +23,6 @@ const WarrantyPage = () => {
     return <Spinner />;
   }
 
-  console.log(data, error);
   return (
     <div>
       <div className="flex items-center justify-between my-4 mb-8">

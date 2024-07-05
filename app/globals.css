@@ -293,6 +293,10 @@ table th {
   }
 }
 
+.leaflet-popup {
+  opacity: 1 !important;
+}
+
 .rbc-event,
 .rbc-day-slot .rbc-background-event {
   background-color: #555 !important;

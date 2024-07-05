@@ -40,8 +40,6 @@ const ResendOtp = () => {
   });
 
   async function onSubmit({ email, channel }) {
-    console.log(email, channel);
-
     try {
       const res = await resendOtp({
         channel,

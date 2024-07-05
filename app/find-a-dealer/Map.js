@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
@@ -17,9 +17,6 @@ import Link from "next/link";
 import { BASE_URL_IMAGE, getCoordinatesFromUrl } from "../lib/utils";
 import { useStorelocations, useStores } from "../_features/stores/useStores";
 import NotFoundData from "../components/ui/NotFoundData";
-import { CLIENT_PUBLIC_FILES_PATH } from "next/dist/shared/lib/constants";
-import useCheckPermission from "../_hooks/usePermission";
-import NoPermission from "../components/ui/NoPermission";
 
 const getFormattedOpeningHours = (weeks) => {
   const dayMap = {
@@ -166,16 +163,18 @@ export default function MyMap() {
     watch,
     formState: { isSubmitting },
   } = useForm();
+
+  const popupRef = useRef(null);
+
+  useEffect(() => {
+    if (popupRef.current) {
+      popupRef.current.openPopup();
+    }
+  }, []);
+
   const { data, isLoading, isError } = useStores();
-  const {
-    data: data2,
-    isLoading: isLoading2,
-    isError: isError2,
-  } = useStorelocations();
 
   const [filteredStores, setFilteredStores] = useState([]);
-
-  console.log(data2);
 
   const {
     isLoading: isLoadingPosition,
@@ -440,7 +439,7 @@ export default function MyMap() {
                   storeCoordinates?.longitude,
                 ]}
               >
-                <Popup>
+                <Popup ref={popupRef}>
                   <div className="text-base">
                     <h1 className="font-serif font-semibold text-lg">
                       {store.company_name || "Company Name Not Found"}

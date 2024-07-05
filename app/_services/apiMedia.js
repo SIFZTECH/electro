@@ -26,7 +26,7 @@ export async function getAllSocialMediaAssets(page, query) {
     });
 
     return data.data;
-  } else if (user && user.roles[0].name === "dealer") {
+  } else if (user && user.roles[0].id === 2) {
     const { data } = await axios.get(url2, {
       headers: {
         Authorization: `Bearer ${token}`,

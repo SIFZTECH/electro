@@ -17,8 +17,6 @@ const WarrantiesPage = () => {
   const { data, isLoading, error, isError } = useWarrantiesForAdmin(page);
   const isCreateWarrantyPermission = useCheckPermission("create_warranty");
 
-  console.log(data);
-
   if (isLoading) {
     return <Spinner />;
   }

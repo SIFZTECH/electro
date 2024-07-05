@@ -102,7 +102,6 @@ export async function updateWarrantyStatus(id, { status, message }) {
 }
 
 export async function updateWarranty(id, formData) {
-  console.log("paypad", formData);
   const token = localStorage.getItem("access-token");
 
   if (!token && !id) return null;

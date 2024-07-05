@@ -10,7 +10,7 @@ const SettingsPage = () => {
   const isPermission = useCheckPermission("settings");
   const { user, isLoading, isError } = useUser();
 
-  const user_role = !isLoading && user.roles[0].name;
+  const user_role = !isLoading && user.roles[0].id === 2;
 
   if (isPermission) {
     return user_role === "dealer" ? (
