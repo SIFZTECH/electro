@@ -8,7 +8,7 @@ const AllResources = ({ data, metaData, page }) => {
   return (
     <div className="flex-1">
       <SearchFolder navigateTo="/dashboard/dealer-resources" />
-      {data.length === 0 ? (
+      {data?.length === 0 ? (
         <NotFoundData message="There is no resources available" />
       ) : (
         <Folders data={data} page="dealer-resources" />
