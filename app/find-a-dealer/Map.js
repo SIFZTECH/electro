@@ -134,11 +134,11 @@ const haversineDistance = (coords1, coords2, isMiles = false) => {
   const distance = (a, b) => (Math.PI / 180) * (a - b);
   const RADIUS_OF_EARTH_IN_KM = 6371;
 
-  const dLat = distance(coords2.latitude, coords1.latitude);
-  const dLon = distance(coords2.longitude, coords1.longitude);
+  const dLat = distance(coords2[0], coords1.latitude);
+  const dLon = distance(coords2[1], coords1.longitude);
 
   const lat1 = toRadian(coords1.latitude);
-  const lat2 = toRadian(coords2.latitude);
+  const lat2 = toRadian(coords2[0]);
 
   const a =
     Math.pow(Math.sin(dLat / 2), 2) +
@@ -305,13 +305,20 @@ export default function MyMap() {
               <NotFoundData message="There is no stores at that momment!" />
             ) : (
               filteredStores?.map((store, i) => {
-                const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+                const regex = /(-?\d+\.?\d*)/g;
+
+                // Use match() to find all number substrings
+                const numbers = store.map_url.match(regex);
+
+                // Convert strings to numbers using parseFloat()
+                const coordinates = numbers.map(parseFloat);
+
                 const distance = haversineDistance(
                   {
                     latitude: geolocationPosition?.lat,
                     longitude: geolocationPosition?.lng,
                   },
-                  storeCoordinates
+                  coordinates
                 );
                 const { formattedString, holidaysString } =
                   getFormattedOpeningHours(store.weeks);
@@ -399,7 +406,7 @@ export default function MyMap() {
                         )}
                       </div>
                       <Link
-                        href={`/find-a-dealer?lat=${storeCoordinates?.latitude}&lng=${storeCoordinates?.longitude}`}
+                        href={`/find-a-dealer?lat=${coordinates[0]}&lng=${coordinates[1]}`}
                         className="btn-primary inline-flex items-center"
                       >
                         <RiDirectionLine className="text-xl me-1" />
@@ -429,16 +436,17 @@ export default function MyMap() {
         {!isLoading &&
           data &&
           data.data.map((store, index) => {
-            const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+            // Regular expression to extract numbers
+            const regex = /(-?\d+\.?\d*)/g;
+
+            // Use match() to find all number substrings
+            const numbers = store.map_url.match(regex);
+
+            // Convert strings to numbers using parseFloat()
+            const coordinates = numbers.map(parseFloat);
 
             return (
-              <Marker
-                key={index}
-                position={[
-                  storeCoordinates?.latitude,
-                  storeCoordinates?.longitude,
-                ]}
-              >
+              <Marker key={index} position={[coordinates[0], coordinates[1]]}>
                 <Popup ref={popupRef}>
                   <div className="text-base">
                     <h1 className="font-serif font-semibold text-lg">

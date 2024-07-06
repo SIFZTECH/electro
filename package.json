@@ -31,6 +31,7 @@
     "cmdk": "^1.0.0",
     "input-otp": "^1.2.4",
     "leaflet": "^1.9.4",
+    "leaflet-control-geocoder": "^2.4.0",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "lucide-react": "^0.379.0",
     "moment": "^2.30.1",

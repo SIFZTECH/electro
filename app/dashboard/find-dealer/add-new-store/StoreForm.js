@@ -9,6 +9,7 @@ import { createStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { getCoordinatesFromUrl } from "@/app/lib/utils";
 import { useState } from "react";
+import SelectPosition from "./SelectPosition";
 
 const AddNewStore = () => {
   const queryClient = useQueryClient();
@@ -17,6 +18,7 @@ const AddNewStore = () => {
   const {
     register,
     control,
+    setValue,
     setError,
     clearErrors,
     handleSubmit,
@@ -35,6 +37,7 @@ const AddNewStore = () => {
   });
 
   const [coordinates, setCoordinates] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -42,26 +45,13 @@ const AddNewStore = () => {
   });
 
   async function onSubmit(data) {
-    const coords = getCoordinatesFromUrl(data.map_url);
-
-    if (coords) {
-      setCoordinates(data.coords);
-      clearErrors("map_url");
-    } else {
-      setCoordinates(null);
-      setError("map_url", {
-        type: "manual",
-        message: "The URL does not contain valid latitude and longitude.",
-      });
-      return;
-    }
-
     try {
-      const res = await createStore(data);
-
+      const res = await createStore({
+        ...data,
+        map_url: [coordinates.lat, coordinates.lng],
+      });
       if (res) {
         toast.success(res.message);
-
         queryClient.invalidateQueries("stores");
         router.back(-1);
       }
@@ -248,6 +238,7 @@ const AddNewStore = () => {
             <div className="mt-1">
               <input
                 {...register("weburl")}
+                type="url"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>
@@ -343,24 +334,47 @@ const AddNewStore = () => {
             </div>
           </div>
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Your Google Map Address url
-            </label>
-            <div className="mt-1">
+            <div className="mt-1 relative">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Your Position
+              </label>
               <input
                 {...register("map_url", {
                   required: "This is required field",
                 })}
-                type="url"
-                placeholder="Paste Google Maps URL here"
+                value={`${coordinates?.lat || ""},${coordinates?.lng || ""}`}
+                placeholder="Your Position"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
+              {open ? (
+                <span
+                  className="btn-primary absolute right-2 top-2/4"
+                  onClick={() => setOpen((open) => !open)}
+                >
+                  Close map
+                </span>
+              ) : (
+                <span
+                  className="btn-primary absolute right-2 top-2/4"
+                  onClick={() => setOpen((open) => !open)}
+                >
+                  Open map
+                </span>
+              )}
               {errors?.map_url && (
                 <span className="text-red-500 text-sm">
                   {errors.map_url.message}
                 </span>
               )}
             </div>
+          </div>
+          <div className="col-span-2">
+            {open && (
+              <SelectPosition
+                coordinates={coordinates}
+                setCoordinates={setCoordinates}
+              />
+            )}
           </div>
 
           <div className="col-span-2">

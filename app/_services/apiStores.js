@@ -55,17 +55,18 @@ export async function createStore(formData) {
     logo: formData.logo[0],
   };
 
-  const { data } = await axios({
-    url: `${BASE_URL}/find/dealer/create`,
-    method: "post",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "content-type": "multipart/form-data",
-    },
-    data: process_data,
-  });
+  console.log(process_data);
+  // const { data } = await axios({
+  //   url: `${BASE_URL}/find/dealer/create`,
+  //   method: "post",
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //     "content-type": "multipart/form-data",
+  //   },
+  //   data: process_data,
+  // });
 
-  return data;
+  // return data;
 }
 
 export async function updateStore(id, formData) {

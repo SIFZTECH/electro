@@ -349,3 +349,8 @@ table th {
   display: none;
   pointer-events: none;
 }
+
+.leaflet-control-geocoder-form input {
+  padding: 4px 12px;
+  border: border solid #777;
+}

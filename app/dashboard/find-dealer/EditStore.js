@@ -72,14 +72,15 @@ const EditStore = ({ store }) => {
       });
       return;
     }
+    console.log(coords);
+    console.log(formData);
     try {
-      const res = await updateStore(store.id, formData);
-
-      if (res) {
-        toast.success(res.message);
-        queryClient.invalidateQueries("stores");
-        setOpen((open) => !open);
-      }
+      // const res = await updateStore(store.id, formData);
+      // if (res) {
+      //   toast.success(res.message);
+      //   queryClient.invalidateQueries("stores");
+      //   setOpen((open) => !open);
+      // }
     } catch (err) {
       console.error(err);
       if (err.response) {
@@ -97,7 +98,7 @@ const EditStore = ({ store }) => {
       <DialogTrigger className="btn-primary transition-all py-1 bg-amber-200">
         Edit
       </DialogTrigger>
-      <DialogContent className="max-w-fit">
+      <DialogContent className="max-w-fit max-h-dvh overflow-y-auto">
         <div>
           <h2 className="font-serif text-lg">Edit Store</h2>
           <p className="text-sm text-gray-800 mt-3">
@@ -318,8 +319,7 @@ const EditStore = ({ store }) => {
                     {...register("map_url", {
                       required: "This is required field",
                     })}
-                    type="url"
-                    placeholder="Paste Google Maps URL here"
+                    placeholder="Your Position"
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                   {errors?.map_url && (
