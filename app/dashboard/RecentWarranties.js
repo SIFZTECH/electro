@@ -1,7 +1,9 @@
 import Link from "next/link";
 import EditWarranty from "@/app/dashboard/warranty/EditWarranty";
+import { useDashboardStats } from "../_features/stats/useDashboardStats";
 
 const RecentWarranties = ({ data }) => {
+
   const warranties = data?.data;
 
   return (

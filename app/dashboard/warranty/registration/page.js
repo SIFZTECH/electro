@@ -7,6 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import SelectDealer from "./SelectDealer";
 
 const WarrantyRegistrationPage = () => {
   const queryClient = useQueryClient();
@@ -228,24 +229,7 @@ const WarrantyRegistrationPage = () => {
             </div>
           </div>
 
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Purchase From
-            </label>
-            <input
-              {...register("purchase_from", {
-                required: "This field is required",
-              })}
-              type="date"
-              placeholder="Purchase from"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-            {errors?.purchase_from && (
-              <span className="text-red-500 text-sm">
-                {errors.purchase_from.message}
-              </span>
-            )}
-          </div>
+          <SelectDealer register={register} errors={errors} />
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date

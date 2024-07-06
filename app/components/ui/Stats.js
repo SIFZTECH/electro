@@ -81,7 +81,7 @@ const Stats = ({ isLoading, isError, error, data }) => {
                 />
               </svg>
             }
-            value={data?.data?.last_12_months_count[1]?.count || 0}
+            value={data?.data?.last_12_months_count[0]?.count || 0}
             percentage="0.27"
           />
         </div>
