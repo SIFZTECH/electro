@@ -494,8 +494,9 @@ export default function MyMap() {
                     )}
 
                     <Link
-                      href={store.map_url}
+                      href={`https://www.google.com/maps/@${coordinates[0]},${coordinates[1]}`}
                       className="btn-primary inline-flex items-center mt-2"
+                      target="_blank"
                     >
                       <RiDirectionLine className="text-xl me-1" />
                       Get direction From Google Map

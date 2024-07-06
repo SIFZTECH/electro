@@ -8,19 +8,31 @@ import {
 } from "@/app/components/ui/dialog";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { updateStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { getCoordinatesFromUrl } from "@/app/lib/utils";
+import SelectPosition from "./add-new-store/SelectPosition";
 
 const EditStore = ({ store }) => {
   const [open, setOpen] = useState();
+  const [open2, setOpen2] = useState();
+  const position = useRef();
+
+  const regex = /(-?\d+\.?\d*)/g;
+  // Use match() to find all number substrings
+  const numbers = store.map_url.match(regex);
+
+  // Convert strings to numbers using parseFloat()
+  const exitingCoordinates = numbers.map(parseFloat);
+
   const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     setError,
     clearErrors,
     formState: { isSubmitting, errors },
@@ -38,8 +50,7 @@ const EditStore = ({ store }) => {
       city: store?.city,
       postal_code: store?.postal_code,
       state: store?.state,
-
-      map_url: store?.map_url,
+      map_url: `Lat: ${exitingCoordinates[0]}, Lng: ${exitingCoordinates[1]}`,
       status: store?.status,
       weeks: store?.weeks || [
         {
@@ -52,35 +63,41 @@ const EditStore = ({ store }) => {
     },
   });
 
-  const [coordinates, setCoordinates] = useState(null);
+  const [coordinates, setCoordinates] = useState({
+    lat: exitingCoordinates[0],
+    lng: exitingCoordinates[1],
+  });
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "weeks",
   });
 
-  async function onSubmit(formData) {
-    const coords = getCoordinatesFromUrl(formData.map_url);
+  useEffect(
+    function () {
+      const latlng = `Lat: ${exitingCoordinates[0]}, Lng: ${exitingCoordinates[1]}`;
 
-    if (coords) {
-      setCoordinates(formData.coords);
-      clearErrors("map_url");
-    } else {
-      setCoordinates(null);
-      setError("map_url", {
-        type: "manual",
-        message: "The URL does not contain valid latitude and longitude.",
-      });
-      return;
-    }
-    console.log(coords);
-    console.log(formData);
+      setValue("map_url", latlng);
+    },
+    [coordinates]
+  );
+
+  async function onSubmit(formData) {
+    
+
     try {
-      // const res = await updateStore(store.id, formData);
-      // if (res) {
-      //   toast.success(res.message);
-      //   queryClient.invalidateQueries("stores");
-      //   setOpen((open) => !open);
-      // }
+      if (!formData.map_url) {
+        return toast.error("Please select your position");
+      }
+      const res = await updateStore(store.id, {
+        ...formData,
+        map_url: coordinates
+      });
+      if (res) {
+        toast.success(res.message);
+        queryClient.invalidateQueries("stores");
+        setOpen((open) => !open);
+      }
     } catch (err) {
       console.error(err);
       if (err.response) {
@@ -311,23 +328,45 @@ const EditStore = ({ store }) => {
                 </div>
               </div>
               <div className="">
-                <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                  Your Google Map Address url
-                </label>
-                <div className="mt-1">
+                <div className="mt-1 relative">
+                  <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1 after:content-['*'] after:ml-0.5 after:text-red-600">
+                    Your Position
+                  </label>
                   <input
-                    {...register("map_url", {
-                      required: "This is required field",
-                    })}
+                    {...register("map_url")}
+                    readOnly
                     placeholder="Your Position"
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
+                  {open2 ? (
+                    <span
+                      className="btn-primary absolute right-2 top-2/4"
+                      onClick={() => setOpen2((open) => !open)}
+                    >
+                      Close map
+                    </span>
+                  ) : (
+                    <span
+                      className="btn-primary absolute right-2 top-2/4"
+                      onClick={() => setOpen2((open) => !open)}
+                    >
+                      Open map
+                    </span>
+                  )}
                   {errors?.map_url && (
                     <span className="text-red-500 text-sm">
                       {errors.map_url.message}
                     </span>
                   )}
                 </div>
+              </div>
+              <div className="col-span-2">
+                {open2 && (
+                  <SelectPosition
+                    coordinates={coordinates}
+                    setCoordinates={setCoordinates}
+                  />
+                )}
               </div>
 
               <div className="col-span-2">

@@ -8,7 +8,7 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { createStore } from "@/app/_services/apiStores";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { getCoordinatesFromUrl } from "@/app/lib/utils";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SelectPosition from "./SelectPosition";
 
 const AddNewStore = () => {
@@ -19,6 +19,7 @@ const AddNewStore = () => {
     register,
     control,
     setValue,
+    getValues,
     setError,
     clearErrors,
     handleSubmit,
@@ -38,18 +39,35 @@ const AddNewStore = () => {
 
   const [coordinates, setCoordinates] = useState(null);
   const [open, setOpen] = useState(false);
+  const position = useRef();
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "weeks",
   });
 
+  useEffect(
+    function () {
+      const latlng =
+        coordinates && `Lat: ${coordinates?.lat}, Lng: ${coordinates?.lng}`;
+      position.current.value = latlng;
+      setValue("map_url", latlng);
+    },
+    [coordinates]
+  );
+
   async function onSubmit(data) {
+    console.log(data);
     try {
+      if (!data.map_url) {
+        return toast.error("Please select your position");
+      }
+
       const res = await createStore({
         ...data,
-        map_url: [coordinates.lat, coordinates.lng],
+        map_url: coordinates,
       });
+
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("stores");
@@ -339,10 +357,9 @@ const AddNewStore = () => {
                 Your Position
               </label>
               <input
-                {...register("map_url", {
-                  required: "This is required field",
-                })}
-                value={`${coordinates?.lat || ""},${coordinates?.lng || ""}`}
+                {...register("map_url")}
+                ref={position}
+                readOnly
                 placeholder="Your Position"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
