@@ -4,10 +4,19 @@ import { useRoles } from "@/app/_features/roles/useRoles";
 import { updateEvent } from "@/app/_services/apiEvents";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
+import moment from "moment";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
+const UpdateEventTab = ({
+  id,
+  startDate,
+  endDate,
+  title,
+  description,
+  visible,
+  setOpen,
+}) => {
   const queryClient = useQueryClient();
   const { data, isLoading } = useRoles();
 
@@ -20,12 +29,19 @@ const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
       title: title,
       description: description,
       visible_to: visible,
-      date: date,
+      start_date: moment(startDate).format("YYYY-MM-DD"),
+      end_date: moment(endDate).format("YYYY-MM-DD"),
     },
   });
 
-  async function onSubmit({ title, description, visible_to, date }) {
-    const specificDate = new Date(date);
+  async function onSubmit({
+    title,
+    description,
+    visible_to,
+    start_date,
+    end_date,
+  }) {
+    const specificDate = new Date(start_date);
 
     const options = {
       year: "numeric",
@@ -34,6 +50,8 @@ const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
     };
 
     const formattedDate = specificDate.toLocaleDateString("en-CA", options);
+    const formattedStartDate = moment(start_date).format("MM/DD/YYYY");
+    const formattedEndDate = moment(end_date).format("MM/DD/YYYY");
 
     try {
       const res = await updateEvent(id, {
@@ -41,6 +59,8 @@ const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
         description,
         visible_to,
         date: formattedDate,
+        start_date: formattedStartDate,
+        end_date: formattedEndDate,
       });
       if (res) {
         toast.success("Event updated");
@@ -95,6 +115,46 @@ const UpdateEventTab = ({ id, date, title, description, visible, setOpen }) => {
             {errors?.description && (
               <span className="text-red-500 text-sm">
                 {errors.description.message}
+              </span>
+            )}
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            Start Date
+          </label>
+          <div className="mt-2">
+            <input
+              {...register("start_date", {
+                required: "This is required field",
+              })}
+              disabled={isSubmitting}
+              type="date"
+              className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+            {errors?.start_date && (
+              <span className="text-red-500 text-sm">
+                {errors.start_date.message}
+              </span>
+            )}
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            End Date
+          </label>
+          <div className="mt-2">
+            <input
+              {...register("end_date", {
+                required: "This is required field",
+              })}
+              disabled={isSubmitting}
+              type="date"
+              className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+            {errors?.end_date && (
+              <span className="text-red-500 text-sm">
+                {errors.end_date.message}
               </span>
             )}
           </div>

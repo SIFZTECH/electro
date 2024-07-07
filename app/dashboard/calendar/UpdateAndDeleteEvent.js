@@ -10,7 +10,8 @@ import DeleteEventTab from "./DeleteEventTab";
 
 const UpdateAndDeleteEvent = ({
   id,
-  date,
+  startDate,
+  endDate,
   title,
   description,
   visible,
@@ -34,7 +35,8 @@ const UpdateAndDeleteEvent = ({
         <TabsContent value="updateEvent">
           <UpdateEventTab
             id={id}
-            date={date}
+            startDate={startDate}
+            endDate={endDate}
             title={title}
             description={description}
             visible={visible}

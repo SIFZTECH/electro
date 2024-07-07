@@ -24,15 +24,13 @@ const CreateNewEvent = ({ date, setOpen }) => {
 
   async function onSubmit({
     date,
-    start_date,
+
     end_date,
     title,
     description,
     visible_to,
   }) {
     const specificDate = new Date(date);
-    const startDate = new Date(start_date);
-    const endDate = new Date(end_date);
 
     const options = {
       year: "numeric",
@@ -41,7 +39,8 @@ const CreateNewEvent = ({ date, setOpen }) => {
     };
 
     const formattedDate = specificDate.toLocaleDateString("en-CA", options);
-    const formattedStartDate = moment(start_date).format("MM/DD/YYYY");
+    
+    const formattedStartDate = moment(date).format("MM/DD/YYYY");
     const formattedEndDate = moment(end_date).format("MM/DD/YYYY");
 
     try {
@@ -53,7 +52,6 @@ const CreateNewEvent = ({ date, setOpen }) => {
         description,
         visible_to,
       });
-
       if (res) {
         toast.success("New Event Created Successfully");
         queryClient.invalidateQueries("events");
@@ -91,26 +89,7 @@ const CreateNewEvent = ({ date, setOpen }) => {
           )}
         </div>
       </div>
-      <div>
-        <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-          Start Date
-        </label>
-        <div className="mt-2">
-          <input
-            {...register("start_date", {
-              required: "This is required field",
-            })}
-            disabled={isSubmitting}
-            type="date"
-            className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-          />
-          {errors?.start_date && (
-            <span className="text-red-500 text-sm">
-              {errors.start_date.message}
-            </span>
-          )}
-        </div>
-      </div>
+
       <div>
         <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
           End Date

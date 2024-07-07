@@ -28,6 +28,8 @@ export default function CalendarPage() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [id, setId] = useState(null);
   const [title, setTitle] = useState("null");
   const [description, setDescription] = useState("null");
@@ -44,7 +46,8 @@ export default function CalendarPage() {
     setId(e.id);
     setTitle(e.title);
     setDescription(e.description);
-    setDate(e.start);
+    setStartDate(e.start);
+    setEndDate(e.end);
     setVisible(e.visible_to);
   };
 
@@ -63,14 +66,16 @@ export default function CalendarPage() {
         id: event.id,
         title: event.title,
         description: event.description,
-        start: new Date(event.date),
-        end: new Date(event.date),
+
+        start: new Date(event.start_date),
+        end: new Date(event.end_date),
         visible_to: event.visible_to,
       }))
     : data?.data?.map((event) => ({
         id: event.id,
         title: event.title,
         description: event.description,
+
         start: new Date(event.date),
         end: new Date(event.date),
         visible_to: event.visible_to,
@@ -113,7 +118,8 @@ export default function CalendarPage() {
         <Dialog open={open2} onOpenChange={() => setOpen2((open) => !open)}>
           <UpdateAndDeleteEvent
             id={id}
-            date={date}
+            startDate={startDate}
+            endDate={endDate}
             title={title}
             description={description}
             visible={visible}
