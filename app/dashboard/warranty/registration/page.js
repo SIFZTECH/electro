@@ -8,20 +8,30 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import SelectDealer from "./SelectDealer";
+import { useState } from "react";
 
 const WarrantyRegistrationPage = () => {
+  const [dealer, setDealer] = useState(null);
+
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
+
     formState: { errors, isSubmitting },
   } = useForm();
 
   async function onSubmit(data) {
     try {
-      const res = await createWarranty(data);
+      if (!dealer) {
+        return toast.error("Purchase from is missing!");
+      }
+      const res = await createWarranty({
+        ...data,
+        purchase_from: Number(dealer),
+      });
 
       if (res) {
         toast.success(res.message);
@@ -229,7 +239,7 @@ const WarrantyRegistrationPage = () => {
             </div>
           </div>
 
-          <SelectDealer register={register} errors={errors} />
+          <SelectDealer value={dealer} setDealer={setDealer} />
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date

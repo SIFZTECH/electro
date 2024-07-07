@@ -13,6 +13,7 @@ import { useAllUsers } from "@/app/_features/users/useUsers";
 import { CreateNewResource, EditFolder } from "@/app/_services/apiResources";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
+import SelectUser from "../../social-media-assets/SelectUser";
 
 const UpdateFolder = ({ folder_id, folderData }) => {
   const [open, setOpen] = useState();
@@ -29,21 +30,18 @@ const UpdateFolder = ({ folder_id, folderData }) => {
     defaultValues: {
       folder_name: folderData.folder_name || "",
       visible_date: folderData.visible_date || "",
-
-      access_users: folderData.access_users.map((id) => {
-        return { id: id };
-      }) || [{ id: null }],
+      // const formattedUsers = formData.access_users.map((user) =>
+      //   Number(user.value)
+      // );
+      access_users: folderData.access_users || [],
 
       access_to_anyone: folderData.access_to_anyone || 0,
     },
   });
 
-  const checkedAnyoneAccessBox = watch("access_to_anyone");
+  console.log(folderData);
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "access_users",
-  });
+  const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   async function onSubmit({
     folder_name,
@@ -51,17 +49,17 @@ const UpdateFolder = ({ folder_id, folderData }) => {
     access_users,
     access_to_anyone,
   }) {
-    const fotmattedUsers = access_users.map((user) => Number(user.id));
+    // const formattedUsers = access_users.map((user) =>  Number(user.value));
+
     const formattedDateStr = moment(visible_date).format("MM/DD/YYYY");
 
     try {
       const res = await EditFolder(folder_id, {
         folder_name,
-        access_users: fotmattedUsers,
+        access_users,
         access_to_anyone,
         visible_date: formattedDateStr,
       });
-
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("resources");
@@ -134,58 +132,9 @@ const UpdateFolder = ({ folder_id, folderData }) => {
                 )}
               </div>
             </div>
-            {!checkedAnyoneAccessBox && (
-              <div>
-                {fields.map((item, index) => (
-                  <div className="flex gap-8 items-center w-full" key={item.id}>
-                    <div className="flex-1">
-                      <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                        Access Users
-                      </label>
-                      <Controller
-                        render={({ field }) => (
-                          <select
-                            className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
-                            {...field}
-                          >
-                            <option value="">--Select User--</option>
-                            {!isLoading &&
-                              !isError &&
-                              !error &&
-                              data?.data.map((user) => (
-                                <option
-                                  className="capitalize"
-                                  value={user.id}
-                                  key={user.id}
-                                >
-                                  {user.firstname} {user.lastname} ({user.email}
-                                  )
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                        name={`access_users[${index}].id`}
-                        control={control}
-                        defaultValue={item.id}
-                      />
-                    </div>
 
-                    <span
-                      className="btn-primary texl-sm bg-gray-200 py-[8px] self-end cursor-pointer"
-                      onClick={() => remove(index)}
-                    >
-                      Remove
-                    </span>
-                  </div>
-                ))}
-                <span
-                  className="btn-primary font-serif text-sm inline-block mt-3"
-                  onClick={() => append({ id: null })}
-                >
-                  Add More Users
-                </span>
-              </div>
-            )}
+            {!checkedAnyoneAccessBox && <SelectUser control={control} />}
+
             <div className="flex gap-1 items-center">
               <input
                 {...register("access_to_anyone")}

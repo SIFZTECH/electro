@@ -1,6 +1,6 @@
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,6 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAllUsers } from "@/app/_features/users/useUsers";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
 import { CreateNewSocialAssets } from "@/app/_services/apiMedia";
@@ -33,15 +32,12 @@ const CreateNewAssets = () => {
   const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   async function onSubmit(formData) {
-    const formattedUsers = formData.access_users.map((user) =>
-      Number(user.value)
-    );
     const formattedDateStr = moment(formData.visible_date).format("MM/DD/YYYY");
 
     try {
       const res = await CreateNewSocialAssets({
         folder_name: formData.folder_name,
-        access_users: formattedUsers,
+        access_users: formData.access_users,
         access_to_anyone: formData.access_to_anyone,
         visible_date: formattedDateStr,
       });
@@ -116,9 +112,7 @@ const CreateNewAssets = () => {
                 )}
               </div>
             </div>
-            {!checkedAnyoneAccessBox && (
-              <SelectUser control={control} register={register} />
-            )}
+            {!checkedAnyoneAccessBox && <SelectUser control={control} />}
 
             <div className="flex gap-1 items-center">
               <input

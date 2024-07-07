@@ -7,7 +7,7 @@ import {
 } from "@/app/components/ui/select";
 import { useState } from "react";
 
-const SelectUser = ({ data, label, name, placeholder }) => {
+const SelectSearchUser = ({ data, label, value, setDealer }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredUsers = data?.filter((user) => {
@@ -25,9 +25,9 @@ const SelectUser = ({ data, label, name, placeholder }) => {
         {label}
       </label>
 
-      <Select name={name} required>
+      <Select onValueChange={(value) => setDealer(value)} required>
         <SelectTrigger>
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder="Select Dealer" />
         </SelectTrigger>
         <SelectContent>
           <input
@@ -38,7 +38,7 @@ const SelectUser = ({ data, label, name, placeholder }) => {
             onChange={handleSearchChange}
           />
           {filteredUsers?.map((user) => (
-            <SelectItem key={user.id} value={user.id}>
+            <SelectItem key={user.id} value={String(user.id)}>
               {user.firstname} {user.lastname}
             </SelectItem>
           ))}
@@ -48,4 +48,4 @@ const SelectUser = ({ data, label, name, placeholder }) => {
   );
 };
 
-export default SelectUser;
+export default SelectSearchUser;

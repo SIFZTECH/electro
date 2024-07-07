@@ -18,7 +18,6 @@ import SelectUser from "../social-media-assets/SelectUser";
 const CreateNewResources = () => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useAllUsers();
 
   const {
     register,
@@ -40,13 +39,13 @@ const CreateNewResources = () => {
     access_users,
     access_to_anyone,
   }) {
-    const formattedUsers = access_users.map((user) => Number(user.value));
+    // const formattedUsers = access_users.map((user) => Number(user.value));
     const formattedDateStr = moment(visible_date).format("MM/DD/YYYY");
 
     try {
       const res = await CreateNewResource({
         folder_name,
-        access_users: formattedUsers,
+        access_users,
         access_to_anyone,
         visible_date: formattedDateStr,
       });

@@ -1,15 +1,16 @@
 import { useUsers } from "@/app/_features/users/useUsers";
 import SelectUser from "@/app/components/ui/SearchAndSelect";
 
-const SelectDealer = () => {
+const SelectDealer = ({ value, setDealer }) => {
   const { data } = useUsers();
 
   return (
     <SelectUser
       data={data?.data}
       label="Purchase From"
-      placeholder="Select Dealer"
       name="purchase_from"
+      value={value}
+      setDealer={setDealer}
     />
   );
 };

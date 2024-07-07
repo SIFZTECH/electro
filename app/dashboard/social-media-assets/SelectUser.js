@@ -4,7 +4,7 @@ import Spinner from "@/app/components/ui/Spinner";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const SelectUser = ({ control, register }) => {
+const SelectUser = ({ control, existingUser }) => {
   const { data, isLoading, isError } = useAllUsers();
 
   const userOptions =
