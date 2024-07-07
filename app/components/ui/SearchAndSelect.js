@@ -5,6 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/app/components/ui/select";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
+import Image from "next/image";
 import { useState } from "react";
 
 const SelectSearchUser = ({ data, label, value, setDealer }) => {
@@ -38,8 +40,25 @@ const SelectSearchUser = ({ data, label, value, setDealer }) => {
             onChange={handleSearchChange}
           />
           {filteredUsers?.map((user) => (
-            <SelectItem key={user.id} value={String(user.id)}>
-              {user.firstname} {user.lastname}
+            <SelectItem
+              key={user.id}
+              value={String(user.id)}
+              className="flex items-center gap-2"
+            >
+              <Image
+                src={
+                  user.profile
+                    ? ` ${BASE_URL_IMAGE}${user.profile}`
+                    : "/default.jpg"
+                }
+                height={30}
+                width={30}
+                alt=""
+                className="inline rounded-full border border-gray-200"
+              />{" "}
+              <span>
+                {user.firstname} {user.lastname}
+              </span>
             </SelectItem>
           ))}
         </SelectContent>

@@ -85,6 +85,7 @@ export async function CreateNewResource(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+  console.log(formData);
 
   const { data } = await axios(`${BASE_URL}/create-folder`, {
     method: "post",

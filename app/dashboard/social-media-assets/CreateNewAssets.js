@@ -32,14 +32,13 @@ const CreateNewAssets = () => {
   const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   async function onSubmit(formData) {
-    const formattedDateStr = moment(formData.visible_date).format("MM/DD/YYYY");
-
+    const start_date = moment(formData.start_date).format("MM/DD/YYYY");
+    const end_date = moment(formData.end_date).format("MM/DD/YYYY");
     try {
       const res = await CreateNewSocialAssets({
-        folder_name: formData.folder_name,
-        access_users: formData.access_users,
-        access_to_anyone: formData.access_to_anyone,
-        visible_date: formattedDateStr,
+        ...formData,
+        start_date,
+        end_date,
       });
       if (res) {
         toast.success(res.message);
@@ -73,7 +72,7 @@ const CreateNewAssets = () => {
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
                 Folder Name
               </label>
               <div className="mt-2">
@@ -93,21 +92,41 @@ const CreateNewAssets = () => {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Visible Date
+              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
+                Start Date
               </label>
               <div className="mt-2">
                 <input
-                  {...register("visible_date", {
+                  {...register("start_date", {
                     required: "This filed is required",
                   })}
                   disabled={isSubmitting}
                   type="date"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.visible_date && (
+                {errors?.start_date && (
                   <span className="text-red-500 text-sm">
-                    {errors.visible_date.message}
+                    {errors.start_date.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
+                End Date
+              </label>
+              <div className="mt-2">
+                <input
+                  {...register("end_date", {
+                    required: "This filed is required",
+                  })}
+                  disabled={isSubmitting}
+                  type="date"
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.end_date && (
+                  <span className="text-red-500 text-sm">
+                    {errors.end_date.message}
                   </span>
                 )}
               </div>

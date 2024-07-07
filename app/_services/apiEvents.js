@@ -97,6 +97,7 @@ export async function createEvent(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+  console.log(formData);
 
   const { data } = await axios({
     url: `${BASE_URL}/promotional/calendar/create`,
