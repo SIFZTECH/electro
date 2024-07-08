@@ -1,6 +1,7 @@
 import { useAllUsers } from "@/app/_features/users/useUsers";
 import MultipleSelector from "@/app/components/ui/multi-selector";
 import Spinner from "@/app/components/ui/Spinner";
+import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
 import React from "react";
 import { Controller } from "react-hook-form";
 
@@ -14,6 +15,9 @@ const SelectUser = ({ control, existingUser }) => {
       return {
         label: `${user.firstname} ${user.lastname} - ${user.email} - ${user.roles[0].name}`,
         value: user.id,
+        image: user?.profile
+          ? `${BASE_URL_IMAGE}${user.profile}`
+          : "/default.jpg",
       };
     });
 

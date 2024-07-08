@@ -39,8 +39,6 @@ const UpdateFolder = ({ folder_id, folderData }) => {
     },
   });
 
-  console.log(folderData);
-
   const checkedAnyoneAccessBox = watch("access_to_anyone");
 
   async function onSubmit({

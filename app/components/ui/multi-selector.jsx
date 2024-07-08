@@ -307,7 +307,6 @@ const MultipleSelector = React.forwardRef(
           "h-auto overflow-visible bg-transparent",
           commandProps?.className
         )}
-        // When onSearch is provided, we don't want to filter the options. You can still override it.
         shouldFilter={
           commandProps?.shouldFilter !== undefined
             ? commandProps.shouldFilter
@@ -364,7 +363,6 @@ const MultipleSelector = React.forwardRef(
                 </Badge>
               );
             })}
-            {/* Avoid having the "Search" Icon */}
             <CommandPrimitive.Input
               {...inputProps}
               ref={inputRef}
@@ -466,11 +464,16 @@ const MultipleSelector = React.forwardRef(
                                 onChange?.(newOptions);
                               }}
                               className={cn(
-                                "cursor-pointer",
+                                "cursor-pointer flex items-center gap-2",
                                 option.disable &&
                                   "cursor-default text-muted-foreground"
                               )}
                             >
+                              <img
+                                src={option.image}
+                                alt={option.label}
+                                className="h-6 w-6 rounded-full"
+                              />
                               {option.label}
                             </CommandItem>
                           );
