@@ -23,6 +23,8 @@ import UploadFileModal from "@/app/components/ui/UploadFileModal";
 import { CreateNewMediaFile } from "@/app/_services/apiMedia";
 import Link from "next/link";
 import CreateNewSubFolder from "./CreateNewSubFolder";
+import BreadcrumbN from "../../dealer-resources/[...folder_id]/BreadcrumbN";
+import { usePathname } from "next/navigation";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -50,6 +52,7 @@ const isSpreadsheet = (file) => {
 };
 
 const FolderPage = ({ folder_id }) => {
+  const pathName = usePathname();
   const { data, isLoading, isError, error } = useSocialMediaAsset(folder_id);
 
   const { isAdmin } = useUser();
@@ -61,10 +64,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex justify-between flex-wrap">
-        <h1 className="font-serif text-xl mb-6 font-semibold">
-          {data?.data?.folder_name}
-        </h1>
-
+        <BreadcrumbN folderPath={pathName} />
         {isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
             <CreateNewSubFolder
@@ -82,6 +82,10 @@ const FolderPage = ({ folder_id }) => {
           </div>
         )}
       </div>
+
+      <h1 className="font-serif text-2xl mb-6 text-color-primary font-semibold">
+        {data?.data?.folder_name}
+      </h1>
 
       {!isLoading && isError && error && (
         <NotFoundData message="There is no files with that ID" />

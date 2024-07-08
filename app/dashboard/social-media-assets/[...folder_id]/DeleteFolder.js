@@ -28,7 +28,7 @@ const DeleteFolder = ({ folder_id }) => {
       if (res) {
         toast.success(res.message);
 
-        router.replace("/dashboard/social-media-assets");
+        router.back(-1);
         queryClient.invalidateQueries("social_assets");
       }
     } catch (err) {

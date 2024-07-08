@@ -27,7 +27,7 @@ const DeleteFolder = ({ folder_id }) => {
       if (res) {
         toast.success(res.message);
 
-        router.replace("/dashboard/dealer-resources");
+        router.back(-1);
         queryClient.invalidateQueries("resources");
       }
     } catch (err) {
