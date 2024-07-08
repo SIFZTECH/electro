@@ -85,7 +85,6 @@ export async function CreateNewResource(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
-  console.log(formData);
 
   const { data } = await axios(`${BASE_URL}/create-folder`, {
     method: "post",
@@ -97,6 +96,23 @@ export async function CreateNewResource(formData) {
 
   return data;
 }
+
+export async function CreateNewSubResource(formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(`${BASE_URL}/create-folder`, {
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  });
+
+  return data;
+}
+
 export async function EditFolder(id, formData) {
   const token = localStorage.getItem("access-token");
 

@@ -23,6 +23,7 @@ import UpdateFolder from "./UpdateFolder";
 import DownloadButton from "@/app/components/ui/DownloadFile";
 import { useUser } from "@/app/_features/authentication/useUser";
 import { CreateNewFile } from "@/app/_services/apiResources";
+import CreateNewSubFolder from "./CreateNewSubFolder";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -64,6 +65,10 @@ const FolderPage = ({ folder_id }) => {
         </h1>
         {isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
+            <CreateNewSubFolder
+              parent_folder_id={folder_id}
+              folderData={data?.data}
+            />
             <UpdateFolder folder_id={folder_id} folderData={data?.data} />
             <DeleteFolder folder_id={folder_id} />
             <UploadFileModal
