@@ -78,9 +78,7 @@ const CreateNewSubFolder = ({ parent_folder_id, folderData }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary bg-emerald-300">
-        Add New Sub-Folder
-      </DialogTrigger>
+      <DialogTrigger className="btn-primary">Add New Sub-Folder</DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">

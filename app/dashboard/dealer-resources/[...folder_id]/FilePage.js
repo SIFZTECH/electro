@@ -73,12 +73,13 @@ const FolderPage = ({ folder_id }) => {
               folderData={data?.data}
             />
             <UpdateFolder folder_id={folder_id} folderData={data?.data} />
-            <DeleteFolder folder_id={folder_id} />
+
             <UploadFileModal
               folder_id={folder_id}
               sendTo={CreateNewFile}
               queryKey="folder"
             />
+            <DeleteFolder folder_id={folder_id} />
           </div>
         )}
       </div>
