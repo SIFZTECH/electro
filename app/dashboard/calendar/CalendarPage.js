@@ -46,8 +46,8 @@ export default function CalendarPage() {
     setId(e.id);
     setTitle(e.title);
     setDescription(e.description);
-    setStartDate(e.start);
-    setEndDate(e.end);
+    setStartDate(e.start_date);
+    setEndDate(e.end_date);
     setVisible(e.visible_to);
   };
 
@@ -66,9 +66,10 @@ export default function CalendarPage() {
         id: event.id,
         title: event.title,
         description: event.description,
-
-        start: new Date(event.start_date),
-        end: new Date(event.end_date),
+        start_date: event.start_date,
+        end_date: event.end_date,
+        start: new Date(event.date),
+        end: new Date(event.date),
         visible_to: event.visible_to,
       }))
     : data?.data?.map((event) => ({
@@ -88,7 +89,7 @@ export default function CalendarPage() {
 
         {isCreateEventPermission ? (
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-            {/* <DialogTrigger className="btn-primary">Add New Event</DialogTrigger> */}
+            <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
             <DialogContent>
               <CreateNewEvent date={date} setOpen={setOpen} />
             </DialogContent>

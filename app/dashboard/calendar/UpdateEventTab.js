@@ -34,6 +34,8 @@ const UpdateEventTab = ({
     },
   });
 
+  console.log(startDate, endDate);
+
   async function onSubmit({
     title,
     description,

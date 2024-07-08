@@ -14,17 +14,20 @@ const CreateNewEvent = ({ date, setOpen }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
       date: date || Date.now(),
+      start_date: moment(date).format("YYYY-MM-DD"),
+      end_date: moment(date).format("YYYY-MM-DD"),
     },
   });
   const { isLoading, data } = useRoles();
 
   async function onSubmit({
     date,
-
+    start_date,
     end_date,
     title,
     description,
@@ -39,8 +42,8 @@ const CreateNewEvent = ({ date, setOpen }) => {
     };
 
     const formattedDate = specificDate.toLocaleDateString("en-CA", options);
-    
-    const formattedStartDate = moment(date).format("MM/DD/YYYY");
+
+    const formattedStartDate = moment(start_date).format("MM/DD/YYYY");
     const formattedEndDate = moment(end_date).format("MM/DD/YYYY");
 
     try {
@@ -56,6 +59,7 @@ const CreateNewEvent = ({ date, setOpen }) => {
         toast.success("New Event Created Successfully");
         queryClient.invalidateQueries("events");
         setOpen((open) => !open);
+        reset();
       }
     } catch (err) {
       console.error(err);
@@ -90,6 +94,26 @@ const CreateNewEvent = ({ date, setOpen }) => {
         </div>
       </div>
 
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+          Start Date
+        </label>
+        <div className="mt-2">
+          <input
+            {...register("start_date", {
+              required: "This is required field",
+            })}
+            disabled={isSubmitting}
+            type="date"
+            className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+          />
+          {errors?.start_date && (
+            <span className="text-red-500 text-sm">
+              {errors.start_date.message}
+            </span>
+          )}
+        </div>
+      </div>
       <div>
         <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
           End Date

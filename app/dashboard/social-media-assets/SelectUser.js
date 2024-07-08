@@ -12,7 +12,7 @@ const SelectUser = ({ control, existingUser }) => {
     !isError &&
     data?.data?.map((user) => {
       return {
-        label: `${user.firstname} ${user.lastname}`,
+        label: `${user.firstname} ${user.lastname} - ${user.email} - ${user.roles[0].name}`,
         value: user.id,
       };
     });
