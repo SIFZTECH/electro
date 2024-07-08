@@ -71,7 +71,7 @@ export async function getUsersAll() {
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/admin/users-and-admin`,
+    url: `${BASE_URL}/admin/users-and-admin?per_page=500`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
