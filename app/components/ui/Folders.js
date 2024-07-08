@@ -4,8 +4,6 @@ import Link from "next/link";
 const Folders = ({ data, page }) => {
   return (
     <div>
-      {/* <h1 className="heading-h1 mt-12">NCM Moscow</h1> */}
-
       <div className="folders grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4 flex-wrap mt-12">
         {data.map((item) => (
           <Link
