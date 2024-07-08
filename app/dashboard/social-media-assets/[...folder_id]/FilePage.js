@@ -1,9 +1,7 @@
 "use client";
 
-import { useResource } from "@/app/_features/dealer-resources/useResource";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import Spinner from "@/app/components/ui/Spinner";
-import UploadFileModal from "@/app/components/ui/UploadFileModal";
 import Image from "next/image";
 import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
 import { VscFilePdf } from "react-icons/vsc";
@@ -17,12 +15,13 @@ import {
 } from "@/app/components/ui/dialog";
 import DeleteFile from "./DeleteFile";
 import DeleteFolder from "./DeleteFolder";
-import { useState } from "react";
-import Link from "next/link";
-import UpdateFolder from "./UpdateFolder";
+import { useSocialMediaAsset } from "@/app/_features/social_media/useMedia";
+import UpdateAssetsFolder from "./UpdateAssetsFolder";
 import DownloadButton from "@/app/components/ui/DownloadFile";
 import { useUser } from "@/app/_features/authentication/useUser";
-import { CreateNewFile } from "@/app/_services/apiResources";
+import UploadFileModal from "@/app/components/ui/UploadFileModal";
+import { CreateNewMediaFile } from "@/app/_services/apiMedia";
+import Link from "next/link";
 import CreateNewSubFolder from "./CreateNewSubFolder";
 
 // Utility functions to check file types
@@ -51,14 +50,13 @@ const isSpreadsheet = (file) => {
 };
 
 const FolderPage = ({ folder_id }) => {
-  const { data, isLoading, isError, error } = useResource(Number(folder_id));
+  const { data, isLoading, isError, error } = useSocialMediaAsset(folder_id);
+
   const { isAdmin } = useUser();
 
   if (isLoading) {
     return <Spinner />;
   }
-
-  console.log(data);
 
   return (
     <div>
@@ -66,22 +64,21 @@ const FolderPage = ({ folder_id }) => {
         <h1 className="font-serif text-xl mb-6 font-semibold">
           {data?.data?.folder_name}
         </h1>
+
         {isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
-            <CreateNewSubFolder
-              parent_folder_id={folder_id}
-              folderData={data?.data}
-            />
-            <UpdateFolder folder_id={folder_id} folderData={data?.data} />
+            {/* <CreateNewSubFolder folder_id={folder_id} folderData={data?.data} /> */}
+            <UpdateAssetsFolder folder_id={folder_id} folderData={data?.data} />
             <DeleteFolder folder_id={folder_id} />
             <UploadFileModal
               folder_id={folder_id}
-              sendTo={CreateNewFile}
-              queryKey="folder"
+              sendTo={CreateNewMediaFile}
+              queryKey="media-folder"
             />
           </div>
         )}
       </div>
+
       {!isLoading && isError && error && (
         <NotFoundData message="There is no files with that ID" />
       )}
@@ -96,7 +93,7 @@ const FolderPage = ({ folder_id }) => {
               <div className="flex gap-8 flex-wrap">
                 {data?.data?.child_folders?.map((item) => (
                   <Link
-                    href={`/dashboard/dealer-resources/${item.id}`}
+                    href={`/dashboard/social-media-assets/${item.id}`}
                     key={item.id}
                     className="folder flex flex-col items-center flex-wrap"
                   >

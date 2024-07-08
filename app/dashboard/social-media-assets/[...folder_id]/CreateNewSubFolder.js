@@ -1,6 +1,5 @@
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
 
 import {
   Dialog,
@@ -9,40 +8,58 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { CreateNewResource } from "@/app/_services/apiResources";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { useForm } from "react-hook-form";
+import { CreateNewSubResource } from "@/app/_services/apiResources";
+import SelectUser from "../../social-media-assets/SelectUser";
 import moment from "moment";
-import SelectUser from "../social-media-assets/SelectUser";
+import { CreateNewSubAssets } from "@/app/_services/apiMedia";
 
-const CreateNewResources = () => {
+const CreateNewSubFolder = ({ parent_folder_id, folderData }) => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
 
   const {
     register,
     handleSubmit,
-    control,
     watch,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      access_users: [],
+      folder_name: "New Folder",
+      start_date: folderData.start_date || "",
+      end_date: folderData.end_date || "",
+      // const formattedUsers = formData.access_users.map((user) =>
+      //   Number(user.value)
+      // );
+      access_users: folderData.access_users || [],
+
+      access_to_anyone: folderData.access_to_anyone || 0,
     },
   });
 
   const checkedAnyoneAccessBox = watch("access_to_anyone");
 
-  async function onSubmit(formData) {
-    // const formattedUsers = access_users.map((user) => Number(user.value));
-    const start_date = moment(formData.start_date).format("MM/DD/YYYY");
-    const end_date = moment(formData.end_date).format("MM/DD/YYYY");
-
+  async function onSubmit({
+    folder_name,
+    start_date,
+    end_date,
+    access_users,
+    access_to_anyone,
+  }) {
+    const fstart_date = moment(start_date).format("MM/DD/YYYY");
+    const fend_date = moment(end_date).format("MM/DD/YYYY");
     try {
-      const res = await CreateNewResource({
-        ...formData,
-        start_date,
-        end_date,
+      const res = await CreateNewSubAssets({
+        folder_name,
+        start_date: fstart_date,
+        end_date: fend_date,
+        access_users,
+        access_to_anyone,
+        parent_folder_id,
       });
+
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("resources");
@@ -62,18 +79,20 @@ const CreateNewResources = () => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary">Add New Resources</DialogTrigger>
+      <DialogTrigger className="btn-primary bg-emerald-300">
+        Add New Sub-Folder
+      </DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">
-            Create new Resources
+            Create New Sub-Folder
           </h2>
           <p className="text-sm text-gray-800 mt-3">
-            Create new Resources. Click create when you&apos;re done.
+            Create New Sub-Folder. Click create when you&apos;re done.
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
+              <label className="block text-sm font-medium leading-6 text-gray-900">
                 Folder Name
               </label>
               <div className="mt-2">
@@ -132,15 +151,18 @@ const CreateNewResources = () => {
                 )}
               </div>
             </div>
-            {!checkedAnyoneAccessBox && (
-              <SelectUser control={control} register={register} />
-            )}
+
+            {!checkedAnyoneAccessBox && <SelectUser control={control} />}
+
             <div className="flex gap-1 items-center">
               <input
                 {...register("access_to_anyone")}
                 id="access_to_anyone"
                 disabled={isSubmitting}
                 type="checkbox"
+                defaultChecked={
+                  folderData.access_to_anyone === 1 ? true : false
+                }
               />
 
               <label
@@ -157,7 +179,7 @@ const CreateNewResources = () => {
                 disabled={isSubmitting}
                 className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
-                {isSubmitting ? <SpinnerMini /> : "Create"}
+                {isSubmitting ? <SpinnerMini /> : "Update"}
               </button>
             </div>
           </form>
@@ -167,4 +189,4 @@ const CreateNewResources = () => {
   );
 };
 
-export default CreateNewResources;
+export default CreateNewSubFolder;
