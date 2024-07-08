@@ -67,14 +67,18 @@ const FolderPage = ({ folder_id }) => {
 
         {isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
-            {/* <CreateNewSubFolder folder_id={folder_id} folderData={data?.data} /> */}
+            <CreateNewSubFolder
+              parent_folder_id={folder_id}
+              folderData={data?.data}
+            />
             <UpdateAssetsFolder folder_id={folder_id} folderData={data?.data} />
-            <DeleteFolder folder_id={folder_id} />
+
             <UploadFileModal
               folder_id={folder_id}
               sendTo={CreateNewMediaFile}
               queryKey="media-folder"
             />
+            <DeleteFolder folder_id={folder_id} />
           </div>
         )}
       </div>

@@ -63,6 +63,7 @@ export async function CreateNewSubAssets(formData) {
 
   if (!token) return null;
 
+  console.log(formData);
   const { data } = await axios(
     `${BASE_URL}/social-media-assets/create-folder`,
     {

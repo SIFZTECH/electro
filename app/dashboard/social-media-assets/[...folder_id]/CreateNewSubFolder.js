@@ -79,9 +79,7 @@ const CreateNewSubFolder = ({ parent_folder_id, folderData }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary bg-emerald-300">
-        Add New Sub-Folder
-      </DialogTrigger>
+      <DialogTrigger className="btn-primary">Add New Sub-Folder</DialogTrigger>
       <DialogContent>
         <div>
           <h2 className="font-serif text-lg font-semibold">
@@ -179,7 +177,7 @@ const CreateNewSubFolder = ({ parent_folder_id, folderData }) => {
                 disabled={isSubmitting}
                 className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
-                {isSubmitting ? <SpinnerMini /> : "Update"}
+                {isSubmitting ? <SpinnerMini /> : "Create"}
               </button>
             </div>
           </form>
