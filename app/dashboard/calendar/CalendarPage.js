@@ -69,7 +69,7 @@ export default function CalendarPage() {
         start_date: event.start_date,
         end_date: event.end_date,
         start: new Date(event.start_date),
-        end: new Date(event.start_date),
+        end: new Date(event.end_date),
         visible_to: event.visible_to,
       }))
     : data?.data?.map((event) => ({
@@ -78,7 +78,7 @@ export default function CalendarPage() {
         description: event.description,
 
         start: new Date(event.start_date),
-        end: new Date(event.start_date),
+        end: new Date(event.end_date),
         visible_to: event.visible_to,
       }));
 

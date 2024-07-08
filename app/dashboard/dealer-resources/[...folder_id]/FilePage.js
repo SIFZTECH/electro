@@ -61,11 +61,13 @@ const FolderPage = ({ folder_id }) => {
     return <Spinner />;
   }
 
+  console.log(data, error);
+
   return (
     <div>
       <div className="flex justify-between flex-wrap">
         <BreadcrumbN folderPath={pathName} />
-        {isAdmin && (
+        {!isLoading && !isError && data?.data && isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
             <CreateNewSubFolder
               parent_folder_id={folder_id}

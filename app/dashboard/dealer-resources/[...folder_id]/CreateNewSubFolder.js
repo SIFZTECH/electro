@@ -27,14 +27,14 @@ const CreateNewSubFolder = ({ parent_folder_id, folderData }) => {
   } = useForm({
     defaultValues: {
       folder_name: "New Folder",
-      start_date: folderData.start_date || "",
-      end_date: folderData.end_date || "",
+      start_date: folderData?.start_date || "",
+      end_date: folderData?.end_date || "",
       // const formattedUsers = formData.access_users.map((user) =>
       //   Number(user.value)
       // );
-      access_users: folderData.access_users || [],
+      access_users: folderData?.access_users || [],
 
-      access_to_anyone: folderData.access_to_anyone || 0,
+      access_to_anyone: folderData?.access_to_anyone || 0,
     },
   });
 
@@ -158,7 +158,7 @@ const CreateNewSubFolder = ({ parent_folder_id, folderData }) => {
                 disabled={isSubmitting}
                 type="checkbox"
                 defaultChecked={
-                  folderData.access_to_anyone === 1 ? true : false
+                  folderData?.access_to_anyone === 1 ? true : false
                 }
               />
 

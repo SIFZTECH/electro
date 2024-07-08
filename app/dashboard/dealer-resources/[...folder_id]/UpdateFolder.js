@@ -27,15 +27,15 @@ const UpdateFolder = ({ folder_id, folderData }) => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      folder_name: folderData.folder_name || "",
-      start_date: folderData.start_date || "",
-      end_date: folderData.end_date || "",
+      folder_name: folderData?.folder_name || "",
+      start_date: folderData?.start_date || "",
+      end_date: folderData?.end_date || "",
       // const formattedUsers = formData.access_users.map((user) =>
       //   Number(user.value)
       // );
-      access_users: folderData.access_users || [],
+      access_users: folderData?.access_users || [],
 
-      access_to_anyone: folderData.access_to_anyone || 0,
+      access_to_anyone: folderData?.access_to_anyone || 0,
     },
   });
 
@@ -160,7 +160,7 @@ const UpdateFolder = ({ folder_id, folderData }) => {
                 disabled={isSubmitting}
                 type="checkbox"
                 defaultChecked={
-                  folderData.access_to_anyone === 1 ? true : false
+                  folderData?.access_to_anyone === 1 ? true : false
                 }
               />
 
