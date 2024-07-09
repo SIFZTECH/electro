@@ -26,7 +26,7 @@ const PermissionTable = () => {
         <CreateRolesAndPermissions /> */}
       </div>
 
-      <Table className="mt-10 table_modify">
+      <Table className="mt-10 ">
         <TableHeader>
           <TableRow className="text-center">
             <TableHead scope="col" className="w-fit">

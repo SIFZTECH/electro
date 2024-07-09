@@ -14,7 +14,7 @@ const ProductOrders = ({ data }) => {
   return (
     <div className="mt-12">
       <h1 className="heading-h1 mb-2 text-lg mt-4">Product On Order</h1>
-      <Table className="mt-10 table_modify">
+      <Table className="mt-10 ">
         <TableHeader>
           <TableRow className="font-serif">
             <TableHead scope="col">Product Image</TableHead>

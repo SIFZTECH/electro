@@ -1,8 +1,7 @@
-import Link from "next/link";
-import Nav from "./Nav";
+import { redirect } from "next/navigation";
 
 const page = () => {
-  return;
+  redirect("/dashboard/email-templates/password-reset");
 };
 
 export default page;

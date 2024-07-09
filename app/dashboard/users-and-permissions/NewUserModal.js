@@ -107,9 +107,9 @@ const NewUserModal = ({ btn }) => {
                       type="text"
                       className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
-                    {errors?.firstName && (
+                    {errors?.firstname && (
                       <span className="text-red-500 text-sm">
-                        {errors?.firstName.message}
+                        {errors?.firstname.message}
                       </span>
                     )}
                   </div>
@@ -125,11 +125,6 @@ const NewUserModal = ({ btn }) => {
                       type="text"
                       className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
-                    {errors?.lastname && (
-                      <span className="text-red-500 text-sm">
-                        {errors?.lastname.message}
-                      </span>
-                    )}
                   </div>
                 </div>
                 <div>

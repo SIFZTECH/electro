@@ -71,7 +71,7 @@ const RootPage = () => {
             width={40}
             alt="Logo"
           />
-          {!isLoading2 && user && isVerified ? (
+          {!isLoading2 && user ? (
             <Link className="btn-primary" href="/dashboard">
               Dashboard
             </Link>

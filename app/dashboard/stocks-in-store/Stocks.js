@@ -58,7 +58,7 @@ const Stocks = ({ products }) => {
   const data = products.data.data;
 
   return (
-    <Table className="mt-10 table_modify">
+    <Table className="mt-10 ">
       <TableHeader>
         <TableRow>
           <TableHead>Products</TableHead>

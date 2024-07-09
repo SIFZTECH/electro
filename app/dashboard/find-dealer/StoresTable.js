@@ -65,7 +65,7 @@ const StoresTable = () => {
             <NotFoundData message="There is no stores! Please add new one" />
           ) : (
             <>
-              <Table className="!mt-4 !mb-4 table_modify">
+              <Table className="!mt-4 !mb-4 ">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="font-medium" scope="col">

@@ -41,7 +41,7 @@ const CollectedOrders = () => {
             <NotFoundData message="There is no order!" />
           ) : (
             <>
-              <Table className="mt-10 table_modify">
+              <Table className="mt-10 ">
                 <TableHeader>
                   <TableRow>
                     <TableHead scope="col">Order ID</TableHead>
@@ -121,7 +121,6 @@ const CollectedOrders = () => {
           )}
         </>
       )}
-     
     </>
   );
 };

@@ -33,7 +33,7 @@ const BlockedUsers = () => {
       {!isLoading && !isError && !error && data?.data?.length === 0 ? (
         <NotFoundData message="There is no blocked user with that name" />
       ) : (
-        <Table className="!mt-4 *:table_modify">
+        <Table className="!mt-4">
           <TableHeader>
             <TableRow>
               <TableHead className="font-medium" scope="col">
