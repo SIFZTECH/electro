@@ -79,16 +79,11 @@ const SendMail = () => {
             CC:
           </label>
           <input
-            {...register("cc", {
-              required: "This is required field",
-            })}
+            {...register("cc")}
             placeholder="Your cc"
             className="w-full lg:w-2/4 rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
             type="text"
           />
-          {errors?.cc && (
-            <span className="text-red-500 text-sm">{errors.cc.message}</span>
-          )}
         </div>
 
         <div className="flex items-start gap-2 flex-col">

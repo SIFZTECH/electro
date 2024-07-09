@@ -17,7 +17,7 @@ const Stats = () => {
             value={data.data.last_30_days_count || 0}
           />
           <Stat
-            title="Month to Warranty Registration"
+            title="Last Year to Warranty Registration"
             value={data?.data.last_12_months_count[0]?.count || 0}
           />
         </div>
