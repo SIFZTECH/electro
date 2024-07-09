@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { handleValidationError } from "../_hooks/useHandleValidationError";
 
 export default function Page() {
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -31,6 +32,7 @@ export default function Page() {
     firstname,
     lastname,
     email,
+    phone,
     password,
     passwordConfirm,
   }) {
@@ -39,6 +41,7 @@ export default function Page() {
         firstname,
         lastname,
         email,
+        phone,
         password,
         password_confirmation: passwordConfirm,
       });
@@ -53,8 +56,10 @@ export default function Page() {
       }
     } catch (err) {
       console.error(err);
-      if (err.response?.data?.message.email) {
-        toast.error(err.response.data.message.email);
+      if (err.response?.data) {
+        err.response?.data?.message
+          ? handleValidationError(err.response?.data.message)
+          : toast.error(err.response.message);
       } else {
         toast.error("Something went wrong!");
       }
@@ -136,6 +141,27 @@ export default function Page() {
                 {errors?.email && (
                   <span className="text-red-500 text-sm">
                     {errors.email.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Phone Number
+              </label>
+              <div className="mt-2">
+                <input
+                  {...register("phone", {
+                    required: "Please provide your Phone number",
+                  })}
+                  type="tel"
+                  autoComplete="phone"
+                  disabled={isSubmitting}
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.phone && (
+                  <span className="text-red-500 text-sm">
+                    {errors.phone.message}
                   </span>
                 )}
               </div>

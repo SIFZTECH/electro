@@ -172,6 +172,17 @@ export async function verifyOtpForLogin(otp) {
 
   return data;
 }
+export async function verifyOtpOfPhone(otp) {
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/verify-registration-phone`,
+    method: "post",
+    data: {
+      otp: otp,
+    },
+  });
+
+  return data;
+}
 
 export async function verifyOtpForEnable(otp) {
   const token = localStorage.getItem("access-token");
@@ -217,6 +228,17 @@ export async function resendOtp(formData) {
 
   return data;
 }
+
+export async function resendPhoneOtp(formData) {
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/resend-phone-registration-otp`,
+    method: "post",
+    data: formData,
+  });
+
+  return data;
+}
+
 export async function resendEmail() {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
