@@ -88,6 +88,10 @@
   .required-field {
     @apply after:content-['*'] after:ml-0.5 after:text-red-600;
   }
+
+  .email-editor p {
+    @apply text-xl;
+  }
 }
 
 /* width */
