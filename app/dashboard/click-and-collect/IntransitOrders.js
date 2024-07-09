@@ -2,6 +2,13 @@ import { useOrders } from "@/app/_features/orders/useOrders";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import Spinner from "@/app/components/ui/Spinner";
+import {   Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow } from "@/app/components/ui/table";
 import { PAGE_SIZE } from "@/app/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -28,27 +35,27 @@ const IntransitOrders = () => {
             <NotFoundData message="There is no order!" />
           ) : (
             <>
-              <table className="mt-10 table_modify">
-                <thead>
-                  <tr>
-                    <th scope="col">Order ID</th>
-                    <th scope="col">Dealer Name</th>
-                    <th scope="col">Customer Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">View Details</th>
-                    <th scope="col">Invoice</th>
-                  </tr>
-                </thead>
-                <tbody>
+              <Table className="mt-10">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Order ID</TableHead>
+                    <TableHead>Dealer Name</TableHead>
+                    <TableHead>Customer Name</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>View Details</TableHead>
+                    <TableHead>Invoice</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   {data.data.map((data, i) => {
                     return (
-                      <tr key={i + 1}>
-                        <td data-label="Order ID">{data.order_id}</td>
-                        <td data-label="Dealer Name">
+                      <TableRow key={i + 1}>
+                        <TableCell data-label="Order ID">{data.order_id}</TableCell>
+                        <TableCell data-label="Dealer Name">
                           {data.user.firstname} {data.user.lastname}
-                        </td>
-                        <td data-label="Customer Name">{data.customer_name}</td>
-                        <td data-label="Status">
+                        </TableCell>
+                        <TableCell data-label="Customer Name">{data.customer_name}</TableCell>
+                        <TableCell data-label="Status">
                           {data.status === "pending" && (
                             <span className="font-semibold text-[#FFB500] capitalize">
                               {data.status}
@@ -69,28 +76,28 @@ const IntransitOrders = () => {
                               {data.status}
                             </span>
                           )}
-                        </td>
-                        <td data-label="View Details" className="text-center">
+                        </TableCell>
+                        <TableCell data-label="View Details" className="text-center">
                           <Link
                             href={`click-and-collect/${data.id}`}
                             className="btn-primary"
                           >
                             View
                           </Link>
-                        </td>
-                        <td data-label="Invoice" className="text-center">
+                        </TableCell>
+                        <TableCell data-label="Invoice" className="text-center">
                           <Link
                             href={`click-and-collect/invoice/${data.id}`}
                             className="btn-primary"
                           >
                             View
                           </Link>
-                        </td>
-                      </tr>
+                        </TableCell>
+                      </TableRow>
                     );
                   })}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
               <PaginationUI
                 data={data}
                 page={page}

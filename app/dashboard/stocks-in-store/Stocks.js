@@ -1,5 +1,13 @@
 import { useProducts } from "@/app/_features/products/useProducts";
 import Spinner from "@/app/components/ui/Spinner";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/app/components/ui/table";
 
 const dummyData = [
   {
@@ -50,26 +58,26 @@ const Stocks = ({ products }) => {
   const data = products.data.data;
 
   return (
-    <table className="mt-10 table_modify">
-      <thead>
-        <tr>
-          <th scope="col">Products</th>
-          <th scope="col">E Bikes</th>
-          <th scope="col">Clicks</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table className="mt-10 table_modify">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Products</TableHead>
+          <TableHead>E Bikes</TableHead>
+          <TableHead>Clicks</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {products?.data.data.map((data, i) => {
           return (
-            <tr key={i + 1}>
-              <td data-label="Products">{data.name}</td>
-              <td data-label="MyEBikes">{data.stock}</td>
-              <td data-label="Clicks">-</td>
-            </tr>
+            <TableRow key={i + 1}>
+              <TableCell data-label="Products">{data.name}</TableCell>
+              <TableCell data-label="MyEBikes">{data.stock}</TableCell>
+              <TableCell data-label="Clicks">-</TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 export default Stocks;
