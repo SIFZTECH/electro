@@ -71,6 +71,12 @@
   }
 }
 
+@layer base {
+  button {
+    @apply disabled:cursor-not-allowed disabled:opacity-75;
+  }
+}
+
 @layer components {
   .heading-h1 {
     @apply text-2xl font-bold font-serif;

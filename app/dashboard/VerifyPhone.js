@@ -37,6 +37,9 @@ function PhoneOTPForm() {
   });
 
   async function onSubmit({ otp }) {
+    if (otp.length !== 6) {
+      return toast.error("Please fill your input before submit!");
+    }
     try {
       const res = await verifyOtpOfPhone(otp);
 

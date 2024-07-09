@@ -25,7 +25,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting: isLoading },
+    formState: { errors, isSubmitting: isLoading, isSubmitSuccessful },
   } = useForm();
 
   async function onSubmit({ email, password }) {
@@ -143,7 +143,7 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isSubmitSuccessful}
                   className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
                 >
                   {isLoading ? <SpinnerMini /> : "Sign in"}
