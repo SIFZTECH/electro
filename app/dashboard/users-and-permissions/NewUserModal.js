@@ -14,6 +14,7 @@ import { useSearchParams } from "next/navigation";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
 const NewUserModal = ({ btn }) => {
   const [open, setOpen] = useState(false);
@@ -38,6 +39,7 @@ const NewUserModal = ({ btn }) => {
     firstname,
     lastname,
     email,
+    phone,
     role,
     password,
     location,
@@ -48,6 +50,7 @@ const NewUserModal = ({ btn }) => {
         firstname,
         lastname,
         email,
+        phone,
         role,
         password,
         location,
@@ -62,8 +65,8 @@ const NewUserModal = ({ btn }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        err.response.data.data
-          ? toast.error(err.response.data.data.email)
+        err.response?.data?.data
+          ? handleValidationError(err.response.data.data)
           : toast.error(err.response.data.message);
       } else {
         toast.error(err.message);
@@ -80,7 +83,7 @@ const NewUserModal = ({ btn }) => {
       <DialogTrigger className="btn-primary px-6 py-1 text-base">
         {btn}
       </DialogTrigger>
-      <DialogContent className="bg-white max-w-[50rem]">
+      <DialogContent className="bg-white max-w-[50rem] max-h-dvh overflow-y-auto">
         <div className="flex items-center flex-1 flex-col justify-center lg:px-8 ">
           <div className="sm:py-8 w-full mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
@@ -149,6 +152,26 @@ const NewUserModal = ({ btn }) => {
                     {errors?.email && (
                       <span className="text-red-500 text-sm">
                         {errors?.email.message}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                    Phone Number
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      {...register("phone", {
+                        required: "Please provide your phone number",
+                      })}
+                      type="tel"
+                      autoComplete="tel"
+                      className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    />
+                    {errors?.phone && (
+                      <span className="text-red-500 text-sm">
+                        {errors?.phone.message}
                       </span>
                     )}
                   </div>

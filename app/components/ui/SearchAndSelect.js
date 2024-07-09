@@ -39,10 +39,10 @@ const SelectSearchUser = ({ data, label, value, setDealer }) => {
             autoFocus={true}
             onChange={handleSearchChange}
           />
-          {filteredUsers?.map((user) => (
+          {filteredUsers?.map((user, i) => (
             <SelectItem
-              key={user.id}
-              value={String(user.id)}
+              key={i + 1}
+              value={`${user.firstname} ${user.lastname}`}
               className="flex items-center gap-2"
             >
               <Image

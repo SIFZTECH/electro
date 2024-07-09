@@ -12,7 +12,7 @@ import {
 } from "@/app/components/ui/table";
 
 const WarrantyProducts = ({ data }) => {
-  const warranties = data.data;
+  const warranties = data?.data;
 
   return (
     <div className="mt-10">
@@ -21,8 +21,8 @@ const WarrantyProducts = ({ data }) => {
           There is no warranties at that momment! Please add new Warranty
         </h1>
       ) : (
-        <Table className="mt-10 table_modify">
-          <TableHead className="font-serif">
+        <Table className="mt-10">
+          <TableHeader className="font-serif">
             <TableRow>
               <TableHead>Order ID</TableHead>
               <TableHead>Dealer Name</TableHead>
@@ -30,7 +30,7 @@ const WarrantyProducts = ({ data }) => {
               <TableHead>Status</TableHead>
               <TableHead>View Details</TableHead>
             </TableRow>
-          </TableHead>
+          </TableHeader>
           <TableBody>
             {warranties.map((data, i) => {
               return (

@@ -20,28 +20,26 @@ const WarrantyProducts = ({ data }) => {
           There is no warranties at that momment! Please add new Warranty
         </h1>
       ) : (
-        <Table className="mt-10 table_modify">
+        <Table className="mt-10">
           <TableHeader className="font-serif">
             <TableRow>
-              <TableHead scope="col">Order ID</TableHead>
-              <TableHead scope="col">Dealer Name</TableHead>
-              <TableHead scope="col">Customer Name</TableHead>
-              <TableHead scope="col">Status</TableHead>
-              <TableHead scope="col">Actions</TableHead>
+              <TableHead>Order ID</TableHead>
+              <TableHead>Dealer Name</TableHead>
+              <TableHead>Customer Name</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {warranties.map((data, i) => {
               return (
                 <TableRow key={i + 1}>
-                  <TableCell data-label="Order ID">{data.id}</TableCell>
-                  <TableCell data-label="Dealer Name">
+                  <TableCell>{data.id}</TableCell>
+                  <TableCell>
                     {data.firstname} {data.lastname}
                   </TableCell>
-                  <TableCell data-label="Customer Name">
-                    {data.company_name}
-                  </TableCell>
-                  <TableCell data-label="Status" className="capitalize">
+                  <TableCell>{data.company_name}</TableCell>
+                  <TableCell className="capitalize">
                     {data.status === "active" ? (
                       <span className="btn-primary bg-green-300">
                         {data.status}
@@ -52,7 +50,7 @@ const WarrantyProducts = ({ data }) => {
                       </span>
                     )}
                   </TableCell>
-                  <TableCell data-label="View Details" className="text-center">
+                  <TableCell className="text-center">
                     <div className="flex gap-2 items-center flex-wrap">
                       {data.status === "pending" && (
                         <EditWarranty warranty={data} />

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
 import SelectDealer from "./SelectDealer";
 import { useState } from "react";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 
 const WarrantyRegistrationPage = () => {
   const [dealer, setDealer] = useState(null);
@@ -30,7 +31,7 @@ const WarrantyRegistrationPage = () => {
       }
       const res = await createWarranty({
         ...data,
-        purchase_from: Number(dealer),
+        purchase_from: dealer,
       });
 
       if (res) {
@@ -42,7 +43,9 @@ const WarrantyRegistrationPage = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response?.data?.message
+          ? handleValidationError(err.response?.data?.message)
+          : toast.error("Something went wrong!");
       } else {
         toast.error("Something went wrong");
       }
