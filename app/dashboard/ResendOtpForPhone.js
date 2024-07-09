@@ -19,11 +19,9 @@ const ResendOtpPhone = () => {
     formState: { isSubmitting, isSubmitSuccessful },
   } = useForm({});
 
-  async function onSubmit({ phone }) {
+  async function onSubmit() {
     try {
-      const res = await resendPhoneOtp({
-        phone,
-      });
+      const res = await resendPhoneOtp();
       if (res) {
         toast.success(res.message);
         start();

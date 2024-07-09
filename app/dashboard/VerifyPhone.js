@@ -40,17 +40,15 @@ function PhoneOTPForm() {
     try {
       const res = await verifyOtpOfPhone(otp);
 
-      if (res.data) {
-        localStorage.setItem("access-token", res.data.auth);
+      if (res) {
         router.refresh();
         queryClient.invalidateQueries();
-
         toast.success("Verified Successfully");
       }
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        toast.error(err.response?.data?.message);
       } else {
         toast.error("Something went wrong!");
       }

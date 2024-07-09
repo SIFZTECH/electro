@@ -78,9 +78,7 @@ const UsersTable = () => {
                           {data.firstname} {data.lastname}
                         </TableCell>
                         <TableCell data-label="Email">{data.email}</TableCell>
-                        <TableCell data-label="Phone">
-                          {data.phone_number}
-                        </TableCell>
+                        <TableCell data-label="Phone">{data.phone}</TableCell>
                         <TableCell data-label="Role">
                           {data?.roles[0]?.name}
                         </TableCell>
