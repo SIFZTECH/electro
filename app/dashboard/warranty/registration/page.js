@@ -52,7 +52,9 @@ const WarrantyRegistrationPage = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response?.data?.message);
+        err.response?.data?.message
+          ? handleValidationError(err.response?.data?.message)
+          : toast.error(err.response.message);
       } else {
         toast.error("Something went wrong");
       }
