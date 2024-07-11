@@ -23,6 +23,7 @@ const SettingsFormForNonDealer = () => {
     defaultValues: {
       firstname: user.firstname || "",
       email: user.email || "",
+      phone: user.phone || "",
       lastname: user.lastname || "",
       logo: user.logo || "",
     },
@@ -109,6 +110,20 @@ const SettingsFormForNonDealer = () => {
                 type="email"
                 readOnly
                 placeholder="Your Email"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Phone
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("phone")}
+                type="phone"
+                readOnly
+                placeholder="Your Phone"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
             </div>

@@ -10,8 +10,11 @@ import { AiOutlineExclamationCircle } from "react-icons/ai";
 import SelectDealer from "./SelectDealer";
 import { useState } from "react";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { DatePicker } from "@/app/components/ui/DatePicker";
+import moment from "moment";
 
 const WarrantyRegistrationPage = () => {
+  const [date, setDate] = useState(null);
   const [dealer, setDealer] = useState(null);
 
   const queryClient = useQueryClient();
@@ -29,8 +32,14 @@ const WarrantyRegistrationPage = () => {
       if (!dealer) {
         return toast.error("Purchase from is missing!");
       }
+
+      if (!date) {
+        return toast.error("Purchase date is missing!");
+      }
+
       const res = await createWarranty({
         ...data,
+        purchase_date: moment(date).format("YYYY-MM-DD"),
         purchase_from: dealer,
       });
 
@@ -43,9 +52,7 @@ const WarrantyRegistrationPage = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        err.response?.data?.message
-          ? handleValidationError(err.response?.data?.message)
-          : toast.error("Something went wrong!");
+        toast.error(err.response?.data?.message);
       } else {
         toast.error("Something went wrong");
       }
@@ -200,6 +207,21 @@ const WarrantyRegistrationPage = () => {
               )}
             </div>
           </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+              Company Name
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("company_name", {
+                  required: "This field is required",
+                })}
+                type="tel"
+                placeholder="Company Name"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
 
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
@@ -227,14 +249,9 @@ const WarrantyRegistrationPage = () => {
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date
             </label>
-            <input
-              {...register("purchase_date", {
-                required: "This field is required",
-              })}
-              type="date"
-              placeholder="Purchase Date"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
+
+            <DatePicker date={date} setDate={setDate} />
+
             {errors?.purchase_date && (
               <span className="text-red-500 text-sm">
                 {errors.purchase_date.message}

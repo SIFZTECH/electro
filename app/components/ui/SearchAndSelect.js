@@ -28,7 +28,7 @@ const SelectSearchUser = ({ data, label, value, setDealer }) => {
       </label>
 
       <Select onValueChange={(value) => setDealer(value)} required>
-        <SelectTrigger>
+        <SelectTrigger className="bg-gray-100 border-gray-300">
           <SelectValue placeholder="Select Dealer" />
         </SelectTrigger>
         <SelectContent>
@@ -54,7 +54,7 @@ const SelectSearchUser = ({ data, label, value, setDealer }) => {
                 height={30}
                 width={30}
                 alt=""
-                className="inline rounded-full border border-gray-200"
+                className="inline rounded-full object-cover h-[30px] border border-gray-200"
               />{" "}
               <span>
                 {user.firstname} {user.lastname}

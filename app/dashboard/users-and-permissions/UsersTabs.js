@@ -10,9 +10,14 @@ import UsersTable from "./UsersTable";
 import PermissionTable from "./PermissionTable";
 
 import AdminTable from "./AdminTable";
-import { useAdminUsers, useUsers } from "@/app/_features/users/useUsers";
+import {
+  useAdminUsers,
+  useCustomerUsers,
+  useUsers,
+} from "@/app/_features/users/useUsers";
 import BlockedUsers from "./BlockedUsers";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import CustomersTable from "./CustomersTable";
 
 const UsersTabs = () => {
   const { data, total_num, isLoading } = useUsers();
@@ -21,6 +26,7 @@ const UsersTabs = () => {
     true
   );
   const { total_num: total_num3, isLoading: isLoading3 } = useAdminUsers();
+  const { total_num: total_num4, isLoading: isLoading4 } = useCustomerUsers();
 
   const isGetAllUsersPermission = useCheckPermission("all_users");
   const isGetBlockedUsersPermission = useCheckPermission("block_list");
@@ -72,6 +78,14 @@ const UsersTabs = () => {
               </p>
             )}
           </TabsTrigger>
+          <TabsTrigger value="customer">
+            Customers
+            {!isLoading4 && total_num4 && (
+              <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
+                <span className="p-1 text-[10px] leading-3">{total_num4}</span>
+              </p>
+            )}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="allUsers">
           <UsersTable />
@@ -84,6 +98,9 @@ const UsersTabs = () => {
         </TabsContent>
         <TabsContent value="admin">
           <AdminTable />
+        </TabsContent>
+        <TabsContent value="customer">
+          <CustomersTable />
         </TabsContent>
       </Tabs>
     </>

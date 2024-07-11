@@ -65,6 +65,21 @@ export async function getAllDealers() {
   return data;
 }
 
+export async function getAllCustomers(page) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users-and-admin?role=customer&per_page=${PAGE_SIZE}&page=${page}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function getAllStores() {
   const token = localStorage.getItem("access-token");
 

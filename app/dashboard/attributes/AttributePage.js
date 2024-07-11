@@ -39,7 +39,7 @@ const Categories = () => {
         </div>
       </div>
 
-      <AttributeTable attributes={data.attributes} />
+      <AttributeTable attributes={data?.attributes} />
     </div>
   );
 };
