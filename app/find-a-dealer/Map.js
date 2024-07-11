@@ -302,7 +302,7 @@ export default function MyMap() {
               </div>
             )}
             {!isLoading && filteredStores.length === 0 ? (
-              <NotFoundData message="There is no stores at that momment!" />
+              <NotFoundData message="There is no stores at that moment!" />
             ) : (
               filteredStores?.map((store, i) => {
                 const regex = /(-?\d+\.?\d*)/g;
