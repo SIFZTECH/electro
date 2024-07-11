@@ -45,7 +45,7 @@ const DeleteEventTab = ({ id, setOpen }) => {
           This will Delete this Event
         </p>
         <form className="flex gap-3 mt-6" onSubmit={handleSubmit(onSubmit)}>
-          <DialogClose className="btn-primary bg-transparent border border-gray-900">
+          <DialogClose className="btn-primary text-color-primary bg-transparent border border-color-primary">
             Cencel
           </DialogClose>
           <button type="submit" className="btn-primary bg-red-500 text-white">

@@ -12,7 +12,7 @@ const AttributesList = ({ attribute, attribute_value }) => {
       <TableCell className="space-x-2 space-y-2">
         {attribute_value?.map((value, index) => (
           <small
-            className="font-semibold font-serif text-[15px] inline-block"
+            className="font-semibold text-color-primary font-serif text-base inline-block"
             key={index}
             style={
               attribute.toLowerCase() === "color"

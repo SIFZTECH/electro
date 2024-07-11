@@ -110,7 +110,7 @@ const EditStore = ({ store }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1 bg-amber-200">
+      <DialogTrigger className="btn-primary transition-all py-1 bg-green-400">
         Edit
       </DialogTrigger>
       <DialogContent className="max-w-fit max-h-dvh overflow-y-auto">

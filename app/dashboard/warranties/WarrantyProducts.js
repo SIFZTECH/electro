@@ -54,7 +54,7 @@ const WarrantyProducts = ({ data }) => {
                       </span>
                     )}
                     {data.status === "pending" && (
-                      <span className="btn-primary bg-yellow-200">
+                      <span className="btn-primary bg-yellow-400">
                         {data.status}
                       </span>
                     )}

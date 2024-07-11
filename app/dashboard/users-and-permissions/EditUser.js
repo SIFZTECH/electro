@@ -58,7 +58,7 @@ const EditUser = ({ user }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1 bg-amber-200">
+      <DialogTrigger className="btn-primary transition-all py-1 bg-color-primary">
         Edit
       </DialogTrigger>
       <DialogContent>
