@@ -3,7 +3,7 @@ import Nav from "./Nav";
 
 const layout = ({ children }) => {
   return (
-    <div className="flex gap-6">
+    <div className="flex lg:flex-row flex-col gap-6">
       <Nav />
       <div className="flex-1">{children}</div>
     </div>
