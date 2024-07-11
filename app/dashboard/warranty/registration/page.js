@@ -41,6 +41,10 @@ const WarrantyRegistrationPage = () => {
         ...data,
         purchase_date: moment(date).format("YYYY-MM-DD"),
         purchase_from: dealer,
+        battery_serial_no_image: data.battery_serial_no_image[0],
+        motor_serial_no_image: data.motor_serial_no_image[0],
+        invoice_image: data.invoice_image[0],
+        frame_serial_no_image: data.frame_serial_no_image[0],
       });
 
       if (res) {

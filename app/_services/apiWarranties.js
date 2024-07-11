@@ -125,7 +125,6 @@ export async function createWarranty(formData) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  console.log(formData);
   const { data } = await axios({
     url: `${BASE_URL}/warranty/create`,
     method: "post",
@@ -133,7 +132,7 @@ export async function createWarranty(formData) {
       Authorization: `Bearer ${token}`,
       "content-type": "multipart/form-data",
     },
-    data: formData,
+    data: { ...formData },
   });
 
   return data;

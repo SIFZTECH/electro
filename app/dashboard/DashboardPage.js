@@ -51,7 +51,7 @@ const DashboardPage = () => {
                 {error?.response?.data?.message || error.message}
               </h1>
             )}
-            {!isLoading && !isError && !error && (
+            {!isLoading && !isError && !error && data && (
               <RecentWarranties data={data} />
             )}
           </div>
