@@ -41,11 +41,11 @@ const WarrantyProducts = ({ data }) => {
                   <TableCell>{data.company_name}</TableCell>
                   <TableCell className="capitalize">
                     {data.status === "active" ? (
-                      <span className="btn-primary bg-green-300">
+                      <span className="btn-primary bg-green-400">
                         {data.status}
                       </span>
                     ) : (
-                      <span className="btn-primary bg-yellow-300">
+                      <span className="btn-primary bg-yellow-400">
                         {data.status}
                       </span>
                     )}

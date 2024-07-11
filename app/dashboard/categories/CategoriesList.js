@@ -16,7 +16,10 @@ const CategoriesList = ({ index, category, subCategories }) => {
       <TableCell data-label="Category Name">{category.name}</TableCell>
       <TableCell data-label="Sub-Categories">
         {subCategories.map((item) => (
-          <button key={item.id} className="btn-primary mr-3 bg-green-200">
+          <button
+            key={item.id}
+            className="font-semibold text-color-primary mr-3"
+          >
             {item.name}
           </button>
         ))}

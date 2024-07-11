@@ -62,7 +62,7 @@ const AllOrders = () => {
                         <TableCell>{data.customer_name}</TableCell>
                         <TableCell className="font-sans">
                           {data.status === "pending" && (
-                            <span className="font-semibold text-[15px] text-[#FFB500] capitalize">
+                            <span className="font-semibold text-[15px] text-color-primary capitalize">
                               {data.status}
                             </span>
                           )}

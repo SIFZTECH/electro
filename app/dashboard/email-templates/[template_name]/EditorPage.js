@@ -95,7 +95,7 @@ export default function EditorPage({ template_name }) {
           <button
             disabled={isSubmitting}
             onClick={handleSubmit(onSubmit)}
-            className="btn-primary bg-[#facc15] hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded"
+            className="btn-primary bg-[#facc15] hover:bg-color-primary text-white text-white font-bold py-2 px-4 rounded"
           >
             {isSubmitting ? <SpinnerMini /> : "Submit"}
           </button>

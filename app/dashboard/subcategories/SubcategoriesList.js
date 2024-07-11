@@ -18,7 +18,7 @@ const SubCategoriesList = ({ index, subcategory }) => {
         <TableCell data-label="SN">{index + 1}</TableCell>
         <TableCell data-label="Sub-Category Name">{subcategory.name}</TableCell>
         <TableCell data-label="Category Name">
-          <span className="btn-primary bg-transparent mr-3 bg-green-200">
+          <span className="font-semibold text-color-primary mr-3">
             {subcategory.category.name}
           </span>
         </TableCell>

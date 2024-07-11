@@ -2,13 +2,15 @@ import { useOrders } from "@/app/_features/orders/useOrders";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import Spinner from "@/app/components/ui/Spinner";
-import {   Table,
+import {
+  Table,
   TableBody,
   TableCaption,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow } from "@/app/components/ui/table";
+  TableRow,
+} from "@/app/components/ui/table";
 import { PAGE_SIZE } from "@/app/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -50,14 +52,18 @@ const IntransitOrders = () => {
                   {data.data.map((data, i) => {
                     return (
                       <TableRow key={i + 1}>
-                        <TableCell data-label="Order ID">{data.order_id}</TableCell>
+                        <TableCell data-label="Order ID">
+                          {data.order_id}
+                        </TableCell>
                         <TableCell data-label="Dealer Name">
                           {data.user.firstname} {data.user.lastname}
                         </TableCell>
-                        <TableCell data-label="Customer Name">{data.customer_name}</TableCell>
+                        <TableCell data-label="Customer Name">
+                          {data.customer_name}
+                        </TableCell>
                         <TableCell data-label="Status">
                           {data.status === "pending" && (
-                            <span className="font-semibold text-[#FFB500] capitalize">
+                            <span className="font-semibold text-color-primary capitalize">
                               {data.status}
                             </span>
                           )}
@@ -77,7 +83,10 @@ const IntransitOrders = () => {
                             </span>
                           )}
                         </TableCell>
-                        <TableCell data-label="View Details" className="text-center">
+                        <TableCell
+                          data-label="View Details"
+                          className="text-center"
+                        >
                           <Link
                             href={`click-and-collect/${data.id}`}
                             className="btn-primary"

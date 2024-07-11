@@ -8,9 +8,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import SubCategoriesList from "./SubCategoriesList";
-import { useSearchParams } from "next/navigation";
-import PaginationUI from "@/app/components/ui/PaginationUI";
+import SubCategoriesList from "./SubcategoriesList";
 
 const SubCategoryTable = ({ data, page }) => {
   const subcategories = data.data;
@@ -20,7 +18,7 @@ const SubCategoryTable = ({ data, page }) => {
       {subcategories.length === 0 ? (
         "There is no sub-categories. Please add new sub-category!"
       ) : (
-        <Table className="">
+        <Table>
           <TableHeader>
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
               <TableHead>SN</TableHead>
@@ -29,7 +27,7 @@ const SubCategoryTable = ({ data, page }) => {
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="">
+          <TableBody>
             {subcategories.map((subcategory, i) => (
               <SubCategoriesList
                 key={subcategory.id}

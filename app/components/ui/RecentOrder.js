@@ -61,7 +61,7 @@ const RecentOrder = () => {
                         </TableCell>
                         <TableCell data-label="Status">
                           {data.status === "pending" && (
-                            <span className="font-medium text-[15px] text-[#FFB500] capitalize">
+                            <span className="font-medium text-[15px] text-color-primary capitalize">
                               {data.status}
                             </span>
                           )}

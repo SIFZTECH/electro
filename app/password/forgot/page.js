@@ -78,7 +78,7 @@ export default function ForgotPassword() {
                 <button
                   type="submit"
                   disabled={isSubmitted}
-                  className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary disabled:cursor-not-allowed"
+                  className="font-serif flex w-full justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? <SpinnerMini /> : "Forgot Password"}
                 </button>

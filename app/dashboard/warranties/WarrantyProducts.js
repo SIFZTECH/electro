@@ -44,7 +44,7 @@ const WarrantyProducts = ({ data }) => {
                   </TableCell>
                   <TableCell data-label="Status">
                     {data.status === "approve" && (
-                      <span className="btn-primary bg-emerald-200">
+                      <span className="btn-primary bg-green-400">
                         {data.status}
                       </span>
                     )}

@@ -38,11 +38,11 @@ const WarrantyPageInfo = ({ params }) => {
                 <TableCell className="font-semibold">Status:</TableCell>
                 <TableCell>
                   {warranty.status === "active" ? (
-                    <span className="btn-primary bg-green-300 capitalize">
+                    <span className="btn-primary bg-green-400 capitalize">
                       {warranty.status}
                     </span>
                   ) : (
-                    <span className="btn-primary bg-yellow-300 capitalize">
+                    <span className="btn-primary bg-yellow-400 capitalize">
                       {warranty.status}
                     </span>
                   )}

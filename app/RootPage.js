@@ -66,9 +66,9 @@ const RootPage = () => {
         <div className="w-full flex justify-between items-center">
           <Image
             className="pt-5"
-            src={"/logo.svg"}
-            height={40}
-            width={40}
+            src={"/logo.jpeg"}
+            height={100}
+            width={100}
             alt="Logo"
           />
           {!isLoading2 && user ? (

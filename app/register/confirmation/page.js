@@ -34,7 +34,7 @@ const Confirmation = () => {
     <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
       <div className="sm:w-[34rem] sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-          <Image src={"/logo.svg"} height={40} width={40} alt="Logo" />
+          <Image src={"/logo.jpeg"} height={40} width={40} alt="Logo" />
           <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
             Verify your Email address
           </h2>
@@ -51,7 +51,7 @@ const Confirmation = () => {
             <button
               type="submit"
               disabled={isSubmitSuccessful}
-              className="font-medium mt-4 text-[14px] text-[#FFB500] hover:underline cursor-pointer disabled:cursor-not-allowed"
+              className="font-medium mt-4 text-[14px] text-color-primary hover:underline cursor-pointer disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Resending..." : "Resend"}
             </button>

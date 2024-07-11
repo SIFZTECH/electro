@@ -17,7 +17,7 @@ const ProductSpecifications = ({ product }) => {
   return (
     <Table>
       <TableHeader>
-        <TableRow className="bg-color-primary hover:bg-color-primary">
+        <TableRow className="bg-color-primary text-white hover:bg-color-primary text-white">
           <TableHead className=""></TableHead>
           <TableHead className="" key={product.id}>
             {product.model_name}

@@ -11,6 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { handleValidationError } from "../_hooks/useHandleValidationError";
+import Image from "next/image";
 
 export default function Page() {
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -71,7 +72,7 @@ export default function Page() {
       <div className="flex items-center min-h-dvh flex-1 flex-col justify-center py-12">
         <div className="sm:w-[40rem] w-full sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-            <Logo />
+            <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
               Create new account
             </h2>
@@ -243,7 +244,7 @@ export default function Page() {
             <div>
               <button
                 type="submit"
-                className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                className="font-serif flex w-full justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
                 {isSubmitting ? <SpinnerMini /> : "Sign Up"}
               </button>
