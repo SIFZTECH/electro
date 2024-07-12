@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import SubCategoriesList from "./SubcategoriesList";
+import SubCategoriesList from "@/app/dashboard/subcategories/SubcategoriesList";
 
 const SubCategoryTable = ({ data, page }) => {
   const subcategories = data.data;
