@@ -1,5 +1,5 @@
 "use client";
-
+//comments
 import {
   Table,
   TableBody,
@@ -9,6 +9,8 @@ import {
 } from "@/app/components/ui/table";
 
 import SubCategoriesList from "@/app/dashboard/subcategories/SubcategoriesList";
+import { useSearchParams } from "next/navigation";
+import PaginationUI from "@/app/components/ui/PaginationUI";
 
 const SubCategoryTable = ({ data, page }) => {
   const subcategories = data.data;
