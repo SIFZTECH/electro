@@ -2,6 +2,7 @@ import Image from "next/image";
 import ProductSpecifications from "./ProductSpecifications";
 import NotFoundData from "../ui/NotFoundData";
 import { CiSquareMinus } from "react-icons/ci";
+import { MdLibraryAdd } from "react-icons/md";
 
 const CompareProducts = ({ compareList, toggleCompare }) => {
   if (compareList.length === 0) {
@@ -33,7 +34,7 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
                 {product.name}
               </span>
               <span className="icon-heart border border-gray-200 p-1 bg-gray-100">
-                <CiSquareMinus size="18" />
+                <MdLibraryAdd className="fill-color-primary" size="18" />
               </span>
             </button>
             <div className="line-clamp-3">{product.introduction}</div>

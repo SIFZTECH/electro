@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CiSquarePlus, CiSquareCheck } from "react-icons/ci";
+import { MdLibraryAdd } from "react-icons/md";
 
 const imageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
@@ -42,9 +42,9 @@ const Product = ({
           className="icon-heart border border-gray-200 p-1 bg-gray-100"
         >
           {isCompared ? (
-            <CiSquareCheck size="18" />
+            <MdLibraryAdd className="fill-color-primary" size="18" />
           ) : (
-            <CiSquarePlus size="18" />
+            <MdLibraryAdd size="18" />
           )}
         </span>
       </button>

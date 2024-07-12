@@ -213,25 +213,10 @@ const WarrantyRegistrationPage = () => {
               )}
             </div>
           </div>
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-              Company Name
-            </label>
-            <div className="mt-1">
-              <input
-                {...register("company_name", {
-                  required: "This field is required",
-                })}
-                type="tel"
-                placeholder="Company Name"
-                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
 
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Address
+              Address Line
             </label>
             <div className="mt-1">
               <input
@@ -239,12 +224,81 @@ const WarrantyRegistrationPage = () => {
                   required: "This field is required",
                 })}
                 type="text"
-                placeholder="Street Address"
+                placeholder="Address Line"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
               {errors?.address && (
                 <span className="text-red-500 text-sm">
                   {errors.address.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              Address Line 1
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("address_line_1", {
+                  required: "This field is required",
+                })}
+                type="text"
+                placeholder="Address Line 1"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+              {errors?.address_line_1 && (
+                <span className="text-red-500 text-sm">
+                  {errors.address_line_1.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              City
+            </label>
+            <div className="mt-1">
+              <input
+                {...register("city", {
+                  required: "This field is required",
+                })}
+                type="text"
+                placeholder="City"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              />
+              {errors?.city && (
+                <span className="text-red-500 text-sm">
+                  {errors.city.message}
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              State
+            </label>
+            <div className="mt-1">
+              <select
+                {...register("state", {
+                  required: "This field is required",
+                })}
+                placeholder="State"
+                className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              >
+                <option value="">--Select State--</option>
+                <option value="QA">QA</option>
+                <option value="TAS">TAS</option>
+                <option value="NSW">NSW</option>
+                <option value="VIC">VIC</option>
+                <option value="WA">WA</option>
+                <option value="SA">SA</option>
+                <option value="NA">NA</option>
+                <option value="ACT">ACT</option>
+              </select>
+              {errors?.state && (
+                <span className="text-red-500 text-sm">
+                  {errors.state.message}
                 </span>
               )}
             </div>
