@@ -84,9 +84,9 @@ const EditWarranty = ({ warranty }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        err.response?.data?.message
-          ? handleValidationError(err.response.data.message)
-          : toast.error(err.response.message);
+        err.response?.data?.data
+          ? handleValidationError(err.response.data.data)
+          : toast.error(err.response?.data.message);
       } else {
         toast.error("Something went wrong!");
       }
@@ -95,7 +95,7 @@ const EditWarranty = ({ warranty }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary bg-emerald-200 transition-all py-1">
+      <DialogTrigger className="btn-primary bg-green-400 transition-all py-1">
         Edit
       </DialogTrigger>
       <DialogContent className="!max-w-[60rem] max-h-dvh overflow-y-scroll">
@@ -239,7 +239,7 @@ const EditWarranty = ({ warranty }) => {
                 {...register("purchase_from", {
                   required: "This field is required",
                 })}
-                type="date"
+                type="text"
                 placeholder="Purchase from"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />

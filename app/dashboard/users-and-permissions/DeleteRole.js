@@ -59,7 +59,7 @@ const DeleteRole = ({ roleName }) => {
               This will Delete your role.
             </p>
             <form className="flex gap-3 mt-6" onSubmit={handleSubmit(onSubmit)}>
-              <DialogClose className="btn-primary bg-transparent border border-gray-900">
+              <DialogClose className="btn-primary text-color-primary bg-transparent border border-color-primary">
                 Cencel
               </DialogClose>
               <button

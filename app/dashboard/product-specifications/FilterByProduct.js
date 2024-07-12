@@ -20,7 +20,7 @@ const FilterByProduct = () => {
         <h2 className="font-semibold">Filters</h2>
         <Link
           href="/dashboard/product-specifications"
-          className="text-[#FFB500]"
+          className="text-color-primary"
           onClick={resetFilters}
         >
           Clear All

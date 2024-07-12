@@ -6,6 +6,7 @@ import { useUser } from "../_features/authentication/useUser";
 import Spinner from "./ui/Spinner";
 import Confirmation from "../register/confirmation/page";
 import { useQueryClient } from "@tanstack/react-query";
+import PhoneOTPForm from "../dashboard/VerifyPhone";
 
 const ProtectedRoute = ({ children }) => {
   if (typeof window !== "undefined") {
@@ -16,7 +17,15 @@ const ProtectedRoute = ({ children }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   // 1. Get currentUser and check user is admin or dealer
-  const { isLoading, isError, error, user, isVerified, isBlocked } = useUser();
+  const {
+    isLoading,
+    isError,
+    error,
+    user,
+    isEmailVerified,
+    isPhoneVerified,
+    isBlocked,
+  } = useUser();
 
   useEffect(
     function () {
@@ -43,8 +52,12 @@ const ProtectedRoute = ({ children }) => {
   if (isLoading) return <Spinner />;
 
   // If there is user and not verified
-  if (user && !isVerified) {
+  if (user && !isEmailVerified) {
     return <Confirmation />;
+  }
+
+  if (user && !isPhoneVerified) {
+    return <PhoneOTPForm />;
   }
 
   // 4. If there IS a admin user, render the app

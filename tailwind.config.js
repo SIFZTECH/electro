@@ -22,7 +22,11 @@ module.exports = {
         serif: ["var(--font-playfair)"],
       },
       colors: {
-        "color-primary": "#FFB500",
+        "color-primary": "var(--color-primary)",
+        "color-primary_shade-1": "var(--color-primary-shade-1)",
+        "color-primary_shade-2": "var(--color-primary-shade-2)",
+        "color-primary_shade-3": "var(--color-primary-shade-3)",
+        "color-primary_shade-4": "var(--color-primary-shade-4)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

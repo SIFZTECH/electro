@@ -50,6 +50,36 @@ export async function getAllDealerInfo() {
   return data;
 }
 
+export async function getAllDealers() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/warranty/get-dealers`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
+export async function getAllCustomers(page) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/users-and-admin?role=customer&per_page=${PAGE_SIZE}&page=${page}`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 export async function getAllStores() {
   const token = localStorage.getItem("access-token");
 
@@ -71,7 +101,7 @@ export async function getUsersAll() {
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/admin/users-and-admin`,
+    url: `${BASE_URL}/admin/users-and-admin?per_page=500`,
     headers: {
       Authorization: `Bearer ${token}`,
     },

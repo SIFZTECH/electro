@@ -1,7 +1,7 @@
 import { useDashboardStats } from "../_features/stats/useDashboardStats";
 import PieCharts from "../components/ui/PieCharts";
 import RecentOrder from "../components/ui/RecentOrder";
-import Stats from "./warranties/WarrantyStats";
+import Stats from "../components/ui/Stats";
 
 const DashboardForNonCustomer = () => {
   const {
@@ -19,6 +19,7 @@ const DashboardForNonCustomer = () => {
         error={error2}
         data={data2}
       />
+
       <PieCharts data={data2?.data} />
       <RecentOrder />
     </div>

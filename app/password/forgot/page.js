@@ -7,6 +7,7 @@ import axios from "axios";
 import { BASE_URL } from "@/app/lib/utils";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function ForgotPassword() {
       <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:w-[34rem] sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-            <Logo />
+            <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
               Forgot your password
             </h2>
@@ -78,7 +79,7 @@ export default function ForgotPassword() {
                 <button
                   type="submit"
                   disabled={isSubmitted}
-                  className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary disabled:cursor-not-allowed"
+                  className="font-serif flex w-full justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? <SpinnerMini /> : "Forgot Password"}
                 </button>

@@ -58,6 +58,26 @@ export async function CreateNewSocialAssets(formData) {
   return data;
 }
 
+export async function CreateNewSubAssets(formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  console.log(formData);
+  const { data } = await axios(
+    `${BASE_URL}/social-media-assets/create-folder`,
+    {
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: formData,
+    }
+  );
+
+  return data;
+}
+
 export async function getMediaAsset(id) {
   const token = localStorage.getItem("access-token");
   const user = await getCurrentUser();

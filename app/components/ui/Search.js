@@ -53,13 +53,13 @@ const SearchFolder = ({ navigateTo }) => {
         </div>
         <input
           {...register("query")}
-          className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
+          className="bg-gray-100 text-gray-900 text-sm  focus:ring-color-primary-shade-2 focus:ring-1 focus:outline-none focus:border-color-primary-shade-2 block w-full ps-10 p-2.5"
           placeholder="Search..."
         />
       </div>
       <button
         type="submit"
-        className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary   hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300"
+        className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary text-white   hover:bg-color-primary text-white focus:ring-4 focus:outline-none focus:ring-color-primary_shade-3"
       >
         <svg
           className="w-4 h-4 me-2"

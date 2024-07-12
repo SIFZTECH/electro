@@ -46,7 +46,7 @@ const UsersTable = () => {
             <NotFoundData message="There is no user with that name" />
           ) : (
             <>
-              <Table className="!mt-4 !mb-4 table_modify">
+              <Table className="!mt-4 !mb-4 ">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="font-medium" scope="col">
@@ -78,9 +78,7 @@ const UsersTable = () => {
                           {data.firstname} {data.lastname}
                         </TableCell>
                         <TableCell data-label="Email">{data.email}</TableCell>
-                        <TableCell data-label="Phone">
-                          {data.phone_number}
-                        </TableCell>
+                        <TableCell data-label="Phone">{data.phone}</TableCell>
                         <TableCell data-label="Role">
                           {data?.roles[0]?.name}
                         </TableCell>

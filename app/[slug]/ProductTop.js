@@ -51,7 +51,7 @@ const ProductTop = ({ product }) => {
           <span className="font-serif font-semibold text-xl">
             {product.name}
           </span>
-          <span className="badge xl:bg-color-primary rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px]">
+          <span className="badge xl:bg-color-primary text-white rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px]">
             {product.model_name}
           </span>
         </div>
@@ -95,7 +95,7 @@ const ProductTop = ({ product }) => {
               {sizeValues.map((size, i) => (
                 <ToggleGroupItem
                   key={i + 1}
-                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state=on]:bg-color-primary font-serif text-base"
+                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state=on]:bg-color-primary text-white font-serif text-base"
                   value={size}
                 >
                   {size}

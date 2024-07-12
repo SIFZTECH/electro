@@ -28,6 +28,8 @@ export default function CalendarPage() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [id, setId] = useState(null);
   const [title, setTitle] = useState("null");
   const [description, setDescription] = useState("null");
@@ -44,7 +46,8 @@ export default function CalendarPage() {
     setId(e.id);
     setTitle(e.title);
     setDescription(e.description);
-    setDate(e.start);
+    setStartDate(e.start_date);
+    setEndDate(e.end_date);
     setVisible(e.visible_to);
   };
 
@@ -63,16 +66,19 @@ export default function CalendarPage() {
         id: event.id,
         title: event.title,
         description: event.description,
-        start: new Date(event.date),
-        end: new Date(event.date),
+        start_date: event.start_date,
+        end_date: event.end_date,
+        start: new Date(event.start_date),
+        end: new Date(event.end_date),
         visible_to: event.visible_to,
       }))
     : data?.data?.map((event) => ({
         id: event.id,
         title: event.title,
         description: event.description,
-        start: new Date(event.date),
-        end: new Date(event.date),
+
+        start: new Date(event.start_date),
+        end: new Date(event.end_date),
         visible_to: event.visible_to,
       }));
 
@@ -83,7 +89,7 @@ export default function CalendarPage() {
 
         {isCreateEventPermission ? (
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-            {/* <DialogTrigger className="btn-primary">Add New Event</DialogTrigger> */}
+            <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
             <DialogContent>
               <CreateNewEvent date={date} setOpen={setOpen} />
             </DialogContent>
@@ -113,7 +119,8 @@ export default function CalendarPage() {
         <Dialog open={open2} onOpenChange={() => setOpen2((open) => !open)}>
           <UpdateAndDeleteEvent
             id={id}
-            date={date}
+            startDate={startDate}
+            endDate={endDate}
             title={title}
             description={description}
             visible={visible}

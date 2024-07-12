@@ -2,14 +2,18 @@
 import { useWarranty } from "@/app/_features/warranties/useWarranty";
 import Spinner from "@/app/components/ui/Spinner";
 import Image from "next/image";
-import DeleteWarranty from "../DeleteWarranty";
-import EditWarranty from "../EditWarranty";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/app/components/ui/table";
 
 const WarrantyPageInfo = ({ params }) => {
   const { warrantyId } = params;
@@ -28,82 +32,94 @@ const WarrantyPageInfo = ({ params }) => {
       )}
       {!isLoading && !isError && !error && (
         <div className="space-y-2">
-          <table className="table-fixed w-full">
-            <tbody>
-              <tr>
-                <td className="font-semibold">Status:</td>
-                <td>
+          <Table className="border border-gray-200 bg-gray-100">
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-semibold">Status:</TableCell>
+                <TableCell>
                   {warranty.status === "active" ? (
-                    <span className="btn-primary bg-green-300 capitalize">
+                    <span className="btn-primary bg-green-400 capitalize">
                       {warranty.status}
                     </span>
                   ) : (
-                    <span className="btn-primary bg-yellow-300 capitalize">
+                    <span className="btn-primary bg-yellow-400 capitalize">
                       {warranty.status}
                     </span>
                   )}
-                </td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Company Name:</td>
-                <td className="font-semibold">{warranty.company_name}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Name:</td>
-                <td className="font-semibold">
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Company Name:</TableCell>
+                <TableCell className="font-semibold">
+                  {warranty.company_name}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Name:</TableCell>
+                <TableCell className="font-semibold">
                   {warranty.firstname} {warranty.lastname}
-                </td>
-              </tr>
-              <tr>
-                <td className="font-semibold">ID:</td>
-                <td>{warranty.id}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Created At:</td>
-                <td>{new Date(warranty.created_at).toDateString()}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Address:</td>
-                <td>{warranty.address}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Email:</td>
-                <td>{warranty.email}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Phone No:</td>
-                <td>{warranty.phone}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Purchase From:</td>
-                <td>{warranty.purchase_from}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Purchase Date:</td>
-                <td>{warranty.purchase_date}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Updated at:</td>
-                <td>{new Date(warranty.updated_at).toDateString()}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Bike Battary Serial No:</td>
-                <td>{warranty.bike_battery_serial_no}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Bike Frame Serial No:</td>
-                <td>{warranty.bike_frame_serial_no}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Bike Motor Serial No:</td>
-                <td>{warranty.bike_motor_serial_no}</td>
-              </tr>
-              <tr>
-                <td className="font-semibold">Invoice No:</td>
-                <td>{warranty.invoice_number}</td>
-              </tr>
-            </tbody>
-          </table>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">ID:</TableCell>
+                <TableCell>{warranty.id}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Created At:</TableCell>
+                <TableCell>
+                  {new Date(warranty.created_at).toDateString()}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Address:</TableCell>
+                <TableCell>{warranty.address}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Email:</TableCell>
+                <TableCell>{warranty.email}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Phone No:</TableCell>
+                <TableCell>{warranty.phone}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Purchase From:</TableCell>
+                <TableCell>{warranty.purchase_from}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Purchase Date:</TableCell>
+                <TableCell>{warranty.purchase_date}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Updated at:</TableCell>
+                <TableCell>
+                  {new Date(warranty.updated_at).toDateString()}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">
+                  Bike Battary Serial No:
+                </TableCell>
+                <TableCell>{warranty.bike_battery_serial_no}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">
+                  Bike Frame Serial No:
+                </TableCell>
+                <TableCell>{warranty.bike_frame_serial_no}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">
+                  Bike Motor Serial No:
+                </TableCell>
+                <TableCell>{warranty.bike_motor_serial_no}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Invoice No:</TableCell>
+                <TableCell>{warranty.invoice_number}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
 
           <div className="flex gap-4 flex-wrap items-start !mt-6">
             {warranty.battery_serial_no_image && (

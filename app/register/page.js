@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { handleValidationError } from "../_hooks/useHandleValidationError";
+import Image from "next/image";
 
 export default function Page() {
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -31,6 +33,7 @@ export default function Page() {
     firstname,
     lastname,
     email,
+    phone,
     password,
     passwordConfirm,
   }) {
@@ -39,6 +42,7 @@ export default function Page() {
         firstname,
         lastname,
         email,
+        phone,
         password,
         password_confirmation: passwordConfirm,
       });
@@ -53,8 +57,10 @@ export default function Page() {
       }
     } catch (err) {
       console.error(err);
-      if (err.response?.data?.message.email) {
-        toast.error(err.response.data.message.email);
+      if (err.response?.data) {
+        err.response?.data?.message
+          ? handleValidationError(err.response?.data.message)
+          : toast.error(err.response.message);
       } else {
         toast.error("Something went wrong!");
       }
@@ -66,7 +72,7 @@ export default function Page() {
       <div className="flex items-center min-h-dvh flex-1 flex-col justify-center py-12">
         <div className="sm:w-[40rem] w-full sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-            <Logo />
+            <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
               Create new account
             </h2>
@@ -136,6 +142,27 @@ export default function Page() {
                 {errors?.email && (
                   <span className="text-red-500 text-sm">
                     {errors.email.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Phone Number
+              </label>
+              <div className="mt-2">
+                <input
+                  {...register("phone", {
+                    required: "Please provide your Phone number",
+                  })}
+                  type="tel"
+                  autoComplete="phone"
+                  disabled={isSubmitting}
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.phone && (
+                  <span className="text-red-500 text-sm">
+                    {errors.phone.message}
                   </span>
                 )}
               </div>
@@ -217,7 +244,7 @@ export default function Page() {
             <div>
               <button
                 type="submit"
-                className="font-serif flex w-full justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                className="font-serif flex w-full justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
                 {isSubmitting ? <SpinnerMini /> : "Sign Up"}
               </button>

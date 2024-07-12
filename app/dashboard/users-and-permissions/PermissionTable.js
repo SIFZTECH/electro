@@ -26,7 +26,7 @@ const PermissionTable = () => {
         <CreateRolesAndPermissions /> */}
       </div>
 
-      <Table className="mt-10 table_modify">
+      <Table className="mt-10 ">
         <TableHeader>
           <TableRow className="text-center">
             <TableHead scope="col" className="w-fit">
@@ -56,7 +56,7 @@ const PermissionTable = () => {
                   <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
                     {data.permissions.map((permission) => (
                       <span
-                        className="btn-primary bg-amber-200"
+                        className="btn-primary bg-color-primary_shade-4 text-color-primary"
                         key={permission}
                       >
                         {permission}

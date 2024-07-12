@@ -9,15 +9,14 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useAllUsers } from "@/app/_features/users/useUsers";
 import { CreateNewResource } from "@/app/_services/apiResources";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
+import SelectUser from "../social-media-assets/SelectUser";
 
 const CreateNewResources = () => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
-  const { data, isLoading, isError, error } = useAllUsers();
 
   const {
     register,
@@ -27,34 +26,23 @@ const CreateNewResources = () => {
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
-      access_users: [{ id: null }],
+      access_users: [],
     },
-  });
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "access_users",
   });
 
   const checkedAnyoneAccessBox = watch("access_to_anyone");
 
-  async function onSubmit({
-    folder_name,
-    visible_date,
-    access_users,
-    access_to_anyone,
-  }) {
-    const fotmattedUsers = access_users.map((user) => Number(user.id));
-    const formattedDateStr = moment(visible_date).format("MM/DD/YYYY");
+  async function onSubmit(formData) {
+    // const formattedUsers = access_users.map((user) => Number(user.value));
+    const start_date = moment(formData.start_date).format("MM/DD/YYYY");
+    const end_date = moment(formData.end_date).format("MM/DD/YYYY");
 
     try {
       const res = await CreateNewResource({
-        folder_name,
-        access_users: fotmattedUsers,
-        access_to_anyone,
-        visible_date: formattedDateStr,
+        ...formData,
+        start_date,
+        end_date,
       });
-
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("resources");
@@ -85,7 +73,7 @@ const CreateNewResources = () => {
           </p>
           <form className="space-y-3 mt-4" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
+              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
                 Folder Name
               </label>
               <div className="mt-2">
@@ -105,76 +93,47 @@ const CreateNewResources = () => {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900">
-                Visible Date
+              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
+                Start Date
               </label>
               <div className="mt-2">
                 <input
-                  {...register("visible_date", {
+                  {...register("start_date", {
                     required: "This filed is required",
                   })}
                   disabled={isSubmitting}
                   type="date"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.visible_date && (
+                {errors?.start_date && (
                   <span className="text-red-500 text-sm">
-                    {errors.visible_date.message}
+                    {errors.start_date.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
+                End Date
+              </label>
+              <div className="mt-2">
+                <input
+                  {...register("end_date", {
+                    required: "This filed is required",
+                  })}
+                  disabled={isSubmitting}
+                  type="date"
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.end_date && (
+                  <span className="text-red-500 text-sm">
+                    {errors.end_date.message}
                   </span>
                 )}
               </div>
             </div>
             {!checkedAnyoneAccessBox && (
-              <div>
-                {fields.map((item, index) => (
-                  <div className="flex gap-8 items-center w-full" key={item.id}>
-                    <div className="flex-1">
-                      <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
-                        Access Users
-                      </label>
-                      <Controller
-                        render={({ field }) => (
-                          <select
-                            className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
-                            {...field}
-                          >
-                            <option value="">--Select User--</option>
-                            {!isLoading &&
-                              !isError &&
-                              !error &&
-                              data?.data.map((user) => (
-                                <option
-                                  className="capitalize"
-                                  value={user.id}
-                                  key={user.id}
-                                >
-                                  {user.firstname} {user.lastname} ({user.email}
-                                  )
-                                </option>
-                              ))}
-                          </select>
-                        )}
-                        name={`access_users[${index}].id`}
-                        control={control}
-                        defaultValue={item.id}
-                      />
-                    </div>
-
-                    <span
-                      className="btn-primary texl-sm bg-gray-200 py-[8px] self-end cursor-pointer"
-                      onClick={() => remove(index)}
-                    >
-                      Remove
-                    </span>
-                  </div>
-                ))}
-                <span
-                  className="btn-primary font-serif text-sm inline-block mt-3"
-                  onClick={() => append({ id: null })}
-                >
-                  Add More Users
-                </span>
-              </div>
+              <SelectUser control={control} register={register} />
             )}
             <div className="flex gap-1 items-center">
               <input
@@ -196,7 +155,7 @@ const CreateNewResources = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                className="mt-6 font-serif flex justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
                 {isSubmitting ? <SpinnerMini /> : "Create"}
               </button>

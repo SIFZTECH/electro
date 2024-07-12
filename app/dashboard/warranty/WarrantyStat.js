@@ -2,7 +2,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 const Stat = ({ title, value, percentage }) => {
   return (
-    <div className="bg-gray-100 p-3 rounded-xl cursor-pointer leading-5 hover:bg-yellow-50 hover:transition-all">
+    <div className="bg-gray-100 p-3 rounded-xl cursor-pointer leading-5 hover:bg-color-primary_shade-4 hover:transition-all">
       <div className="flex items-center gap-8 xl:gap-10 justify-between">
         <h2>{title}</h2>
       </div>

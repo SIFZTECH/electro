@@ -35,7 +35,7 @@ export default function DealerPortalChart({ title, engagements }) {
             <YAxis dataKey="user" type="category" scale="band" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="engagements" barSize={20} fill="#FFB500" />
+            <Bar dataKey="engagements" barSize={20} fill="#334155" />
             <Line dataKey="user" stroke="#ff7300" />
           </ComposedChart>
         </ResponsiveContainer>

@@ -14,9 +14,9 @@ const ProductSpecifications = ({ specification }) => {
   const allFeatures = featuresWithKeyAndIcon.map((feature) => feature.key);
 
   return (
-    <Table>
+    <Table className="overflow-x-auto">
       <TableHeader>
-        <TableRow className="bg-color-primary hover:bg-color-primary">
+        <TableRow className="bg-color-primary text-white hover:bg-color-primar text-white">
           <TableHead></TableHead>
           {specification.map((product) => (
             <TableHead key={product.id}>{product.model_name}</TableHead>

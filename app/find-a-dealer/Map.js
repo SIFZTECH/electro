@@ -134,11 +134,11 @@ const haversineDistance = (coords1, coords2, isMiles = false) => {
   const distance = (a, b) => (Math.PI / 180) * (a - b);
   const RADIUS_OF_EARTH_IN_KM = 6371;
 
-  const dLat = distance(coords2.latitude, coords1.latitude);
-  const dLon = distance(coords2.longitude, coords1.longitude);
+  const dLat = distance(coords2[0], coords1.latitude);
+  const dLon = distance(coords2[1], coords1.longitude);
 
   const lat1 = toRadian(coords1.latitude);
-  const lat2 = toRadian(coords2.latitude);
+  const lat2 = toRadian(coords2[0]);
 
   const a =
     Math.pow(Math.sin(dLat / 2), 2) +
@@ -226,7 +226,7 @@ export default function MyMap() {
       <div className="find-store p-4 bg-white absolute max-w-[30rem] left-6 top-6 z-[99999]">
         <div>
           <button
-            className="btn-primary mb-2 bg-gray-200"
+            className="btn-primary mb-2 bg-gray-200 text-color-primary"
             onClick={() => router.push("/dashboard")}
           >
             Go back to Dashboard
@@ -261,13 +261,13 @@ export default function MyMap() {
                 type="search"
                 id="search"
                 {...register("search")}
-                className="bg-gray-100 text-gray-900 text-sm  focus:ring-yellow-400 focus:ring-1 focus:outline-none focus:border-yellow-500 block w-full ps-10 p-2.5"
+                className="bg-gray-100 text-gray-900 text-sm  focus:ring-color-primary-shade-2 focus:ring-1 focus:outline-none focus:border-color-primary-shade-2 block w-full ps-10 p-2.5"
                 placeholder="Search..."
               />
             </div>
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary   hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300"
+              className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary text-white   hover:bg-color-primary text-white focus:ring-4 focus:outline-none focus:ring-color-primary_shade-3"
             >
               <svg
                 className="w-4 h-4 me-2"
@@ -302,16 +302,23 @@ export default function MyMap() {
               </div>
             )}
             {!isLoading && filteredStores.length === 0 ? (
-              <NotFoundData message="There is no stores at that momment!" />
+              <NotFoundData message="There is no stores at that moment!" />
             ) : (
               filteredStores?.map((store, i) => {
-                const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+                const regex = /(-?\d+\.?\d*)/g;
+
+                // Use match() to find all number substrings
+                const numbers = store.map_url.match(regex);
+
+                // Convert strings to numbers using parseFloat()
+                const coordinates = numbers.map(parseFloat);
+
                 const distance = haversineDistance(
                   {
                     latitude: geolocationPosition?.lat,
                     longitude: geolocationPosition?.lng,
                   },
-                  storeCoordinates
+                  coordinates
                 );
                 const { formattedString, holidaysString } =
                   getFormattedOpeningHours(store.weeks);
@@ -367,7 +374,7 @@ export default function MyMap() {
                           <span>
                             <Link
                               href={`tel:${store.phone}`}
-                              className="hover:text-yellow-500"
+                              className="hover:text-color-primary_shade-2"
                             >
                               {store.phone || "Unavailable"}
                             </Link>
@@ -378,7 +385,7 @@ export default function MyMap() {
                           <span>
                             <Link
                               href={`mailto:${store.email}`}
-                              className="hover:text-yellow-500"
+                              className="hover:text-color-primary_shade-2"
                             >
                               {store.email || "Unavailable Email"}
                             </Link>
@@ -390,7 +397,7 @@ export default function MyMap() {
                             <span>
                               <Link
                                 href={store.weburl}
-                                className="hover:text-yellow-500"
+                                className="hover:text-color-primary_shade-2"
                               >
                                 {store.weburl || "Unavailable Website"}
                               </Link>
@@ -399,7 +406,7 @@ export default function MyMap() {
                         )}
                       </div>
                       <Link
-                        href={`/find-a-dealer?lat=${storeCoordinates?.latitude}&lng=${storeCoordinates?.longitude}`}
+                        href={`/find-a-dealer?lat=${coordinates[0]}&lng=${coordinates[1]}`}
                         className="btn-primary inline-flex items-center"
                       >
                         <RiDirectionLine className="text-xl me-1" />
@@ -429,16 +436,17 @@ export default function MyMap() {
         {!isLoading &&
           data &&
           data.data.map((store, index) => {
-            const storeCoordinates = getCoordinatesFromUrl(store.map_url);
+            // Regular expression to extract numbers
+            const regex = /(-?\d+\.?\d*)/g;
+
+            // Use match() to find all number substrings
+            const numbers = store.map_url.match(regex);
+
+            // Convert strings to numbers using parseFloat()
+            const coordinates = numbers.map(parseFloat);
 
             return (
-              <Marker
-                key={index}
-                position={[
-                  storeCoordinates?.latitude,
-                  storeCoordinates?.longitude,
-                ]}
-              >
+              <Marker key={index} position={[coordinates[0], coordinates[1]]}>
                 <Popup ref={popupRef}>
                   <div className="text-base">
                     <h1 className="font-serif font-semibold text-lg">
@@ -486,8 +494,9 @@ export default function MyMap() {
                     )}
 
                     <Link
-                      href={store.map_url}
+                      href={`https://www.google.com/maps/@${coordinates[0]},${coordinates[1]}`}
                       className="btn-primary inline-flex items-center mt-2"
+                      target="_blank"
                     >
                       <RiDirectionLine className="text-xl me-1" />
                       Get direction From Google Map

@@ -19,6 +19,7 @@ const DeleteFile = ({ file_path, folder_id }) => {
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("folder", folder_id);
+        
       }
     } catch (err) {
       console.error(err);

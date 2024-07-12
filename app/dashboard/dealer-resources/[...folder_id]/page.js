@@ -5,7 +5,9 @@ export const metadata = {
 };
 
 const page = ({ params: { folder_id } }) => {
-  return <FilePage folder_id={folder_id} />;
+  const filterId = Number(folder_id.at(-1));
+
+  return <FilePage folder_id={filterId} />;
 };
 
 export default page;

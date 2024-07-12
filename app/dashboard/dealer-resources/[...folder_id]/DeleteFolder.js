@@ -1,4 +1,3 @@
-import { deleteMediaFolder } from "@/app/_services/apiMedia";
 import { deleteFolder } from "@/app/_services/apiResources";
 import {
   Dialog,
@@ -23,13 +22,13 @@ const DeleteFolder = ({ folder_id }) => {
 
   async function onSubmit() {
     try {
-      const res = await deleteMediaFolder(folder_id);
+      const res = await deleteFolder(folder_id);
 
       if (res) {
         toast.success(res.message);
 
-        router.replace("/dashboard/social-media-assets");
-        queryClient.invalidateQueries("social_assets");
+        router.back(-1);
+        queryClient.invalidateQueries("resources");
       }
     } catch (err) {
       console.error(err);

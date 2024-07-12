@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/app/_features/authentication/useUser";
 import toast from "react-hot-toast";
 import { resendOtp } from "@/app/_services/apiAuth";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
@@ -10,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "../components/ui/dialog";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
-// import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 
 const ResendOtp = () => {
   const [channel, setChannel] = useState(null);

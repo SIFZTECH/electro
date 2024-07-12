@@ -58,7 +58,7 @@ const EditUser = ({ user }) => {
 
   return (
     <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
-      <DialogTrigger className="btn-primary transition-all py-1 bg-amber-200">
+      <DialogTrigger className="btn-primary transition-all py-1 bg-color-primary">
         Edit
       </DialogTrigger>
       <DialogContent>
@@ -148,7 +148,7 @@ const EditUser = ({ user }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                className="mt-6 font-serif flex justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
                 {isSubmitting ? <SpinnerMini /> : "Update"}
               </button>

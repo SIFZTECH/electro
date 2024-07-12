@@ -165,6 +165,24 @@ export async function verifyOtpForLogin(otp) {
   const { data } = await axios({
     url: `${BASE_URL}/admin/verify-otp`,
     method: "post",
+
+    data: {
+      otp: otp,
+    },
+  });
+
+  return data;
+}
+export async function verifyOtpOfPhone(otp) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/verify-registration-phone`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     data: {
       otp: otp,
     },
@@ -217,6 +235,24 @@ export async function resendOtp(formData) {
 
   return data;
 }
+
+export async function resendPhoneOtp() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/admin/resend-phone-registration-otp`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    
+  });
+
+  return data;
+}
+
 export async function resendEmail() {
   const token = localStorage.getItem("access-token");
   if (!token) return null;

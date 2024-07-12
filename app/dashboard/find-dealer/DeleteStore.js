@@ -55,7 +55,7 @@ const DeleteStore = ({ store }) => {
               This will Delete your store.
             </p>
             <form className="flex gap-3 mt-6" onSubmit={handleSubmit(onSubmit)}>
-              <DialogClose className="btn-primary bg-transparent border border-gray-900">
+              <DialogClose className="btn-primary text-color-primary bg-transparent border border-color-primary">
                 Cencel
               </DialogClose>
               <button

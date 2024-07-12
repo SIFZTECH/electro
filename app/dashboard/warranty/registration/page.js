@@ -7,20 +7,45 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
+import SelectDealer from "./SelectDealer";
+import { useState } from "react";
+import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import { DatePicker } from "@/app/components/ui/DatePicker";
+import moment from "moment";
 
 const WarrantyRegistrationPage = () => {
+  const [date, setDate] = useState(null);
+  const [dealer, setDealer] = useState(null);
+
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
+
     formState: { errors, isSubmitting },
   } = useForm();
 
   async function onSubmit(data) {
     try {
-      const res = await createWarranty(data);
+      if (!dealer) {
+        return toast.error("Purchase from is missing!");
+      }
+
+      if (!date) {
+        return toast.error("Purchase date is missing!");
+      }
+
+      const res = await createWarranty({
+        ...data,
+        purchase_date: moment(date).format("YYYY-MM-DD"),
+        purchase_from: dealer,
+        battery_serial_no_image: data.battery_serial_no_image[0],
+        motor_serial_no_image: data.motor_serial_no_image[0],
+        invoice_image: data.invoice_image[0],
+        frame_serial_no_image: data.frame_serial_no_image[0],
+      });
 
       if (res) {
         toast.success(res.message);
@@ -31,7 +56,9 @@ const WarrantyRegistrationPage = () => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        err.response?.data?.message
+          ? handleValidationError(err.response?.data?.message)
+          : toast.error(err.response.message);
       } else {
         toast.error("Something went wrong");
       }
@@ -186,9 +213,8 @@ const WarrantyRegistrationPage = () => {
               )}
             </div>
           </div>
-
           <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
               Company Name
             </label>
             <div className="mt-1">
@@ -196,17 +222,13 @@ const WarrantyRegistrationPage = () => {
                 {...register("company_name", {
                   required: "This field is required",
                 })}
-                type="text"
+                type="tel"
                 placeholder="Company Name"
                 className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
-              {errors?.company_name && (
-                <span className="text-red-500 text-sm">
-                  {errors.company_name.message}
-                </span>
-              )}
             </div>
           </div>
+
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Address
@@ -228,36 +250,14 @@ const WarrantyRegistrationPage = () => {
             </div>
           </div>
 
-          <div className="">
-            <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-              Purchase From
-            </label>
-            <input
-              {...register("purchase_from", {
-                required: "This field is required",
-              })}
-              type="date"
-              placeholder="Purchase from"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
-            {errors?.purchase_from && (
-              <span className="text-red-500 text-sm">
-                {errors.purchase_from.message}
-              </span>
-            )}
-          </div>
+          <SelectDealer value={dealer} setDealer={setDealer} />
           <div className="">
             <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
               Purchase Date
             </label>
-            <input
-              {...register("purchase_date", {
-                required: "This field is required",
-              })}
-              type="date"
-              placeholder="Purchase Date"
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-            />
+
+            <DatePicker date={date} setDate={setDate} />
+
             {errors?.purchase_date && (
               <span className="text-red-500 text-sm">
                 {errors.purchase_date.message}

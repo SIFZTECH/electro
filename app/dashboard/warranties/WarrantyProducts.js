@@ -1,9 +1,18 @@
 import Link from "next/link";
 import EditWarranty from "./EditWarranty";
 import DeleteWarranty from "./DeleteWarranty";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/app/components/ui/table";
 
 const WarrantyProducts = ({ data }) => {
-  const warranties = data.data;
+  const warranties = data?.data;
 
   return (
     <div className="mt-10">
@@ -12,28 +21,30 @@ const WarrantyProducts = ({ data }) => {
           There is no warranties at that momment! Please add new Warranty
         </h1>
       ) : (
-        <table className="mt-10 table_modify">
-          <thead className="font-serif">
-            <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Dealer Name</th>
-              <th scope="col">Customer Name</th>
-              <th scope="col">Status</th>
-              <th scope="col">View Details</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table className="mt-10">
+          <TableHeader className="font-serif">
+            <TableRow>
+              <TableHead>Order ID</TableHead>
+              <TableHead>Dealer Name</TableHead>
+              <TableHead>Customer Name</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>View Details</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {warranties.map((data, i) => {
               return (
-                <tr key={i + 1}>
-                  <td data-label="Order ID">{data.id}</td>
-                  <td data-label="Dealer Name">
+                <TableRow key={i + 1}>
+                  <TableCell data-label="Order ID">{data.id}</TableCell>
+                  <TableCell data-label="Dealer Name">
                     {data.firstname} {data.lastname}
-                  </td>
-                  <td data-label="Customer Name">{data.company_name}</td>
-                  <td data-label="Status">
+                  </TableCell>
+                  <TableCell data-label="Customer Name">
+                    {data.company_name}
+                  </TableCell>
+                  <TableCell data-label="Status">
                     {data.status === "approve" && (
-                      <span className="btn-primary bg-emerald-200">
+                      <span className="btn-primary bg-green-400">
                         {data.status}
                       </span>
                     )}
@@ -43,7 +54,7 @@ const WarrantyProducts = ({ data }) => {
                       </span>
                     )}
                     {data.status === "pending" && (
-                      <span className="btn-primary bg-yellow-200">
+                      <span className="btn-primary bg-yellow-400">
                         {data.status}
                       </span>
                     )}
@@ -52,8 +63,8 @@ const WarrantyProducts = ({ data }) => {
                         {data.status}
                       </span>
                     )}
-                  </td>
-                  <td data-label="Actions">
+                  </TableCell>
+                  <TableCell data-label="Actions">
                     <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
                       <Link
                         className="btn-primary"
@@ -64,12 +75,12 @@ const WarrantyProducts = ({ data }) => {
                       <EditWarranty warranty={data} />
                       <DeleteWarranty warrantyId={data.id} />
                     </div>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       )}
     </div>
   );

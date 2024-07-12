@@ -9,7 +9,7 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
   }
 
   return (
-    <div className="compare-products">
+    <div className="compare-products max-w-[92dvw] mx-auto sm:max-w-full">
       <h1 className="heading-h1 mb-10 mt-6">Compare Bikes</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-8">
         {compareList.map((product) => (

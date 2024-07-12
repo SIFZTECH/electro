@@ -38,7 +38,7 @@ const ProductDetailsPage = ({ params }) => {
             Product Details
           </h2>
           <div className="product__introduction">
-            <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
+            <h2 className="bg-color-primary text-white flex items-center justify-center gap-1 py-2 font-serif">
               <Image
                 src="/Info.png"
                 height={25}
@@ -53,7 +53,7 @@ const ProductDetailsPage = ({ params }) => {
           </div>
 
           <div className="product__features">
-            <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
+            <h2 className="bg-color-primary text-white flex items-center justify-center gap-1 py-2 font-serif">
               <Image
                 src="/key_features.png"
                 height={25}
@@ -67,7 +67,7 @@ const ProductDetailsPage = ({ params }) => {
         </div>
         {product.compare && (
           <div className="product__specifications">
-            <h2 className="bg-color-primary flex items-center justify-center gap-1 py-2 font-serif">
+            <h2 className="bg-color-primary text-white flex items-center justify-center gap-1 py-2 font-serif">
               <Image
                 src="/Specs.png"
                 height={25}

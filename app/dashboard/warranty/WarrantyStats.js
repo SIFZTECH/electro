@@ -14,7 +14,7 @@ const Stats = () => {
         percentage="0.27"
       />
       <Stat
-        title="Month to Warranty Registration"
+        title="Last Year to Warranty Registration"
         value={758}
         percentage="0.27"
       />
