@@ -226,7 +226,7 @@ export default function MyMap() {
       <div className="find-store p-4 bg-white absolute max-w-[30rem] left-6 top-6 z-[99999]">
         <div>
           <button
-            className="btn-primary mb-2 bg-gray-200"
+            className="btn-primary mb-2 bg-gray-200 text-color-primary"
             onClick={() => router.push("/dashboard")}
           >
             Go back to Dashboard
@@ -374,7 +374,7 @@ export default function MyMap() {
                           <span>
                             <Link
                               href={`tel:${store.phone}`}
-                              className="hover:text-yellow-500"
+                              className="hover:text-color-primary_shade-2"
                             >
                               {store.phone || "Unavailable"}
                             </Link>
@@ -385,7 +385,7 @@ export default function MyMap() {
                           <span>
                             <Link
                               href={`mailto:${store.email}`}
-                              className="hover:text-yellow-500"
+                              className="hover:text-color-primary_shade-2"
                             >
                               {store.email || "Unavailable Email"}
                             </Link>
@@ -397,7 +397,7 @@ export default function MyMap() {
                             <span>
                               <Link
                                 href={store.weburl}
-                                className="hover:text-yellow-500"
+                                className="hover:text-color-primary_shade-2"
                               >
                                 {store.weburl || "Unavailable Website"}
                               </Link>
