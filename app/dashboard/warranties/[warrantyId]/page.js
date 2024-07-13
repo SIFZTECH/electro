@@ -48,12 +48,7 @@ const WarrantyPageInfo = ({ params }) => {
                   )}
                 </TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell className="font-semibold">Company Name:</TableCell>
-                <TableCell className="font-semibold">
-                  {warranty.company_name}
-                </TableCell>
-              </TableRow>
+
               <TableRow>
                 <TableCell className="font-semibold">Name:</TableCell>
                 <TableCell className="font-semibold">
@@ -71,8 +66,20 @@ const WarrantyPageInfo = ({ params }) => {
                 </TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className="font-semibold">Address:</TableCell>
-                <TableCell>{warranty.address}</TableCell>
+                <TableCell className="font-semibold">Address Line</TableCell>
+                <TableCell>{warranty.address_line}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Address Line 1</TableCell>
+                <TableCell>{warranty.address_line1}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">State</TableCell>
+                <TableCell>{warranty.state}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-semibold">Country</TableCell>
+                <TableCell>{warranty.country}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-semibold">Email:</TableCell>

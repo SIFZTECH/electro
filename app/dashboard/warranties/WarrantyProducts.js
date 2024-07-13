@@ -37,10 +37,10 @@ const WarrantyProducts = ({ data }) => {
                 <TableRow key={i + 1}>
                   <TableCell data-label="Order ID">{data.id}</TableCell>
                   <TableCell data-label="Dealer Name">
-                    {data.firstname} {data.lastname}
+                    {data?.dealer?.firstname} {data?.dealer?.lastname}
                   </TableCell>
                   <TableCell data-label="Customer Name">
-                    {data.company_name}
+                    {data.firstname} {data.lastname}
                   </TableCell>
                   <TableCell data-label="Status">
                     {data.status === "approve" && (
