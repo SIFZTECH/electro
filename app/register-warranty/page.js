@@ -52,7 +52,7 @@ const WarrantyRegistrationPage = () => {
         toast.success(res.message);
 
         queryClient.invalidateQueries("warranties");
-        router.back(-1);
+        router.replace("/login");
       }
     } catch (err) {
       console.error(err);
