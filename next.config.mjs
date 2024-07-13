@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "electro-api.sifztech.comnull",
       },
+      {
+        protocol: "https",
+        hostname: "www.countryflags.io",
+      },
     ],
   },
 };

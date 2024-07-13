@@ -346,7 +346,7 @@ const WarrantyRegistrationPage = () => {
               <SelectDealer value={dealer} setDealer={setDealer} />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-9 gap-y-3 mt-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-9 gap-y-3">
             <div className="border-[1.5px] border-gray-300 p-3 shadow-sm flex flex-col gap-3 rounded-md">
               <div className="">
                 <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
