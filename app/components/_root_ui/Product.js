@@ -18,7 +18,7 @@ const Product = ({
 }) => {
   return (
     <Link
-      href={navigateTo ? `/${navigateTo}/${slug}` : `/${slug}`}
+      href={navigateTo ? `/${navigateTo}/${slug}` : `/product/${slug}`}
       className="product flex flex-col gap-2 border border-gray-200 p-5 pt-3"
     >
       <div className="h-[180px] w-[180px] self-center relative">

@@ -6,7 +6,7 @@ import Spinner from "@/app/components/ui/Spinner";
 
 import Image from "next/image";
 import Link from "next/link";
-import ProductSpecifications from "../dashboard/product-specifications/[slug]/ProductSpecifications";
+import ProductSpecifications from "../../dashboard/product-specifications/[slug]/ProductSpecifications";
 
 const ProductDetailsPage = ({ params }) => {
   const { isLoading, product, error, isError } = useProductForPublic(
