@@ -143,8 +143,8 @@ export default function Login() {
               <div>
                 <button
                   type="submit"
-                  disabled={isSubmitSuccessful}
-                  className="font-serif flex w-full justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                  disabled={isLoading}
+                  className="font-serif flex w-full justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm hover:bg-color-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
                 >
                   {isLoading ? <SpinnerMini /> : "Sign in"}
                 </button>
