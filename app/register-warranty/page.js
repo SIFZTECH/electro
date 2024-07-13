@@ -1,7 +1,7 @@
 "use client";
 
 import toast from "react-hot-toast";
-import { createWarranty } from "@/app/_services/apiWarranties";
+import { createWarrantyForAnyone } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -37,7 +37,7 @@ const WarrantyRegistrationPage = () => {
         return toast.error("Purchase date is missing!");
       }
 
-      const res = await createWarranty({
+      const res = await createWarrantyForAnyone({
         ...data,
         purchase_date: moment(date).format("YYYY-MM-DD"),
         purchase_from: dealer,
