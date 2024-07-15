@@ -68,15 +68,14 @@ const WarrantyRegistrationPage = () => {
 
   return (
     <div className="w-full py-6">
-      <h1 className="heading-h1 text-center">Warranty Registration</h1>
       <form
-        className="md:py-8 p-2 md:px-6 max-w-7xl mx-auto"
+        className="md:py-8 p-2 md:px-6 max-w-7xl mx-auto border border-[#ddd] rounded-md"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h2 className="flex items-center gap-2 justify-center my-3 mb-6">
+        <h2 className="flex items-center gap-2 justify-center my-3 mb-6 text-xl">
           <svg
-            width="28"
-            height="28"
+            width="32"
+            height="32"
             viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
