@@ -21,7 +21,7 @@ const RecentOrder = () => {
       )}
       {!isLoading && !isError && !error && data && (
         <>
-          <h2 className="text-xl font-serif mt-6">
+          <h2 className="text-xl font-serif font-semibold mt-6">
             Recent clicks and Collect Orders
           </h2>
           <Table>

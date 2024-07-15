@@ -28,7 +28,7 @@ const Orders = () => {
       <TabsList>
         <TabsTrigger value="allOrders" className="">
           All Orders{" "}
-          {!isLoading && total_num && (
+          {!isLoading && total_num > 0 && (
             <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
               <span className="p-1 text-[10px] leading-3">
                 {total_num ? total_num : 0}
@@ -38,7 +38,7 @@ const Orders = () => {
         </TabsTrigger>
         <TabsTrigger value="collectedOrder">
           Collected Order{" "}
-          {!isLoading2 && total_num2 && (
+          {!isLoading2 && total_num2 > 0 && (
             <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
               <span className="p-1 text-[10px] leading-3">
                 {total_num2 ? total_num2 : 0}
@@ -48,7 +48,7 @@ const Orders = () => {
         </TabsTrigger>
         <TabsTrigger value="intransitOrders">
           Intransit Orders{" "}
-          {!isLoading3 && total_num3 && (
+          {!isLoading3 && total_num3 > 0 && (
             <p className="ml-2 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
               <span className="p-1 text-[10px] leading-3">
                 {total_num3 ? total_num3 : 0}

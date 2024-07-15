@@ -73,7 +73,7 @@ const WarrantyRegistrationPage = () => {
         className="md:py-8 p-2 md:px-6 max-w-7xl mx-auto"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h2 className="flex items-center  gap-2 justify-center my-3 mb-6">
+        <h2 className="flex items-center gap-2 justify-center my-3 mb-6">
           <svg
             width="28"
             height="28"
