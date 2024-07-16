@@ -7,12 +7,18 @@ import CreateNewCategory from "./CreateNewCategory";
 import { useRoles } from "@/app/_features/roles/useRoles";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
+import PaginationUI from "@/app/components/ui/PaginationUI";
+import { useSearchParams } from "next/navigation";
+import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
 
 const Category = () => {
+  const params = useSearchParams();
+  const page = params.get("page") ? +params.get("page") : 1;
+
   const isPermission = useCheckPermission("category_add");
   const isCategoryListPermission = useCheckPermission("category_list");
 
-  const { data, isLoading, isError, error } = useCategories();
+  const { data, isLoading, isError, error } = useCategories(page);
 
   if (!isCategoryListPermission) {
     return (
@@ -37,8 +43,15 @@ const Category = () => {
             : error.message}
         </h1>
       )}
+      <PaginationUI
+        data={data}
+        page={page}
+        page_size={CATAGORY_PAGE_SIZE}
+        navigation="categories"
+      />
     </div>
   );
+  0;
 };
 
 export default Category;

@@ -3,19 +3,13 @@
 import {
   getAllCategories,
   getAllCategoriesForPublic,
-  getCategory,
 } from "@/app/_services/apiCategories";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
-export function useCategories() {
+export function useCategories(page) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getAllCategories(),
+    queryKey: ["categories", { page }],
+    queryFn: () => getAllCategories(page),
   });
 
   return { data, isLoading, error, isError };
