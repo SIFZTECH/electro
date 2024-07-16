@@ -44,7 +44,7 @@ const ManageImage = ({ images, slug }) => {
           />
           {images.length > 1 && (
             <span
-              className="text-sm font-serif btn-primary bg-gray-200 cursor-pointer"
+              className="text-sm font-serif btn-primary bg-gray-200 text-color-primary cursor-pointer"
               onClick={() => handleClick(img.id)}
             >
               Remove

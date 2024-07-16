@@ -40,7 +40,7 @@ const ProductsPage = ({
           data={products?.data}
           page={+page}
           page_size={PRODUCT_PAGE_SIZE}
-          navigation="test"
+          navigation="product-specifications"
         />
       </div>
     </>

@@ -42,6 +42,8 @@ const ProductForm = () => {
     category_id,
     subcategory_id,
     brand_id,
+    status,
+    sku,
     key_features,
     variants,
     specification,
@@ -57,6 +59,8 @@ const ProductForm = () => {
         category_id,
         subcategory_id,
         brand_id,
+        status,
+        sku,
         variants,
         specification: key_features,
         images,
@@ -180,12 +184,57 @@ const ProductForm = () => {
             )}
           </div>
         </div>
+
         <SelectBrand register={register} errors={errors} />
         <SelectCategoryFormComponent
           control={control}
           watch={watch}
           errors={errors}
         />
+
+        <div className="">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            SKU
+          </label>
+          <div className="mt-1">
+            <input
+              {...register("sku", {
+                required: "This is required field.",
+              })}
+              placeholder="SKU"
+              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+            />
+            {errors?.sku && (
+              <span className="text-red-500 text-sm">{errors.sku.message}</span>
+            )}
+          </div>
+        </div>
+        <div className="">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            Status
+          </label>
+          <div className="mt-1">
+            <select
+              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+              {...register("status")}
+            >
+              [Active,Inactive,Out of
+              Stock,Discontinued,Pending,Draft,Pre-order,Backorder,On
+              Hold,Featured,Custom]
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+              <option value="Pending">Pending</option>
+              <option value="Out of Stock">Out of Stock</option>
+              <option value="Discontinued">Discontinued</option>
+              <option value="Draft">Draft</option>
+              <option value="Pre-order">Pre-order</option>
+              <option value="Backorder">Backorder</option>
+              <option value="On Hold">On Hold</option>
+              <option value="Featured">Featured</option>
+              <option value="Custom">Custom</option>
+            </select>
+          </div>
+        </div>
         <SelectKeyFeatures control={control} />
 
         <SelectAttribute control={control} errors={errors} />

@@ -15,7 +15,7 @@ function SelectKeyFeatures({ control }) {
     name: "key_features",
   });
 
-  const selectedFeatureKeys = watchFeatures.map((item) => item.key);
+  const selectedFeatureKeys = watchFeatures?.map((item) => item.key);
 
   return (
     <>
@@ -40,7 +40,7 @@ function SelectKeyFeatures({ control }) {
                       {featuresWithKeyAndIcon
                         .filter(
                           (feature) =>
-                            !selectedFeatureKeys.includes(feature.key) ||
+                            !selectedFeatureKeys?.includes(feature.key) ||
                             feature.key === field.value
                         )
                         .map((feature) => (

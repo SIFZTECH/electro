@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/app/components/ui/toggle-group";
 import ProductImage from "./ProductImage";
 
@@ -50,9 +49,6 @@ const ProductTop = ({ product }) => {
         <div className="product__name flex gap-3 flex-col xl:flex-row xl:items-center ">
           <span className="font-serif font-semibold text-xl">
             {product.name}
-          </span>
-          <span className="badge xl:bg-color-primary text-white rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px]">
-            {product.model_name}
           </span>
         </div>
         <h1 className="font-serif text-xl font-semibold">
@@ -104,6 +100,13 @@ const ProductTop = ({ product }) => {
             </ToggleGroup>
           </div>
         )}
+
+        <div className="flex flex-col justify-start items-start">
+          <span className="font-serif font-medium mb-1">Model Name</span>
+          <button>
+            <span className="btn-primary"> {product?.model_name}</span>
+          </button>
+        </div>
 
         <div className="flex flex-col items-start gap-2">
           {filteredVariants.map((variant) => {

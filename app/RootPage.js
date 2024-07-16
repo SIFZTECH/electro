@@ -57,7 +57,7 @@ const RootPage = () => {
           />
           <p className="absolute right-0 top-0 bg-red-500 rounded-full text-white w-[1.40rem] h-[1.40rem] flex items-center justify-center">
             <span className="p-1 text-[10px] leading-3">
-              {compareList.length}
+              {compareList?.length}
             </span>
           </p>
         </div>
