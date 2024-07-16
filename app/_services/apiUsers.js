@@ -41,7 +41,7 @@ export async function getAllDealerInfo() {
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/find/dealer/get-all`,
+    url: `${BASE_URL}/dealer/find`,
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -51,15 +51,8 @@ export async function getAllDealerInfo() {
 }
 
 export async function getAllDealers() {
-  const token = localStorage.getItem("access-token");
-
-  if (!token) return null;
-
   const { data } = await axios({
     url: `${BASE_URL}/warranty/get-dealers`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
   });
 
   return data;

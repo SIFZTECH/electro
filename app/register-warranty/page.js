@@ -1,7 +1,7 @@
 "use client";
 
 import toast from "react-hot-toast";
-import { createWarranty } from "@/app/_services/apiWarranties";
+import { createWarrantyForAnyone } from "@/app/_services/apiWarranties";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ import SelectDealer from "./SelectDealer";
 import { useState } from "react";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { DatePicker } from "@/app/components/ui/DatePicker";
+
 import moment from "moment";
 
 const WarrantyRegistrationPage = () => {
@@ -37,7 +38,7 @@ const WarrantyRegistrationPage = () => {
         return toast.error("Purchase date is missing!");
       }
 
-      const res = await createWarranty({
+      const res = await createWarrantyForAnyone({
         ...data,
         purchase_date: moment(date).format("YYYY-MM-DD"),
         purchase_from: dealer,
@@ -51,7 +52,7 @@ const WarrantyRegistrationPage = () => {
         toast.success(res.message);
 
         queryClient.invalidateQueries("warranties");
-        router.back(-1);
+        router.replace("/login");
       }
     } catch (err) {
       console.error(err);
@@ -66,13 +67,15 @@ const WarrantyRegistrationPage = () => {
   }
 
   return (
-    <>
-      <h1 className="heading-h1 text-center">Warranty Registration</h1>
-      <form className="md:py-8 p-2 md:px-6" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="flex items-center  gap-2 justify-center my-3 mb-6">
+    <div className="w-full py-6">
+      <form
+        className="md:py-8 p-2 md:px-6 max-w-7xl mx-auto border border-[#ddd] rounded-md"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h2 className="flex items-center gap-2 justify-center my-3 mb-6 text-xl">
           <svg
-            width="28"
-            height="28"
+            width="32"
+            height="32"
             viewBox="0 0 28 28"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -526,7 +529,7 @@ const WarrantyRegistrationPage = () => {
           {isSubmitting ? <SpinnerMini /> : "Save"}
         </button>
       </form>
-    </>
+    </div>
   );
 };
 

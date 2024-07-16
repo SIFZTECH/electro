@@ -16,7 +16,7 @@ const ProductSpecifications = ({ specification }) => {
   return (
     <Table className="overflow-x-auto">
       <TableHeader>
-        <TableRow className="bg-color-primary text-white hover:bg-color-primar text-white">
+        <TableRow className="bg-color-primary text-white hover:bg-color-primary">
           <TableHead></TableHead>
           {specification.map((product) => (
             <TableHead key={product.id}>{product.model_name}</TableHead>

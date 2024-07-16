@@ -137,3 +137,16 @@ export async function createWarranty(formData) {
 
   return data;
 }
+
+export async function createWarrantyForAnyone(formData) {
+  const { data } = await axios({
+    url: `${BASE_URL}/public/warranty/create`,
+    method: "post",
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+    data: { ...formData },
+  });
+
+  return data;
+}

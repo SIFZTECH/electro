@@ -1,6 +1,6 @@
 "use client";
 
-import SubCategoryTable from "@/app/dashboard/subcategories/SubcategoryTable";
+import SubCategoryTable from "./SubCategoryTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateSubNewCategory from "./CreateNewSubCategory";
 import { useSubcategories } from "@/app/_features/subCategories/useSubcategories";

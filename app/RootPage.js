@@ -71,15 +71,23 @@ const RootPage = () => {
             width={100}
             alt="Logo"
           />
-          {!isLoading2 && user ? (
-            <Link className="btn-primary" href="/dashboard">
-              Dashboard
+          <div className="flex items-center gap-3">
+            <Link
+              className="btn-primary bg-transparent text-color-primary border border-color-primary"
+              href="/register-warranty"
+            >
+              Register Warranty
             </Link>
-          ) : (
-            <Link className="btn-primary" href="/login">
-              Log in
-            </Link>
-          )}
+            {!isLoading2 && user ? (
+              <Link className="btn-primary" href="/dashboard">
+                Dashboard
+              </Link>
+            ) : (
+              <Link className="btn-primary" href="/login">
+                Log in
+              </Link>
+            )}
+          </div>
         </div>
         <div className="flex-1 w-full">
           <Tabs value={value} className="font-serif w-full">
