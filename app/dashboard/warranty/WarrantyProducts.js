@@ -31,6 +31,7 @@ const WarrantyProducts = ({ data }) => {
             </TableRow>
           </TableHeader>
           <TableBody>
+            Tyd
             {warranties.map((data, i) => {
               return (
                 <TableRow key={i + 1}>
