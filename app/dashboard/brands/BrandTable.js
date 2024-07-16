@@ -9,9 +9,16 @@ import {
 } from "@/app/components/ui/table";
 
 import BrandsList from "./BrandsList";
+import { useSearchParams } from "next/navigation";
+import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
 
 const BrandTable = ({ data }) => {
   const brands = data?.data;
+
+  const params = useSearchParams();
+
+  const currentPage = params.get("page") || 1;
+  const startIndex = (currentPage - 1) * CATAGORY_PAGE_SIZE;
 
   return (
     <>
@@ -29,7 +36,7 @@ const BrandTable = ({ data }) => {
           </TableHeader>
           <TableBody className="">
             {brands.map((brand, i) => (
-              <BrandsList key={brand.id} index={i} brand={brand} />
+              <BrandsList key={brand.id} index={startIndex + i} brand={brand} />
             ))}
           </TableBody>
         </Table>

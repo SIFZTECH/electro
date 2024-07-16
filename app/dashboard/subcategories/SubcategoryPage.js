@@ -30,7 +30,7 @@ const SubCategoryPage = () => {
           <PaginationUI
             data={data}
             page={page}
-            page_size={10}
+            page_size={CATAGORY_PAGE_SIZE}
             navigation="subcategories"
           />
         </>

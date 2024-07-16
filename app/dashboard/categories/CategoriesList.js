@@ -12,7 +12,7 @@ const CategoriesList = ({ index, category, subCategories }) => {
 
   return (
     <TableRow>
-      <TableCell data-label="SN">{index + 1}</TableCell>
+      <TableCell data-label="SN">{index}</TableCell>
       <TableCell data-label="Category Name">{category.name}</TableCell>
       <TableCell data-label="Sub-Categories">
         {subCategories.map((item) => (
