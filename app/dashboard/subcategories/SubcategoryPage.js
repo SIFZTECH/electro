@@ -1,6 +1,5 @@
 "use client";
 
-import SubCategoryTable from "./SubCategoryTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateSubNewCategory from "./CreateNewSubCategory";
 import { useSubcategories } from "@/app/_features/subCategories/useSubcategories";
@@ -8,6 +7,7 @@ import useCheckPermission from "@/app/_hooks/usePermission";
 import { useSearchParams } from "next/navigation";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import SubCategoryTable from "./SubcategoryTable";
 
 const SubCategoryPage = () => {
   const params = useSearchParams();
