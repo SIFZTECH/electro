@@ -105,7 +105,7 @@ function ImageUploader({ register, errors, setValue }) {
                 className="border border-gray-200"
               />
               <span
-                className="text-sm font-serif btn-primary bg-gray-200 cursor-pointer"
+                className="text-sm font-serif btn-primary text-color-primary bg-gray-200 cursor-pointer"
                 onClick={() => handleRemoveImage(index)}
               >
                 Remove
