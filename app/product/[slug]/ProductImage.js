@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import Image from "next/image";
 import Magnifier from "@/app/components/ui/CustomMagnifier";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 
 const imageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
