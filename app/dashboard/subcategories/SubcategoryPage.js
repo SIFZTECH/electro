@@ -7,7 +7,7 @@ import { useSubcategories } from "@/app/_features/subCategories/useSubcategories
 import useCheckPermission from "@/app/_hooks/usePermission";
 import { useSearchParams } from "next/navigation";
 import PaginationUI from "@/app/components/ui/PaginationUI";
-import { PAGE_SIZE } from "@/app/lib/utils";
+import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
 
 const SubCategoryPage = () => {
   const params = useSearchParams();
@@ -30,7 +30,7 @@ const SubCategoryPage = () => {
           <PaginationUI
             data={data}
             page={page}
-            page_size={10}
+            page_size={CATAGORY_PAGE_SIZE}
             navigation="subcategories"
           />
         </>
@@ -42,6 +42,12 @@ const SubCategoryPage = () => {
             : error.message}
         </h1>
       )}
+      <PaginationUI
+        data={data}
+        page={page}
+        page_size={CATAGORY_PAGE_SIZE}
+        navigation="subcategories"
+      />
     </div>
   );
 };

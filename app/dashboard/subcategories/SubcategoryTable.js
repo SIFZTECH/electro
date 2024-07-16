@@ -9,8 +9,14 @@ import {
 } from "@/app/components/ui/table";
 
 import SubCategoriesList from "@/app/dashboard/subcategories/SubcategoriesList";
+import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 const SubCategoryTable = ({ data, page }) => {
+  const params = useSearchParams();
+
+  const currentPage = params.get("page") || 1;
+  const startIndex = (currentPage - 1) * CATAGORY_PAGE_SIZE;
   const subcategories = data.data;
 
   return (
@@ -31,7 +37,7 @@ const SubCategoryTable = ({ data, page }) => {
             {subcategories.map((subcategory, i) => (
               <SubCategoriesList
                 key={subcategory.id}
-                index={i}
+                index={startIndex + i}
                 subcategory={subcategory}
               />
             ))}

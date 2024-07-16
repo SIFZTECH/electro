@@ -36,7 +36,11 @@ const ManageImage = ({ images, slug }) => {
           <Image
             loader={imageLoader}
             key={index + 1}
-            src={`${BASE_URL_IMAGE}${img.image_path}`}
+            src={
+              img?.image_path.startsWith("https://www.leoncycle.com.au")
+                ? img?.image_path
+                : `${BASE_URL_IMAGE}${img?.image_path}`
+            }
             height={50}
             width={50}
             alt={`Image ${index + 1}`}
@@ -44,7 +48,7 @@ const ManageImage = ({ images, slug }) => {
           />
           {images.length > 1 && (
             <span
-              className="text-sm font-serif btn-primary bg-gray-200 cursor-pointer"
+              className="text-sm font-serif btn-primary bg-gray-200 text-color-primary cursor-pointer"
               onClick={() => handleClick(img.id)}
             >
               Remove

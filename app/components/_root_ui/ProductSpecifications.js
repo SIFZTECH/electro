@@ -44,7 +44,7 @@ const ProductSpecifications = ({ specification }) => {
               </TableCell>
               {specification.map((product) => {
                 const productFeature =
-                  product.specification.find((spec) => spec.key === feature) ||
+                  product.specification?.find((spec) => spec.key === feature) ||
                   {};
                 return (
                   <TableCell

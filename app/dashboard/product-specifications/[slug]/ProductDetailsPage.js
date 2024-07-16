@@ -27,7 +27,7 @@ const ProductDetailsPage = ({ params }) => {
         <div className="flex gap-3">
           {isProductUpdatePermission && <EditProduct product={product} />}
           {isProductDeletePermission && (
-            <DeleteProduct productId={product.id} />
+            <DeleteProduct productId={product?.id} />
           )}
         </div>
       </div>

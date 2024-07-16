@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.countryflags.io",
       },
+      {
+        protocol: "https",
+        hostname: "www.leoncycle.com.au",
+      },
     ],
   },
 };

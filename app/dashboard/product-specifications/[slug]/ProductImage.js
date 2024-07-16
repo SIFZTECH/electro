@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import Image from "next/image";
 import Magnifier from "@/app/components/ui/CustomMagnifier";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 
 const imageLoader = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
@@ -12,8 +13,13 @@ const imageLoader = ({ src, width, quality }) => {
 const ProductImage = ({ images, product_name }) => {
   const [loading, setLoading] = useState(
     images.reduce((acc, img) => {
-      const imgPath = `https://electro-api.sifztech.com${img.image_path}`;
+      const imgPath = img?.image_path.startsWith("https://www.leoncycle.com.au")
+        ? img?.image_path
+        : `https://electro-api.sifztech.com${img?.image_path}`;
+
+      console.log(imgPath);
       acc[imgPath] = true;
+
       return acc;
     }, {})
   );
@@ -27,11 +33,20 @@ const ProductImage = ({ images, product_name }) => {
 
   return (
     <Tabs
-      defaultValue={`https://electro-api.sifztech.com${images[0].image_path}`}
+      defaultValue={
+        images[0]?.image_path.startsWith("https://www.leoncycle.com.au")
+          ? images[0]?.image_path
+          : `${BASE_URL_IMAGE}${images[0]?.image_path}`
+      }
     >
       <div className="product__image">
         {images.map((img, i) => {
-          const imgPath = `https://electro-api.sifztech.com${img.image_path}`;
+          const imgPath = img?.image_path.startsWith(
+            "https://www.leoncycle.com.au"
+          )
+            ? img?.image_path
+            : `https://electro-api.sifztech.com${img?.image_path}`;
+
           return (
             <TabsContent key={i + 1} value={imgPath}>
               <div className="relative mt-4 md:mt-0">
@@ -53,7 +68,12 @@ const ProductImage = ({ images, product_name }) => {
       </div>
       <TabsList className="product__thumbnails flex items-center justify-center gap-3 mt-6">
         {images.map((img) => {
-          const imgPath = `https://electro-api.sifztech.com${img.image_path}`;
+          const imgPath = img?.image_path.startsWith(
+            "https://www.leoncycle.com.au"
+          )
+            ? img?.image_path
+            : `https://electro-api.sifztech.com${img?.image_path}`;
+
           return (
             <TabsTrigger
               value={imgPath}

@@ -1,17 +1,20 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, CATAGORY_PAGE_SIZE } from "../lib/utils";
 
-export async function getAllBrands() {
+export async function getAllBrands(page) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/brands`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${BASE_URL}/brands?per_page=${CATAGORY_PAGE_SIZE}&page=${page}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!data.data)
     throw new Error(

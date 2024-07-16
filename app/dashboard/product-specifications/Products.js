@@ -31,12 +31,18 @@ const Products = ({
         {!isLoading &&
           !isError &&
           !error &&
-          products.data.data.map((product) => (
+          products?.data?.data?.map((product) => (
             <Product
               key={product.id}
               id={product.id}
               slug={product.slug}
-              image={`${BASE_URL_IMAGE}${product?.images[0]?.image_path}`}
+              image={
+                product?.images[0]?.image_path.startsWith(
+                  "https://www.leoncycle.com.au"
+                )
+                  ? product?.images[0]?.image_path
+                  : `${BASE_URL_IMAGE}${product?.images[0]?.image_path}`
+              }
               name={product.name}
               summary={product.introduction}
               isCompared={compareList.some((p) => p.id === product.id)}

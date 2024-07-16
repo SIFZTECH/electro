@@ -3,6 +3,7 @@ import ProductSpecifications from "./ProductSpecifications";
 import NotFoundData from "../ui/NotFoundData";
 import { CiSquareMinus } from "react-icons/ci";
 import { MdLibraryAdd } from "react-icons/md";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 
 const CompareProducts = ({ compareList, toggleCompare }) => {
   if (compareList.length === 0) {
@@ -13,14 +14,20 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
     <div className="compare-products max-w-[92dvw] mx-auto sm:max-w-full">
       <h1 className="heading-h1 mb-10 mt-6">Compare Bikes</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-8">
-        {compareList.map((product) => (
+        {compareList?.map((product) => (
           <div
             key={product.id}
             className="product flex flex-col gap-2 border border-gray-200 p-5 pt-3"
           >
             <div className="h-[180px] w-[180px] self-center relative">
               <Image
-                src={`https://electro-api.sifztech.com/${product?.images[0]?.image_path}`}
+                src={
+                  product?.images[0]?.image_path.startsWith(
+                    "https://www.leoncycle.com.au"
+                  )
+                    ? product?.images[0]?.image_path
+                    : `${BASE_URL_IMAGE}${product?.images[0]?.image_path}`
+                }
                 alt={product.name}
                 fill
                 objectFit="contain"

@@ -29,12 +29,12 @@ const ProductsPage = ({
             toggleCompare={toggleCompare}
           />
         </div>
-        <PaginationUI
+        {/* <PaginationUI
           data={products?.data}
           page={+page}
           page_size={PRODUCT_PAGE_SIZE}
-          navigation="test"
-        />
+          navigation=""
+        /> */}
       </div>
     </>
   );

@@ -51,9 +51,6 @@ const ProductTop = ({ product }) => {
           <span className="font-serif font-semibold text-xl">
             {product.name}
           </span>
-          <span className="badge xl:bg-color-primary text-white rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px]">
-            {product.model_name}
-          </span>
         </div>
         <h1 className="font-serif text-xl font-semibold">
           ${selectedPrice === "0.00" ? product.price : selectedPrice}
@@ -105,11 +102,19 @@ const ProductTop = ({ product }) => {
           </div>
         )}
 
+        <div className="flex flex-col justify-start items-start">
+          <span className="font-serif font-medium mb-1">Model Name</span>
+          <button>
+            <span className="btn-primary"> {product?.model_name}</span>
+          </button>
+        </div>
+
+        <span className="badge xl:bg-color-primary text-white rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px] line-clamp-1"></span>
         <div className="flex flex-col items-start gap-2">
           {filteredVariants.map((variant) => {
             return (
               <div key={variant.id} className="flex flex-col">
-                <span className="font-serif mb-1">
+                <span className="font-serif font-medium mb-1">
                   {variant.attribute_value.attribute.name}
                 </span>
                 <button className="btn-primary">

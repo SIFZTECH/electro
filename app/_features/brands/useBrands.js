@@ -3,10 +3,10 @@
 import { getAllBrands, getAllBrandsForPublic } from "@/app/_services/apiBrand";
 import { useQuery } from "@tanstack/react-query";
 
-export function useBrands() {
+export function useBrands(page) {
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["brands"],
-    queryFn: getAllBrands,
+    queryKey: ["brands", { page }],
+    queryFn: () => getAllBrands(page),
   });
 
   return { data, isLoading, error, isError };

@@ -9,9 +9,15 @@ import {
 } from "@/app/components/ui/table";
 
 import CategoriesList from "./CategoriesList";
+import { useSearchParams } from "next/navigation";
+import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
 
 const CategoryTable = ({ data }) => {
   const categories = data.data;
+  const params = useSearchParams();
+
+  const currentPage = params.get("page") || 1;
+  const startIndex = (currentPage - 1) * CATAGORY_PAGE_SIZE;
 
   return (
     <>
@@ -33,7 +39,7 @@ const CategoryTable = ({ data }) => {
             {categories.map((category, i) => (
               <CategoriesList
                 key={category.id}
-                index={i}
+                index={startIndex + i + 1}
                 category={category}
                 subCategories={category.subcategories}
               />
