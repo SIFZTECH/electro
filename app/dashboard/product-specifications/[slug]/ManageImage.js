@@ -36,7 +36,11 @@ const ManageImage = ({ images, slug }) => {
           <Image
             loader={imageLoader}
             key={index + 1}
-            src={`${BASE_URL_IMAGE}${img.image_path}`}
+            src={
+              img?.image_path.startsWith("https://www.leoncycle.com.au")
+                ? img?.image_path
+                : `${BASE_URL_IMAGE}${img?.image_path}`
+            }
             height={50}
             width={50}
             alt={`Image ${index + 1}`}
