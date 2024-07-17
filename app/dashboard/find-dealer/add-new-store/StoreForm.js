@@ -57,7 +57,6 @@ const AddNewStore = () => {
   );
 
   async function onSubmit(data) {
-    console.log(data);
     try {
       if (!data.map_url) {
         return toast.error("Please select your position");

@@ -17,7 +17,6 @@ const ProductImage = ({ images, product_name }) => {
         ? img?.image_path
         : `https://electro-api.sifztech.com${img?.image_path}`;
 
-      console.log(imgPath);
       acc[imgPath] = true;
 
       return acc;

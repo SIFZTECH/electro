@@ -1,10 +1,17 @@
 "use client";
-import { useCategories } from "@/app/_features/categories/useCategory";
+import { useCategoriesForSelect } from "@/app/_features/categories/useCategory";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { CategoryOptions } from "../CategoryOptions";
 
-const SelectCategoryFormComponent = ({ control, watch, errors }) => {
-  const { isLoading, isError, data } = useCategories();
+const SelectCategoryFormComponent = ({
+  control,
+  watch,
+  errors,
+  setValue,
+  id,
+}) => {
+  const { isLoading, isError, data } = useCategoriesForSelect();
   const [subcategories, setSubcategories] = useState([]);
 
   const categories = data?.data;
@@ -37,34 +44,17 @@ const SelectCategoryFormComponent = ({ control, watch, errors }) => {
         <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600 mb-1">
           Category
         </label>
-        <Controller
-          name="category_id"
-          control={control}
-          rules={{ required: "This is required field!" }}
-          render={({ field }) => (
-            <select
-              className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              {...field}
-            >
-              <option value="">Select Category</option>
-              {!isLoading &&
-                categories?.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-            </select>
-          )}
+        <CategoryOptions
+          data={data}
+          isLoading={isLoading}
+          isError={isError}
+          setValue={setValue}
+          id={id}
         />
-        {errors?.category_id && (
-          <span className="text-red-500 text-sm self-center">
-            {errors.category_id.message}
-          </span>
-        )}
       </div>
 
       <div className="flex-1">
-        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600 mb-1">
+        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 mb-1">
           Sub-Category
         </label>
         <Controller

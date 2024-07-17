@@ -20,7 +20,6 @@ const DashboardPage = () => {
   const { isAdmin, isDealer, user } = useUser();
   const { data, isLoading, error, isError } = useWarranties();
 
-  console.log(error);
   if (isAdmin || isDealer) {
     return <DashboardForNonCustomer />;
   } else {

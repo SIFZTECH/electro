@@ -8,9 +8,9 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import SubCategoriesList from "@/app/dashboard/subcategories/SubcategoriesList";
 import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
 import { useSearchParams } from "next/navigation";
+import SubCategoriesList from "./SubcategoriesList";
 
 const SubCategoryTable = ({ data, page }) => {
   const params = useSearchParams();
