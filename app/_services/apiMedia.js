@@ -13,8 +13,6 @@ export async function getAllSocialMediaAssets(page, query) {
   let url = `${BASE_URL}/social-media-assets/get-folders?per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
   let url2 = `${BASE_URL}/social-assets?per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
 
-  console.log(url2);
-
   if (query) {
     url = `${BASE_URL}/search-social-media-assets?search=${query}&per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
     url2 = `${BASE_URL}/search-social-media-assets?search=${query}&per_page=${SOCIALMEDIAASSESTS_PAGE_SIZE}&page=${page}`;
@@ -63,7 +61,6 @@ export async function CreateNewSubAssets(formData) {
 
   if (!token) return null;
 
-  console.log(formData);
   const { data } = await axios(
     `${BASE_URL}/social-media-assets/create-folder`,
     {

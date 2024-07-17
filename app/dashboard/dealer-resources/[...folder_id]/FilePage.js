@@ -56,12 +56,9 @@ const FolderPage = ({ folder_id }) => {
   const { data, isLoading, isError, error } = useResource(Number(folder_id));
   const { isAdmin } = useUser();
 
-  console.log(pathName);
   if (isLoading) {
     return <Spinner />;
   }
-
-  console.log(data, error);
 
   return (
     <div>
