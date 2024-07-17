@@ -1,8 +1,9 @@
 "use client";
+import { useSearchParams } from "next/navigation";
 import FilterByProduct from "./FilterByProduct";
+import PaginationRoot from "./Pagination";
 import Products from "./Products";
 import { PRODUCT_PAGE_SIZE } from "@/app/lib/utils";
-import PaginationUI from "@/app/components/ui/PaginationUI";
 
 const ProductsPage = ({
   products,
@@ -29,12 +30,11 @@ const ProductsPage = ({
             toggleCompare={toggleCompare}
           />
         </div>
-        {/* <PaginationUI
+        <PaginationRoot
           data={products?.data}
           page={+page}
           page_size={PRODUCT_PAGE_SIZE}
-          navigation=""
-        /> */}
+        />
       </div>
     </>
   );
