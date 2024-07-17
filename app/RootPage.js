@@ -63,7 +63,7 @@ const RootPage = () => {
         </div>
       </div>
       <div className="py-4 px-6 flex flex-col items-start">
-        <div className="w-full flex justify-between items-center">
+        <div className="w-full flex sm:flex-row flex-col gap-y-6 justify-between items-center">
           <Image
             className="pt-5"
             src={"/logo.jpeg"}

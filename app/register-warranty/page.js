@@ -69,7 +69,7 @@ const WarrantyRegistrationPage = () => {
   return (
     <div className="w-full py-6">
       <form
-        className="md:py-8 p-2 md:px-6 max-w-7xl mx-auto border border-[#ddd] rounded-md"
+        className="md:py-8 p-2 md:px-6 max-w-7xl mx-auto sm:border sm:border-[#ddd] rounded-md"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2 className="flex items-center gap-2 justify-center my-3 mb-6 text-xl">
@@ -135,7 +135,7 @@ const WarrantyRegistrationPage = () => {
           </span>
         </h2>
         <div className="flex flex-col gap-x-9 gap-y-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-9 gap-y-3">
+          <div className="flex flex-col sm:grid md:grid-cols-2 gap-x-9 gap-y-3">
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                 First Name
