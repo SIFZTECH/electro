@@ -23,6 +23,25 @@ export async function getAllBrands(page) {
 
   return data.data;
 }
+
+export async function getAllBrandsForSelect() {
+  const token = localStorage.getItem("access-token");
+  if (!token) return null;
+
+  const { data } = await axios.get(`${BASE_URL}/brands?per_page=500`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!data.data)
+    throw new Error(
+      "There is no brand at that momment! Please add a new Brand"
+    );
+
+  return data.data;
+}
+
 export async function getAllBrandsForPublic() {
   const { data } = await axios.get(`${BASE_URL}/public/brands`);
 

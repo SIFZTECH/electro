@@ -65,6 +65,12 @@ const EditProduct = ({ product }) => {
 
     images,
   }) {
+    if (!brand_id) {
+      return toast.error("Brand is Missing!");
+    } else if (!category_id) {
+      return toast.error("Category is Missing!");
+    }
+
     const formattedVariants = variants.map((variant) => {
       return {
         attribute_value_id: variant.attribute_value_id,
@@ -218,9 +224,14 @@ const EditProduct = ({ product }) => {
               </div>
             </div>
 
-            <SelectBrand register={register} errors={errors} />
+            <SelectBrand id={product?.brand_id} setValue={setValue} />
 
-            <SelectCategoryFormComponent control={control} watch={watch} />
+            <SelectCategoryFormComponent
+              control={control}
+              watch={watch}
+              id={product?.category_id}
+              setValue={setValue}
+            />
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                 SKU

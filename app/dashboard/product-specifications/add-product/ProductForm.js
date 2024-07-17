@@ -50,6 +50,11 @@ const ProductForm = () => {
     images,
   }) {
     try {
+      if (!brand_id) {
+        return toast.error("Brand is Missing!");
+      } else if (!category_id) {
+        return toast.error("Category is Missing!");
+      }
       const res = await createProduct({
         name,
         model_name,
@@ -185,11 +190,12 @@ const ProductForm = () => {
           </div>
         </div>
 
-        <SelectBrand register={register} errors={errors} />
+        <SelectBrand setValue={setValue} />
         <SelectCategoryFormComponent
           control={control}
           watch={watch}
           errors={errors}
+          setValue={setValue}
         />
 
         <div className="">

@@ -10,11 +10,12 @@ import {
 } from "@/app/components/ui/dialog";
 import { useState } from "react";
 import { createSubcategory } from "@/app/_services/apiSubcategories";
-import { useCategories } from "@/app/_features/categories/useCategory";
+import { useCategoriesForSelect } from "@/app/_features/categories/useCategory";
+import { CategoryOptions } from "../product-specifications/CategoryOptions";
 
 const CreateNewSubCategory = () => {
   const [open, setOpen] = useState();
-  const { data, isLoading } = useCategories();
+  const { data, isLoading, isError } = useCategoriesForSelect();
 
   const queryClient = useQueryClient();
 
@@ -26,12 +27,16 @@ const CreateNewSubCategory = () => {
 
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm();
 
   async function onSubmit({ name, category_id }) {
     try {
+      if (!category_id) {
+        return toast.error("Category is missing!");
+      }
       const res = await createSubcategory({ name, category_id });
 
       if (res) {
@@ -88,31 +93,19 @@ const CreateNewSubCategory = () => {
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Select Category
               </label>
-              <div className="mt-2">
-                <select
-                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                  {...register("category_id")}
-                >
-                  <option value="">--Please choose an option--</option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-                {errors?.category_name && (
-                  <span className="text-red-500 text-sm">
-                    {errors.category_name.message}
-                  </span>
-                )}
-              </div>
+              <CategoryOptions
+                data={data}
+                isLoading={isLoading}
+                isError={isError}
+                setValue={setValue}
+              />
             </div>
 
             <div>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-6 font-serif flex justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+                className="mt-6 font-serif flex justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm hover:bg-color-primary  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
                 {isSubmitting ? <SpinnerMini /> : "Create"}
               </button>
