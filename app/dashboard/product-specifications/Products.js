@@ -11,6 +11,7 @@ const Products = ({
   products,
   compareList,
   toggleCompare,
+  setValue
 }) => {
   return (
     <div>
@@ -48,6 +49,7 @@ const Products = ({
               isCompared={compareList.some((p) => p.id === product.id)}
               toggleCompare={() => toggleCompare(product)}
               navigateTo={"dashboard/product-specifications"}
+              setValue={setValue}
             />
           ))}
       </div>

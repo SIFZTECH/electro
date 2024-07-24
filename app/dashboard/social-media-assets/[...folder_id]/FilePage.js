@@ -24,7 +24,7 @@ import { CreateNewMediaFile } from "@/app/_services/apiMedia";
 import Link from "next/link";
 import CreateNewSubFolder from "./CreateNewSubFolder";
 import BreadcrumbN from "../../dealer-resources/[...folder_id]/BreadcrumbN";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 // Utility functions to check file types
 const isImage = (file) => {
@@ -52,6 +52,7 @@ const isSpreadsheet = (file) => {
 };
 
 const FolderPage = ({ folder_id }) => {
+  const router = useRouter();
   const pathName = usePathname();
   const { data, isLoading, isError, error } = useSocialMediaAsset(folder_id);
 
@@ -66,7 +67,7 @@ const FolderPage = ({ folder_id }) => {
       <div className="flex justify-between flex-wrap">
         <BreadcrumbN folderPath={pathName} />
         {!isLoading && !isError && data?.data && isAdmin && (
-          <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-8">
+          <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">
             <CreateNewSubFolder
               parent_folder_id={folder_id}
               folderData={data?.data}
@@ -83,6 +84,13 @@ const FolderPage = ({ folder_id }) => {
         )}
       </div>
 
+      <button
+        onClick={() => router.back(-1)}
+        className="btn-primary bg-color-primary_shade-4 text-color-primary mb-3"
+      >
+        Go Back
+      </button>
+
       <h1 className="font-serif text-2xl mb-6 text-color-primary font-semibold">
         {data?.data?.folder_name}
       </h1>
@@ -94,10 +102,6 @@ const FolderPage = ({ folder_id }) => {
         <div className="flex items-start flex-col gap-10">
           {data?.data?.child_folders.length > 0 && (
             <div className="flex flex-col mt-3">
-              <h1 className="font-serif text-xl mb-3 font-semibold">
-                Sub-Folders
-              </h1>
-
               <div className="flex gap-8 flex-wrap">
                 {data?.data?.child_folders?.map((item) => (
                   <Link
@@ -125,7 +129,6 @@ const FolderPage = ({ folder_id }) => {
             </div>
           ) : (
             <div className="flex gap-2 flex-col mt-3">
-              <h1 className="font-serif text-xl mb-3 font-semibold">Files</h1>
               <div className="flex gap-8 flex-wrap">
                 {data?.data?.files?.map((file, i) => (
                   <Dialog key={i + 1}>

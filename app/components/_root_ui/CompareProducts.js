@@ -4,6 +4,7 @@ import NotFoundData from "../ui/NotFoundData";
 import { CiSquareMinus } from "react-icons/ci";
 import { MdLibraryAdd } from "react-icons/md";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
+import Link from "next/link";
 
 const CompareProducts = ({ compareList, toggleCompare }) => {
   if (compareList.length === 0) {
@@ -33,18 +34,23 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
                 objectFit="contain"
               />
             </div>
-            <button
-              className="flex justify-between items-center gap-3 mb-2 text-start"
-              onClick={() => toggleCompare(product)}
+            <Link
+              href={`product-specifications/${product.slug}`}
+              className="flex justify-between items-center gap-3 mb-2 text-start hover:underline"
             >
-              <span className="font-semibold mt-2 font-serif line-clamp-2">
+              <span className="font-semibold mt-2 font-serif">
                 {product.name}
               </span>
-              <span className="icon-heart border border-gray-200 p-1 bg-gray-100">
-                <MdLibraryAdd className="fill-color-primary" size="18" />
-              </span>
+            </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                toggleCompare(product);
+              }}
+              className={`flex justify-center items-center btn-primary bg-[#f1f3f5] text-color-primary py-2`}
+            >
+              <span>Remove</span>
             </button>
-            <div className="line-clamp-3">{product.introduction}</div>
           </div>
         ))}
       </div>
