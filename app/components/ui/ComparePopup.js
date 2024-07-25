@@ -22,8 +22,8 @@ const ComparePopup = ({ productName, isCompared, toggleCompare, setValue }) => {
           <MdLibraryAdd size="18" />
         </span>
       </DialogTrigger>
-      <DialogContent className="space-y-5">
-        <h1 className="text-lg font-medium font-serif">
+      <DialogContent>
+        <h1 className="text-lg font-medium font-serif mb-5">
           You have added{" "}
           <strong className="text-color-primary">{productName}</strong> to your
           product comparison!
@@ -34,7 +34,7 @@ const ComparePopup = ({ productName, isCompared, toggleCompare, setValue }) => {
               setOpen((open) => !open);
               setValue("compare-bikes");
             }}
-            className="btn-primary text-xl px-4"
+            className="btn-primary text-lg px-4"
           >
             Compare Now
           </button>

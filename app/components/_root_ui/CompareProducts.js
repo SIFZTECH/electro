@@ -42,15 +42,17 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
                 {product.name}
               </span>
             </Link>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                toggleCompare(product);
-              }}
-              className={`flex justify-center items-center btn-primary bg-[#f1f3f5] text-color-primary py-2`}
-            >
-              <span>Remove</span>
-            </button>
+            <div className="flex-1 flex justify-start items-end">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleCompare(product);
+                }}
+                className={`btn-primary bg-[#f1f3f5] text-color-primary py-2`}
+              >
+                <span>Remove</span>
+              </button>
+            </div>
           </div>
         ))}
       </div>

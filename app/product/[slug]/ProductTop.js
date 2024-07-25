@@ -101,13 +101,6 @@ const ProductTop = ({ product }) => {
           </div>
         )}
 
-        <div className="flex flex-col justify-start items-start">
-          <span className="font-serif font-medium mb-1">Model Name</span>
-          <button>
-            <span className="btn-primary"> {product?.model_name}</span>
-          </button>
-        </div>
-
         <div className="flex flex-col items-start gap-2">
           {filteredVariants.map((variant) => {
             return (

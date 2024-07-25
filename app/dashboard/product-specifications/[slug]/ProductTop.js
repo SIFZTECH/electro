@@ -81,7 +81,6 @@ const ProductTop = ({ product }) => {
         {sizeValues.length > 0 && (
           <div className="product__sizes">
             <h3 className="font-serif mb-2">Sizes</h3>
-
             <ToggleGroup
               type="single"
               className="gap-1"
@@ -101,13 +100,6 @@ const ProductTop = ({ product }) => {
             </ToggleGroup>
           </div>
         )}
-
-        <div className="flex flex-col justify-start items-start">
-          <span className="font-serif font-medium mb-1">Model Name</span>
-          <button>
-            <span className="btn-primary"> {product?.model_name}</span>
-          </button>
-        </div>
 
         <span className="badge xl:bg-color-primary text-white rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px] line-clamp-1"></span>
         <div className="flex flex-col items-start gap-2">
