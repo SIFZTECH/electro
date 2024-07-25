@@ -54,11 +54,12 @@ const ProductImage = ({ images, product_name }) => {
                     <div className="loader"></div>
                   </div>
                 )}
+
                 <Magnifier
                   src={imgPath}
                   alt={`Image of ${product_name}`}
-                  width={550}
-                  height={550}
+                  width={550} // Adjust the width of the magnifier container
+                  height={550} // Adjust the height of the magnifier container
                 />
               </div>
             </TabsContent>
