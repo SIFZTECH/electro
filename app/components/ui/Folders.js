@@ -6,7 +6,6 @@ const Folders = ({ data, page }) => {
     <div>
       <div className="folders grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-5 gap-4 flex-wrap mt-12">
         {data.map((item) => {
-          console.log(item);
           return (
             <Link
               href={`/dashboard/${page}/${item.id}`}
