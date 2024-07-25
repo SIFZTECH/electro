@@ -65,7 +65,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex justify-between flex-wrap">
-        <BreadcrumbN folderPath={pathName} data={data} />
+        <BreadcrumbN folderPath={pathName} />
 
         {!isLoading && !isError && data?.data && isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">

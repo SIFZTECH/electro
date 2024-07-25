@@ -1,12 +1,16 @@
 import Image from "next/image";
 import ProductSpecifications from "./ProductSpecifications";
 import NotFoundData from "../ui/NotFoundData";
-import { CiSquareMinus } from "react-icons/ci";
-import { MdLibraryAdd } from "react-icons/md";
+
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const CompareProducts = ({ compareList, toggleCompare }) => {
+  const pathname = usePathname();
+
+  console.log(pathname);
+
   if (compareList.length === 0) {
     return <NotFoundData message="There are no products in compare!" />;
   }
@@ -35,7 +39,11 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
               />
             </div>
             <Link
-              href={`product-specifications/${product.slug}`}
+              href={
+                pathname.startsWith("/dashboard")
+                  ? `${pathname}/${product.slug}`
+                  : `/product/${product.slug}`
+              }
               className="flex justify-between items-center gap-3 mb-2 text-start hover:underline"
             >
               <span className="font-semibold mt-2 font-serif">
