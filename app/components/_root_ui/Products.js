@@ -30,12 +30,11 @@ const Products = ({
         {!isLoading && products?.data.data.length === 0 && (
           <NotFoundData message="There is no products!" />
         )}
-        {isLoading && !isError && !error && products && (
-          <SkeletonProductCards />
-        )}
+        {isLoading && !isError && !error && <SkeletonProductCards />}
         {!isLoading &&
           !isError &&
           !error &&
+          products &&
           products?.data?.data?.map((product) => (
             <Product
               key={product.id}
