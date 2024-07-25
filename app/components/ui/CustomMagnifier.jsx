@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 
 const imageLoader = ({ src, width, quality }) => {
@@ -12,6 +12,19 @@ const Magnifier = ({ src, alt, width, height }) => {
   const lensRef = useRef(null);
   const [largeImageSize, setLargeImageSize] = useState({ width: 0, height: 0 });
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (largeImageRef.current) {
+        const { naturalWidth, naturalHeight } = largeImageRef.current;
+        setLargeImageSize({ width: naturalWidth, height: naturalHeight });
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [src]);
+
   const handleMouseMove = (e) => {
     const { offsetX, offsetY, target } = e.nativeEvent;
     const { width: imgWidth, height: imgHeight } = target;
@@ -21,24 +34,20 @@ const Magnifier = ({ src, alt, width, height }) => {
 
     if (!largeImg || !largeImageContainer || !lens) return;
 
-    // Calculate the position and scale of the large image
     const ratioX = largeImageSize.width / imgWidth;
     const ratioY = largeImageSize.height / imgHeight;
     const lensSize = lens.offsetWidth;
     const xPercent = offsetX / imgWidth;
     const yPercent = offsetY / imgHeight;
 
-    // Move the large image to show the magnified area
     const translateX = -(offsetX * ratioX - lensSize / 2);
     const translateY = -(offsetY * ratioY - lensSize / 2);
 
     largeImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(2)`;
 
-    // Position the lens
     let lensX = offsetX - lensSize / 2;
     let lensY = offsetY - lensSize / 2;
 
-    // Ensure the lens stays within the image boundaries
     if (lensX < 0) lensX = 0;
     if (lensY < 0) lensY = 0;
     if (lensX + lensSize > imgWidth) lensX = imgWidth - lensSize;
@@ -77,6 +86,7 @@ const Magnifier = ({ src, alt, width, height }) => {
         src={src}
         alt={alt}
         layout="fill"
+        objectFit="cover"
         className="magnifier-img"
         onLoadingComplete={({ naturalWidth, naturalHeight }) => {
           setLargeImageSize({ width: naturalWidth, height: naturalHeight });
@@ -102,7 +112,7 @@ const Magnifier = ({ src, alt, width, height }) => {
           layout="fill"
           className="magnifier-img large"
           ref={largeImageRef}
-          style={{ transform: "scale(2)" }}
+          style={{ transform: "scale(2)", pointerEvents: "none" }}
         />
       </div>
       <div

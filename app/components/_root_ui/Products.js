@@ -15,7 +15,9 @@ const Products = ({
 }) => {
   return (
     <div>
-      <SearchProduct />
+      <div className="hidden md:block">
+        <SearchProduct />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cold-2 xl:grid-cols-4 2xl:grid-cols-5 gap-8 pt-8">
         {!isLoading && isError && error && (

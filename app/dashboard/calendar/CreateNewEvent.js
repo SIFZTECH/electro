@@ -167,7 +167,7 @@ const CreateNewEvent = ({ date, setOpen }) => {
           >
             {!isLoading &&
               data?.data?.rolesWithPermissions
-                .filter((role) => role.id !== 1)
+                .filter((role) => role.id !== 3)
                 .map((role) => (
                   <option key={role.name} value={role.name}>
                     {role.name}
@@ -182,7 +182,7 @@ const CreateNewEvent = ({ date, setOpen }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-6 font-serif flex justify-center rounded-md bg-color-primary text-white px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
+          className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm hover:bg-color-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
         >
           {isSubmitting ? <SpinnerMini /> : "Create Event"}
         </button>

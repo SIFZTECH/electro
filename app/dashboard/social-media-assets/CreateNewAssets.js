@@ -112,23 +112,16 @@ const CreateNewAssets = () => {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium leading-6 text-gray-900 required-field">
+              <label className="block text-sm font-medium leading-6 text-gray-900">
                 End Date
               </label>
               <div className="mt-2">
                 <input
-                  {...register("end_date", {
-                    required: "This filed is required",
-                  })}
+                  {...register("end_date")}
                   disabled={isSubmitting}
                   type="date"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.end_date && (
-                  <span className="text-red-500 text-sm">
-                    {errors.end_date.message}
-                  </span>
-                )}
               </div>
             </div>
             {!checkedAnyoneAccessBox && <SelectUser control={control} />}

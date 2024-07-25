@@ -16,39 +16,79 @@ const Filter = ({
   handleCheckboxChange,
 }) => {
   return (
-    <Accordion type="single" collapsible defaultValue="category">
-      <AccordionItem value="category">
-        <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
-          By {title}
-        </AccordionTrigger>
-        <AccordionContent>
-          <div className="border-b border-grey-0 px-3 pb-3">
-            {isLoading && !isError ? (
-              <SkeletonFiler />
-            ) : (
-              data?.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex gap-2 items-center cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    id={item.name}
-                    name={item.name}
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => handleCheckboxChange(item.id)}
-                    className="cursor-pointer"
-                  />
-                  <label className="cursor-pointer" htmlFor={item.name}>
-                    {item.name}
-                  </label>
-                </div>
-              ))
-            )}
-          </div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <>
+      <Accordion
+        type="single"
+        className="hidden md:block"
+        collapsible
+        defaultValue="category"
+      >
+        <AccordionItem value="category">
+          <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
+            By {title}
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="border-b border-grey-0 px-3 pb-3">
+              {isLoading && !isError ? (
+                <SkeletonFiler />
+              ) : (
+                data?.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex gap-2 items-center cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      id={item.name}
+                      name={item.name}
+                      checked={selectedItems.includes(item.id)}
+                      onChange={() => handleCheckboxChange(item.id)}
+                      className="cursor-pointer"
+                    />
+                    <label className="cursor-pointer" htmlFor={item.name}>
+                      {item.name}
+                    </label>
+                  </div>
+                ))
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      <Accordion type="single" className="md:hidden" collapsible>
+        <AccordionItem value="category">
+          <AccordionTrigger className="font-bold mb-2 font-serif px-3 mt-6">
+            By {title}
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="border-b border-grey-0 px-3 pb-3">
+              {isLoading && !isError ? (
+                <SkeletonFiler />
+              ) : (
+                data?.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex gap-2 items-center cursor-pointer"
+                  >
+                    <input
+                      type="checkbox"
+                      id={item.name}
+                      name={item.name}
+                      checked={selectedItems.includes(item.id)}
+                      onChange={() => handleCheckboxChange(item.id)}
+                      className="cursor-pointer"
+                    />
+                    <label className="cursor-pointer" htmlFor={item.name}>
+                      {item.name}
+                    </label>
+                  </div>
+                ))
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </>
   );
 };
 
