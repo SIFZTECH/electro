@@ -65,7 +65,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex justify-between flex-wrap">
-        <BreadcrumbN folderPath={pathName} />
+        <BreadcrumbN folderPath={pathName} data={data} />
 
         {!isLoading && !isError && data?.data && isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">
@@ -92,14 +92,19 @@ const FolderPage = ({ folder_id }) => {
         Go Back
       </button>
 
-      <h1 className="font-serif text-2xl mb-6 text-color-primary font-semibold">
+      <h1 className="font-serif text-2xl mb-6 font-semibold bg-slate-900 text-white text-center py-3">
         {data?.data?.folder_name}
       </h1>
 
       {!isLoading && isError && error && (
         <NotFoundData message="There is no files with that ID" />
       )}
-      {!isLoading && !isError && !error && data && (
+      {!isLoading &&
+      !isError &&
+      !error &&
+      data &&
+      (data?.data?.files?.length > 0 ||
+        data?.data?.child_folders?.length > 0) ? (
         <div className="flex items-start flex-col gap-10">
           {data?.data?.child_folders.length > 0 && (
             <div className="flex flex-col mt-3">
@@ -267,6 +272,8 @@ const FolderPage = ({ folder_id }) => {
             </div>
           </div>
         </div>
+      ) : (
+        <NotFoundData message="There is files belongs to that folder!" />
       )}
     </div>
   );

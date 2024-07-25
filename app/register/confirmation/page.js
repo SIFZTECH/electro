@@ -1,6 +1,7 @@
 "use client";
 
 import { resendEmail } from "@/app/_services/apiAuth";
+import Logo from "@/app/components/_root_ui/Logo";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -34,7 +35,7 @@ const Confirmation = () => {
     <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
       <div className="sm:w-[34rem] sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-          <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
+          <Logo />
           <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
             Verify your Email address
           </h2>

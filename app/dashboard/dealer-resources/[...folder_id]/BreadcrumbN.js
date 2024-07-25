@@ -9,7 +9,7 @@ import {
 } from "@/app/components/ui/breadcrumb";
 import React from "react";
 
-const BreadcrumbN = ({ folderPath }) => {
+const BreadcrumbN = ({ folderPath, data }) => {
   // Split the path and filter out empty strings
   const pathSegments = folderPath.split("/").filter((segment) => segment);
 

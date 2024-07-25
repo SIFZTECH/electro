@@ -1,15 +1,10 @@
 "use client";
-import {
-  useProducts,
-  useProductsForPublic,
-} from "@/app/_features/products/useProducts";
+
 import FilterByProduct from "./FilterByProduct";
 import Products from "./Products";
-import Spinner from "@/app/components/ui/Spinner";
-import NotFoundData from "@/app/components/ui/NotFoundData";
 import { PRODUCT_PAGE_SIZE } from "@/app/lib/utils";
 import PaginationUI from "@/app/components/ui/PaginationUI";
-import SearchProduct from "./SearchProduct";
+import PaginationForProducts from "@/app/components/ui/PaginationForProducts";
 
 const ProductsPage = ({
   products,
@@ -38,7 +33,7 @@ const ProductsPage = ({
             setValue={setValue}
           />
         </div>
-        <PaginationUI
+        <PaginationForProducts
           data={products?.data}
           page={+page}
           page_size={PRODUCT_PAGE_SIZE}

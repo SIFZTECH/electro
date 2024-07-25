@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "../../components/ui/Logo";
+import Logo from "@/app/components/_root_ui/Logo";
 import { useForm } from "react-hook-form";
 import SpinnerMini from "../../components/ui/SpinnerMini";
 import { useRouter, useSearchParams } from "next/navigation";

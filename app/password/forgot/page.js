@@ -1,13 +1,12 @@
 "use client";
 
-import Logo from "@/app/components/ui/Logo";
 import { useForm } from "react-hook-form";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import axios from "axios";
 import { BASE_URL } from "@/app/lib/utils";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import Logo from "@/app/components/_root_ui/Logo";
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -42,7 +41,7 @@ export default function ForgotPassword() {
       <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:w-[34rem] sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-            <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
+            <Logo />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
               Forgot your password
             </h2>
