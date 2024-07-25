@@ -86,6 +86,7 @@ export async function CreateNewResource(formData) {
 
   if (!token) return null;
 
+  console.log(formData);
   const { data } = await axios(`${BASE_URL}/create-folder`, {
     method: "post",
     headers: {

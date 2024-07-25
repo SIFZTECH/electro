@@ -13,9 +13,12 @@ import { CreateNewResource } from "@/app/_services/apiResources";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import moment from "moment";
 import SelectUser from "../social-media-assets/SelectUser";
+import { useAllUsers } from "@/app/_features/users/useUsers";
 
 const CreateNewResources = () => {
   const [open, setOpen] = useState();
+  const { data, isLoading, isError } = useAllUsers();
+
   const queryClient = useQueryClient();
 
   const {
@@ -35,7 +38,9 @@ const CreateNewResources = () => {
   async function onSubmit(formData) {
     // const formattedUsers = access_users.map((user) => Number(user.value));
     const start_date = moment(formData.start_date).format("MM/DD/YYYY");
-    const end_date = moment(formData.end_date).format("MM/DD/YYYY");
+    const end_date = formData.end_date
+      ? moment(formData.end_date).format("MM/DD/YYYY")
+      : null;
 
     try {
       const res = await CreateNewResource({
@@ -82,6 +87,7 @@ const CreateNewResources = () => {
                     required: "This filed is required",
                   })}
                   disabled={isSubmitting}
+                  placeholder="Enter Folder Name"
                   type="text"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
@@ -147,7 +153,7 @@ const CreateNewResources = () => {
             <div>
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoading}
                 className="mt-6 font-serif flex justify-center rounded-md bg-color-primary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-color-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-color-primary"
               >
                 {isSubmitting ? <SpinnerMini /> : "Create"}
