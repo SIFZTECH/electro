@@ -27,34 +27,16 @@ import BreadcrumbN from "./BreadcrumbN";
 import { usePathname, useRouter } from "next/navigation";
 
 // Utility functions to check file types
-const isImage = (file) => {
-  return file.match(/\.(jpeg|jpg|gif|png|webp)$/);
-};
-
-const isPDF = (file) => {
-  return file.match(/\.pdf$/);
-};
-
-const isText = (file) => {
-  return file.match(/\.(txt|doc|docx)$/);
-};
-
-const isVideo = (file) => {
-  return file.match(/\.(mp4|mkv|webm|avi)$/);
-};
-
-const isAudio = (file) => {
-  return file.match(/\.(mp3|wav|ogg)$/);
-};
-
-const isSpreadsheet = (file) => {
-  return file.match(/\.(xls|xlsx|csv)$/);
-};
+const isImage = (file) => file.match(/\.(jpeg|jpg|gif|png|webp)$/);
+const isPDF = (file) => file.match(/\.pdf$/);
+const isText = (file) => file.match(/\.(txt|doc|docx)$/);
+const isVideo = (file) => file.match(/\.(mp4|mkv|webm|avi)$/);
+const isAudio = (file) => file.match(/\.(mp3|wav|ogg)$/);
+const isSpreadsheet = (file) => file.match(/\.(xls|xlsx|csv)$/);
 
 const FolderPage = ({ folder_id }) => {
   const pathName = usePathname();
   const router = useRouter();
-
   const { data, isLoading, isError, error } = useResource(Number(folder_id));
   const { isAdmin } = useUser();
 
@@ -74,7 +56,6 @@ const FolderPage = ({ folder_id }) => {
               folderData={data?.data}
             />
             <UpdateFolder folder_id={folder_id} folderData={data?.data} />
-
             <UploadFileModal
               folder_id={folder_id}
               sendTo={CreateNewFile}
@@ -99,6 +80,7 @@ const FolderPage = ({ folder_id }) => {
       {!isLoading && isError && error && (
         <NotFoundData message="There is no files with that ID" />
       )}
+
       {!isLoading &&
       !isError &&
       !error &&
@@ -119,7 +101,7 @@ const FolderPage = ({ folder_id }) => {
                       src="/icons8-folder.svg"
                       height={100}
                       width={100}
-                      alt="Icon of"
+                      alt="Folder Icon"
                     />
                     <span className="text-sm font-medium">
                       {item.folder_name}
@@ -131,11 +113,11 @@ const FolderPage = ({ folder_id }) => {
           )}
 
           <div className="flex gap-2 flex-col mt-3">
-            <div className="flex gap-8 flex-wrap">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-8">
               {data?.data?.files?.map((file, i) => (
                 <Dialog key={i + 1}>
                   <DialogTrigger>
-                    <div className="border border-gray-200 shadow-sm flex items-center justify-center cursor-pointer h-full">
+                    <div className="border border-gray-200 shadow-sm flex flex-col items-center justify-center cursor-pointer h-full p-2">
                       {isImage(file) && (
                         <Image
                           src={`${BASE_URL_IMAGE}${file}`}
@@ -148,13 +130,11 @@ const FolderPage = ({ folder_id }) => {
                       {isPDF(file) && (
                         <div className="p-2 flex flex-col gap-2 items-center">
                           <VscFilePdf size={100} />
-                          <p className="font-serif">PDF Document</p>
                         </div>
                       )}
                       {isText(file) && (
                         <div className="p-2 flex flex-col gap-2 items-center">
                           <GrDocumentText size={100} className="file-preview" />
-                          <p className="font-serif">Text Document</p>
                         </div>
                       )}
                       {isVideo(file) && (
@@ -166,7 +146,6 @@ const FolderPage = ({ folder_id }) => {
                             />
                             Your browser does not support the video tag.
                           </video>
-                          <p className="font-serif">Video File</p>
                         </div>
                       )}
                       {isAudio(file) && (
@@ -178,7 +157,6 @@ const FolderPage = ({ folder_id }) => {
                             />
                             Your browser does not support the audio element.
                           </audio>
-                          <p className="font-serif">Audio File</p>
                         </div>
                       )}
                       {isSpreadsheet(file) && (
@@ -194,9 +172,11 @@ const FolderPage = ({ folder_id }) => {
                         !isSpreadsheet(file) && (
                           <div className="p-2 flex flex-col gap-2 items-center">
                             <AiFillFileUnknown size={100} />
-                            <p className="font-serif">Unknown File Type</p>
                           </div>
                         )}
+                      <p className="text-center text-sm font-medium mt-2 break-words text-ellipsis w-full">
+                        {file.split("/").at(-1)}
+                      </p>
                     </div>
                   </DialogTrigger>
                   <DialogContent className="max-w-2xl pt-9">
@@ -273,7 +253,7 @@ const FolderPage = ({ folder_id }) => {
           </div>
         </div>
       ) : (
-        <NotFoundData message="There is files belongs to that folder!" />
+        <NotFoundData message="There are no files in this folder!" />
       )}
     </div>
   );

@@ -14,7 +14,7 @@ const BreadcrumbN = ({ folderPath, data }) => {
   const pathSegments = folderPath.split("/").filter((segment) => segment);
 
   function findObjectById(obj, id) {
-    if (obj.id === id) {
+    if (obj?.id === id) {
       return obj;
     }
 
