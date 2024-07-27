@@ -32,9 +32,15 @@ const RootPage = () => {
     query
   );
 
-  const initialCompareList =
-    JSON.parse(localStorage.getItem("compareList")) || [];
-  const [compareList, setCompareList] = useState(initialCompareList);
+  const [compareList, setCompareList] = useState([]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const initialCompareList =
+        JSON.parse(localStorage.getItem("compareList")) || [];
+      setCompareList(initialCompareList);
+    }
+  }, []);
 
   const toggleCompare = (product) => {
     setCompareList((prevList) => {
