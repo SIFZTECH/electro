@@ -267,7 +267,7 @@ export default function MyMap() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary text-white   hover:bg-color-primary text-white focus:ring-4 focus:outline-none focus:ring-color-primary_shade-3"
+              className="inline-flex items-center py-2.5 px-6 ms-2 text-sm font-serif bg-color-primary hover:bg-color-primary text-white focus:ring-4 focus:outline-none focus:ring-color-primary_shade-3"
             >
               <svg
                 className="w-4 h-4 me-2"

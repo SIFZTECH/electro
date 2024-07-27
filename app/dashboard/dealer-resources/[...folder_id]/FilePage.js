@@ -25,6 +25,8 @@ import { CreateNewFile } from "@/app/_services/apiResources";
 import CreateNewSubFolder from "./CreateNewSubFolder";
 import BreadcrumbN from "./BreadcrumbN";
 import { usePathname, useRouter } from "next/navigation";
+import Search from "./Search";
+import { useEffect, useState } from "react";
 
 // Utility functions to check file types
 const isImage = (file) => file.match(/\.(jpeg|jpg|gif|png|webp)$/);
@@ -35,10 +37,18 @@ const isAudio = (file) => file.match(/\.(mp3|wav|ogg)$/);
 const isSpreadsheet = (file) => file.match(/\.(xls|xlsx|csv)$/);
 
 const FolderPage = ({ folder_id }) => {
+  const [folderData, setFolderData] = useState([]);
+
   const pathName = usePathname();
   const router = useRouter();
   const { data, isLoading, isError, error } = useResource(Number(folder_id));
   const { isAdmin } = useUser();
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      setFolderData(data.data);
+    }
+  }, [data, isLoading]);
 
   if (isLoading) {
     return <Spinner />;
@@ -68,15 +78,15 @@ const FolderPage = ({ folder_id }) => {
 
       <button
         onClick={() => router.back(-1)}
-        className="btn-primary bg-color-primary_shade-4 text-color-primary mb-3"
+        className="btn-primary bg-color-primary_shade-4 text-color-primary mb-5"
       >
         Go Back
       </button>
 
-      <h1 className="font-serif text-2xl mb-6 font-semibold bg-slate-900 text-white text-center py-3">
+      {/* <h1 className="font-serif text-2xl mb-6 font-semibold bg-slate-900 text-white text-center py-3">
         {data?.data?.folder_name}
-      </h1>
-
+      </h1> */}
+      <Search folderData={folderData} setFolderData={setFolderData} />
       {!isLoading && isError && error && (
         <NotFoundData message="There is no files with that ID" />
       )}
@@ -85,13 +95,13 @@ const FolderPage = ({ folder_id }) => {
       !isError &&
       !error &&
       data &&
-      (data?.data?.files?.length > 0 ||
-        data?.data?.child_folders?.length > 0) ? (
+      (folderData?.files?.length > 0 ||
+        folderData?.child_folders?.length > 0) ? (
         <div className="flex items-start flex-col gap-10">
           {data?.data?.child_folders.length > 0 && (
             <div className="flex flex-col mt-3">
               <div className="flex gap-8 flex-wrap">
-                {data?.data?.child_folders?.map((item) => (
+                {folderData?.child_folders?.map((item) => (
                   <Link
                     href={`${pathName}/${item.id}`}
                     key={item.id}
@@ -114,7 +124,7 @@ const FolderPage = ({ folder_id }) => {
 
           <div className="flex gap-2 flex-col mt-3">
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-8">
-              {data?.data?.files?.map((file, i) => (
+              {folderData?.files?.map((file, i) => (
                 <Dialog key={i + 1}>
                   <DialogTrigger>
                     <div className="border border-gray-200 shadow-sm flex flex-col items-center justify-center cursor-pointer h-full p-2">
