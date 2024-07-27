@@ -3,7 +3,13 @@
 import axios from "axios";
 import { BASE_URL, PRODUCT_PAGE_SIZE } from "../lib/utils";
 
-export async function getAllProducts({ categoryId, brandId, page, query }) {
+export async function getAllProducts({
+  categoryId,
+  brandId,
+  page,
+  query,
+  status,
+}) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
@@ -23,6 +29,10 @@ export async function getAllProducts({ categoryId, brandId, page, query }) {
 
   if (query) {
     url = `${BASE_URL}/search-products?search=${query}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (status !== "all") {
+    url = `${BASE_URL}/search-products?status=${status}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
   const { data } = await axios.get(url, {

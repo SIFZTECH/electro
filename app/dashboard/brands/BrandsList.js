@@ -14,7 +14,17 @@ const BrandsList = ({ index, brand }) => {
     <TableRow>
       <TableCell data-label="SN">{index + 1}</TableCell>
       <TableCell data-label="Brand Name">{brand.name}</TableCell>
-      <TableCell>-</TableCell>
+      <TableCell>
+        {brand?.status === "Active" ? (
+          <span className="bg-green-400 text-white text-sm px-2 py-1 rounded-sm">
+            {brand?.status}
+          </span>
+        ) : (
+          <span className="bg-[#ced4da] text-color-primary text-sm px-2 py-1 rounded-sm">
+            {brand?.status}
+          </span>
+        )}
+      </TableCell>
       <TableCell data-label="Actions">
         <div className="flex gap-1 flex-wrap justify-end xl:justify-normal">
           {isUpdateBrandPermission && <EditBrand brand={brand} />}

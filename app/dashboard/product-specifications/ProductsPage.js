@@ -15,6 +15,8 @@ const ProductsPage = ({
   compareList,
   toggleCompare,
   setValue,
+  status,
+  setStatus,
 }) => {
   return (
     <>
@@ -31,6 +33,8 @@ const ProductsPage = ({
             compareList={compareList}
             toggleCompare={toggleCompare}
             setValue={setValue}
+            status={status}
+            setStatus={setStatus}
           />
         </div>
         <PaginationForProducts

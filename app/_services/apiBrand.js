@@ -104,7 +104,7 @@ export async function deleteBrand(id) {
   return data;
 }
 
-export async function createBrand(name) {
+export async function createBrand(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
@@ -115,7 +115,7 @@ export async function createBrand(name) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { name },
+    data: formData,
   });
 
   return data;

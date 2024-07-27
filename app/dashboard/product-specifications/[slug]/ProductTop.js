@@ -47,6 +47,62 @@ const ProductTop = ({ product }) => {
     <div className="flex gap-8 flex-col lg:flex-row">
       <ProductImage images={product?.images} product_name={product?.name} />
       <div className="product__summary flex flex-col gap-8">
+        {product?.status === "Active" && (
+          <p className="bg-green-500 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Inactive" && (
+          <p className="bg-gray-400 text-gray-800 text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Pending" && (
+          <p className="bg-yellow-400 text-yellow-800 text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Out of Stock" && (
+          <p className="bg-red-500 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Discontinued" && (
+          <p className="bg-gray-600 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Draft" && (
+          <p className="bg-blue-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Pre-order" && (
+          <p className="bg-purple-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Backorder" && (
+          <p className="bg-yellow-500 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "On Hold" && (
+          <p className="bg-orange-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Featured" && (
+          <p className="bg-pink-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Custom" && (
+          <p className="bg-teal-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+
         <div className="product__name flex gap-3 flex-col xl:flex-row xl:items-center ">
           <span className="font-serif font-semibold text-xl">
             {product.name}

@@ -12,9 +12,9 @@ const CategoriesList = ({ index, category, subCategories }) => {
 
   return (
     <TableRow>
-      <TableCell data-label="SN">{index}</TableCell>
-      <TableCell data-label="Category Name">{category.name}</TableCell>
-      <TableCell data-label="Sub-Categories">
+      <TableCell>{index}</TableCell>
+      <TableCell>{category.name}</TableCell>
+      <TableCell>
         {subCategories.map((item) => (
           <button
             key={item.id}
@@ -24,7 +24,18 @@ const CategoriesList = ({ index, category, subCategories }) => {
           </button>
         ))}
       </TableCell>
-      <TableCell data-label="Actions">
+      <TableCell>
+        {category?.status === "Active" ? (
+          <span className="bg-green-400 text-white text-sm px-2 py-1 rounded-sm">
+            {category?.status}
+          </span>
+        ) : (
+          <span className="bg-[#ced4da] text-color-primary text-sm px-2 py-1 rounded-sm">
+            {category?.status}
+          </span>
+        )}
+      </TableCell>
+      <TableCell>
         <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
           {isCategoryUpdatePermission && <EditCategory category={category} />}
           {isCategoryDeletePermission && <DeleteCategory category={category} />}

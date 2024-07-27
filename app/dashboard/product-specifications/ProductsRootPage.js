@@ -17,6 +17,7 @@ import useCheckPermission from "@/app/_hooks/usePermission";
 
 const RootPage = () => {
   const [value, setValue] = useState("e-bikes");
+  const [status, setStatus] = useState("all");
 
   const params = useSearchParams();
 
@@ -30,7 +31,8 @@ const RootPage = () => {
     categoryId,
     brandId,
     page,
-    query
+    query,
+    status
   );
 
   const initialCompareList =
@@ -104,6 +106,8 @@ const RootPage = () => {
                 compareList={compareList}
                 toggleCompare={toggleCompare}
                 setValue={setValue}
+                status={status}
+                setStatus={setStatus}
               />
             </TabsContent>
             <TabsContent value="compare-bikes">

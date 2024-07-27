@@ -6,15 +6,15 @@ import {
 } from "@/app/_services/apiProducts";
 import { useQuery } from "@tanstack/react-query";
 
-export function useProducts(categoryId, brandId, page, query) {
+export function useProducts(categoryId, brandId, page, query, status) {
   const {
     data: products,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["products", { categoryId, brandId, page, query }],
-    queryFn: () => getAllProducts({ categoryId, brandId, page, query }),
+    queryKey: ["products", { categoryId, brandId, page, query, status }],
+    queryFn: () => getAllProducts({ categoryId, brandId, page, query, status }),
   });
 
   return { products, isError, isLoading, error };
