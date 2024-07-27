@@ -9,6 +9,7 @@ export async function getAllProducts({
   page,
   query,
   status,
+  sort,
 }) {
   const token = localStorage.getItem("access-token");
 
@@ -35,6 +36,13 @@ export async function getAllProducts({
     url = `${BASE_URL}/search-products?status=${status}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
+  if (sort) {
+    const sortBy = sort.split("-")[0];
+    const sortType = sort.split("-")[1];
+
+    url = `${BASE_URL}/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
   const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -49,6 +57,7 @@ export async function getAllProductsForPublic({
   brandId,
   page,
   query,
+  sort,
 }) {
   let url = `${BASE_URL}/public/products`;
 
@@ -65,6 +74,14 @@ export async function getAllProductsForPublic({
 
   if (query) {
     url = `${BASE_URL}/public/search-products?search=${query}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (sort) {
+    console.log(sort);
+    const sortBy = sort.split("-")[0];
+    const sortType = sort.split("-")[1];
+
+    url = `${BASE_URL}/public/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
   const { data } = await axios.get(url);

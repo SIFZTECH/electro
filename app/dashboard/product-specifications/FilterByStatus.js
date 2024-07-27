@@ -10,7 +10,7 @@ const FilterByStatus = ({ status: value, setStatus: setValue }) => {
   return (
     <div className="flex justify-end mt-3 mr-1">
       <Select value={value} onValueChange={(val) => setValue(val)}>
-        <SelectTrigger className="w-[100px] bg-gray-100 h-8 font-semibold">
+        <SelectTrigger className="w-fit bg-gray-100 h-8 font-semibold shadow-md focus:ring-0 focus:ring-offset-0 gap-2">
           <SelectValue placeholder="All" />
         </SelectTrigger>
         <SelectContent>

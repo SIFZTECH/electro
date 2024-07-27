@@ -14,6 +14,8 @@ const ProductsPage = ({
   compareList,
   toggleCompare,
   setValue,
+  sort,
+  setSort,
 }) => {
   return (
     <>
@@ -30,6 +32,8 @@ const ProductsPage = ({
             compareList={compareList}
             toggleCompare={toggleCompare}
             setValue={setValue}
+            sort={sort}
+            setSort={setSort}
           />
         </div>
         <PaginationRoot

@@ -3,6 +3,7 @@ import SkeletonProductCards from "@/app/components/ui/SkeletonProductCards";
 import Product from "./Product";
 import SearchProduct from "./SearchProduct";
 import NotFoundData from "@/app/components/ui/NotFoundData";
+import SortBy from "@/app/dashboard/product-specifications/SortBy";
 
 const Products = ({
   isLoading,
@@ -12,11 +13,17 @@ const Products = ({
   compareList,
   toggleCompare,
   setValue,
+  sort,
+  setSort,
 }) => {
   return (
     <div>
       <div className="hidden md:block">
         <SearchProduct />
+      </div>
+
+      <div className="flex gap-4 items-center justify-end">
+        <SortBy sort={sort} setSort={setSort} />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cold-2 xl:grid-cols-4 2xl:grid-cols-5 gap-8 pt-8">
