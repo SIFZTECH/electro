@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Search = ({ folderData, setFolderData }) => {
+const Search = ({ originalFolderData, setFolderData }) => {
   const params = useSearchParams();
 
   const {
@@ -17,8 +17,22 @@ const Search = ({ folderData, setFolderData }) => {
     },
   });
 
-  const onSubmit = ({ query }) => {
-   
+  const onSubmit = (data) => {
+    const query = data.query.toLowerCase();
+
+    if (query === "") {
+      setFolderData(originalFolderData);
+    }
+    setFolderData((prevData) => ({
+      ...prevData,
+
+      files: prevData.files?.filter((file) =>
+        file.toLowerCase().includes(query)
+      ),
+      child_folders: prevData.child_folders.filter((folder) => {
+        return folder.folder_name.toLowerCase().includes(query);
+      }),
+    }));
   };
 
   return (

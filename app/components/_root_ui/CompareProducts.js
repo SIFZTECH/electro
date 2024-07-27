@@ -9,8 +9,6 @@ import { usePathname } from "next/navigation";
 const CompareProducts = ({ compareList, toggleCompare }) => {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   if (compareList.length === 0) {
     return <NotFoundData message="There are no products in compare!" />;
   }

@@ -37,7 +37,8 @@ const isAudio = (file) => file.match(/\.(mp3|wav|ogg)$/);
 const isSpreadsheet = (file) => file.match(/\.(xls|xlsx|csv)$/);
 
 const FolderPage = ({ folder_id }) => {
-  const [folderData, setFolderData] = useState([]);
+  const [originalFolderData, setOriginalFolderData] = useState(null);
+  const [folderData, setFolderData] = useState(null);
 
   const pathName = usePathname();
   const router = useRouter();
@@ -47,6 +48,7 @@ const FolderPage = ({ folder_id }) => {
   useEffect(() => {
     if (!isLoading && data) {
       setFolderData(data.data);
+      setOriginalFolderData(data.data);
     }
   }, [data, isLoading]);
 
@@ -86,7 +88,10 @@ const FolderPage = ({ folder_id }) => {
       {/* <h1 className="font-serif text-2xl mb-6 font-semibold bg-slate-900 text-white text-center py-3">
         {data?.data?.folder_name}
       </h1> */}
-      <Search folderData={folderData} setFolderData={setFolderData} />
+      <Search
+        originalFolderData={originalFolderData}
+        setFolderData={setFolderData}
+      />
       {!isLoading && isError && error && (
         <NotFoundData message="There is no files with that ID" />
       )}

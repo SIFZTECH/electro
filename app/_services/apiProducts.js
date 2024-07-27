@@ -77,7 +77,6 @@ export async function getAllProductsForPublic({
   }
 
   if (sort) {
-    console.log(sort);
     const sortBy = sort.split("-")[0];
     const sortType = sort.split("-")[1];
 
