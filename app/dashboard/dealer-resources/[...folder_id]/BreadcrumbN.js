@@ -19,6 +19,15 @@ const BreadcrumbN = ({ folderPath }) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink
+            className="text-slate-800 hover:text-color-primary font-medium"
+            href="/dashboard/dealer-resources"
+          >
+            Dealer Resources
+          </BreadcrumbLink>
+          <BreadcrumbSeparator />
+        </BreadcrumbItem>
         {pathSegments.map((segment, index) => {
           if (isNumeric(segment)) {
             return (
