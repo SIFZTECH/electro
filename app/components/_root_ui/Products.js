@@ -4,6 +4,7 @@ import Product from "./Product";
 import SearchProduct from "./SearchProduct";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import SortBy from "@/app/dashboard/product-specifications/SortBy";
+import FilterByBikes from "@/app/dashboard/product-specifications/FilterByBikes";
 
 const Products = ({
   isLoading,
@@ -15,6 +16,8 @@ const Products = ({
   setValue,
   sort,
   setSort,
+  misc13,
+  setMisc13,
 }) => {
   return (
     <div>
@@ -23,6 +26,7 @@ const Products = ({
       </div>
 
       <div className="flex gap-4 items-center justify-end">
+        <FilterByBikes misc13={misc13} setMisc13={setMisc13} />
         <SortBy sort={sort} setSort={setSort} />
       </div>
 

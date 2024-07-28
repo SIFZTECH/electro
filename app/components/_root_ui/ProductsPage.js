@@ -16,6 +16,8 @@ const ProductsPage = ({
   setValue,
   sort,
   setSort,
+  misc13,
+  setMisc13,
 }) => {
   return (
     <>
@@ -34,6 +36,8 @@ const ProductsPage = ({
             setValue={setValue}
             sort={sort}
             setSort={setSort}
+            misc13={misc13}
+            setMisc13={setMisc13}
           />
         </div>
         <PaginationRoot

@@ -10,6 +10,7 @@ export async function getAllProducts({
   query,
   status,
   sort,
+  misc13,
 }) {
   const token = localStorage.getItem("access-token");
 
@@ -37,15 +38,17 @@ export async function getAllProducts({
   }
 
   if (sort) {
-    if (sort === "misc13") {
-      url = `${BASE_URL}/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
-    } else if (sort === "e-bikes") {
-      url = `${BASE_URL}/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
-    } else {
-      const sortBy = sort.split("-")[0];
-      const sortType = sort.split("-")[1];
+    const sortBy = sort.split("-")[0];
+    const sortType = sort.split("-")[1];
 
-      url = `${BASE_URL}/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    url = `${BASE_URL}/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (misc13) {
+    if (misc13 === "e-bikes") {
+      url = `${BASE_URL}/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else if (misc13 === "bikes") {
+      url = `${BASE_URL}/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
     }
   }
 
@@ -64,6 +67,7 @@ export async function getAllProductsForPublic({
   page,
   query,
   sort,
+  misc13,
 }) {
   let url = `${BASE_URL}/public/products`;
 
@@ -83,15 +87,17 @@ export async function getAllProductsForPublic({
   }
 
   if (sort) {
-    if (sort === "misc13") {
-      url = `${BASE_URL}/public/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
-    } else if (sort === "e-bikes") {
-      url = `${BASE_URL}/public/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
-    } else {
-      const sortBy = sort.split("-")[0];
-      const sortType = sort.split("-")[1];
+    const sortBy = sort.split("-")[0];
+    const sortType = sort.split("-")[1];
 
-      url = `${BASE_URL}/public/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    url = `${BASE_URL}/public/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  }
+
+  if (misc13) {
+    if (misc13 === "e-bikes") {
+      url = `${BASE_URL}/public/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else if (misc13 === "bikes") {
+      url = `${BASE_URL}/public/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
     }
   }
 

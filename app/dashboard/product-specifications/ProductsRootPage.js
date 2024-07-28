@@ -19,6 +19,7 @@ const RootPage = () => {
   const [value, setValue] = useState("e-bikes");
   const [status, setStatus] = useState("all");
   const [sort, setSort] = useState("");
+  const [misc13, setMisc13] = useState("");
 
   const params = useSearchParams();
 
@@ -34,7 +35,8 @@ const RootPage = () => {
     page,
     query,
     status,
-    sort
+    sort,
+    misc13
   );
 
   const initialCompareList =
@@ -112,6 +114,8 @@ const RootPage = () => {
                 setStatus={setStatus}
                 sort={sort}
                 setSort={setSort}
+                misc13={misc13}
+                setMisc13={setMisc13}
               />
             </TabsContent>
             <TabsContent value="compare-bikes">
