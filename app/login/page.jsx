@@ -3,7 +3,6 @@
 import { useState } from "react"; // Import useState hook
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import Logo from "../components/ui/Logo";
 import SpinnerMini from "../components/ui/SpinnerMini";
 import Link from "next/link";
 import { login } from "../_services/apiAuth";
@@ -11,6 +10,7 @@ import toast from "react-hot-toast";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
+import Logo from "../components/_root_ui/Logo";
 
 export default function Login() {
   const queryClient = useQueryClient();
@@ -61,7 +61,7 @@ export default function Login() {
       <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:w-[34rem] sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
-            <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
+            <Logo />
             <h2 className="font-serif mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 ">
               Sign in to your account
             </h2>

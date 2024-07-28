@@ -3,6 +3,8 @@ import SkeletonProductCards from "@/app/components/ui/SkeletonProductCards";
 import SearchProduct from "./SearchProduct";
 import NotFoundData from "@/app/components/ui/NotFoundData";
 import Product from "@/app/components/_root_ui/Product";
+import FilterByStatus from "./FilterByStatus";
+import SortBy from "./SortBy";
 
 const Products = ({
   isLoading,
@@ -11,10 +13,21 @@ const Products = ({
   products,
   compareList,
   toggleCompare,
+  setValue,
+  status,
+  setStatus,
+  sort,
+  setSort,
 }) => {
   return (
     <div>
-      <SearchProduct />
+      <div className="hidden md:block">
+        <SearchProduct />
+      </div>
+      <div className="flex gap-4 items-center justify-end">
+        <SortBy sort={sort} setSort={setSort} />
+        <FilterByStatus status={status} setStatus={setStatus} />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cold-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 pt-8">
         {!isLoading && isError && error && (
@@ -48,6 +61,7 @@ const Products = ({
               isCompared={compareList.some((p) => p.id === product.id)}
               toggleCompare={() => toggleCompare(product)}
               navigateTo={"dashboard/product-specifications"}
+              setValue={setValue}
             />
           ))}
       </div>

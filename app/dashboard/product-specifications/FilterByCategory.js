@@ -1,17 +1,8 @@
-import {
-  useCategories,
-  useCategoriesForPublic,
-} from "@/app/_features/categories/useCategory";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/app/components/ui/accordion";
+import { useCategoriesForPublic } from "@/app/_features/categories/useCategory";
+
 import Filter from "@/app/components/ui/Filter";
-import { SkeletonFiler } from "@/app/components/ui/SkeletonFilter";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 const FilterByCategory = ({ selectedCategories, setSelectedCategories }) => {
   const { data, isLoading, isError, error } = useCategoriesForPublic();

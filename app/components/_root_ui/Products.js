@@ -3,6 +3,7 @@ import SkeletonProductCards from "@/app/components/ui/SkeletonProductCards";
 import Product from "./Product";
 import SearchProduct from "./SearchProduct";
 import NotFoundData from "@/app/components/ui/NotFoundData";
+import SortBy from "@/app/dashboard/product-specifications/SortBy";
 
 const Products = ({
   isLoading,
@@ -11,10 +12,19 @@ const Products = ({
   products,
   compareList,
   toggleCompare,
+  setValue,
+  sort,
+  setSort,
 }) => {
   return (
     <div>
-      <SearchProduct />
+      <div className="hidden md:block">
+        <SearchProduct />
+      </div>
+
+      <div className="flex gap-4 items-center justify-end">
+        <SortBy sort={sort} setSort={setSort} />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cold-2 xl:grid-cols-4 2xl:grid-cols-5 gap-8 pt-8">
         {!isLoading && isError && error && (
@@ -27,12 +37,11 @@ const Products = ({
         {!isLoading && products?.data.data.length === 0 && (
           <NotFoundData message="There is no products!" />
         )}
-        {isLoading && !isError && !error && products && (
-          <SkeletonProductCards />
-        )}
+        {isLoading && !isError && !error && <SkeletonProductCards />}
         {!isLoading &&
           !isError &&
           !error &&
+          products &&
           products?.data?.data?.map((product) => (
             <Product
               key={product.id}
@@ -49,6 +58,7 @@ const Products = ({
               summary={product.introduction}
               isCompared={compareList.some((p) => p.id === product.id)}
               toggleCompare={() => toggleCompare(product)}
+              setValue={setValue}
             />
           ))}
       </div>

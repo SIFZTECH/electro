@@ -54,7 +54,8 @@ const DeleteCategory = ({ category }) => {
           <h2 className="font-serif text-xl">Delete Category</h2>
           <div>
             <p className="mt-3">
-              Are you sure you want to delete this cartegory #Name
+              Are you sure you want to delete this cartegory{" "}
+              <strong>({category.name})</strong>
             </p>
             <p className="text-sm text-gray-800 mt-3">
               This will delete your category permanently. You cannot undo this

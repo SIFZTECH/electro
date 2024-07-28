@@ -29,7 +29,7 @@ const UpdateAssetsFolder = ({ folder_id, folderData }) => {
     defaultValues: {
       folder_name: folderData.folder_name || "",
       start_date: folderData.start_date || "",
-      end_date: folderData.end_date || "",
+      end_date: folderData.end_date || null,
 
       access_users: folderData.access_users || [],
 
@@ -57,7 +57,7 @@ const UpdateAssetsFolder = ({ folder_id, folderData }) => {
         access_users,
         access_to_anyone,
         start_date: moment(start_date).format("MM/DD/YYYY"),
-        end_date: moment(end_date).format("MM/DD/YYYY"),
+        end_date: end_date ? moment(end_date).format("MM/DD/YYYY") : null,
       });
 
       if (res) {
@@ -138,18 +138,11 @@ const UpdateAssetsFolder = ({ folder_id, folderData }) => {
               </label>
               <div className="mt-2">
                 <input
-                  {...register("end_date", {
-                    required: "This filed is required",
-                  })}
+                  {...register("end_date")}
                   disabled={isSubmitting}
                   type="date"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.end_date && (
-                  <span className="text-red-500 text-sm">
-                    {errors.end_date.message}
-                  </span>
-                )}
               </div>
             </div>
             {!checkedAnyoneAccessBox && (

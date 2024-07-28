@@ -6,17 +6,17 @@ import {
   PaginationPrevious,
 } from "@/app/components/ui/pagination";
 
-function PaginationRoot({ data, page, page_size }) {
+function PaginationForProducts({ data, page, page_size, navigation }) {
   return (
     <div className="flex flex-col gap-3 items-center justify-center">
       {data?.total > page_size && (
-        <Pagination className="mt-6 flex">
-          <PaginationContent>
+        <Pagination className="mt-6 flex ">
+          <PaginationContent className="flex gap-3 items-center">
             <PaginationItem>
               {1 < page && (
                 <PaginationPrevious
                   className="bg-gray-100 hover:bg-gray-200"
-                  href={`/?page=${page - 1}`}
+                  href={`/dashboard/${navigation}?page=${page - 1}`}
                 />
               )}
             </PaginationItem>
@@ -25,7 +25,7 @@ function PaginationRoot({ data, page, page_size }) {
               {!(page === data?.last_page) && (
                 <PaginationNext
                   className="bg-gray-100 hover:bg-gray-200"
-                  href={`/?page=${page + 1}`}
+                  href={`/dashboard/${navigation}?page=${page + 1}`}
                 />
               )}
             </PaginationItem>
@@ -52,4 +52,4 @@ function PaginationRoot({ data, page, page_size }) {
   );
 }
 
-export default PaginationRoot;
+export default PaginationForProducts;

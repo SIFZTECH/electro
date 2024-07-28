@@ -16,14 +16,13 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/app/components/ui/input-otp";
-import Logo from "@/app/components/ui/Logo";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { verifyOtpForLogin } from "@/app/_services/apiAuth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useTimer } from "@gabrielyotoo/react-use-timer";
 import ResendOtp from "../RecentOtp";
 import { useQueryClient } from "@tanstack/react-query";
+import Logo from "@/app/components/_root_ui/Logo";
 
 function InputOTPForm() {
   const queryClient = useQueryClient();

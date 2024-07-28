@@ -22,14 +22,11 @@ export async function getAllCategoriesForSelect() {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  const { data } = await axios.get(
-    `${BASE_URL}/categories?per_page=500`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const { data } = await axios.get(`${BASE_URL}/categories?per_page=500`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return data.data;
 }
@@ -87,7 +84,7 @@ export async function deleteCategory(id) {
   return data;
 }
 
-export async function createCategory(name) {
+export async function createCategory(formData) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
@@ -97,7 +94,7 @@ export async function createCategory(name) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    data: { name },
+    data: formData,
   });
 
   return data;

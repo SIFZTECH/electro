@@ -69,7 +69,6 @@ const EditWarranty = ({ warranty }) => {
                 {...register("status")}
               >
                 <option value="pending">Pending</option>
-                <option value="active">Active</option>
                 <option value="approve">Approve</option>
                 <option value="decline">Decline</option>
               </select>

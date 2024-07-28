@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import {
   Tabs,
@@ -10,12 +11,14 @@ import ProductsPage from "./ProductsPage";
 import CompareProducts from "@/app/components/_root_ui/CompareProducts";
 import { useProducts } from "@/app/_features/products/useProducts";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCategories from "./ProductCategories";
 import useCheckPermission from "@/app/_hooks/usePermission";
 
 const RootPage = () => {
   const [value, setValue] = useState("e-bikes");
+  const [status, setStatus] = useState("all");
+  const [sort, setSort] = useState("");
 
   const params = useSearchParams();
 
@@ -29,24 +32,36 @@ const RootPage = () => {
     categoryId,
     brandId,
     page,
-    query
+    query,
+    status,
+    sort
   );
 
-  const [compareList, setCompareList] = useState([]);
+  const initialCompareList =
+    JSON.parse(localStorage.getItem("compareList")) || [];
+  const [compareList, setCompareList] = useState(initialCompareList);
 
   const toggleCompare = (product) => {
     setCompareList((prevList) => {
       if (prevList.find((p) => p.id === product.id)) {
         return prevList.filter((p) => p.id !== product.id);
-      } else {
+      } else if (prevList.length < 5) {
         return [...prevList, product];
+      } else {
+        alert("You can only compare up to 5 products.");
+        return prevList;
       }
     });
   };
 
+  // Update local storage whenever compareList changes
+  useEffect(() => {
+    localStorage.setItem("compareList", JSON.stringify(compareList));
+  }, [compareList]);
+
   return (
     <div className="relative w-full min-h-dvh overflow-hidden">
-      <div className="fixed right-5 bottom-8">
+      <div className="fixed right-5 bottom-8 z-[9999] bg-white">
         <div className="relative" onClick={() => setValue("compare-bikes")}>
           <Image
             className="cursor-pointer"
@@ -92,6 +107,11 @@ const RootPage = () => {
                 page={page}
                 compareList={compareList}
                 toggleCompare={toggleCompare}
+                setValue={setValue}
+                status={status}
+                setStatus={setStatus}
+                sort={sort}
+                setSort={setSort}
               />
             </TabsContent>
             <TabsContent value="compare-bikes">

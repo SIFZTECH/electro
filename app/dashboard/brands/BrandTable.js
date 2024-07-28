@@ -30,7 +30,7 @@ const BrandTable = ({ data }) => {
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
               <TableHead>SN</TableHead>
               <TableHead>Brand Name</TableHead>
-              <TableHead>-</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>

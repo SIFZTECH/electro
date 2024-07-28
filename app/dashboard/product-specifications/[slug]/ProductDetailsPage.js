@@ -24,6 +24,7 @@ const ProductDetailsPage = ({ params }) => {
     <div>
       <div className="flex flex-wrap justify-between items-center">
         <h1 className="heading-h1 my-4 mb-8">Product Specifications</h1>
+
         <div className="flex gap-3">
           {isProductUpdatePermission && <EditProduct product={product} />}
           {isProductDeletePermission && (

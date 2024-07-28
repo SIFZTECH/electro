@@ -91,7 +91,7 @@ const ProductTop = ({ product }) => {
               {sizeValues.map((size, i) => (
                 <ToggleGroupItem
                   key={i + 1}
-                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state=on]:bg-color-primary text-white font-serif text-base"
+                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state=on]:bg-color-primary data-[state=on]:text-white text-color-primary font-serif text-base"
                   value={size}
                 >
                   {size}
@@ -100,13 +100,6 @@ const ProductTop = ({ product }) => {
             </ToggleGroup>
           </div>
         )}
-
-        <div className="flex flex-col justify-start items-start">
-          <span className="font-serif font-medium mb-1">Model Name</span>
-          <button>
-            <span className="btn-primary"> {product?.model_name}</span>
-          </button>
-        </div>
 
         <div className="flex flex-col items-start gap-2">
           {filteredVariants.map((variant) => {

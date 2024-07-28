@@ -47,6 +47,62 @@ const ProductTop = ({ product }) => {
     <div className="flex gap-8 flex-col lg:flex-row">
       <ProductImage images={product?.images} product_name={product?.name} />
       <div className="product__summary flex flex-col gap-8">
+        {product?.status === "Active" && (
+          <p className="bg-green-500 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Inactive" && (
+          <p className="bg-gray-400 text-gray-800 text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Pending" && (
+          <p className="bg-yellow-400 text-yellow-800 text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Out of Stock" && (
+          <p className="bg-red-500 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Discontinued" && (
+          <p className="bg-gray-600 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Draft" && (
+          <p className="bg-blue-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Pre-order" && (
+          <p className="bg-purple-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Backorder" && (
+          <p className="bg-yellow-500 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "On Hold" && (
+          <p className="bg-orange-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Featured" && (
+          <p className="bg-pink-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+        {product?.status === "Custom" && (
+          <p className="bg-teal-400 text-white text-sm font-medium rounded-full px-2 py-1 self-start">
+            {product.status}
+          </p>
+        )}
+
         <div className="product__name flex gap-3 flex-col xl:flex-row xl:items-center ">
           <span className="font-serif font-semibold text-xl">
             {product.name}
@@ -81,7 +137,6 @@ const ProductTop = ({ product }) => {
         {sizeValues.length > 0 && (
           <div className="product__sizes">
             <h3 className="font-serif mb-2">Sizes</h3>
-
             <ToggleGroup
               type="single"
               className="gap-1"
@@ -92,7 +147,7 @@ const ProductTop = ({ product }) => {
               {sizeValues.map((size, i) => (
                 <ToggleGroupItem
                   key={i + 1}
-                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent hover:text-color-primary data-[state=on]:bg-color-primary text-white font-serif text-base"
+                  className="px-3 cursor-pointer border border-color-primary py-1 hover:bg-transparent data-[state=on]:bg-color-primary data-[state=on]:text-white text-color-primary font-serif text-base"
                   value={size}
                 >
                   {size}
@@ -101,13 +156,6 @@ const ProductTop = ({ product }) => {
             </ToggleGroup>
           </div>
         )}
-
-        <div className="flex flex-col justify-start items-start">
-          <span className="font-serif font-medium mb-1">Model Name</span>
-          <button>
-            <span className="btn-primary"> {product?.model_name}</span>
-          </button>
-        </div>
 
         <span className="badge xl:bg-color-primary text-white rounded-full xl:px-2 font-serif xl:font-sans xl:text-[12px] line-clamp-1"></span>
         <div className="flex flex-col items-start gap-2">

@@ -1,11 +1,14 @@
 import Image from "next/image";
 import ProductSpecifications from "./ProductSpecifications";
 import NotFoundData from "../ui/NotFoundData";
-import { CiSquareMinus } from "react-icons/ci";
-import { MdLibraryAdd } from "react-icons/md";
+
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const CompareProducts = ({ compareList, toggleCompare }) => {
+  const pathname = usePathname();
+
   if (compareList.length === 0) {
     return <NotFoundData message="There are no products in compare!" />;
   }
@@ -33,18 +36,29 @@ const CompareProducts = ({ compareList, toggleCompare }) => {
                 objectFit="contain"
               />
             </div>
-            <button
-              className="flex justify-between items-center gap-3 mb-2 text-start"
-              onClick={() => toggleCompare(product)}
+            <Link
+              href={
+                pathname.startsWith("/dashboard")
+                  ? `${pathname}/${product.slug}`
+                  : `/product/${product.slug}`
+              }
+              className="flex justify-between items-center gap-3 mb-2 text-start hover:underline"
             >
-              <span className="font-semibold mt-2 font-serif line-clamp-2">
+              <span className="font-semibold mt-2 font-serif">
                 {product.name}
               </span>
-              <span className="icon-heart border border-gray-200 p-1 bg-gray-100">
-                <MdLibraryAdd className="fill-color-primary" size="18" />
-              </span>
-            </button>
-            <div className="line-clamp-3">{product.introduction}</div>
+            </Link>
+            <div className="flex-1 flex justify-start items-end">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleCompare(product);
+                }}
+                className={`btn-primary bg-[#f1f3f5] text-color-primary py-2`}
+              >
+                <span>Remove</span>
+              </button>
+            </div>
           </div>
         ))}
       </div>
