@@ -37,10 +37,16 @@ export async function getAllProducts({
   }
 
   if (sort) {
-    const sortBy = sort.split("-")[0];
-    const sortType = sort.split("-")[1];
+    if (sort === "misc13") {
+      url = `${BASE_URL}/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else if (sort === "e-bikes") {
+      url = `${BASE_URL}/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else {
+      const sortBy = sort.split("-")[0];
+      const sortType = sort.split("-")[1];
 
-    url = `${BASE_URL}/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+      url = `${BASE_URL}/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    }
   }
 
   const { data } = await axios.get(url, {
@@ -77,10 +83,16 @@ export async function getAllProductsForPublic({
   }
 
   if (sort) {
-    const sortBy = sort.split("-")[0];
-    const sortType = sort.split("-")[1];
+    if (sort === "misc13") {
+      url = `${BASE_URL}/public/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else if (sort === "e-bikes") {
+      url = `${BASE_URL}/public/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else {
+      const sortBy = sort.split("-")[0];
+      const sortType = sort.split("-")[1];
 
-    url = `${BASE_URL}/public/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+      url = `${BASE_URL}/public/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    }
   }
 
   const { data } = await axios.get(url);
@@ -92,6 +104,7 @@ export async function createProduct(formData) {
 
   if (!token) return null;
 
+  console.log(formData);
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
     headers: {

@@ -46,6 +46,7 @@ const EditProduct = ({ product }) => {
       key_features: product ? product?.specification : [],
       variants: product ? product?.variants : [],
       images: product ? product?.images : [],
+      misc13: product?.misc13 === 1 ? true : false,
     },
   });
 
@@ -64,6 +65,7 @@ const EditProduct = ({ product }) => {
     variants,
 
     images,
+    misc13,
   }) {
     if (!brand_id) {
       return toast.error("Brand is Missing!");
@@ -93,6 +95,7 @@ const EditProduct = ({ product }) => {
         variants: formattedVariants,
         specification: key_features,
         images,
+        misc13: misc13 === true ? 1 : 0,
       });
 
       if (res) {
@@ -290,6 +293,15 @@ const EditProduct = ({ product }) => {
               errors={errors}
               setValue={setValue}
             />
+            <div className="flex gap-2 items-center">
+              <input {...register("misc13")} id="misc" type="checkbox" />
+              <label
+                htmlFor="misc"
+                className="block text-sm font-semibold font-serif leading-6 text-gray-900 cursor-pointer"
+              >
+                Misc13
+              </label>
+            </div>
           </div>
           <button
             type="submit"

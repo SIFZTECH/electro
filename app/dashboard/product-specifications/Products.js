@@ -62,6 +62,7 @@ const Products = ({
               toggleCompare={() => toggleCompare(product)}
               navigateTo={"dashboard/product-specifications"}
               setValue={setValue}
+              compareList={compareList}
             />
           ))}
       </div>

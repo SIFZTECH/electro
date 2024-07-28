@@ -59,6 +59,7 @@ const Products = ({
               isCompared={compareList.some((p) => p.id === product.id)}
               toggleCompare={() => toggleCompare(product)}
               setValue={setValue}
+              compareList={compareList}
             />
           ))}
       </div>

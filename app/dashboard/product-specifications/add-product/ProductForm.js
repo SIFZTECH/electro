@@ -48,6 +48,7 @@ const ProductForm = () => {
     variants,
     specification,
     images,
+    misc13,
   }) {
     try {
       if (!brand_id) {
@@ -69,6 +70,7 @@ const ProductForm = () => {
         variants,
         specification: key_features,
         images,
+        misc13: misc13 === true ? 1 : 0,
       });
 
       if (res) {
@@ -250,6 +252,15 @@ const ProductForm = () => {
           setValue={setValue}
           clearErrors={clearErrors}
         />
+        <div className="flex gap-2 items-center">
+          <input {...register("misc13")} id="misc" type="checkbox" />
+          <label
+            htmlFor="misc"
+            className="block text-sm font-semibold font-serif leading-6 text-gray-900 cursor-pointer"
+          >
+            Misc13
+          </label>
+        </div>
       </div>
       <button
         type="submit"

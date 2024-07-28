@@ -17,6 +17,7 @@ const Product = ({
   toggleCompare,
   navigateTo,
   setValue,
+  compareList,
 }) => {
   return (
     <div className="product flex flex-col justify-between gap-2 border border-gray-200 p-5 pt-3">
@@ -40,6 +41,7 @@ const Product = ({
         isCompared={isCompared}
         toggleCompare={toggleCompare}
         setValue={setValue}
+        compareList={compareList}
       />
       {/* <button
         disabled={isCompared}
