@@ -6,7 +6,7 @@ import {
   BreadcrumbSeparator,
 } from "@/app/components/ui/breadcrumb";
 import React from "react";
-import { useResource } from "@/app/_features/dealer-resources/useResource";
+import { useSocialMediaAsset } from "@/app/_features/social_media/useMedia";
 
 const BreadcrumbN = ({ folderPath }) => {
   // Split the path and filter out empty strings
@@ -22,9 +22,9 @@ const BreadcrumbN = ({ folderPath }) => {
         <BreadcrumbItem>
           <BreadcrumbLink
             className="text-slate-800 hover:text-color-primary font-medium"
-            href="/dashboard/dealer-resources"
+            href="/dashboard/social-media-assets"
           >
-            Dealer Resources
+            Social Media Assets
           </BreadcrumbLink>
           <BreadcrumbSeparator />
         </BreadcrumbItem>
@@ -45,7 +45,7 @@ const BreadcrumbN = ({ folderPath }) => {
   function BreadcrumbSegment({ segment, index }) {
     const isLast = index === pathSegments.length - 1;
     const href = "/" + pathSegments.slice(0, index + 1).join("/");
-    const { data, isLoading, error } = useResource(+segment);
+    const { data, isLoading, error } = useSocialMediaAsset(+segment);
 
     // if (isLoading) return <span>Loading...</span>;
     // if (error) return <span>Error: {error.message}</span>;

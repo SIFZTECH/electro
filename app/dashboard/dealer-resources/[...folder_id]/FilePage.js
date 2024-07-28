@@ -59,7 +59,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex justify-between flex-wrap">
-        <BreadcrumbN folderPath={pathName} data={data?.data} />
+        <BreadcrumbN folderPath={pathName} />
 
         {!isLoading && !isError && data?.data && isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">
@@ -105,7 +105,7 @@ const FolderPage = ({ folder_id }) => {
         <div className="flex items-start flex-col gap-10">
           {data?.data?.child_folders.length > 0 && (
             <div className="flex flex-col mt-3">
-              <div className="flex gap-8 flex-wrap">
+              <div className="flex gap-12 flex-wrap">
                 {folderData?.child_folders?.map((item) => (
                   <Link
                     href={`${pathName}/${item.id}`}

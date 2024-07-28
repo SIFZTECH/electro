@@ -23,7 +23,7 @@ import UploadFileModal from "@/app/components/ui/UploadFileModal";
 import { CreateNewMediaFile } from "@/app/_services/apiMedia";
 import Link from "next/link";
 import CreateNewSubFolder from "./CreateNewSubFolder";
-import BreadcrumbN from "../../dealer-resources/[...folder_id]/BreadcrumbN";
+import BreadcrumbN from "../BreadcrumbN";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Search from "../../dealer-resources/[...folder_id]/Search";
@@ -59,7 +59,7 @@ const FolderPage = ({ folder_id }) => {
   return (
     <div>
       <div className="flex justify-between flex-wrap">
-        <BreadcrumbN folderPath={pathName} data={data?.data} />
+        <BreadcrumbN folderPath={pathName} />
         {!isLoading && !isError && data?.data && isAdmin && (
           <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">
             <CreateNewSubFolder
@@ -105,7 +105,7 @@ const FolderPage = ({ folder_id }) => {
         <div className="flex items-start flex-col gap-10">
           {folderData?.child_folders.length > 0 && (
             <div className="flex flex-col mt-3">
-              <div className="flex gap-8 flex-wrap">
+              <div className="flex gap-12 flex-wrap">
                 {folderData?.child_folders?.map((item) => (
                   <Link
                     href={`${pathName}/${item.id}`}
