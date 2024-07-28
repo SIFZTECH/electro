@@ -23,7 +23,11 @@ const EditBrand = ({ brand }) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
-    defaultValues: { name: brand.name || "", status: brand?.status },
+    defaultValues: {
+      name: brand.name || "",
+      neto_status: brand?.neto_status,
+      status: brand?.status,
+    },
   });
 
   async function onSubmit(data) {
@@ -74,6 +78,28 @@ const EditBrand = ({ brand }) => {
                 {errors?.name && (
                   <span className="text-red-500 text-sm">
                     {errors.name.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Neto Status
+              </label>
+              <div className="mt-2">
+                <select
+                  {...register("neto_status", {
+                    required: "This filed is required",
+                  })}
+                  disabled={isSubmitting}
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+                {errors?.neto_status && (
+                  <span className="text-red-500 text-sm">
+                    {errors.neto_status.message}
                   </span>
                 )}
               </div>

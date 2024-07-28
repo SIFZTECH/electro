@@ -22,9 +22,9 @@ const CreateNewBrand = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  async function onSubmit({ name, status }) {
+  async function onSubmit({ name, neto_status, status }) {
     try {
-      const res = await createBrand({ name, status });
+      const res = await createBrand({ name, neto_status, status });
 
       if (res) {
         toast.success(res.message);
@@ -63,11 +63,34 @@ const CreateNewBrand = () => {
                   })}
                   disabled={isSubmitting}
                   type="text"
+                  placeholder="Enter Brand Name"
                   className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 {errors?.name && (
                   <span className="text-red-500 text-sm">
                     {errors.name.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium leading-6 text-gray-900">
+                Neto Status
+              </label>
+              <div className="mt-2">
+                <select
+                  {...register("neto_status", {
+                    required: "This filed is required",
+                  })}
+                  disabled={isSubmitting}
+                  className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+                {errors?.neto_status && (
+                  <span className="text-red-500 text-sm">
+                    {errors.neto_status.message}
                   </span>
                 )}
               </div>
