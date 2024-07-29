@@ -123,6 +123,23 @@ export async function createProduct(formData) {
   return data;
 }
 
+export async function uploadProduct(formData) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios(`${BASE_URL}/products/import-csv`, {
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "content-type": "multipart/form-data",
+    },
+    data: formData,
+  });
+
+  return data;
+}
+
 export async function getProduct(slug) {
   const token = localStorage.getItem("access-token");
 

@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import DownloadFile from "./DownloadFile";
+import UploadProduct from "./UploadProduct";
 
 const ProductCategories = () => {
   return (
@@ -22,7 +24,9 @@ const ProductCategories = () => {
           <Link href="#">E-Folding</Link>
         </li>
       </ul> */}
-      <div>&nbsp;</div>
+
+      <UploadProduct />
+      <DownloadFile />
       <Link href="product-specifications/add-product" className="btn-primary">
         Add New Product
       </Link>
