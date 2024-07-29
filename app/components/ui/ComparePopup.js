@@ -30,9 +30,15 @@ const ComparePopup = ({
         </span>
       </DialogTrigger>
       <DialogContent>
-        <h1 className="text-lg font-medium font-serif mb-5">
-          You have {compareList.length} E-Bikes in your comparison bucket.
-        </h1>
+        {compareList.length > 4 ? (
+          <h1 className="text-lg font-medium font-serif mb-5">
+            You can only compare up to 5 products.
+          </h1>
+        ) : (
+          <h1 className="text-lg font-medium font-serif mb-5">
+            You have {compareList.length} E-Bikes in your comparison bucket.
+          </h1>
+        )}
 
         <div className="flex gap-4">
           <button
@@ -44,9 +50,11 @@ const ComparePopup = ({
           >
             Compare Now
           </button>
-          <DialogClose className="btn-primary px-4 text-lg bg-transparent border-2 border-color-primary text-color-primary">
-            Add More
-          </DialogClose>
+          {compareList.length < 5 && (
+            <DialogClose className="btn-primary px-4 text-lg bg-transparent border-2 border-color-primary text-color-primary">
+              Add More
+            </DialogClose>
+          )}
         </div>
       </DialogContent>
     </Dialog>

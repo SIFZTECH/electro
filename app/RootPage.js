@@ -53,7 +53,6 @@ const RootPage = () => {
       } else if (prevList.length < 5) {
         return [...prevList, product];
       } else {
-        alert("You can only compare up to 5 products.");
         return prevList;
       }
     });
