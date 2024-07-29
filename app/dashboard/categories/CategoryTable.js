@@ -32,6 +32,7 @@ const CategoryTable = ({ data }) => {
               <TableHead data-label="Sub-Category Name">
                 Sub-Categories Name
               </TableHead>
+              <TableHead data-label="Sub-Category Name">Neto Status</TableHead>
               <TableHead data-label="Sub-Category Name">Status</TableHead>
               <TableHead data-label="Actions">Actions</TableHead>
             </TableRow>

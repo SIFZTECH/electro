@@ -18,7 +18,9 @@ const ProductsPage = ({
   status,
   setStatus,
   sort,
-  setSort
+  setSort,
+  misc13,
+  setMisc13,
 }) => {
   return (
     <>
@@ -39,6 +41,8 @@ const ProductsPage = ({
             setStatus={setStatus}
             sort={sort}
             setSort={setSort}
+            misc13={misc13}
+            setMisc13={setMisc13}
           />
         </div>
         <PaginationForProducts

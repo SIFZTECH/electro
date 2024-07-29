@@ -17,6 +17,7 @@ import { useUser } from "./_features/authentication/useUser";
 const RootPage = () => {
   const { user, isLoading: isLoading2, isVerified } = useUser();
   const [value, setValue] = useState("e-bikes");
+  const [misc13, setMisc13] = useState("");
   const [sort, setSort] = useState("");
 
   const params = useSearchParams();
@@ -31,7 +32,8 @@ const RootPage = () => {
     brandId,
     page,
     query,
-    sort
+    sort,
+    misc13
   );
 
   const [compareList, setCompareList] = useState([]);
@@ -136,6 +138,8 @@ const RootPage = () => {
                 setValue={setValue}
                 sort={sort}
                 setSort={setSort}
+                misc13={misc13}
+                setMisc13={setMisc13}
               />
             </TabsContent>
             <TabsContent value="compare-bikes">

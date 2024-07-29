@@ -5,6 +5,7 @@ import NotFoundData from "@/app/components/ui/NotFoundData";
 import Product from "@/app/components/_root_ui/Product";
 import FilterByStatus from "./FilterByStatus";
 import SortBy from "./SortBy";
+import FilterByBikes from "./FilterByBikes";
 
 const Products = ({
   isLoading,
@@ -18,6 +19,8 @@ const Products = ({
   setStatus,
   sort,
   setSort,
+  misc13,
+  setMisc13,
 }) => {
   return (
     <div>
@@ -25,6 +28,7 @@ const Products = ({
         <SearchProduct />
       </div>
       <div className="flex gap-4 items-center justify-end">
+        <FilterByBikes misc13={misc13} setMisc13={setMisc13} />
         <SortBy sort={sort} setSort={setSort} />
         <FilterByStatus status={status} setStatus={setStatus} />
       </div>
@@ -62,6 +66,7 @@ const Products = ({
               toggleCompare={() => toggleCompare(product)}
               navigateTo={"dashboard/product-specifications"}
               setValue={setValue}
+              compareList={compareList}
             />
           ))}
       </div>

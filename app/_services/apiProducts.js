@@ -10,6 +10,7 @@ export async function getAllProducts({
   query,
   status,
   sort,
+  misc13,
 }) {
   const token = localStorage.getItem("access-token");
 
@@ -43,6 +44,14 @@ export async function getAllProducts({
     url = `${BASE_URL}/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
+  if (misc13) {
+    if (misc13 === "e-bikes") {
+      url = `${BASE_URL}/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else if (misc13 === "bikes") {
+      url = `${BASE_URL}/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    }
+  }
+
   const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -58,6 +67,7 @@ export async function getAllProductsForPublic({
   page,
   query,
   sort,
+  misc13,
 }) {
   let url = `${BASE_URL}/public/products`;
 
@@ -83,6 +93,14 @@ export async function getAllProductsForPublic({
     url = `${BASE_URL}/public/search-products?sort_by=${sortBy}&sort_order=${sortType}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
+  if (misc13) {
+    if (misc13 === "e-bikes") {
+      url = `${BASE_URL}/public/search-products?misc13=true&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    } else if (misc13 === "bikes") {
+      url = `${BASE_URL}/public/search-products?misc13=false&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    }
+  }
+
   const { data } = await axios.get(url);
 
   return data;
@@ -92,6 +110,7 @@ export async function createProduct(formData) {
 
   if (!token) return null;
 
+  console.log(formData);
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
     headers: {

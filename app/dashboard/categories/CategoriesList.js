@@ -25,6 +25,17 @@ const CategoriesList = ({ index, category, subCategories }) => {
         ))}
       </TableCell>
       <TableCell>
+        {category?.neto_status === "Active" ? (
+          <span className="bg-green-400 text-white text-sm px-2 py-1 rounded-sm">
+            {category?.neto_status}
+          </span>
+        ) : (
+          <span className="bg-[#ced4da] text-color-primary text-sm px-2 py-1 rounded-sm">
+            {category?.neto_status}
+          </span>
+        )}
+      </TableCell>
+      <TableCell>
         {category?.status === "Active" ? (
           <span className="bg-green-400 text-white text-sm px-2 py-1 rounded-sm">
             {category?.status}
