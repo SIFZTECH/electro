@@ -81,7 +81,7 @@ const RootPage = () => {
       <div className="flex gap-6 items-start">
         <div className="flex-1">
           <Tabs value={value} className="font-serif">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-center">
               <TabsList>
                 <TabsTrigger
                   value="e-bikes"

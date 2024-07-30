@@ -13,8 +13,8 @@
 
 .magnifier {
   position: absolute;
-  width: 100px; /* Adjust size of the magnifying glass */
-  height: 100px;
+  width: 160px; /* Adjust size of the magnifying glass */
+  height: 160px;
   border: 2px solid #ddd; /* Visible border for debugging */
   border-radius: 50%;
   cursor: none;
