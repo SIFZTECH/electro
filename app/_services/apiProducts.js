@@ -33,8 +33,10 @@ export async function getAllProducts({
     url = `${BASE_URL}/search-products?search=${query}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
   }
 
-  if (status !== "all") {
-    url = `${BASE_URL}/search-products?status=${status}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+  if (status) {
+    if (status !== "all") {
+      url = `${BASE_URL}/search-products?status=${status}&per_page=${PRODUCT_PAGE_SIZE}&page=${page}`;
+    }
   }
 
   if (sort) {
@@ -110,7 +112,6 @@ export async function createProduct(formData) {
 
   if (!token) return null;
 
-  
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
     headers: {

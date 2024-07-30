@@ -55,10 +55,10 @@ const dummyData = [
 ];
 
 const Stocks = ({ products }) => {
-  const data = products.data.data;
+  const data = products?.data?.data;
 
   return (
-    <Table className="mt-10 ">
+    <Table className="mt-3">
       <TableHeader>
         <TableRow>
           <TableHead>Products</TableHead>
@@ -67,7 +67,7 @@ const Stocks = ({ products }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products?.data.data.map((data, i) => {
+        {data.map((data, i) => {
           return (
             <TableRow key={i + 1}>
               <TableCell data-label="Products">{data.name}</TableCell>

@@ -51,15 +51,15 @@ const StocksPage = () => {
             )}
           </div>
         </div>
-        {!isLoading && !isError && products.data.data.length > 0 ? (
+        {!isLoading && !isError && products?.data?.data?.length > 0 ? (
           <Stocks products={products} />
         ) : (
           <NotFoundData message="There is no stocks in store!" />
         )}
         {!isLoading && isError && error && (
           <h1>
-            {error?.response.data.message
-              ? error.response.data.message
+            {error?.response?.data?.message
+              ? error?.response?.data?.message
               : error.message}
           </h1>
         )}
