@@ -35,6 +35,7 @@ export default function CalendarPage() {
   const [title, setTitle] = useState("null");
   const [description, setDescription] = useState("null");
   const [visible, setVisible] = useState(null);
+  const [visibleAnyone, setVisibleAnyone] = useState(null);
 
   const handleSelect = ({ start }) => {
     setDate(start);
@@ -50,6 +51,8 @@ export default function CalendarPage() {
     setStartDate(e.start_date);
     setEndDate(e.end_date);
     setVisible(e.visible_to);
+    setVisibleAnyone(e.visible_to_anyone);
+    setColor(e.color);
   };
 
   if (!isCalendarViewPermission) {
@@ -65,31 +68,35 @@ export default function CalendarPage() {
     setColor(event.target.value);
   };
 
-  const formattedDate = data?.data?.data
-    ? data?.data?.data?.map((event) => ({
-        id: event.id,
-        title: event.title,
-        description: event.description,
-        start_date: event.start_date,
-        end_date: event.end_date,
-        start: new Date(event.start_date),
-        end: new Date(event.end_date),
-        visible_to: event.visible_to,
-      }))
-    : data?.data?.map((event) => ({
-        id: event.id,
-        title: event.title,
-        description: event.description,
+  const formattedDate =
+    data?.data?.data &&
+    data?.data?.data?.map((event) => ({
+      id: event.id,
+      title: event.title,
+      description: event.description,
+      start_date: event.start_date,
+      end_date: event.end_date,
+      start: new Date(event.start_date),
+      end: new Date(event.end_date),
+      color: event.color,
+      visible_to: event.visible_to,
+      visible_to_anyone: event.visible_to_anyone,
+    }));
 
-        start: new Date(event.start_date),
-        end: new Date(event.end_date),
-        visible_to: event.visible_to,
-      }));
+  const eventStyleGetter = (event) => {
+    let style = {};
+
+    style.backgroundColor = event.color;
+
+    return {
+      style: style,
+    };
+  };
 
   return (
     <div className="py-3">
       <div className="flex items-center justify-between mb-3">
-        <h1 className="heading-h1 mb-6">Promotional Calendar</h1>
+        <h1 className="heading-h1 mb-6">Promotion Calendar</h1>
 
         {isCreateEventPermission ? (
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
@@ -123,6 +130,7 @@ export default function CalendarPage() {
         style={{ height: "90dvh" }}
         onSelectEvent={handleManage}
         onSelectSlot={handleSelect}
+        eventPropGetter={eventStyleGetter}
       />
       {isCreateEventPermission && (
         <Dialog open={open2} onOpenChange={() => setOpen2((open) => !open)}>
@@ -132,7 +140,10 @@ export default function CalendarPage() {
             endDate={endDate}
             title={title}
             description={description}
-            visible={visible}
+            visible_to={visible}
+            visible_to_anyone={visibleAnyone}
+            color={color}
+            setColor={setColor}
             setOpen={setOpen2}
           />
         </Dialog>

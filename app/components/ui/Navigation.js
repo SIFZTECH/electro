@@ -308,7 +308,7 @@ const Navigation = () => {
                     fill="#DEE1E6"
                   />
                 </svg>
-                <span>Promotional Calender</span>
+                <span>Promotion Calendar</span>
               </Link>
             </li>
           )}

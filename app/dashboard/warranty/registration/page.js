@@ -237,46 +237,6 @@ const WarrantyRegistrationPage = () => {
             </div>
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                Address Line
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register("address_line", {
-                    required: "This field is required",
-                  })}
-                  type="text"
-                  placeholder="Address Line"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.address_line && (
-                  <span className="text-red-500 text-sm">
-                    {errors.address_line.message}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                Address Line 1
-              </label>
-              <div className="mt-1">
-                <input
-                  {...register("address_line1", {
-                    required: "This field is required",
-                  })}
-                  type="text"
-                  placeholder="Address Line 1"
-                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                />
-                {errors?.address_line1 && (
-                  <span className="text-red-500 text-sm">
-                    {errors.address_line1.message}
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                 City
               </label>
               <div className="mt-1">
@@ -295,6 +255,45 @@ const WarrantyRegistrationPage = () => {
                 )}
               </div>
             </div>
+            <div className="">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+                Address Line 1
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register("address_line", {
+                    required: "This field is required",
+                  })}
+                  type="text"
+                  placeholder="Address Line"
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.address_line && (
+                  <span className="text-red-500 text-sm">
+                    {errors.address_line.message}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                Address Line 2
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register("address_line1")}
+                  type="text"
+                  placeholder="Address Line 1"
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+                {errors?.address_line1 && (
+                  <span className="text-red-500 text-sm">
+                    {errors.address_line1.message}
+                  </span>
+                )}
+              </div>
+            </div>
+
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
                 State
@@ -338,8 +337,20 @@ const WarrantyRegistrationPage = () => {
                 </span>
               )}
             </div>
-            <div className="col-span-2">
+            <div>
               <SelectDealer value={dealer} setDealer={setDealer} />
+            </div>
+            <div className="">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                Description
+              </label>
+              <div className="mt-1">
+                <textarea
+                  {...register("description")}
+                  placeholder="Write here...."
+                  className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-9 gap-y-3 mt-3">
@@ -434,7 +445,7 @@ const WarrantyRegistrationPage = () => {
             <div className="border-[1.5px] border-gray-300 p-3 shadow-sm flex flex-col gap-3 rounded-md">
               <div className="">
                 <label className="flex items-center gap-1 text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-                  <span>Bike Battary Serial Number </span>
+                  <span>Bike Battery Serial Number </span>
                   <AiOutlineExclamationCircle size={18} />
                 </label>
                 <div className="mt-1">
@@ -443,7 +454,7 @@ const WarrantyRegistrationPage = () => {
                       required: "This field is required",
                     })}
                     type="text"
-                    placeholder="Bike Battary Serial Number"
+                    placeholder="Bike Battery Serial Number"
                     className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                   />
                   {errors?.bike_battery_serial_no && (
@@ -455,7 +466,7 @@ const WarrantyRegistrationPage = () => {
               </div>
               <div className="">
                 <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
-                  Upload your Bike Battary Serial Number
+                  Upload your Bike Battery Serial Number
                 </label>
                 <div className="mt-1">
                   <small className="text-sm mb-1">

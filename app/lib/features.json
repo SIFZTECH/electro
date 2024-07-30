@@ -22,7 +22,7 @@
   {
     "id": 5,
     "icon": "/rahmen-icon.png",
-    "key": "frome"
+    "key": "frame"
   },
   {
     "id": 6,
@@ -32,7 +32,7 @@
   {
     "id": 7,
     "icon": "/federgabel-icon.png",
-    "key": "broking-system"
+    "key": "braking-system"
   },
   {
     "id": 8,
