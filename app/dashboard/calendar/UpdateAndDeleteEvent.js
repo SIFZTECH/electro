@@ -14,7 +14,10 @@ const UpdateAndDeleteEvent = ({
   endDate,
   title,
   description,
-  visible,
+  visible_to,
+  visible_to_anyone,
+  color,
+  setColor,
   setOpen,
 }) => {
   return (
@@ -39,7 +42,10 @@ const UpdateAndDeleteEvent = ({
             endDate={endDate}
             title={title}
             description={description}
-            visible={visible}
+            visible_to={visible_to}
+            visible_to_anyone={visible_to_anyone}
+            color={color}
+            setColor={setColor}
             setOpen={setOpen}
           />
         </TabsContent>

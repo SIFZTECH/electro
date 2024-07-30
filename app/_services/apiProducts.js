@@ -110,7 +110,7 @@ export async function createProduct(formData) {
 
   if (!token) return null;
 
-  console.log(formData);
+  
   const { data } = await axios(`${BASE_URL}/add-product`, {
     method: "post",
     headers: {

@@ -316,7 +316,7 @@ table th {
 
 .rbc-event,
 .rbc-day-slot .rbc-background-event {
-  background-color: #555 !important;
+  background-color: #555;
   text-align: center !important;
 }
 
