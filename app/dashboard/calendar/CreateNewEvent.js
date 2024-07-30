@@ -1,6 +1,5 @@
 "use client";
 
-import { useRoles } from "@/app/_features/roles/useRoles";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { createEvent } from "@/app/_services/apiEvents";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";

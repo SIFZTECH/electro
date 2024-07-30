@@ -265,7 +265,7 @@ const WarrantyRegistrationPage = () => {
                     required: "This field is required",
                   })}
                   type="text"
-                  placeholder="Address Line"
+                  placeholder="Address Line 1"
                   className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
                 {errors?.address_line && (
@@ -283,14 +283,9 @@ const WarrantyRegistrationPage = () => {
                 <input
                   {...register("address_line1")}
                   type="text"
-                  placeholder="Address Line 1"
+                  placeholder="Address Line 2"
                   className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
                 />
-                {errors?.address_line1 && (
-                  <span className="text-red-500 text-sm">
-                    {errors.address_line1.message}
-                  </span>
-                )}
               </div>
             </div>
 

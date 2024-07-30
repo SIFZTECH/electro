@@ -1,6 +1,5 @@
 "use client";
-import { useEvent } from "@/app/_features/events/useEvents";
-import { useRoles } from "@/app/_features/roles/useRoles";
+
 import { updateEvent } from "@/app/_services/apiEvents";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
@@ -8,7 +7,7 @@ import moment from "moment";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import SelectUser from "./SelectUser";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const UpdateEventTab = ({
   id,
