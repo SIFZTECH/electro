@@ -24,6 +24,7 @@ export default function CalendarPage() {
   const isCalendarViewPermission = useCheckPermission("calendar_view");
   const { isLoading, isError, error, data } = useEvents();
 
+  const [color, setColor] = useState("#000000");
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -60,6 +61,9 @@ export default function CalendarPage() {
   if (isLoading) {
     return <Spinner />;
   }
+  const handleColorChange = (event) => {
+    setColor(event.target.value);
+  };
 
   const formattedDate = data?.data?.data
     ? data?.data?.data?.map((event) => ({
@@ -91,7 +95,12 @@ export default function CalendarPage() {
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
             <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
             <DialogContent>
-              <CreateNewEvent date={date} setOpen={setOpen} />
+              <CreateNewEvent
+                date={date}
+                setOpen={setOpen}
+                color={color}
+                handleColorChange={handleColorChange}
+              />
             </DialogContent>
           </Dialog>
         ) : (

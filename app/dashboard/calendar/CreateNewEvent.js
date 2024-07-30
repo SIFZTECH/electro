@@ -8,11 +8,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import SelectUser from "./SelectUser";
 
-const CreateNewEvent = ({ date, setOpen }) => {
+const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
   const queryClient = useQueryClient();
   const {
     register,
+    control,
+    watch,
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
@@ -21,9 +24,11 @@ const CreateNewEvent = ({ date, setOpen }) => {
       date: date || Date.now(),
       start_date: moment(date).format("YYYY-MM-DD"),
       end_date: moment(date).format("YYYY-MM-DD"),
+      visible_to: [],
     },
   });
-  const { isLoading, data } = useRoles();
+
+  const checkedAnyoneAccessBox = watch("visible_to_anyone");
 
   async function onSubmit({
     date,
@@ -32,6 +37,7 @@ const CreateNewEvent = ({ date, setOpen }) => {
     title,
     description,
     visible_to,
+    visible_to_anyone,
   }) {
     const specificDate = new Date(date);
 
@@ -53,7 +59,9 @@ const CreateNewEvent = ({ date, setOpen }) => {
         start_date: formattedStartDate,
         end_date: formattedEndDate,
         description,
+        color: color,
         visible_to,
+        visible_to_anyone,
       });
       if (res) {
         toast.success("New Event Created Successfully");
@@ -154,29 +162,47 @@ const CreateNewEvent = ({ date, setOpen }) => {
           )}
         </div>
       </div>
-      <div>
-        <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
-          Visible to
-        </label>
-        <div className="mt-2">
-          <select
-            {...register("visible_to")}
-            disabled={isSubmitting}
-            type="text"
-            className="block w-full rounded-md border border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6"
-          >
-            {!isLoading &&
-              data?.data?.rolesWithPermissions
-                .filter((role) => role.id !== 3)
-                .map((role) => (
-                  <option key={role.name} value={role.name}>
-                    {role.name}
-                  </option>
-                ))}
-            <option value="anyone">anyone</option>
-            <option value="onlyme">only me</option>
-          </select>
+      <div className="font-serif text-sm flex flex-col gap-2">
+        <div className="flex justify-start items-center">
+          <label htmlFor="color-code" className="mr-2 btn-primary bg-green-400">
+            Get your color code
+          </label>
+          <input
+            {...register("value", {
+              required: "This filed is required",
+            })}
+            id="color-code"
+            type="color"
+            onChange={handleColorChange}
+          />
         </div>
+        <p className="flex-1">Selected Color Hex Value: {color}</p>
+      </div>
+      {!checkedAnyoneAccessBox && (
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+            Visible to
+          </label>
+          <div className="mt-2">
+            <SelectUser control={control} register={register} />
+          </div>
+        </div>
+      )}
+
+      <div className="flex gap-1 items-center">
+        <input
+          {...register("visible_to_anyone")}
+          id="visible_to_anyone"
+          disabled={isSubmitting}
+          type="checkbox"
+        />
+
+        <label
+          className="block text-sm font-medium text-gray-900"
+          htmlFor="visible_to_anyone"
+        >
+          Visible to anyone
+        </label>
       </div>
       <div>
         <button
