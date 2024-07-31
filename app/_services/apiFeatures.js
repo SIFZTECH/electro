@@ -110,7 +110,6 @@ export async function createFeature(formData) {
 
   if (!token) return null;
 
-  console.log(formData);
   const { data } = await axios({
     url: `${BASE_URL}/key-features`,
     method: "post",

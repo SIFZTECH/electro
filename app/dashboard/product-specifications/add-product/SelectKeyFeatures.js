@@ -17,7 +17,9 @@ function SelectKeyFeatures({ control }) {
     name: "key_features",
   });
 
-  const selectedFeatureKeys = watchFeatures?.map((item) => item.key);
+  const selectedFeatureKeys = watchFeatures?.map((item) =>
+    Number(item.key_feature_id)
+  );
 
   return (
     <>
@@ -32,7 +34,7 @@ function SelectKeyFeatures({ control }) {
                 <Controller
                   name={`key_features[${index}].key_feature_id`}
                   control={control}
-                  defaultValue={item.key}
+                  defaultValue={item.key_feature_id}
                   render={({ field }) => (
                     <select
                       className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
@@ -40,11 +42,12 @@ function SelectKeyFeatures({ control }) {
                     >
                       <option value="">Select Feature Key</option>
                       {data
-                        ?.filter(
-                          (feature) =>
-                            !selectedFeatureKeys?.includes(feature.key) ||
-                            feature.key === field.value
-                        )
+                        ?.filter((feature) => {
+                          return (
+                            !selectedFeatureKeys?.includes(feature.id) ||
+                            feature.id === Number(field.value)
+                          );
+                        })
                         .map((feature) => (
                           <option
                             className="capitalize"

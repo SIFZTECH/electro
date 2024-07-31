@@ -43,7 +43,12 @@ const EditProduct = ({ product }) => {
       brand_id: product ? product?.brand_id : "",
       status: product?.status,
       sku: product?.sku,
-      key_features: product ? product?.specification : [],
+      key_features: product
+        ? product?.key_features.map((feature) => {
+         
+            return { key_feature_id: feature.id, value: feature?.pivot?.value };
+          })
+        : [],
       variants: product ? product?.variants : [],
       images: product ? product?.images : [],
       misc13: product?.misc13 === 1 ? true : false,
@@ -63,7 +68,6 @@ const EditProduct = ({ product }) => {
     sku,
     key_features,
     variants,
-
     images,
     misc13,
   }) {
@@ -80,6 +84,13 @@ const EditProduct = ({ product }) => {
       };
     });
 
+    const fotmattedFeatures = key_features.map((feature) => {
+      return {
+        key_feature_id: Number(feature.key_feature_id),
+        value: feature.value,
+      };
+    });
+
     try {
       const res = await updateProduct(product.id, {
         name,
@@ -93,11 +104,10 @@ const EditProduct = ({ product }) => {
         sku,
         brand_id,
         variants: formattedVariants,
-        specification: key_features,
+        key_features: fotmattedFeatures,
         images,
         misc13: misc13 === true ? 1 : 0,
       });
-
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("product", product.slug);
