@@ -60,6 +60,10 @@ const WarrantyPageInfo = ({ params }) => {
                 <TableCell>{warranty.id}</TableCell>
               </TableRow>
               <TableRow>
+                <TableCell className="font-semibold">Description</TableCell>
+                <TableCell>{warranty.description || "-"}</TableCell>
+              </TableRow>
+              <TableRow>
                 <TableCell className="font-semibold">Created At:</TableCell>
                 <TableCell>
                   {new Date(warranty.created_at).toDateString()}

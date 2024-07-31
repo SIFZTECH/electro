@@ -40,6 +40,7 @@ const WarrantyRegistrationPage = () => {
 
       const res = await createWarrantyForAnyone({
         ...data,
+        address_line1: data.address_line1 || null,
         purchase_date: moment(date).format("YYYY-MM-DD"),
         purchase_from: dealer,
         battery_serial_no_image: data.battery_serial_no_image[0],
@@ -279,7 +280,7 @@ const WarrantyRegistrationPage = () => {
               </div>
             </div>
             <div className="">
-              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900 after:content-['*'] after:ml-0.5 after:text-red-600">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
                 Address Line 2
               </label>
               <div className="mt-1">
