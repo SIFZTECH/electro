@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/app/components/ui/toggle-group";
 import ProductImage from "./ProductImage";
+import useCheckPermission from "@/app/_hooks/usePermission";
 
 const ProductTop = ({ product }) => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedPrice, setSelectedPrice] = useState(product.price);
+  const isPriceSeePermission = useCheckPermission("can_see_price");
 
   useEffect(() => {
     const variant = product.variants.find(
@@ -108,9 +110,11 @@ const ProductTop = ({ product }) => {
             {product.name}
           </span>
         </div>
-        <h1 className="font-serif text-xl font-semibold">
-          ${selectedPrice === "0.00" ? product.price : selectedPrice}
-        </h1>
+        {isPriceSeePermission && (
+          <h1 className="font-serif text-xl font-semibold">
+            ${selectedPrice === "0.00" ? product.price : selectedPrice}
+          </h1>
+        )}
         {colorValues.length > 0 && (
           <div className="product__colors">
             <h3 className="font-serif mb-2">Colors</h3>

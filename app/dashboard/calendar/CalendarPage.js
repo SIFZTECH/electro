@@ -68,20 +68,31 @@ export default function CalendarPage() {
     setColor(event.target.value);
   };
 
-  const formattedDate =
-    data?.data?.data &&
-    data?.data?.data?.map((event) => ({
-      id: event.id,
-      title: event.title,
-      description: event.description,
-      start_date: event.start_date,
-      end_date: event.end_date,
-      start: new Date(event.start_date),
-      end: new Date(event.end_date),
-      color: event.color,
-      visible_to: event.visible_to,
-      visible_to_anyone: event.visible_to_anyone,
-    }));
+  const formattedDate = data?.data?.data
+    ? data?.data?.data?.map((event) => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        start_date: event.start_date,
+        end_date: event.end_date,
+        start: new Date(event.start_date),
+        end: new Date(event.end_date),
+        color: event.color,
+        visible_to: event.visible_to,
+        visible_to_anyone: event.visible_to_anyone,
+      }))
+    : data?.data?.map((event) => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+
+        start: new Date(event.start_date),
+        end: new Date(event.end_date),
+
+        color: event.color,
+        visible_to: event.visible_to,
+        visible_to_anyone: event.visible_to_anyone,
+      }));
 
   const eventStyleGetter = (event) => {
     let style = {};

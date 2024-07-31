@@ -45,7 +45,10 @@ const UpdateUsersPermissions = ({
 
   if (!isLoading && permissions) {
     permissions.forEach((permission) => {
-      if (permission.name.startsWith("product")) {
+      if (
+        permission.name.startsWith("product") ||
+        permission.name.startsWith("can_see_price")
+      ) {
         groupedPermissions.product.push(permission);
       } else if (permission.name.startsWith("category")) {
         groupedPermissions.category.push(permission);

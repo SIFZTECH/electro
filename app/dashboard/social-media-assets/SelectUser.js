@@ -12,7 +12,7 @@ const SelectUser = ({ control, existingUser }) => {
     !isLoading &&
     !isError &&
     data?.data
-      ?.filter((user) => user.roles[0]?.name !== "customer")
+      ?.filter((user) => user.roles[0]?.id !== 3)
       .map((user) => {
         return {
           label: `${user.firstname} ${user.lastname} - ${user.email} - ${user.roles[0].name}`,

@@ -95,7 +95,7 @@
   }
 
   .email-editor p {
-    @apply text-xl;
+    @apply text-lg;
   }
 }
 
