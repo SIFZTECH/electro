@@ -2,9 +2,11 @@
 
 import React from "react";
 import { useFieldArray, Controller, useWatch } from "react-hook-form";
-import featuresWithKeyAndIcon from "@/app/lib/features.json";
+import { useFeaturesForSelect } from "@/app/_features/key_features/useFeatures";
 
 function SelectKeyFeatures({ control }) {
+  const { data, isLoading, isError } = useFeaturesForSelect();
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "key_features",
@@ -28,7 +30,7 @@ function SelectKeyFeatures({ control }) {
                   Features Key
                 </label>
                 <Controller
-                  name={`key_features[${index}].key`}
+                  name={`key_features[${index}].key_feature_id`}
                   control={control}
                   defaultValue={item.key}
                   render={({ field }) => (
@@ -37,8 +39,8 @@ function SelectKeyFeatures({ control }) {
                       {...field}
                     >
                       <option value="">Select Feature Key</option>
-                      {featuresWithKeyAndIcon
-                        .filter(
+                      {data
+                        ?.filter(
                           (feature) =>
                             !selectedFeatureKeys?.includes(feature.key) ||
                             feature.key === field.value
@@ -47,7 +49,7 @@ function SelectKeyFeatures({ control }) {
                           <option
                             className="capitalize"
                             key={feature.id}
-                            value={feature.key}
+                            value={feature.id}
                           >
                             {feature.key}
                           </option>

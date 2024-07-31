@@ -112,16 +112,17 @@ export async function createProduct(formData) {
 
   if (!token) return null;
 
-  const { data } = await axios(`${BASE_URL}/add-product`, {
-    method: "post",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "content-type": "multipart/form-data",
-    },
-    data: formData,
-  });
+  console.log(formData);
+  // const { data } = await axios(`${BASE_URL}/add-product`, {
+  //   method: "post",
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //     "content-type": "multipart/form-data",
+  //   },
+  //   data: formData,
+  // });
 
-  return data;
+  // return data;
 }
 
 export async function uploadProduct(formData) {
