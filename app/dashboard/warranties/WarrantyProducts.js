@@ -121,7 +121,16 @@ const WarrantyProducts = ({ data }) => {
       },
       {
         accessorKey: "purchase_date",
-        header: "Purchase Date",
+        header: ({ column }) => (
+          <button
+            className="flex items-center"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <span>Purchase Date</span>
+            <ArrowDown01 className="ml-1 h-4 w-4" />
+          </button>
+        ),
+
         cell: ({ row }) => (
           <div>{new Date(row.original.purchase_date).toLocaleDateString()}</div>
         ),
@@ -198,7 +207,7 @@ const WarrantyProducts = ({ data }) => {
       ) : (
         <>
           <div className="flex items-center py-4">
-            <div className="sm:basis-[40%] flex flex-wrap items-center gap-2">
+            <div className="sm:basis-[35%] flex flex-wrap sm:flex-nowrap items-center gap-2">
               <Input
                 placeholder="Search by Dealer name..."
                 value={table.getColumn("dealer")?.getFilterValue() ?? ""}

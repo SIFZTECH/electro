@@ -4,12 +4,9 @@ import { useCategories } from "@/app/_features/categories/useCategory";
 import CategoryTable from "./CategoryTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateNewCategory from "./CreateNewCategory";
-import { useRoles } from "@/app/_features/roles/useRoles";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
-import PaginationUI from "@/app/components/ui/PaginationUI";
 import { useSearchParams } from "next/navigation";
-import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
 const Category = () => {
   const params = useSearchParams();
@@ -43,12 +40,6 @@ const Category = () => {
             : error.message}
         </h1>
       )}
-      {/* <PaginationUI
-        data={data}
-        page={page}
-        page_size={TABLE_PAGE_SIZE}
-        navigation="categories"
-      /> */}
     </div>
   );
   0;

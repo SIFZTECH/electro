@@ -6,29 +6,16 @@ import UploadStock from "./UploadStock";
 import NoPermission from "@/app/components/ui/NoPermission";
 import Spinner from "@/app/components/ui/Spinner";
 import NotFoundData from "@/app/components/ui/NotFoundData";
-import { useProducts } from "@/app/_features/products/useProducts";
-import PaginationUI from "@/app/components/ui/PaginationUI";
-import { STOCKS_PAGE_SIZE } from "@/app/lib/utils";
-import { useSearchParams } from "next/navigation";
+import { useProductsForStocks } from "@/app/_features/products/useProducts";
+
 import DownloadFile from "./DownloadFile";
 
 const StocksPage = () => {
-  const params = useSearchParams();
-
-  const page = params.get("page") || 1;
-  const categoryId = params.get("category");
-  const brandId = params.get("brand");
-  const query = params.get("query");
   const isUpdateStockPermission = useCheckPermission("upload_stock");
   const isDeleteStockPermission = useCheckPermission("delete_stock");
   const isStockPermission = useCheckPermission("stock");
 
-  const { products, isLoading, isError, error } = useProducts(
-    categoryId,
-    brandId,
-    page,
-    query
-  );
+  const { products, isLoading, isError, error } = useProductsForStocks();
 
   if (isLoading) {
     return <Spinner />;
@@ -63,12 +50,7 @@ const StocksPage = () => {
               : error.message}
           </h1>
         )}
-        <PaginationUI
-          data={products?.data}
-          page={+page}
-          page_size={STOCKS_PAGE_SIZE}
-          navigation="stocks-in-store"
-        />
+
         <DownloadFile />
       </div>
     </>

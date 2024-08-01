@@ -1,17 +1,20 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL, TABLE_PAGE_SIZE } from "../lib/utils";
 
 export async function getAllAttributes() {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/data-attributes`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const { data } = await axios.get(
+    `${BASE_URL}/data-attributes?per_page=${TABLE_PAGE_SIZE}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!data.data)
     throw new Error(
