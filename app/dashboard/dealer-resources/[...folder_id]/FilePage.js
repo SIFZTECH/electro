@@ -27,6 +27,8 @@ import BreadcrumbN from "./BreadcrumbN";
 import { usePathname, useRouter } from "next/navigation";
 import Search from "./Search";
 import { useEffect, useState } from "react";
+import DeleteFiles from "./DeleteFiles";
+import DownloadFiles from "./DownloadFiles";
 
 // Utility functions to check file types
 const isImage = (file) => file.match(/\.(jpeg|jpg|gif|png|webp)$/);
@@ -39,6 +41,9 @@ const isSpreadsheet = (file) => file.match(/\.(xls|xlsx|csv)$/);
 const FolderPage = ({ folder_id }) => {
   const [originalFolderData, setOriginalFolderData] = useState(null);
   const [folderData, setFolderData] = useState(null);
+  const [selectedItems, setSelectedItems] = useState({});
+  const [open, setOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const pathName = usePathname();
   const router = useRouter();
@@ -52,6 +57,23 @@ const FolderPage = ({ folder_id }) => {
     }
   }, [data, isLoading]);
 
+  const handleItemSelection = (itemId, type, doubleClick = false) => {
+    if (doubleClick) {
+      setSelectedFile(itemId);
+      setOpen(true);
+    } else {
+      setSelectedItems((prevSelected) => {
+        const newSelected = { ...prevSelected };
+        if (newSelected[itemId]) {
+          delete newSelected[itemId];
+        } else {
+          newSelected[itemId] = type;
+        }
+        return newSelected;
+      });
+    }
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -61,20 +83,37 @@ const FolderPage = ({ folder_id }) => {
       <div className="flex justify-between flex-wrap">
         <BreadcrumbN folderPath={pathName} />
 
-        {!isLoading && !isError && data?.data && isAdmin && (
-          <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">
-            <CreateNewSubFolder
-              parent_folder_id={folder_id}
-              folderData={data?.data}
-            />
-            <UpdateFolder folder_id={folder_id} folderData={data?.data} />
-            <UploadFileModal
+        {Object.keys(selectedItems).length > 0 ? (
+          <div className="flex gap-3 items-center ">
+            <DeleteFiles
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
               folder_id={folder_id}
-              sendTo={CreateNewFile}
-              queryKey="folder"
             />
-            <DeleteFolder folder_id={folder_id} />
+            <DownloadFiles
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
           </div>
+        ) : (
+          !isLoading &&
+          !isError &&
+          data?.data &&
+          isAdmin && (
+            <div className="flex-1 flex flex-wrap gap-2 w-full justify-end mb-2">
+              <CreateNewSubFolder
+                parent_folder_id={folder_id}
+                folderData={data?.data}
+              />
+              <UpdateFolder folder_id={folder_id} folderData={data?.data} />
+              <UploadFileModal
+                folder_id={folder_id}
+                sendTo={CreateNewFile}
+                queryKey="folder"
+              />
+              <DeleteFolder folder_id={folder_id} />
+            </div>
+          )
         )}
       </div>
 
@@ -85,9 +124,6 @@ const FolderPage = ({ folder_id }) => {
         Go Back
       </button>
 
-      {/* <h1 className="font-serif text-2xl mb-6 font-semibold bg-slate-900 text-white text-center py-3">
-        {data?.data?.folder_name}
-      </h1> */}
       <Search
         originalFolderData={originalFolderData}
         setFolderData={setFolderData}
@@ -130,9 +166,21 @@ const FolderPage = ({ folder_id }) => {
           <div className="flex gap-2 flex-col mt-3">
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-8">
               {folderData?.files?.map((file, i) => (
-                <Dialog key={i + 1}>
+                <Dialog
+                  key={i + 1}
+                  open={open && selectedFile === file}
+                  onOpenChange={() => setOpen(false)}
+                >
                   <DialogTrigger>
-                    <div className="border border-gray-200 shadow-sm flex flex-col items-center justify-center cursor-pointer h-full p-2">
+                    <div
+                      className={`border border-gray-200 shadow-sm flex flex-col items-center justify-center cursor-pointer h-full p-2 ${
+                        selectedItems[file] ? "bg-gray-200" : ""
+                      }`}
+                      onClick={() => handleItemSelection(file, "file")}
+                      onDoubleClick={() =>
+                        handleItemSelection(file, "file", true)
+                      }
+                    >
                       {isImage(file) && (
                         <Image
                           src={`${BASE_URL_IMAGE}${file}`}
