@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useCategoriesForSelect } from "@/app/_features/categories/useCategory";
 import React, { useState } from "react";

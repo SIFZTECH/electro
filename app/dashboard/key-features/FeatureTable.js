@@ -1,48 +1,240 @@
 "use client";
+import * as React from "react";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { Button } from "@/app/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu";
 
+import { Input } from "@/app/components/ui/input";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
 
-import FeaturesList from "./FeaturesList";
+import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
+import EditFeature from "./EditFeature";
+import DeleteFeature from "./DeleteFeature";
+import Image from "next/image";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
 const FeatureTable = ({ data }) => {
-  const features = data;
+  const features = React.useMemo(
+    () =>
+      data.map((feature, index) => ({
+        ...feature,
+        index: index + 1,
+      })),
+    [data]
+  );
 
-  const params = useSearchParams();
+  const columns = React.useMemo(
+    () => [
+      {
+        accessorKey: "index",
+        cell: ({ row }) => <div>{row.original.index}</div>,
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>SN</span>
+              <ArrowDown01 className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
+      },
+      {
+        accessorKey: "key",
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>Feature Name</span>
+              <ArrowDownAz className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
+      },
+      {
+        accessorKey: "icon",
+        header: "Feature Icon",
+        cell: ({ row }) => (
+          <Image
+            src={`${BASE_URL_IMAGE}${row.original.icon}`}
+            height={40}
+            width={40}
+            alt=""
+          />
+        ),
+      },
+      {
+        id: "actions",
+        enableHiding: false,
+        cell: ({ row }) => {
+          const feature = row.original;
 
-  const currentPage = params.get("page") || 1;
-  const startIndex = (currentPage - 1) * TABLE_PAGE_SIZE;
+          return (
+            <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
+              <EditFeature feature={feature} />
+              <DeleteFeature feature={feature} />
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const table = useReactTable({
+    data: features,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
 
   return (
-    <>
-      {features?.length === 0 ? (
-        "There is no features. Please add new feature!"
-      ) : (
-        <Table className="">
-          <TableHeader>
-            <TableRow className="font-serif font-bold text-gray-900 text-lg">
-              <TableHead>SN</TableHead>
-              <TableHead>Feature Name</TableHead>
-              <TableHead>Feature Icon</TableHead>
+    <div className="w-full">
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Filter by feature name..."
+          value={table.getColumn("key")?.getFilterValue() ?? ""}
+          onChange={(event) =>
+            table.getColumn("key")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns
+              <LucideChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
 
-              <TableHead>Actions</TableHead>
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                );
+              })}
             </TableRow>
-          </TableHeader>
-          <TableBody className="">
-            {features?.map((ft, i) => (
-              <FeaturesList key={ft.id} index={startIndex + i} feature={ft} />
-            ))}
-          </TableBody>
-        </Table>
-      )}
-    </>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
 

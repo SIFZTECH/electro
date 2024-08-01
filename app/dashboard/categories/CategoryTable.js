@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import * as React from "react";
 import {
@@ -15,6 +16,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
+
 import { Input } from "@/app/components/ui/input";
 import {
   Table,
@@ -24,6 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
+
 import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import EditCategory from "./EditCategory";
