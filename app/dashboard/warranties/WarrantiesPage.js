@@ -45,12 +45,12 @@ const WarrantiesPage = () => {
           }
         />
       )}
-      <PaginationUI
+      {/* <PaginationUI
         data={data?.warranties}
         page={page}
         page_size={WARRANTY_PAGE_SIZE}
         navigation="warranties"
-      />
+      /> */}
     </div>
   );
 };
