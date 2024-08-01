@@ -12,6 +12,7 @@ import {
   CommandList,
 } from "@/app/components/ui/command";
 import { cn } from "@/app/lib/utils";
+import Image from "next/image";
 
 export function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = React.useState(value);
@@ -469,9 +470,11 @@ const MultipleSelector = React.forwardRef(
                                   "cursor-default text-muted-foreground"
                               )}
                             >
-                              <img
+                              <Image
                                 src={option.image}
                                 alt={option.label}
+                                height={6}
+                                width={6}
                                 className="h-6 w-6 rounded-full"
                               />
                               {option.label}
