@@ -42,12 +42,12 @@ const SubCategoryPage = () => {
             : error.message}
         </h1>
       )}
-      <PaginationUI
+      {/* <PaginationUI
         data={data}
         page={page}
         page_size={TABLE_PAGE_SIZE}
         navigation="subcategories"
-      />
+      /> */}
     </div>
   );
 };
