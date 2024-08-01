@@ -8,13 +8,9 @@ import {
 } from "@/app/components/ui/table";
 import Image from "next/image";
 
-import featuresWithKeyAndIcon from "@/app/lib/features.json";
-import { useFeaturesForSelect } from "@/app/_features/key_features/useFeatures";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 
 const ProductSpecifications = ({ product }) => {
-  const { data, isLoading, isError } = useFeaturesForSelect();
-
   const allFeatures = product?.key_features?.map((feature) => feature);
   // Extract all unique features across all products
 
@@ -30,19 +26,15 @@ const ProductSpecifications = ({ product }) => {
       </TableHeader>
       <TableBody>
         {allFeatures.map((feature) => {
-          const matchedFeature = data?.find((item) => item.id === feature.id);
-
           const productFeature =
             product?.key_features?.find((spec) => spec.id === feature.id) || {};
-
-          console.log("p", productFeature);
 
           return (
             <TableRow key={feature}>
               <TableCell className="font-serif font-semibold flex flex-col text-center gap-2 items-center">
-                {matchedFeature && (
+                {productFeature && (
                   <Image
-                    src={`${BASE_URL_IMAGE}${matchedFeature.icon}`}
+                    src={`${BASE_URL_IMAGE}${productFeature.icon}`}
                     alt={feature}
                     width={30}
                     height={30}

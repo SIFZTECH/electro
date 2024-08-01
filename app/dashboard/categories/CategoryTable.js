@@ -9,14 +9,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Button } from "@/app/components/ui/button";
-import { Checkbox } from "@/app/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { Input } from "@/app/components/ui/input";
@@ -28,8 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import { ArrowDownAZ, LucideChevronDown } from "lucide-react";
-import { MdMoreHoriz } from "react-icons/md";
+import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import EditCategory from "./EditCategory";
 import DeleteCategory from "./DeleteCategory";
@@ -47,37 +42,37 @@ const CategoryTable = ({ data }) => {
   const columns = React.useMemo(
     () => [
       {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
-            aria-label="Select all"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-      {
         accessorKey: "index",
-        header: "SN",
         cell: ({ row }) => <div>{row.original.index}</div>,
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>SN</span>
+              <ArrowDown01 className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
       },
       {
         accessorKey: "name",
-        header: "Category Name",
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>Category Name</span>
+              <ArrowDownAz className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
       },
       {
         accessorKey: "subcategories",
@@ -258,11 +253,24 @@ const CategoryTable = ({ data }) => {
         </TableBody>
       </Table>
 
+      {/* Pagination Controls */}
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
       </div>
     </div>
   );

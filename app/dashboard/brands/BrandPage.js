@@ -8,7 +8,7 @@ import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import { useSearchParams } from "next/navigation";
-import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
 const BrandPage = () => {
   const params = useSearchParams();
@@ -43,7 +43,7 @@ const BrandPage = () => {
       <PaginationUI
         data={data}
         page={page}
-        page_size={CATAGORY_PAGE_SIZE}
+        page_size={TABLE_PAGE_SIZE}
         navigation="brands"
       />
     </div>

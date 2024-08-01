@@ -1,14 +1,14 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL, CATAGORY_PAGE_SIZE } from "../lib/utils";
+import { BASE_URL, TABLE_PAGE_SIZE } from "../lib/utils";
 
 export async function getAllFeatures(page) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
   const { data } = await axios.get(
-    `${BASE_URL}/key-features?per_page=${CATAGORY_PAGE_SIZE}&page=${page}`,
+    `${BASE_URL}/key-features?per_page=${TABLE_PAGE_SIZE}&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

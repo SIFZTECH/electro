@@ -6,7 +6,7 @@ import CreateNewFeature from "./CreateNewFeature";
 
 import PaginationUI from "@/app/components/ui/PaginationUI";
 import { useSearchParams } from "next/navigation";
-import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 import { useFeatures } from "@/app/_features/key_features/useFeatures";
 
 const BrandPage = () => {
@@ -34,7 +34,7 @@ const BrandPage = () => {
       <PaginationUI
         data={data}
         page={page}
-        page_size={CATAGORY_PAGE_SIZE}
+        page_size={TABLE_PAGE_SIZE}
         navigation="brands"
       />
     </div>

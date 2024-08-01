@@ -89,8 +89,7 @@ const CreateNewFeature = () => {
                 className="block w-full border border-gray-300 rounded-md py-1.5 px-3 text-gray-900 shadow-sm sm:text-sm sm:leading-6 file:mr-4 file:py-2 file:px-4
                 file:rounded file:border-0
                 file:text-sm file:font-semibold file:ring-1
-                file:ring-color-primary file:text-color-primary
-                file:hover:ring-2 file:bg-transparent"
+                file:bg-color-primary file:text-white"
               />
               {errors?.icon && (
                 <span className="text-red-500 text-sm">

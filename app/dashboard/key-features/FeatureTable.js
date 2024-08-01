@@ -10,7 +10,7 @@ import {
 
 import FeaturesList from "./FeaturesList";
 import { useSearchParams } from "next/navigation";
-import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
 const FeatureTable = ({ data }) => {
   const features = data;
@@ -18,7 +18,7 @@ const FeatureTable = ({ data }) => {
   const params = useSearchParams();
 
   const currentPage = params.get("page") || 1;
-  const startIndex = (currentPage - 1) * CATAGORY_PAGE_SIZE;
+  const startIndex = (currentPage - 1) * TABLE_PAGE_SIZE;
 
   return (
     <>

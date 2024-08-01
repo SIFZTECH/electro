@@ -10,7 +10,7 @@ import {
 
 import BrandsList from "./BrandsList";
 import { useSearchParams } from "next/navigation";
-import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
 const BrandTable = ({ data }) => {
   const brands = data?.data;
@@ -18,7 +18,7 @@ const BrandTable = ({ data }) => {
   const params = useSearchParams();
 
   const currentPage = params.get("page") || 1;
-  const startIndex = (currentPage - 1) * CATAGORY_PAGE_SIZE;
+  const startIndex = (currentPage - 1) * TABLE_PAGE_SIZE;
 
   return (
     <>

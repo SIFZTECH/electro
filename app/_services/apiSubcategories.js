@@ -1,12 +1,12 @@
 "use client";
 
 import axios from "axios";
-import { BASE_URL, CATAGORY_PAGE_SIZE } from "../lib/utils";
+import { BASE_URL, TABLE_PAGE_SIZE } from "../lib/utils";
 
 export async function getAllSubcategories(page) {
   const JWT = localStorage.getItem("access-token");
 
-  let url = `${BASE_URL}/subcategories?per_page=${CATAGORY_PAGE_SIZE}&page=${page}`;
+  let url = `${BASE_URL}/subcategories?per_page=${TABLE_PAGE_SIZE}&page=${page}`;
 
   const { data } = await axios.get(url, {
     headers: {
