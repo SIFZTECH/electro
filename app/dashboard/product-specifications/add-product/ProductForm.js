@@ -29,7 +29,7 @@ const ProductForm = () => {
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
-      key_features: [{ key: "", value: "" }],
+      key_features: [{ key_feature_id: null, value: "" }],
     },
   });
 
@@ -56,6 +56,14 @@ const ProductForm = () => {
       } else if (!category_id) {
         return toast.error("Category is Missing!");
       }
+
+      const fotmattedFeatures = key_features.map((feature) => {
+        return {
+          key_feature_id: Number(feature.key_feature_id),
+          value: feature.value,
+        };
+      });
+
       const res = await createProduct({
         name,
         model_name,
@@ -68,7 +76,7 @@ const ProductForm = () => {
         status,
         sku,
         variants,
-        specification: key_features,
+        key_features: fotmattedFeatures,
         images,
         misc13: misc13 === true ? 1 : 0,
       });

@@ -8,12 +8,12 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import BrandsList from "./BrandsList";
+import FeaturesList from "./FeaturesList";
 import { useSearchParams } from "next/navigation";
 import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
-const BrandTable = ({ data }) => {
-  const brands = data?.data;
+const FeatureTable = ({ data }) => {
+  const features = data;
 
   const params = useSearchParams();
 
@@ -22,22 +22,22 @@ const BrandTable = ({ data }) => {
 
   return (
     <>
-      {brands?.length === 0 ? (
-        "There is no brand. Please add new brand!"
+      {features?.length === 0 ? (
+        "There is no features. Please add new feature!"
       ) : (
         <Table className="">
           <TableHeader>
             <TableRow className="font-serif font-bold text-gray-900 text-lg">
               <TableHead>SN</TableHead>
-              <TableHead>Brand Name</TableHead>
-              <TableHead>Neto Status</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>Feature Name</TableHead>
+              <TableHead>Feature Icon</TableHead>
+
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="">
-            {brands.map((brand, i) => (
-              <BrandsList key={brand.id} index={startIndex + i} brand={brand} />
+            {features?.map((ft, i) => (
+              <FeaturesList key={ft.id} index={startIndex + i} feature={ft} />
             ))}
           </TableBody>
         </Table>
@@ -46,4 +46,4 @@ const BrandTable = ({ data }) => {
   );
 };
 
-export default BrandTable;
+export default FeatureTable;

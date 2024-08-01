@@ -39,6 +39,7 @@ const WarrantyRegistrationPage = () => {
 
       const res = await createWarranty({
         ...data,
+        address_line1: data.address_line1 || null,
         purchase_date: moment(date).format("YYYY-MM-DD"),
         purchase_from: dealer,
         battery_serial_no_image: data.battery_serial_no_image[0],

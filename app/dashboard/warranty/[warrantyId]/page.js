@@ -66,6 +66,10 @@ const WarrantyPageInfo = ({ params }) => {
                 </TableCell>
               </TableRow>
               <TableRow>
+                <TableCell className="font-semibold">Description</TableCell>
+                <TableCell>{warranty.description || "-"}</TableCell>
+              </TableRow>
+              <TableRow>
                 <TableCell className="font-semibold">Address Line</TableCell>
                 <TableCell>{warranty.address_line}</TableCell>
               </TableRow>

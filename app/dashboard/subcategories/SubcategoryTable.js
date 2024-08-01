@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import { CATAGORY_PAGE_SIZE } from "@/app/lib/utils";
+import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 import { useSearchParams } from "next/navigation";
 import SubCategoriesList from "./SubcategoriesList";
 
@@ -16,7 +16,7 @@ const SubCategoryTable = ({ data, page }) => {
   const params = useSearchParams();
 
   const currentPage = params.get("page") || 1;
-  const startIndex = (currentPage - 1) * CATAGORY_PAGE_SIZE;
+  const startIndex = (currentPage - 1) * TABLE_PAGE_SIZE;
   const subcategories = data.data;
 
   return (

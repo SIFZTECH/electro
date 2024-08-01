@@ -6,12 +6,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Image from "next/image";
 
-import featuresWithKeyAndIcon from "@/app/lib/features.json";
-
 const ProductSpecifications = ({ specification }) => {
-  const allFeatures = featuresWithKeyAndIcon.map((feature) => feature.key);
+  const allFeatures = specification.flatMap((feature) => feature.key_features);
 
   return (
     <Table className="overflow-x-auto">
@@ -25,27 +24,26 @@ const ProductSpecifications = ({ specification }) => {
       </TableHeader>
       <TableBody>
         {allFeatures.map((feature, i) => {
-          const matchedFeature = featuresWithKeyAndIcon.find(
-            (item) => item.key === feature
-          );
+          console.log(feature);
 
           return (
             <TableRow key={i}>
               <TableCell className="font-serif font-semibold flex flex-col text-center gap-2 items-center">
-                {matchedFeature && (
-                  <Image
-                    src={matchedFeature.icon}
-                    alt={feature}
-                    width={30}
-                    height={30}
-                  />
-                )}
-                <span className="ml-2 capitalize">{feature}</span>
+                <Image
+                  src={`${BASE_URL_IMAGE}${feature?.icon}`}
+                  alt={feature}
+                  width={30}
+                  height={30}
+                />
+
+                <span className="ml-2 capitalize">{feature.key}</span>
               </TableCell>
               {specification.map((product) => {
                 const productFeature =
-                  product.specification?.find((spec) => spec.key === feature) ||
-                  {};
+                  product.key_features?.find(
+                    (spec) => spec.id === feature?.id
+                  ) || {};
+
                 return (
                   <TableCell
                     key={product.id}
@@ -53,7 +51,7 @@ const ProductSpecifications = ({ specification }) => {
                   >
                     <div className="flex items-center">
                       <span className="font-medium text-sm text-gray-700 ml-2 w-full text-center lg:text-start">
-                        {productFeature.value || "N/A"}
+                        {productFeature?.pivot?.value || "N/A"}
                       </span>
                     </div>
                   </TableCell>

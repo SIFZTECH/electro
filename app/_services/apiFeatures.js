@@ -3,12 +3,12 @@
 import axios from "axios";
 import { BASE_URL, TABLE_PAGE_SIZE } from "../lib/utils";
 
-export async function getAllBrands(page) {
+export async function getAllFeatures(page) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
   const { data } = await axios.get(
-    `${BASE_URL}/brands?per_page=${TABLE_PAGE_SIZE}&page=${page}`,
+    `${BASE_URL}/key-features?per_page=${TABLE_PAGE_SIZE}&page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -24,11 +24,11 @@ export async function getAllBrands(page) {
   return data.data;
 }
 
-export async function getAllBrandsForSelect() {
+export async function getAllFeaturesForSelect() {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/brands?per_page=500`, {
+  const { data } = await axios.get(`${BASE_URL}/key-features?per_page=500`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -53,12 +53,12 @@ export async function getAllBrandsForPublic() {
   return data.data;
 }
 
-export async function getBrand(id) {
+export async function getFeature(id) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
-  const { data } = await axios.get(`${BASE_URL}/brands/${id}`, {
+  const { data } = await axios.get(`${BASE_URL}/key-features/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -72,28 +72,29 @@ export async function getBrand(id) {
   return data.data;
 }
 
-export async function updateBrand(id, name) {
+export async function updateFeature(id, formData) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/brands/${id}`,
-    method: "put",
+    url: `${BASE_URL}/key-features/${id}`,
+    method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
+      "content-type": "multipart/form-data",
     },
-    data: name,
+    data: { ...formData, _method: "PUT" },
   });
 
   return data;
 }
 
-export async function deleteBrand(id) {
+export async function deleteFeature(id) {
   const token = localStorage.getItem("access-token");
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/brands/${id}`,
+    url: `${BASE_URL}/key-features/${id}`,
     method: "delete",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -104,16 +105,17 @@ export async function deleteBrand(id) {
   return data;
 }
 
-export async function createBrand(formData) {
+export async function createFeature(formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
 
   const { data } = await axios({
-    url: `${BASE_URL}/brands`,
+    url: `${BASE_URL}/key-features`,
     method: "post",
     headers: {
       Authorization: `Bearer ${token}`,
+      "content-type": "multipart/form-data",
     },
     data: formData,
   });

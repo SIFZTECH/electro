@@ -404,3 +404,7 @@ table th {
   padding: 4px 12px;
   border: border solid #777;
 }
+
+.rdp {
+  padding: 0 !important;
+}

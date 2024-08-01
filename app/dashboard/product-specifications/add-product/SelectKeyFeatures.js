@@ -2,9 +2,11 @@
 
 import React from "react";
 import { useFieldArray, Controller, useWatch } from "react-hook-form";
-import featuresWithKeyAndIcon from "@/app/lib/features.json";
+import { useFeaturesForSelect } from "@/app/_features/key_features/useFeatures";
 
 function SelectKeyFeatures({ control }) {
+  const { data, isLoading, isError } = useFeaturesForSelect();
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "key_features",
@@ -15,7 +17,9 @@ function SelectKeyFeatures({ control }) {
     name: "key_features",
   });
 
-  const selectedFeatureKeys = watchFeatures?.map((item) => item.key);
+  const selectedFeatureKeys = watchFeatures?.map((item) =>
+    Number(item.key_feature_id)
+  );
 
   return (
     <>
@@ -28,26 +32,27 @@ function SelectKeyFeatures({ control }) {
                   Features Key
                 </label>
                 <Controller
-                  name={`key_features[${index}].key`}
+                  name={`key_features[${index}].key_feature_id`}
                   control={control}
-                  defaultValue={item.key}
+                  defaultValue={item.key_feature_id}
                   render={({ field }) => (
                     <select
                       className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 disabled:cursor-not-allowed"
                       {...field}
                     >
                       <option value="">Select Feature Key</option>
-                      {featuresWithKeyAndIcon
-                        .filter(
-                          (feature) =>
-                            !selectedFeatureKeys?.includes(feature.key) ||
-                            feature.key === field.value
-                        )
+                      {data
+                        ?.filter((feature) => {
+                          return (
+                            !selectedFeatureKeys?.includes(feature.id) ||
+                            feature.id === Number(field.value)
+                          );
+                        })
                         .map((feature) => (
                           <option
                             className="capitalize"
                             key={feature.id}
-                            value={feature.key}
+                            value={feature.id}
                           >
                             {feature.key}
                           </option>
