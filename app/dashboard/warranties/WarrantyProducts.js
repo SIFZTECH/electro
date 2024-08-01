@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import {
   flexRender,
@@ -24,10 +23,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
+import { ArrowDown01, LucideChevronDown } from "lucide-react";
 import Link from "next/link";
 import EditWarranty from "./EditWarranty";
 import DeleteWarranty from "./DeleteWarranty";
+import "react-day-picker/dist/style.css";
+import DateRangePicker from "./DateRangePicker";
 
 const WarrantyProducts = ({ data }) => {
   const warranties = React.useMemo(
@@ -39,11 +40,49 @@ const WarrantyProducts = ({ data }) => {
     [data.data]
   );
 
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [selectedRange, setSelectedRange] = React.useState({
+    from: undefined,
+    to: undefined,
+  });
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  React.useEffect(() => {
+    if (selectedRange?.from && selectedRange?.to) {
+      const fromDate = new Date(selectedRange.from);
+      const toDate = new Date(selectedRange.to);
+      setColumnFilters([
+        {
+          id: "purchase_date",
+          value: { from: fromDate, to: toDate },
+        },
+      ]);
+    } else {
+      setColumnFilters([]);
+    }
+  }, [selectedRange]);
+
+  const purchaseDateFilterFn = (row, columnId, filterValue) => {
+    const purchaseDate = new Date(row.original.purchase_date);
+    const fromDate = filterValue.from;
+    const toDate = filterValue.to;
+
+    return purchaseDate >= fromDate && purchaseDate <= toDate;
+  };
+
+  const dealerFilterFn = (row, columnId, filterValue) => {
+    const dealer = row.original.dealer;
+    if (!dealer) return false;
+    const fullName = `${dealer.firstname} ${dealer.lastname}`;
+    return fullName.toLowerCase().includes(filterValue.toLowerCase());
+  };
+
   const columns = React.useMemo(
     () => [
       {
         accessorKey: "index",
-        cell: ({ row }) => <div>{row.original.index}</div>,
         header: ({ column }) => (
           <button
             className="flex items-center"
@@ -66,6 +105,7 @@ const WarrantyProducts = ({ data }) => {
             {row.original.dealer?.firstname} {row.original.dealer?.lastname}
           </div>
         ),
+        filterFn: dealerFilterFn,
       },
       {
         accessorKey: "customer",
@@ -75,6 +115,14 @@ const WarrantyProducts = ({ data }) => {
             {row.original.firstname} {row.original.lastname}
           </div>
         ),
+      },
+      {
+        accessorKey: "purchase_date",
+        header: "Purchase Date",
+        cell: ({ row }) => (
+          <div>{new Date(row.original.purchase_date).toLocaleDateString()}</div>
+        ),
+        filterFn: purchaseDateFilterFn,
       },
       {
         accessorKey: "status",
@@ -117,11 +165,6 @@ const WarrantyProducts = ({ data }) => {
     []
   );
 
-  const [sorting, setSorting] = React.useState([]);
-  const [columnFilters, setColumnFilters] = React.useState([]);
-  const [columnVisibility, setColumnVisibility] = React.useState({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
   const table = useReactTable({
     data: warranties,
     columns,
@@ -145,20 +188,29 @@ const WarrantyProducts = ({ data }) => {
     <div className="w-full mt-10">
       {warranties.length === 0 ? (
         <h1 className="font-serif text-center text-xl">
-          There is no warranties at that moment! Please add new Warranty
+          There are no warranties at the moment! Please add a new Warranty.
         </h1>
       ) : (
         <>
           <div className="flex items-center py-4">
-            <Input
-              placeholder="Filter by dealer or customer name..."
-              value={table.getColumn("dealer")?.getFilterValue() ?? ""}
-              onChange={(event) =>
-                table.getColumn("dealer")?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-            />
-            <DropdownMenu>
+            <div className="basis-[40%] flex items-center gap-2">
+              <Input
+                placeholder="Search by Dealer name..."
+                value={table.getColumn("dealer")?.getFilterValue() ?? ""}
+                onChange={(event) => {
+                  console.log(table.getColumn("dealer"));
+                  return table
+                    .getColumn("dealer")
+                    ?.setFilterValue(event.target.value);
+                }}
+                className="max-w-sm"
+              />
+              <DateRangePicker
+                selectedRange={selectedRange}
+                setSelectedRange={setSelectedRange}
+              />
+            </div>
+            <DropdownMenu className="basis-[60%]">
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
                   Columns
