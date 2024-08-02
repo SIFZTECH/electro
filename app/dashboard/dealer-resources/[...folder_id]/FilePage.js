@@ -29,6 +29,7 @@ import Search from "./Search";
 import { useEffect, useState } from "react";
 import DeleteFiles from "./DeleteFiles";
 import DownloadFiles from "./DownloadFiles";
+import toast from "react-hot-toast";
 
 // Utility functions to check file types
 const isImage = (file) => file.match(/\.(jpeg|jpg|gif|png|webp)$/);
@@ -71,6 +72,20 @@ const FolderPage = ({ folder_id }) => {
         }
         return newSelected;
       });
+    }
+  };
+
+  const handleShare = async (file) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: file,
+          url: `${BASE_URL_IMAGE}${file}`,
+        });
+        toast.success("Shared file successfully");
+      } catch (err) {
+        toast.error("Failed to share file");
+      }
     }
   };
 
@@ -317,7 +332,13 @@ const FolderPage = ({ folder_id }) => {
                           <p>Cannot display this file type.</p>
                         </div>
                       )}
-                    <div className="flex gap-4 items-center justify-end mt-4">
+                    <div className="flex gap-2 items-center justify-end mt-4">
+                      <button
+                        onClick={() => handleShare(file)} // Define your share function here
+                        className="btn-primary bg-purple-400 hover:bg-purple-500 text-white px-3 py-1 rounded-md"
+                      >
+                        Share
+                      </button>
                       <DownloadButton
                         fileUrl={`${BASE_URL}/download?path=${file}`}
                       />

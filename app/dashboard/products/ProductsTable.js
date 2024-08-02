@@ -33,6 +33,8 @@ import EditProduct from "./[slug]/UpdateProduct";
 import DeleteProduct from "./[slug]/DeleteProduct";
 import { useProductsForStocks } from "@/app/_features/products/useProducts";
 import Loading from "@/app/loading";
+import Image from "next/image";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 
 const ProductsTable = () => {
   const { products: data, isLoading, isError, error } = useProductsForStocks();
@@ -45,6 +47,12 @@ const ProductsTable = () => {
       })),
     [data?.data]
   );
+
+  const totalProducts = products ? products.length : 0;
+
+  const statusFilterFn = (row, columnId, filterValue) => {
+    return filterValue.includes(row.original.status);
+  };
 
   const columns = React.useMemo(
     () => [
@@ -63,6 +71,27 @@ const ProductsTable = () => {
               <ArrowDown01 className="ml-1 h-4 w-4" />
             </button>
           );
+        },
+      },
+      {
+        accessorKey: "images",
+        header: () => <div className="text-center">Product Image</div>,
+
+        cell: ({ row }) => {
+          const imagePath = row.original.images[0]?.image_path;
+          if (imagePath) {
+            return (
+              <div className="flex items-center justify-center">
+                <Image
+                  height={40}
+                  width={40}
+                  src={`${imagePath}`}
+                  alt="Product Image"
+                  className="object-contain"
+                />
+              </div>
+            );
+          }
         },
       },
       {
@@ -157,6 +186,7 @@ const ProductsTable = () => {
             </p>
           );
         },
+        filterFn: statusFilterFn,
       },
       {
         id: "actions",
@@ -186,6 +216,19 @@ const ProductsTable = () => {
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [selectedStatuses, setSelectedStatuses] = React.useState([]);
+
+  React.useEffect(() => {
+    const newFilters = [];
+
+    if (selectedStatuses.length > 0) {
+      newFilters.push({
+        id: "status",
+        value: selectedStatuses,
+      });
+    }
+    setColumnFilters(newFilters);
+  }, [selectedStatuses]);
 
   const table = useReactTable({
     data: products,
@@ -208,40 +251,49 @@ const ProductsTable = () => {
 
   return (
     <div className="w-full">
-      <div className="flex items-center py-4">
+      <div className="sm:basis-[35%] flex flex-wrap sm:flex-nowrap gap-2 items-center py-4">
         <Input
           placeholder="Filter by Product name..."
           value={table.getColumn("name")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm focus-visible:ring-offset-0 focus-visible:ring-0"
         />
-        <DropdownMenu>
+        <DropdownMenu className="sm:basis-[60%]">
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
+            <Button variant="outline">
+              Filter by Status
               <LucideChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
+            {[
+              "Active",
+              "Inactive",
+              "Pending",
+              "Out of Stock",
+              "Discontinued",
+              "Draft",
+              "Pre-order",
+              "Backorder",
+              "On Hold",
+              "Featured",
+              "Custom",
+            ].map((status) => (
+              <DropdownMenuCheckboxItem
+                key={status}
+                className="capitalize"
+                checked={selectedStatuses.includes(status)}
+                onCheckedChange={(value) =>
+                  setSelectedStatuses((prev) =>
+                    value ? [...prev, status] : prev.filter((s) => s !== status)
+                  )
+                }
+              >
+                {status}
+              </DropdownMenuCheckboxItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -314,10 +366,9 @@ const ProductsTable = () => {
               Next
             </Button>
           </div>
+          <div className="text-center">Total Products: {totalProducts}</div>
         </>
       )}
-
-      {/* Pagination Controls */}
     </div>
   );
 };
