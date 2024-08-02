@@ -14,12 +14,15 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProductCategories from "./ProductCategories";
 import useCheckPermission from "@/app/_hooks/usePermission";
+import ProductsTable from "./ProductsTable";
+import { useUser } from "@/app/_features/authentication/useUser";
 
 const RootPage = () => {
   const [value, setValue] = useState("e-bikes");
   const [status, setStatus] = useState("all");
   const [sort, setSort] = useState("");
   const [misc13, setMisc13] = useState("");
+  const { isAdmin } = useUser();
 
   const params = useSearchParams();
 
@@ -96,6 +99,14 @@ const RootPage = () => {
                 >
                   Compare Bikes
                 </TabsTrigger>
+                {isAdmin && (
+                  <TabsTrigger
+                    value="manage-bikes"
+                    onClick={() => setValue("manage-bikes")}
+                  >
+                    Product Management
+                  </TabsTrigger>
+                )}
               </TabsList>
               {isPermission && <ProductCategories />}
             </div>
@@ -123,6 +134,11 @@ const RootPage = () => {
                 toggleCompare={toggleCompare}
               />
             </TabsContent>
+            {isAdmin && (
+              <TabsContent value="manage-bikes">
+                <ProductsTable />
+              </TabsContent>
+            )}
           </Tabs>
         </div>
       </div>

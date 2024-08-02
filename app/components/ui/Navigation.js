@@ -269,9 +269,9 @@ const Navigation = () => {
             <li>
               <Link
                 className={`flex gap-2 items-center px-3 py-2 rounded-md ${
-                  pathname.startsWith("/dashboard/product") ? "active" : ""
+                  pathname.startsWith("/dashboard/products") ? "active" : ""
                 }`}
-                href={"/dashboard/product-specifications"}
+                href={"/dashboard/products"}
               >
                 <svg
                   width="25"
@@ -286,7 +286,7 @@ const Navigation = () => {
                   />
                 </svg>
 
-                <span>Product Specifications</span>
+                <span>Products</span>
               </Link>
             </li>
           )}
