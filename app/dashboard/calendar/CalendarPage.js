@@ -15,6 +15,7 @@ import { useEvents } from "@/app/_features/events/useEvents";
 import Spinner from "@/app/components/ui/Spinner";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
+import "moment/locale/en-gb";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
