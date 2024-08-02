@@ -31,7 +31,7 @@ const EditWarrantyStatusForBulk = ({ warranty_ids }) => {
   async function onSubmit({ status, message }) {
     try {
       const res = await updateWarrantyStatusForBulk({
-        action: "post",
+        action: "update_status",
         warranty_ids,
         status,
         message,
