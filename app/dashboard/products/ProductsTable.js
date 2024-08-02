@@ -133,65 +133,30 @@ const ProductsTable = () => {
       {
         accessorKey: "status",
         header: "Status",
-        cell: ({ row }) => (
-          <div>
-            {row.original?.status === "Active" && (
-              <p className="bg-green-500 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Inactive" && (
-              <p className="bg-gray-400 text-gray-800 text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Pending" && (
-              <p className="bg-yellow-400 text-yellow-800 text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Out of Stock" && (
-              <p className="bg-red-500 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Discontinued" && (
-              <p className="bg-gray-600 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Draft" && (
-              <p className="bg-blue-400 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Pre-order" && (
-              <p className="bg-purple-400 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Backorder" && (
-              <p className="bg-yellow-500 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "On Hold" && (
-              <p className="bg-orange-400 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Featured" && (
-              <p className="bg-pink-400 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-            {row.original?.status === "Custom" && (
-              <p className="bg-teal-400 text-white text-sm font-medium rounded-full px-2 py-1 text-center">
-                {row.original.status}
-              </p>
-            )}
-          </div>
-        ),
+        cell: ({ row }) => {
+          const status = row.original?.status;
+          const statusClasses = {
+            Active: "bg-green-500 text-white",
+            Inactive: "bg-gray-400 text-gray-800",
+            Pending: "bg-yellow-400 text-yellow-800",
+            "Out of Stock": "bg-red-500 text-white",
+            Discontinued: "bg-gray-600 text-white",
+            Draft: "bg-blue-400 text-white",
+            "Pre-order": "bg-purple-400 text-white",
+            Backorder: "bg-yellow-500 text-white",
+            "On Hold": "bg-orange-400 text-white",
+            Featured: "bg-pink-400 text-white",
+            Custom: "bg-teal-400 text-white",
+          };
+
+          return (
+            <p
+              className={`${statusClasses[status]} text-sm font-medium rounded-full px-2 py-1 text-center`}
+            >
+              {status}
+            </p>
+          );
+        },
       },
       {
         id: "actions",

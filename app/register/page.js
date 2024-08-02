@@ -69,7 +69,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex items-center min-h-dvh flex-1 flex-col justify-center py-12">
+      <div className="flex items-center min-h-[90dvh] flex-1 flex-col justify-center py-12">
         <div className="sm:w-[40rem] w-full sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
             <Logo />
