@@ -64,7 +64,7 @@ const Products = ({
               summary={product.introduction}
               isCompared={compareList.some((p) => p.id === product.id)}
               toggleCompare={() => toggleCompare(product)}
-              navigateTo={"dashboard/product-specifications"}
+              navigateTo={"dashboard/products"}
               setValue={setValue}
               compareList={compareList}
             />
