@@ -47,7 +47,7 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <div className="flex items-center min-h-dvh flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
+      <div className="flex items-center min-h-[90dvh] flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
         <div className="sm:w-[34rem] sm:py-8 mx-auto sm:border sm:border-gray-200 sm:shadow-sm">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col items-center">
             <Image src={"/logo.jpeg"} height={130} width={130} alt="Logo" />
