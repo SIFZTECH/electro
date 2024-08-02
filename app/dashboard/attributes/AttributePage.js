@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useAttributeNames,
-  useAttributes,
-} from "@/app/_features/attributes/useAttributes";
+import { useAttributes } from "@/app/_features/attributes/useAttributes";
 import AttributeTable from "./AttributeTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateNewAttribute from "./CreateNewAttribute";

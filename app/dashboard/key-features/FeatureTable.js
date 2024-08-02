@@ -31,7 +31,6 @@ import EditFeature from "./EditFeature";
 import DeleteFeature from "./DeleteFeature";
 import Image from "next/image";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
-import { useSearchParams } from "next/navigation";
 
 const FeatureTable = ({ data }) => {
   const features = React.useMemo(

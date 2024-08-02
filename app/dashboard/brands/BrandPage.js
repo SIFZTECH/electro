@@ -6,9 +6,7 @@ import CreateNewBrand from "./CreateNewBrand";
 import { useBrands } from "@/app/_features/brands/useBrands";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
-import PaginationUI from "@/app/components/ui/PaginationUI";
 import { useSearchParams } from "next/navigation";
-import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 
 const BrandPage = () => {
   const params = useSearchParams();
@@ -40,12 +38,6 @@ const BrandPage = () => {
             : error.message}
         </h1>
       )}
-      <PaginationUI
-        data={data}
-        page={page}
-        page_size={TABLE_PAGE_SIZE}
-        navigation="brands"
-      />
     </div>
   );
 };

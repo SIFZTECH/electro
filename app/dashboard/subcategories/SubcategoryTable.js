@@ -19,9 +19,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 
-import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
-import { useSearchParams } from "next/navigation";
-import SubCategoriesList from "./SubcategoriesList";
+
 import React from "react";
 import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
 import EditSubCategory from "./EditSubCategory";

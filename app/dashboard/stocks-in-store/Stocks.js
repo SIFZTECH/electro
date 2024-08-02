@@ -1,5 +1,21 @@
-import { useProducts } from "@/app/_features/products/useProducts";
-import Spinner from "@/app/components/ui/Spinner";
+"use client";
+import * as React from "react";
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { Button } from "@/app/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu";
+
+import { Input } from "@/app/components/ui/input";
 import {
   Table,
   TableBody,
@@ -8,76 +24,180 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-
-const dummyData = [
-  {
-    id: "dyyds735363",
-    products: "NTM T3s",
-    myEBikes: "50",
-    clicks: "50",
-  },
-  {
-    id: "dyyds735364",
-    products: "NTM Tcs",
-    myEBikes: "50",
-    clicks: "50",
-  },
-  {
-    id: "dyyds735365",
-    products: "NTM Tcs",
-    myEBikes: "50",
-    clicks: "50",
-  },
-  {
-    id: "dyyds735366",
-    products: "NTM Tcs",
-    myEBikes: "50",
-    clicks: "50",
-  },
-  {
-    id: "dyyds735367",
-    products: "OLD Tcs",
-    myEBikes: "50",
-    clicks: "50",
-  },
-  {
-    id: "dyyds735368",
-    products: "SST Tcs",
-    myEBikes: "50",
-    clicks: "50",
-  },
-  {
-    id: "dyyds735369",
-    products: "NTM 4ST",
-    myEBikes: "50",
-    clicks: "50",
-  },
-];
+import { ArrowDown01, LucideChevronDown } from "lucide-react";
 
 const Stocks = ({ products }) => {
-  const data = products?.data?.data;
+  const data =
+    products?.data?.data.map((item, index) => ({
+      ...item,
+      sn: index + 1,
+    })) || [];
+
+  const columns = React.useMemo(
+    () => [
+      {
+        accessorKey: "sn",
+        cell: ({ row }) => <div>{row.original.sn}</div>,
+        header: ({ column }) => (
+          <button
+            className="flex items-center"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <span>SN</span>
+            <ArrowDown01 className="ml-1 h-4 w-4" />
+          </button>
+        ),
+      },
+      {
+        accessorKey: "name",
+        header: "Products",
+      },
+      {
+        accessorKey: "stock",
+        header: ({ column }) => (
+          <button
+            className="flex items-center"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <span>E Bikes</span>
+            <ArrowDown01 className="ml-1 h-4 w-4" />
+          </button>
+        ),
+      },
+      {
+        id: "clicks",
+        header: "Clicks",
+        cell: () => "-",
+      },
+    ],
+    []
+  );
+
+  const [sorting, setSorting] = React.useState([]);
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [rowSelection, setRowSelection] = React.useState({});
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
 
   return (
-    <Table className="mt-3">
-      <TableHeader>
-        <TableRow>
-          <TableHead>Products</TableHead>
-          <TableHead>E Bikes</TableHead>
-          <TableHead>Clicks</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.map((data, i) => {
-          return (
-            <TableRow key={i + 1}>
-              <TableCell data-label="Products">{data.name}</TableCell>
-              <TableCell data-label="MyEBikes">{data.stock}</TableCell>
-              <TableCell data-label="Clicks">-</TableCell>
+    <div className="w-full mt-3">
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Filter by product name..."
+          value={table.getColumn("name")?.getFilterValue() ?? ""}
+          onChange={(event) =>
+            table.getColumn("name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns
+              <LucideChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </TableHead>
+              ))}
             </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
+    </div>
   );
 };
+
 export default Stocks;

@@ -1,10 +1,10 @@
-import { deleteResourceFile } from "@/app/_services/apiResources";
+import { deleteMediaFile } from "@/app/_services/apiMedia";
 import SpinnerMini from "@/app/components/ui/SpinnerMini";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const DeleteFile = ({ file_path, folder_id }) => {
+const DeleteFiles = ({ selectedItems, setSelectedItems, folder_id }) => {
   const queryClient = useQueryClient();
 
   const {
@@ -13,15 +13,15 @@ const DeleteFile = ({ file_path, folder_id }) => {
   } = useForm();
 
   async function onSubmit() {
+    const paths = Object.keys(selectedItems);
+
     try {
-      const res = await deleteResourceFile({
-        folder_id,
-        file_paths: [file_path],
-      });
+      const res = await deleteMediaFile({ folder_id, file_paths: paths });
 
       if (res) {
         toast.success(res.message);
         queryClient.invalidateQueries("folder", folder_id);
+        setSelectedItems({});
       }
     } catch (err) {
       console.error(err);
@@ -37,11 +37,11 @@ const DeleteFile = ({ file_path, folder_id }) => {
     <form className="" onSubmit={handleSubmit(onSubmit)}>
       <button>
         <span className="btn-primary bg-red-500 text-white inline-block">
-          {isSubmitting ? <SpinnerMini /> : "Delete"}
+          {isSubmitting ? <SpinnerMini /> : "Delete Selected Files"}
         </span>
       </button>
     </form>
   );
 };
 
-export default DeleteFile;
+export default DeleteFiles;

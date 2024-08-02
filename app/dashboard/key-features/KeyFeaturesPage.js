@@ -4,9 +4,7 @@ import FeatureTable from "./FeatureTable";
 import Spinner from "@/app/components/ui/Spinner";
 import CreateNewFeature from "./CreateNewFeature";
 
-import PaginationUI from "@/app/components/ui/PaginationUI";
 import { useSearchParams } from "next/navigation";
-import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 import { useFeatures } from "@/app/_features/key_features/useFeatures";
 
 const BrandPage = () => {
@@ -31,12 +29,6 @@ const BrandPage = () => {
             : error.message}
         </h1>
       )}
-      <PaginationUI
-        data={data}
-        page={page}
-        page_size={TABLE_PAGE_SIZE}
-        navigation="brands"
-      />
     </div>
   );
 };

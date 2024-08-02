@@ -14,7 +14,7 @@ const DeleteFile = ({ file_path, folder_id }) => {
 
   async function onSubmit() {
     try {
-      const res = await deleteMediaFile({ folder_id, file_path });
+      const res = await deleteMediaFile({ folder_id, file_paths: [file_path] });
 
       if (res) {
         toast.success(res.message);
@@ -23,7 +23,7 @@ const DeleteFile = ({ file_path, folder_id }) => {
     } catch (err) {
       console.error(err);
       if (err.response) {
-        toast.error(err.response.data.message);
+        toast.error(err.response.data?.message);
       } else {
         toast.error("Something went wrong!");
       }

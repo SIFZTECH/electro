@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import * as React from "react";
 import {
   flexRender,
@@ -25,10 +26,12 @@ import {
 } from "@/app/components/ui/table";
 import { ArrowDown01, LucideChevronDown } from "lucide-react";
 import Link from "next/link";
-import EditWarranty from "./EditWarranty";
+import EditWarrantyStatus from "./EditWarrantyStatus";
 import DeleteWarranty from "./DeleteWarranty";
 import "react-day-picker/dist/style.css";
 import DateRangePicker from "./DateRangePicker";
+import useCheckPermission from "@/app/_hooks/usePermission";
+import EditWarranty from "./EditWarranty";
 
 const WarrantyProducts = ({ data }) => {
   const warranties = React.useMemo(
@@ -118,7 +121,16 @@ const WarrantyProducts = ({ data }) => {
       },
       {
         accessorKey: "purchase_date",
-        header: "Purchase Date",
+        header: ({ column }) => (
+          <button
+            className="flex items-center"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <span>Purchase Date</span>
+            <ArrowDown01 className="ml-1 h-4 w-4" />
+          </button>
+        ),
+
         cell: ({ row }) => (
           <div>{new Date(row.original.purchase_date).toLocaleDateString()}</div>
         ),
@@ -146,6 +158,7 @@ const WarrantyProducts = ({ data }) => {
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {
+          const isEditWarrantyPermission = useCheckPermission("edit_warranty");
           const warranty = row.original;
           return (
             <div className="flex gap-2 flex-wrap justify-end xl:justify-normal">
@@ -155,7 +168,8 @@ const WarrantyProducts = ({ data }) => {
               >
                 View Details
               </Link>
-              <EditWarranty warranty={warranty} />
+              <EditWarrantyStatus warranty={warranty} />
+              {isEditWarrantyPermission && <EditWarranty warranty={warranty} />}
               <DeleteWarranty warrantyId={warranty.id} />
             </div>
           );
@@ -193,7 +207,7 @@ const WarrantyProducts = ({ data }) => {
       ) : (
         <>
           <div className="flex items-center py-4">
-            <div className="basis-[40%] flex items-center gap-2">
+            <div className="sm:basis-[35%] flex flex-wrap sm:flex-nowrap items-center gap-2">
               <Input
                 placeholder="Search by Dealer name..."
                 value={table.getColumn("dealer")?.getFilterValue() ?? ""}
@@ -203,14 +217,14 @@ const WarrantyProducts = ({ data }) => {
                     .getColumn("dealer")
                     ?.setFilterValue(event.target.value);
                 }}
-                className="max-w-sm"
+                className="sm:max-w-sm"
               />
               <DateRangePicker
                 selectedRange={selectedRange}
                 setSelectedRange={setSelectedRange}
               />
             </div>
-            <DropdownMenu className="basis-[60%]">
+            <DropdownMenu className="sm:basis-[60%]">
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="ml-auto">
                   Columns

@@ -5,8 +5,6 @@ import CreateSubNewCategory from "./CreateNewSubCategory";
 import { useSubcategories } from "@/app/_features/subCategories/useSubcategories";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import { useSearchParams } from "next/navigation";
-import PaginationUI from "@/app/components/ui/PaginationUI";
-import { TABLE_PAGE_SIZE } from "@/app/lib/utils";
 import SubCategoryTable from "./SubcategoryTable";
 
 const SubCategoryPage = () => {
@@ -24,17 +22,7 @@ const SubCategoryPage = () => {
         {isSubcategoryCreatePermission && <CreateSubNewCategory />}
       </div>
 
-      {!isError && !error && (
-        <>
-          <SubCategoryTable data={data} />{" "}
-          <PaginationUI
-            data={data}
-            page={page}
-            page_size={TABLE_PAGE_SIZE}
-            navigation="subcategories"
-          />
-        </>
-      )}
+      {!isError && !error && <SubCategoryTable data={data} />}
       {isError && error && (
         <h1>
           {error?.response.data.message
@@ -42,12 +30,6 @@ const SubCategoryPage = () => {
             : error.message}
         </h1>
       )}
-      {/* <PaginationUI
-        data={data}
-        page={page}
-        page_size={TABLE_PAGE_SIZE}
-        navigation="subcategories"
-      /> */}
     </div>
   );
 };

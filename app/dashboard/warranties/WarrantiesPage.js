@@ -6,9 +6,7 @@ import Stats from "./WarrantyStats";
 import Spinner from "@/app/components/ui/Spinner";
 import { useWarrantiesForAdmin } from "@/app/_features/warranties/useWarranties";
 import NotFoundData from "@/app/components/ui/NotFoundData";
-import PaginationUI from "@/app/components/ui/PaginationUI";
 import { useSearchParams } from "next/navigation";
-import { WARRANTY_PAGE_SIZE } from "@/app/lib/utils";
 import useCheckPermission from "@/app/_hooks/usePermission";
 
 const WarrantiesPage = () => {
@@ -45,12 +43,6 @@ const WarrantiesPage = () => {
           }
         />
       )}
-      <PaginationUI
-        data={data?.warranties}
-        page={page}
-        page_size={WARRANTY_PAGE_SIZE}
-        navigation="warranties"
-      />
     </div>
   );
 };

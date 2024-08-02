@@ -62,6 +62,21 @@ export async function getAllProducts({
 
   return data;
 }
+export async function getAllProductsForStocks() {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  let url = `${BASE_URL}/products?per_page=10000`;
+
+  const { data } = await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
 
 export async function getAllProductsForPublic({
   categoryId,
