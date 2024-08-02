@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { createSubcategory } from "@/app/_services/apiSubcategories";
 import { useCategoriesForSelect } from "@/app/_features/categories/useCategory";
-import { CategoryOptions } from "../product-specifications/CategoryOptions";
+import { CategoryOptions } from "../products/CategoryOptions";
 
 const CreateNewSubCategory = () => {
   const [open, setOpen] = useState();

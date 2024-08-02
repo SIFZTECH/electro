@@ -15,7 +15,6 @@ const ProductDetailsPage = ({ params }) => {
   const isProductUpdatePermission = useCheckPermission("product_update");
   const isProductDeletePermission = useCheckPermission("product_delete");
   const { isLoading, product, error, isError } = useProduct(params.slug);
-  const allFeatures = featuresWithKeyAndIcon.map((feature) => feature.key);
 
   if (isLoading) return <Spinner />;
   if (isError && error) return;

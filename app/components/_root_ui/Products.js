@@ -3,8 +3,8 @@ import SkeletonProductCards from "@/app/components/ui/SkeletonProductCards";
 import Product from "./Product";
 import SearchProduct from "./SearchProduct";
 import NotFoundData from "@/app/components/ui/NotFoundData";
-import SortBy from "@/app/dashboard/product-specifications/SortBy";
-import FilterByBikes from "@/app/dashboard/product-specifications/FilterByBikes";
+import SortBy from "@/app/dashboard/products/SortBy";
+import FilterByBikes from "@/app/dashboard/products/FilterByBikes";
 
 const Products = ({
   isLoading,

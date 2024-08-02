@@ -33,7 +33,7 @@ const DeleteProduct = ({ productId }) => {
         toast.success(res.message);
 
         queryClient.invalidateQueries("products");
-        router.replace("/dashboard/product-specifications");
+        router.back(-1);
         setOpen((open) => !open);
       }
     } catch (err) {

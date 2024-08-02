@@ -1,7 +1,7 @@
 import ProductsRootPage from "./ProductsRootPage";
 
 export const metadata = {
-  title: "Leon Cycle | Product Specifications",
+  title: "Leon Cycle | Products",
 };
 
 const page = () => {
