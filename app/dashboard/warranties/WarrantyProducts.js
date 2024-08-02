@@ -28,7 +28,6 @@ import { ArrowDown01, LucideChevronDown } from "lucide-react";
 import Link from "next/link";
 import EditWarrantyStatus from "./EditWarrantyStatus";
 import DeleteWarranty from "./DeleteWarranty";
-import "react-day-picker/dist/style.css";
 import DateRangePicker from "./DateRangePicker";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import EditWarranty from "./EditWarranty";
@@ -51,21 +50,26 @@ const WarrantyProducts = ({ data }) => {
   });
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [selectedStatuses, setSelectedStatuses] = React.useState([]);
 
   React.useEffect(() => {
+    const newFilters = [];
     if (selectedRange?.from && selectedRange?.to) {
       const fromDate = new Date(selectedRange.from);
       const toDate = new Date(selectedRange.to);
-      setColumnFilters([
-        {
-          id: "purchase_date",
-          value: { from: fromDate, to: toDate },
-        },
-      ]);
-    } else {
-      setColumnFilters([]);
+      newFilters.push({
+        id: "purchase_date",
+        value: { from: fromDate, to: toDate },
+      });
     }
-  }, [selectedRange]);
+    if (selectedStatuses.length > 0) {
+      newFilters.push({
+        id: "status",
+        value: selectedStatuses,
+      });
+    }
+    setColumnFilters(newFilters);
+  }, [selectedRange, selectedStatuses]);
 
   const purchaseDateFilterFn = (row, columnId, filterValue) => {
     const purchaseDate = new Date(row.original.purchase_date);
@@ -82,8 +86,34 @@ const WarrantyProducts = ({ data }) => {
     return fullName.toLowerCase().includes(filterValue.toLowerCase());
   };
 
+  const statusFilterFn = (row, columnId, filterValue) => {
+    return filterValue.includes(row.original.status);
+  };
+
   const columns = React.useMemo(
     () => [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <input
+            type="checkbox"
+            {...{
+              checked: table.getIsAllRowsSelected(),
+              indeterminate: table.getIsSomeRowsSelected(),
+              onChange: table.getToggleAllRowsSelectedHandler(),
+            }}
+          />
+        ),
+        cell: ({ row }) => (
+          <input
+            type="checkbox"
+            {...{
+              checked: row.getIsSelected(),
+              onChange: row.getToggleSelectedHandler(),
+            }}
+          />
+        ),
+      },
       {
         accessorKey: "index",
         header: ({ column }) => (
@@ -130,7 +160,6 @@ const WarrantyProducts = ({ data }) => {
             <ArrowDown01 className="ml-1 h-4 w-4" />
           </button>
         ),
-
         cell: ({ row }) => (
           <div>{new Date(row.original.purchase_date).toLocaleDateString()}</div>
         ),
@@ -143,7 +172,7 @@ const WarrantyProducts = ({ data }) => {
           const status = row.original.status;
           const statusStyles = {
             approve: "bg-green-400",
-            active: "bg-purple-400 text-white",
+
             pending: "bg-yellow-400",
             decline: "bg-red-400 text-white",
           };
@@ -153,6 +182,7 @@ const WarrantyProducts = ({ data }) => {
             </span>
           );
         },
+        filterFn: statusFilterFn,
       },
       {
         id: "actions",
@@ -198,6 +228,18 @@ const WarrantyProducts = ({ data }) => {
     },
   });
 
+  const handleBulkDelete = () => {
+    const selectedRows = table.getSelectedRowModel().rows;
+    // Implement your bulk delete logic here
+    console.log("Deleting rows:", selectedRows);
+  };
+
+  const handleBulkUpdate = () => {
+    const selectedRows = table.getSelectedRowModel().rows;
+    // Implement your bulk update logic here
+    console.log("Updating rows:", selectedRows);
+  };
+
   return (
     <div className="w-full mt-10">
       {warranties.length === 0 ? (
@@ -211,44 +253,42 @@ const WarrantyProducts = ({ data }) => {
               <Input
                 placeholder="Search by Dealer name..."
                 value={table.getColumn("dealer")?.getFilterValue() ?? ""}
-                onChange={(event) => {
-                  console.log(table.getColumn("dealer"));
-                  return table
-                    .getColumn("dealer")
-                    ?.setFilterValue(event.target.value);
-                }}
+                onChange={(event) =>
+                  table.getColumn("dealer")?.setFilterValue(event.target.value)
+                }
                 className="sm:max-w-sm"
               />
               <DateRangePicker
                 selectedRange={selectedRange}
                 setSelectedRange={setSelectedRange}
               />
-            </div>
-            <DropdownMenu className="sm:basis-[60%]">
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                  Columns
-                  <LucideChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => (
+              <DropdownMenu className="sm:basis-[60%]">
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    Filter by Status
+                    <LucideChevronDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {["approve", "pending", "decline"].map((status) => (
                     <DropdownMenuCheckboxItem
-                      key={column.id}
+                      key={status}
                       className="capitalize"
-                      checked={column.getIsVisible()}
+                      checked={selectedStatuses.includes(status)}
                       onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
+                        setSelectedStatuses((prev) =>
+                          value
+                            ? [...prev, status]
+                            : prev.filter((s) => s !== status)
+                        )
                       }
                     >
-                      {column.id}
+                      {status}
                     </DropdownMenuCheckboxItem>
                   ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
 
           <Table>
@@ -297,24 +337,46 @@ const WarrantyProducts = ({ data }) => {
               )}
             </TableBody>
           </Table>
-
-          <div className="flex items-center justify-end space-x-2 py-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
+          <div className="flex sm:flex-nowrap flex-wrap justify-between py-4">
+            {Object.keys(rowSelection).length > 0 && (
+              <div className="w-full">
+                <Button
+                  variant="outline"
+                  className="bg-green-500 !text-white hover:bg-green-400"
+                  size="sm"
+                  onClick={handleBulkUpdate}
+                >
+                  Bulk Update
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleBulkDelete}
+                  className="ml-2 bg-red-500 hover:bg-red-400 !text-white"
+                >
+                  Bulk Delete
+                </Button>
+              </div>
+            )}
+            <div className="w-full flex justify-end">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+                className="ml-2"
+              >
+                Next
+              </Button>
+            </div>
           </div>
         </>
       )}

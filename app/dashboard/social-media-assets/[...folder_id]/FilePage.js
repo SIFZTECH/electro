@@ -85,7 +85,7 @@ const FolderPage = ({ folder_id }) => {
         <BreadcrumbN folderPath={pathName} />
 
         {Object.keys(selectedItems).length > 0 ? (
-          <div className="flex gap-3 items-center ">
+          <div className="flex gap-3 items-center mb-2">
             <DeleteFiles
               selectedItems={selectedItems}
               setSelectedItems={setSelectedItems}
@@ -181,7 +181,7 @@ const FolderPage = ({ folder_id }) => {
                 >
                   <DialogTrigger>
                     <div
-                      className={`border border-gray-200 shadow-sm flex flex-col items-center justify-center cursor-pointer h-full p-2 ${
+                      className={`border border-gray-200 shadow-sm flex flex-col items-center justify-center cursor-pointer h-full p-2 relative ${
                         selectedItems[file] ? "bg-gray-200" : ""
                       }`}
                       onClick={() => handleItemSelection(file, "file")}
@@ -189,6 +189,20 @@ const FolderPage = ({ folder_id }) => {
                         handleItemSelection(file, "file", true)
                       }
                     >
+                      {selectedItems[file] && (
+                        <svg
+                          className="absolute top-0 right-0 m-2 h-5 w-5 text-green-500"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M18.293 2.293a1 1 0 0 1 1.414 1.414l-13 13a1 1 0 0 1-1.414 0l-7-7a1 1 0 1 1 1.414-1.414L5 12.086l12.293-12.293a1 1 0 0 1 1.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      )}
                       {isImage(file) && (
                         <Image
                           src={`${BASE_URL_IMAGE}${file}`}
