@@ -3,6 +3,7 @@ import * as React from "react";
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -14,7 +15,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
-
 import { Input } from "@/app/components/ui/input";
 import {
   Table,
@@ -24,14 +24,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/components/ui/table";
-import { ArrowDown01, LucideChevronDown } from "lucide-react";
+import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
 
 const Stocks = ({ products }) => {
-  const data =
-    products?.data?.data.map((item, index) => ({
-      ...item,
-      sn: index + 1,
-    })) || [];
+  const data = React.useMemo(
+    () =>
+      products?.data?.data.map((item, index) => ({
+        ...item,
+        sn: index + 1,
+      })) || [],
+    [products]
+  );
 
   const columns = React.useMemo(
     () => [
@@ -50,7 +53,19 @@ const Stocks = ({ products }) => {
       },
       {
         accessorKey: "name",
-        header: "Products",
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>Product Name</span>
+              <ArrowDownAz className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
       },
       {
         accessorKey: "stock",
@@ -86,6 +101,8 @@ const Stocks = ({ products }) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     state: {
@@ -100,7 +117,7 @@ const Stocks = ({ products }) => {
     <div className="w-full mt-3">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter by product name..."
+          placeholder="Filter by Product name..."
           value={table.getColumn("name")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -118,20 +135,16 @@ const Stocks = ({ products }) => {
             {table
               .getAllColumns()
               .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  className="capitalize"
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id}
+                </DropdownMenuCheckboxItem>
+              ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -31,6 +31,8 @@ import DeleteWarranty from "./DeleteWarranty";
 import DateRangePicker from "./DateRangePicker";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import EditWarranty from "./EditWarranty";
+import EditWarrantyStatusForBulk from "./EditWarrantyStatusForBulk";
+import DeleteWarranties from "./DeleteWarranties";
 
 const WarrantyProducts = ({ data }) => {
   const warranties = React.useMemo(
@@ -228,17 +230,8 @@ const WarrantyProducts = ({ data }) => {
     },
   });
 
-  const handleBulkDelete = () => {
-    const selectedRows = table.getSelectedRowModel().rows;
-    // Implement your bulk delete logic here
-    console.log("Deleting rows:", selectedRows);
-  };
-
-  const handleBulkUpdate = () => {
-    const selectedRows = table.getSelectedRowModel().rows;
-    // Implement your bulk update logic here
-    console.log("Updating rows:", selectedRows);
-  };
+  const selectedRows = table.getSelectedRowModel().rows;
+  const warranty_ids = selectedRows?.map((item) => item?.original?.id);
 
   return (
     <div className="w-full mt-10">
@@ -340,22 +333,8 @@ const WarrantyProducts = ({ data }) => {
           <div className="flex sm:flex-nowrap flex-wrap justify-between py-4">
             {Object.keys(rowSelection).length > 0 && (
               <div className="w-full">
-                <Button
-                  variant="outline"
-                  className="bg-green-500 !text-white hover:bg-green-400"
-                  size="sm"
-                  onClick={handleBulkUpdate}
-                >
-                  Bulk Update
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleBulkDelete}
-                  className="ml-2 bg-red-500 hover:bg-red-400 !text-white"
-                >
-                  Bulk Delete
-                </Button>
+                <EditWarrantyStatusForBulk warranty_ids={warranty_ids} />
+                <DeleteWarranties warranty_ids={warranty_ids} />
               </div>
             )}
             <div className="w-full flex justify-end">
