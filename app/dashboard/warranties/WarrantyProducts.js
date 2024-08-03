@@ -44,6 +44,8 @@ const WarrantyProducts = ({ data }) => {
     [data.data]
   );
 
+  const totalWarranties = warranties ? warranties.length : 0;
+
   const [sorting, setSorting] = React.useState([]);
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [selectedRange, setSelectedRange] = React.useState({
@@ -330,14 +332,19 @@ const WarrantyProducts = ({ data }) => {
               )}
             </TableBody>
           </Table>
-          <div className="flex sm:flex-nowrap flex-wrap justify-between py-4">
+          <div className="flex sm:flex-nowrap flex-wrap items-center justify-between py-4">
             {Object.keys(rowSelection).length > 0 && (
-              <div className="w-full">
+              <div className="space-x-2">
                 <EditWarrantyStatusForBulk warranty_ids={warranty_ids} />
                 <DeleteWarranties warranty_ids={warranty_ids} />
               </div>
             )}
-            <div className="w-full flex justify-end">
+
+            <div className="text-center text-sm font-medium">
+              Total Warranties: {totalWarranties}
+            </div>
+
+            <div className="flex items-center justify-end space-x-2 py-4">
               <Button
                 variant="outline"
                 size="sm"
@@ -351,7 +358,6 @@ const WarrantyProducts = ({ data }) => {
                 size="sm"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
-                className="ml-2"
               >
                 Next
               </Button>
