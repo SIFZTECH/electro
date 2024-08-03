@@ -60,22 +60,22 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
     console.log(social_media_asests, dealer_resources);
 
     try {
-      // const res = await createEvent({
-      //   title,
-      //   date: formattedDate,
-      //   start_date: formattedStartDate,
-      //   end_date: formattedEndDate,
-      //   description,
-      //   color: color,
-      //   visible_to,
-      //   visible_to_anyone,
-      // });
-      // if (res) {
-      //   toast.success("New Event Created Successfully");
-      //   queryClient.invalidateQueries("events");
-      //   setOpen((open) => !open);
-      //   reset();
-      // }
+      const res = await createEvent({
+        title,
+        date: formattedDate,
+        start_date: formattedStartDate,
+        end_date: formattedEndDate,
+        description,
+        color: color,
+        visible_to,
+        visible_to_anyone,
+      });
+      if (res) {
+        toast.success("New Event Created Successfully");
+        queryClient.invalidateQueries("events");
+        setOpen((open) => !open);
+        reset();
+      }
     } catch (err) {
       console.error(err);
       if (err.response) {

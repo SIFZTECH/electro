@@ -21,7 +21,7 @@ const UpdateAndDeleteEvent = ({
   setOpen,
 }) => {
   return (
-    <DialogContent>
+    <DialogContent className="max-w-2xl">
       <Tabs
         defaultValue="updateEvent"
         className="font-serif shadow-none appearance-none "
