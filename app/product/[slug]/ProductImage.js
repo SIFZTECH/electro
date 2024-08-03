@@ -65,7 +65,7 @@ const ProductImage = ({ images, product_name }) => {
           );
         })}
       </div>
-      <TabsList className="product__thumbnails flex items-center justify-center gap-3 mt-6">
+      <TabsList className="product__thumbnails flex items-center justify-center flex-wrap gap-3 mt-6">
         {images.map((img) => {
           const imgPath = img?.image_path.startsWith(
             "https://www.leoncycle.com.au"

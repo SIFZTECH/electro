@@ -8,6 +8,7 @@ import moment from "moment";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import SelectUser from "./SelectUser";
+import SelectDealerResources from "./SelectDealerResources";
 
 const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
   const queryClient = useQueryClient();
@@ -176,6 +177,22 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
           />
         </div>
         <p className="flex-1">Selected Color Hex Value: {color}</p>
+      </div>
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900">
+          Dealer Resources
+        </label>
+        <div className="mt-2">
+          <SelectDealerResources control={control} register={register} />
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900">
+          Social Media Assests
+        </label>
+        <div className="mt-2">
+          <SelectDealerResources control={control} register={register} />
+        </div>
       </div>
       {!checkedAnyoneAccessBox && (
         <div>

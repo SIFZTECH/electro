@@ -26,7 +26,6 @@ import {
 import {
   ArrowDown01,
   ArrowDownAz,
-  ArrowDownUp,
   LucideAlignJustify,
   LucideChevronDown,
 } from "lucide-react";
@@ -116,7 +115,6 @@ const FeatureTable = ({ data }) => {
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [showAll, setShowAll] = React.useState(false);
-  const [isDraggable, setIsDraggable] = React.useState(false);
 
   const table = useReactTable({
     data: features,
@@ -143,7 +141,6 @@ const FeatureTable = ({ data }) => {
 
   const handleShowAll = () => {
     setShowAll(!showAll);
-    setIsDraggable(!isDraggable);
   };
 
   const onDragEnd = (result) => {
@@ -164,14 +161,7 @@ const FeatureTable = ({ data }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="w-full">
-        <div className="flex items-center py-4 gap-3">
-          <Button
-            className={`${isDraggable ? "bg-color-primary_shade-4" : ""} px-2`}
-            variant="outline"
-            onClick={handleShowAll}
-          >
-            <ArrowDownUp />
-          </Button>
+        <div className="flex items-center py-4">
           <Input
             placeholder="Filter by feature name..."
             value={table.getColumn("key")?.getFilterValue() ?? ""}
@@ -207,6 +197,9 @@ const FeatureTable = ({ data }) => {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button variant="outline" className="ml-2" onClick={handleShowAll}>
+            <LucideAlignJustify className="h-4 w-4" />
+          </Button>
         </div>
 
         <Table>
@@ -228,53 +221,32 @@ const FeatureTable = ({ data }) => {
               </TableRow>
             ))}
           </TableHeader>
-          <Droppable droppableId="droppable-features">
+          <Droppable droppableId="features">
             {(provided) => (
               <TableBody ref={provided.innerRef} {...provided.droppableProps}>
                 {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row, index) =>
-                    isDraggable ? (
-                      <Draggable
-                        key={row.id}
-                        draggableId={row.id}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <TableRow
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            key={row.id}
-                            data-state={row.getIsSelected() && "selected"}
-                            className={snapshot.isDragging ? "bg-gray-200" : ""}
-                          >
-                            {row.getVisibleCells().map((cell) => (
-                              <TableCell key={cell.id}>
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext()
-                                )}
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        )}
-                      </Draggable>
-                    ) : (
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                      >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    )
-                  )
+                  table.getRowModel().rows.map((row, index) => (
+                    <Draggable key={row.id} draggableId={row.id} index={index}>
+                      {(provided) => (
+                        <TableRow
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          key={row.id}
+                          data-state={row.getIsSelected() && "selected"}
+                        >
+                          {row.getVisibleCells().map((cell) => (
+                            <TableCell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      )}
+                    </Draggable>
+                  ))
                 ) : (
                   <TableRow>
                     <TableCell
@@ -297,7 +269,7 @@ const FeatureTable = ({ data }) => {
             Total Features: {totalFeatures}
           </div>
 
-          <div className="flex items-center justify-end space-x-2 pt-2">
+          <div className="flex items-center justify-end space-x-2 py-4">
             <Button
               variant="outline"
               size="sm"
