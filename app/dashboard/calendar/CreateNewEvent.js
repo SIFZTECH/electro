@@ -8,6 +8,8 @@ import moment from "moment";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import SelectUser from "./SelectUser";
+import SelectDealerResources from "./SelectDealerResources";
+import SelectSocialMediaAssets from "./SelectSocialMediaAssests";
 
 const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
   const queryClient = useQueryClient();
@@ -24,6 +26,8 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
       start_date: moment(date).format("YYYY-MM-DD"),
       end_date: moment(date).format("YYYY-MM-DD"),
       visible_to: [],
+      social_media_asests: [],
+      dealer_resources: [],
     },
   });
 
@@ -36,6 +40,8 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
     title,
     description,
     visible_to,
+    social_media_asests,
+    dealer_resources,
     visible_to_anyone,
   }) {
     const specificDate = new Date(date);
@@ -50,6 +56,8 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
 
     const formattedStartDate = moment(start_date).format("MM/DD/YYYY");
     const formattedEndDate = moment(end_date).format("MM/DD/YYYY");
+
+    console.log(social_media_asests, dealer_resources);
 
     try {
       const res = await createEvent({
@@ -176,6 +184,22 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
           />
         </div>
         <p className="flex-1">Selected Color Hex Value: {color}</p>
+      </div>
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900">
+          Dealer Resources
+        </label>
+        <div className="mt-2">
+          <SelectDealerResources control={control} register={register} />
+        </div>
+      </div>
+      <div>
+        <label className="block text-sm font-medium leading-6 text-gray-900">
+          Social Media Assests
+        </label>
+        <div className="mt-2">
+          <SelectSocialMediaAssets control={control} register={register} />
+        </div>
       </div>
       {!checkedAnyoneAccessBox && (
         <div>

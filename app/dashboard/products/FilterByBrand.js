@@ -1,4 +1,4 @@
-import {  useBrandsForPublic } from "@/app/_features/brands/useBrands";
+import { useBrandsForPublic } from "@/app/_features/brands/useBrands";
 import {
   Accordion,
   AccordionContent,
@@ -33,7 +33,7 @@ const FilterByBrand = ({ selectedBrands, setSelectedBrands }) => {
     const query = updatedSelectedBrands.length
       ? `?brand=${updatedSelectedBrands.join(",")}`
       : "";
-    router.push(`/dashboard/product-specifications${query}`);
+    router.push(`/dashboard/products${query}`);
   };
 
   return (

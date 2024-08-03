@@ -113,7 +113,7 @@ export default function CalendarPage() {
         {isCreateEventPermission ? (
           <Dialog open={open} onOpenChange={() => setOpen((open) => !open)}>
             <DialogTrigger className="btn-primary">Add New Event</DialogTrigger>
-            <DialogContent>
+            <DialogContent className="max-w-2xl">
               <CreateNewEvent
                 date={date}
                 setOpen={setOpen}

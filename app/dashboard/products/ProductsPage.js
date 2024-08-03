@@ -24,7 +24,7 @@ const ProductsPage = ({
 }) => {
   return (
     <>
-      <div className="product-specifications">
+      <div className="products">
         <h1 className="px-2 heading-h1 mb-10 mt-6">E Bikes</h1>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] 2xl:grid-cols-[.20fr_1fr] gap-6">
           <FilterByProduct />
@@ -49,7 +49,7 @@ const ProductsPage = ({
           data={products?.data}
           page={+page}
           page_size={PRODUCT_PAGE_SIZE}
-          navigation="product-specifications"
+          navigation="products"
         />
       </div>
     </>

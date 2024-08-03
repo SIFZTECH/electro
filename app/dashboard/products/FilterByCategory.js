@@ -27,7 +27,7 @@ const FilterByCategory = ({ selectedCategories, setSelectedCategories }) => {
     const query = updatedSelectedCategories.length
       ? `?category=${updatedSelectedCategories.join(",")}`
       : "";
-    router.push(`/dashboard/product-specifications${query}`);
+    router.push(`/dashboard/products${query}`);
   };
 
   return (

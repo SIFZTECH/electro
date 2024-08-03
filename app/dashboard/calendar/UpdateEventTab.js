@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import SelectUser from "./SelectUser";
 import { useState } from "react";
+import SelectDealerResources from "./SelectDealerResources";
+import SelectSocialMediaAssets from "./SelectSocialMediaAssests";
 
 const UpdateEventTab = ({
   id,
@@ -35,7 +37,10 @@ const UpdateEventTab = ({
       title: title,
       description: description,
       visible_to: visible_to,
+      social_media_asests: [],
+      dealer_resources: [],
       visible_to_anyone: visible_to_anyone === 1 ? true : false,
+
       value: color,
       start_date: moment(startDate).format("YYYY-MM-DD"),
       end_date: moment(endDate).format("YYYY-MM-DD"),
@@ -194,6 +199,22 @@ const UpdateEventTab = ({
             />
           </div>
           <p className="flex-1">Selected Color Hex Value: {color2}</p>
+        </div>
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900">
+            Dealer Resources
+          </label>
+          <div className="mt-2">
+            <SelectDealerResources control={control} register={register} />
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900">
+            Social Media Assests
+          </label>
+          <div className="mt-2">
+            <SelectSocialMediaAssets control={control} register={register} />
+          </div>
         </div>
         {!checkedAnyoneAccessBox && (
           <div>

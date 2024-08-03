@@ -15,7 +15,7 @@ const SelectUser = ({ control, existingUser }) => {
       ?.filter((user) => user.roles[0]?.id !== 3)
       .map((user) => {
         return {
-          label: `${user.firstname} ${user.lastname} - ${user.email} - ${user.roles[0].name}`,
+          label: `${user?.firstname} ${user?.lastname} - ${user?.email} - ${user?.roles[0]?.name}`,
           value: user.id,
           image: user?.profile
             ? `${BASE_URL_IMAGE}${user.profile}`
