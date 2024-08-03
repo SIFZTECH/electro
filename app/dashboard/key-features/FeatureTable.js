@@ -27,14 +27,13 @@ import {
   ArrowDown01,
   ArrowDownAz,
   ArrowDownUp,
-  LucideAlignJustify,
   LucideChevronDown,
 } from "lucide-react";
 import EditFeature from "./EditFeature";
 import DeleteFeature from "./DeleteFeature";
 import Image from "next/image";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const FeatureTable = ({ data }) => {
   const [features, setFeatures] = React.useState(

@@ -1,10 +1,10 @@
-import { useSocialMediaAsset } from "@/app/_features/social_media/useMedia";
+import { useSocialMediaResources } from "@/app/_features/social_media/useMediaAssets";
 import MultipleSelector from "@/app/components/ui/multi-selector";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const SelectDealerResources = ({ control }) => {
-  const { data, isLoading, isError } = useSocialMediaAsset();
+const SelectSocialMediaAssets = ({ control }) => {
+  const { data, isLoading, isError } = useSocialMediaResources();
 
   const userOptions =
     !isLoading &&
@@ -21,13 +21,13 @@ const SelectDealerResources = ({ control }) => {
 
   return (
     <Controller
-      name="visible_to"
+      name="social_media_asests"
       control={control}
       render={({ field }) => (
         <MultipleSelector
           {...field}
           defaultOptions={userOptions}
-          placeholder="Select user..."
+          placeholder="Select folders..."
           emptyIndicator={<p className="text-center">no results found.</p>}
         />
       )}
@@ -35,4 +35,4 @@ const SelectDealerResources = ({ control }) => {
   );
 };
 
-export default SelectDealerResources;
+export default SelectSocialMediaAssets;

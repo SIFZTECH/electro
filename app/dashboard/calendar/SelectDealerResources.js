@@ -3,7 +3,7 @@ import MultipleSelector from "@/app/components/ui/multi-selector";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const SelectSocialMediaAssests = ({ control }) => {
+const SelectDealerResources = ({ control }) => {
   const { data, isLoading, isError } = useDealerResources();
 
   const userOptions =
@@ -21,13 +21,13 @@ const SelectSocialMediaAssests = ({ control }) => {
 
   return (
     <Controller
-      name="visible_to"
+      name="dealer_resources"
       control={control}
       render={({ field }) => (
         <MultipleSelector
           {...field}
           defaultOptions={userOptions}
-          placeholder="Select user..."
+          placeholder="Select folders..."
           emptyIndicator={<p className="text-center">no results found.</p>}
         />
       )}
@@ -35,4 +35,4 @@ const SelectSocialMediaAssests = ({ control }) => {
   );
 };
 
-export default SelectSocialMediaAssests;
+export default SelectDealerResources;
