@@ -69,7 +69,7 @@ const ProductForm = () => {
       if (res) {
         toast.success("Product Created Successfull");
         queryClient.invalidateQueries("products");
-        router.replace("/dashboard/product-specifications");
+        router.replace("/dashboard/products");
       }
     } catch (err) {
       console.error(err);

@@ -24,9 +24,9 @@ const SearchProduct = () => {
   });
 
   function onSubmit({ query }) {
-    router.push(`/dashboard/product-specifications?query=${query}`);
+    router.push(`/dashboard/products?query=${query}`);
     if (!query) {
-      router.push(`/dashboard/product-specifications`);
+      router.push(`/dashboard/products`);
     }
   }
 

@@ -27,7 +27,7 @@ const ProductCategories = () => {
 
       <UploadProduct />
       <DownloadFile />
-      <Link href="product-specifications/add-product" className="btn-primary">
+      <Link href="products/add-product" className="btn-primary">
         Add New Product
       </Link>
     </div>
