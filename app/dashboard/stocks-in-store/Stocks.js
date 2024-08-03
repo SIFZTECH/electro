@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "@/app/components/ui/table";
 import { ArrowDown01, ArrowDownAz, LucideChevronDown } from "lucide-react";
+import Image from "next/image";
 
 const Stocks = ({ products }) => {
   const data = React.useMemo(
@@ -35,6 +36,8 @@ const Stocks = ({ products }) => {
       })) || [],
     [products]
   );
+
+  const totalProducts = data ? data.length : 0;
 
   const columns = React.useMemo(
     () => [
@@ -52,6 +55,27 @@ const Stocks = ({ products }) => {
         ),
       },
       {
+        accessorKey: "images",
+        header: () => <div className="text-center">Product Image</div>,
+
+        cell: ({ row }) => {
+          const imagePath = row.original.images[0]?.image_path;
+          if (imagePath) {
+            return (
+              <div className="flex items-center justify-center">
+                <Image
+                  height={40}
+                  width={40}
+                  src={`${imagePath}`}
+                  alt="Product Image"
+                  className="object-contain"
+                />
+              </div>
+            );
+          }
+        },
+      },
+      {
         accessorKey: "name",
         header: ({ column }) => {
           return (
@@ -67,6 +91,39 @@ const Stocks = ({ products }) => {
           );
         },
       },
+      {
+        accessorKey: "model_name",
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>Model Name</span>
+              <ArrowDownAz className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
+      },
+      {
+        accessorKey: "price",
+        header: ({ column }) => {
+          return (
+            <button
+              className="flex items-center"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              <span>Price</span>
+              <ArrowDown01 className="ml-1 h-4 w-4" />
+            </button>
+          );
+        },
+      },
+
       {
         accessorKey: "stock",
         header: ({ column }) => (
@@ -191,23 +248,26 @@ const Stocks = ({ products }) => {
       </Table>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="flex sm:justify-between flex-wrap items-center">
+        <div className="text-center">Total Products: {totalProducts}</div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );

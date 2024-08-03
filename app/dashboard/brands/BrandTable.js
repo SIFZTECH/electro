@@ -42,6 +42,8 @@ const BrandTable = ({ data }) => {
     [data.data]
   );
 
+  const totalBrands = brands ? brands.length : 0;
+
   const columns = React.useMemo(
     () => [
       {
@@ -235,23 +237,29 @@ const BrandTable = ({ data }) => {
       </Table>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="flex sm:justify-between flex-wrap items-center">
+        <div className="text-center text-sm font-medium">
+          Total brands: {totalBrands}
+        </div>
+
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
