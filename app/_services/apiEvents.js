@@ -98,14 +98,14 @@ export async function createEvent(formData) {
 
   if (!token) return null;
 
-  // const { data } = await axios({
-  //   url: `${BASE_URL}/promotional/calendar/create`,
-  //   method: "post",
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  //   data: formData,
-  // });
+  const { data } = await axios({
+    url: `${BASE_URL}/promotional/calendar/create`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: formData,
+  });
 
-  // return data;
+  return data;
 }

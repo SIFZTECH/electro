@@ -26,8 +26,8 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
       start_date: moment(date).format("YYYY-MM-DD"),
       end_date: moment(date).format("YYYY-MM-DD"),
       visible_to: [],
-      social_media_asests: [],
-      dealer_resources: [],
+      social_media_folders: [],
+      resources_folders: [],
     },
   });
 
@@ -40,8 +40,8 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
     title,
     description,
     visible_to,
-    social_media_asests,
-    dealer_resources,
+    social_media_folders,
+    resources_folders,
     visible_to_anyone,
   }) {
     const specificDate = new Date(date);
@@ -57,7 +57,15 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
     const formattedStartDate = moment(start_date).format("MM/DD/YYYY");
     const formattedEndDate = moment(end_date).format("MM/DD/YYYY");
 
-    console.log(social_media_asests, dealer_resources);
+    const formattedResources_folders = resources_folders?.map((folder) => {
+      return { id: folder.value, name: folder.label };
+    });
+
+    const formattedSocial_media_folders = social_media_folders?.map(
+      (folder) => {
+        return { id: folder.value, name: folder.label };
+      }
+    );
 
     try {
       const res = await createEvent({
@@ -68,6 +76,8 @@ const CreateNewEvent = ({ date, setOpen, color, handleColorChange }) => {
         description,
         color: color,
         visible_to,
+        social_media_folders: formattedSocial_media_folders,
+        resources_folders: formattedResources_folders,
         visible_to_anyone,
       });
       if (res) {

@@ -31,8 +31,6 @@ const DeleteWarranties = ({ warranty_ids }) => {
         warranty_ids,
       });
 
-      console.log(res);
-
       if (res) {
         toast.success(res.message);
 

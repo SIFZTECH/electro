@@ -16,6 +16,8 @@ const UpdateAndDeleteEvent = ({
   description,
   visible_to,
   visible_to_anyone,
+  social_media_folders,
+  resources_folders,
   color,
   setColor,
   setOpen,
@@ -44,6 +46,8 @@ const UpdateAndDeleteEvent = ({
             description={description}
             visible_to={visible_to}
             visible_to_anyone={visible_to_anyone}
+            social_media_folders={social_media_folders}
+            resources_folders={resources_folders}
             color={color}
             setColor={setColor}
             setOpen={setOpen}

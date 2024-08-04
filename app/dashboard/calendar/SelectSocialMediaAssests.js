@@ -1,10 +1,10 @@
-import { useSocialMediaResources } from "@/app/_features/social_media/useMediaAssets";
+import { useMediasForAll } from "@/app/_features/social_media/useMediaAssets";
 import MultipleSelector from "@/app/components/ui/multi-selector";
 import React from "react";
 import { Controller } from "react-hook-form";
 
 const SelectSocialMediaAssets = ({ control }) => {
-  const { data, isLoading, isError } = useSocialMediaResources();
+  const { data, isLoading, isError } = useMediasForAll();
 
   const userOptions =
     !isLoading &&
@@ -21,7 +21,7 @@ const SelectSocialMediaAssets = ({ control }) => {
 
   return (
     <Controller
-      name="social_media_asests"
+      name="social_media_folders"
       control={control}
       render={({ field }) => (
         <MultipleSelector

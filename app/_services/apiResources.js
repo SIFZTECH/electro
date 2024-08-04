@@ -64,6 +64,18 @@ export async function getAllResourcesForAdmin(page, query) {
   }
 }
 
+export async function getAllResourcesForWithChilds() {
+  const token = localStorage.getItem("access-token");
+
+  const { data } = await axios.get(`${BASE_URL}/get/all/dealer-resources/folders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return data;
+}
+
 // export async function getAllResourcesForAdmin(page) {
 //   const token = localStorage.getItem("access-token");
 
