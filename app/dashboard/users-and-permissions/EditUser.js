@@ -33,6 +33,8 @@ const EditUser = ({ user }) => {
       user_role: user?.roles[0]?.name,
       city: user?.city,
       state: user?.state,
+      address_line: user?.address_line,
+      address_line1: user?.address_line1,
       assign_to_admin: user?.access_to_admin,
     },
   });

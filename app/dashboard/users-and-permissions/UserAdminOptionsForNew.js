@@ -17,9 +17,9 @@ import {
 import { useAdminUsers } from "@/app/_features/users/useUsers";
 import Image from "next/image";
 
-export function UserAdminOptions({ user, setValue: setValue2 }) {
+export function UserAdminOptionsForNew({ setValue: setValue2 }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(user?.assign_to_admin);
+  const [value, setValue] = React.useState(null);
   const { data, isLoading, isError, error } = useAdminUsers();
 
   const userOptions =
@@ -30,7 +30,7 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
       return {
         label: `${opt?.firstname} ${opt?.lastname}`,
         value: opt?.id,
-        assign_to_admin: user?.assign_to_admin,
+
         image: opt?.profile,
       };
     });
@@ -44,8 +44,7 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
         {value
           ? userOptions &&
             userOptions?.find((user) => {
-              console.log(user);
-              return user.assign_to_admin === value;
+              return user.value === value;
             })?.label
           : "Select user..."}
         <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
