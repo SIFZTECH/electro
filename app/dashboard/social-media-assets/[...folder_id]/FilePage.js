@@ -16,8 +16,10 @@ import {
   LinkedinIcon,
   WhatsappShareButton,
   WhatsappIcon,
-  InstapaperShareButton,
-  InstapaperIcon,
+  PinterestShareButton,
+  TelegramShareButton,
+  TelegramIcon,
+  PinterestIcon,
 } from "react-share";
 
 import {
@@ -377,12 +379,20 @@ const FolderPage = ({ folder_id }) => {
                       >
                         <WhatsappIcon size={32} round />
                       </WhatsappShareButton>
-                      <InstapaperShareButton
+                      <PinterestShareButton
+                        media={`${`${BASE_URL_IMAGE}${file}`}`}
                         url={`${`${BASE_URL_IMAGE}${file}`}`}
                         className="btn-primary"
                       >
-                        <InstapaperIcon size={32} round />
-                      </InstapaperShareButton>
+                        <PinterestIcon size={32} round />
+                      </PinterestShareButton>
+                      <TelegramShareButton
+                        url={`${`${BASE_URL_IMAGE}${file}`}`}
+                        className="btn-primary"
+                      >
+                        <TelegramIcon size={32} round />
+                      </TelegramShareButton>
+
                       <DownloadButton
                         fileUrl={`${BASE_URL}/download?path=${file}`}
                       />
