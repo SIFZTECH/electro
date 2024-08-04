@@ -1,18 +1,16 @@
-import { useDealerUsers } from "@/app/_features/users/useUsers";
-import SelectUser from "@/app/components/ui/SearchAndSelect";
+import { UserDealerOptions } from "../UserDealerOptions";
 
-const SelectDealer = ({ value, setDealer }) => {
-  const { data } = useDealerUsers();
-
+const SelectDealerUser = ({ setValue }) => {
   return (
-    <SelectUser
-      data={data?.data?.data}
-      label="Purchase From"
-      name="purchase_from"
-      value={value}
-      setDealer={setDealer}
-    />
+    <div className="flex items-center gap-8">
+      <div className="flex-1">
+        <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+          Purchase from
+        </label>
+        <UserDealerOptions setValue={setValue} />
+      </div>
+    </div>
   );
 };
 
-export default SelectDealer;
+export default SelectDealerUser;

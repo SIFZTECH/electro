@@ -18,6 +18,7 @@ const EditUser = ({ user }) => {
   const [open, setOpen] = useState();
   const queryClient = useQueryClient();
   const { data, isLoading, isError } = useRoles();
+
   const {
     register,
     handleSubmit,

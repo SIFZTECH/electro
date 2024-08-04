@@ -7,16 +7,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { AiOutlineExclamationCircle } from "react-icons/ai";
-import SelectDealer from "./SelectDealer";
 import { useState } from "react";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import { DatePicker } from "@/app/components/ui/DatePicker";
 
 import moment from "moment";
+import SelectDealerUser from "../dashboard/warranty/registration/SelectDealer";
 
 const WarrantyRegistrationPage = () => {
   const [date, setDate] = useState(null);
-  const [dealer, setDealer] = useState(null);
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -24,13 +23,14 @@ const WarrantyRegistrationPage = () => {
   const {
     register,
     handleSubmit,
+    setValue,
 
     formState: { errors, isSubmitting },
   } = useForm();
 
   async function onSubmit(data) {
     try {
-      if (!dealer) {
+      if (!data.purchase_from) {
         return toast.error("Purchase from is missing!");
       }
 
@@ -42,7 +42,7 @@ const WarrantyRegistrationPage = () => {
         ...data,
         address_line1: data.address_line1 || null,
         purchase_date: moment(date).format("YYYY-MM-DD"),
-        purchase_from: dealer,
+        purchase_from: data.purchase_from,
         battery_serial_no_image: data.battery_serial_no_image[0],
         motor_serial_no_image: data.motor_serial_no_image[0],
         invoice_image: data.invoice_image[0],
@@ -344,7 +344,7 @@ const WarrantyRegistrationPage = () => {
               )}
             </div>
             <div>
-              <SelectDealer value={dealer} setDealer={setDealer} />
+              <SelectDealerUser setValue={setValue} />
             </div>
             <div className="">
               <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">

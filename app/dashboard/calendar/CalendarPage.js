@@ -142,7 +142,7 @@ export default function CalendarPage() {
               {resources_folders && resources_folders.length !== 0 && (
                 <div className="flex flex-col gap-1">
                   <h2 className="font-medium">Resources:</h2>
-                  <ul className="flex gap-2 gap-y-5 flex-wrap">
+                  <ul className="flex gap-3 flex-wrap">
                     {resources_folders?.map((folder) => {
                       return (
                         <li key={folder.id}>
@@ -164,11 +164,12 @@ export default function CalendarPage() {
                   </ul>
                 </div>
               )}
+
               {social_media_folders && social_media_folders.length !== 0 && (
-                <div className="flex flex-col gap-1 mt-3">
+                <div className="flex flex-col gap-1 mt-3 border-t pt-3 border-gray-200">
                   <h2 className="font-medium">Social Media Assests:</h2>
 
-                  <ul className="flex gap-3 gap-y-5 flex-wrap">
+                  <ul className="flex gap-3 flex-wrap">
                     {social_media_folders?.map((folder) => {
                       return (
                         <li key={folder.id}>

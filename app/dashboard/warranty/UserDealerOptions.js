@@ -14,13 +14,13 @@ import {
   CommandItem,
   CommandList,
 } from "@/app/components/ui/command";
-import { useAdminUsers } from "@/app/_features/users/useUsers";
+import { useDealerUsers } from "@/app/_features/users/useUsers";
 import Image from "next/image";
 
-export function UserAdminOptions({ user, setValue: setValue2 }) {
+export function UserDealerOptions({ setValue: setValue2 }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(user?.id);
-  const { data, isLoading, isError, error } = useAdminUsers();
+  const [value, setValue] = React.useState(null);
+  const { data, isLoading, isError, error } = useDealerUsers();
 
   const userOptions =
     !isLoading &&
@@ -29,7 +29,7 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
     data?.data?.data?.map((user) => {
       return {
         label: `${user?.firstname} ${user?.lastname}`,
-        value: user?.id,
+        value: `${user?.firstname} ${user?.lastname}`,
         image: user?.profile,
       };
     });
@@ -44,6 +44,7 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
           ? userOptions &&
             userOptions?.find((user) => user.value === value)?.label
           : "Select user..."}
+
         <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
       </span>
 
@@ -51,7 +52,7 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
         <div className="p-0 z-[99999] absolute w-full rounded-md border bg-gray-100 border-gray-300">
           <Command>
             <CommandInput placeholder="Search user..." className="h-9" />
-            <CommandEmpty>No Admin user found.</CommandEmpty>
+            <CommandEmpty>No dealer user found.</CommandEmpty>
             <CommandGroup>
               <CommandList>
                 {!isLoading &&
@@ -63,7 +64,7 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
                       onSelect={() => {
                         setValue(user.value === value ? null : user.value);
                         setValue2(
-                          "assign_to_admin",
+                          "purchase_from",
                           user.value === value ? null : user.value
                         );
                         setOpen(false);
