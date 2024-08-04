@@ -122,3 +122,20 @@ export async function createFeature(formData) {
 
   return data;
 }
+
+export async function reOrderFeatures(ordered_ids) {
+  const token = localStorage.getItem("access-token");
+
+  if (!token) return null;
+
+  const { data } = await axios({
+    url: `${BASE_URL}/key-features/reorder`,
+    method: "post",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: { ordered_ids },
+  });
+
+  return data;
+}

@@ -34,8 +34,13 @@ import DeleteFeature from "./DeleteFeature";
 import Image from "next/image";
 import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import toast from "react-hot-toast";
+import { reOrderFeatures } from "@/app/_services/apiFeatures";
+import { useQueryClient } from "@tanstack/react-query";
 
 const FeatureTable = ({ data }) => {
+  const queryClient = useQueryClient();
+
   const [features, setFeatures] = React.useState(
     data.map((feature, index) => ({
       ...feature,
@@ -145,7 +150,7 @@ const FeatureTable = ({ data }) => {
     setIsDraggable(!isDraggable);
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = async (result) => {
     if (!result.destination) return;
 
     const reorderedFeatures = Array.from(features);
@@ -158,6 +163,25 @@ const FeatureTable = ({ data }) => {
         index: index + 1,
       }))
     );
+
+    const ordered_ids = reorderedFeatures.map((feature) => feature.id);
+
+    try {
+      const res = await reOrderFeatures(ordered_ids);
+
+      if (res) {
+        toast.success(res.message);
+
+        queryClient.invalidateQueries("key_features");
+      }
+    } catch (err) {
+      console.error(err);
+      if (err.response) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
   };
 
   return (
