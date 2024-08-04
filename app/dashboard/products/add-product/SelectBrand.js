@@ -1,9 +1,6 @@
-import { useBrands } from "@/app/_features/brands/useBrands";
 import { BrandOptions } from "./BrandOptions";
 
 const SelectBrand = ({ id, setValue }) => {
-  const { data: brands, isLoading, isError } = useBrands();
-
   return (
     <div className="flex items-center gap-8">
       <div className="flex-1">

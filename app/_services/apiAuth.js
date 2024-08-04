@@ -247,7 +247,6 @@ export async function resendPhoneOtp() {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    
   });
 
   return data;
