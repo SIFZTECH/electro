@@ -7,6 +7,18 @@ import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
 import { VscFilePdf } from "react-icons/vsc";
 import { GrDocumentText } from "react-icons/gr";
 import { AiFillFileUnknown } from "react-icons/ai";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  InstapaperShareButton,
+  InstapaperIcon,
+} from "react-share";
 
 import {
   Dialog,
@@ -338,13 +350,39 @@ const FolderPage = ({ folder_id }) => {
                           <p>Cannot display this file type.</p>
                         </div>
                       )}
-                    <div className="flex gap-2 items-center justify-end mt-4">
-                      <button
-                        onClick={() => handleShare(file)} // Define your share function here
-                        className="btn-primary bg-purple-400 hover:bg-purple-500 text-white px-3 py-1 rounded-md"
+
+                    <div className="flex gap-2 flex-wrap items-center justify-end mt-4">
+                      <FacebookShareButton
+                        url={`${BASE_URL_IMAGE}${file}`}
+                        quote={file}
+                        className="btn-primary"
                       >
-                        Share
-                      </button>
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        url={`${BASE_URL_IMAGE}${file}`}
+                        className="btn-primary"
+                      >
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                      <LinkedinShareButton
+                        url={`${BASE_URL_IMAGE}${file}`}
+                        className="btn-primary"
+                      >
+                        <LinkedinIcon size={32} round />
+                      </LinkedinShareButton>
+                      <WhatsappShareButton
+                        url={`${`${BASE_URL_IMAGE}${file}`}`}
+                        className="btn-primary"
+                      >
+                        <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                      <InstapaperShareButton
+                        url={`${`${BASE_URL_IMAGE}${file}`}`}
+                        className="btn-primary"
+                      >
+                        <InstapaperIcon size={32} round />
+                      </InstapaperShareButton>
                       <DownloadButton
                         fileUrl={`${BASE_URL}/download?path=${file}`}
                       />

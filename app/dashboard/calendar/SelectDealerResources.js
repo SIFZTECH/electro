@@ -1,10 +1,10 @@
-import { useDealerResources } from "@/app/_features/dealer-resources/useResources";
+import { useDealerResourcesForAll } from "@/app/_features/dealer-resources/useResources";
 import MultipleSelector from "@/app/components/ui/multi-selector";
 import React from "react";
 import { Controller } from "react-hook-form";
 
 const SelectDealerResources = ({ control }) => {
-  const { data, isLoading, isError } = useDealerResources();
+  const { data, isLoading, isError } = useDealerResourcesForAll();
 
   const userOptions =
     !isLoading &&
@@ -21,7 +21,7 @@ const SelectDealerResources = ({ control }) => {
 
   return (
     <Controller
-      name="dealer_resources"
+      name="resources_folders"
       control={control}
       render={({ field }) => (
         <MultipleSelector

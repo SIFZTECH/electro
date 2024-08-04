@@ -24,8 +24,6 @@ const ProductSpecifications = ({ specification }) => {
       </TableHeader>
       <TableBody>
         {allFeatures.map((feature, i) => {
-          console.log(feature);
-
           return (
             <TableRow key={i}>
               <TableCell className="font-serif font-semibold flex flex-col text-center gap-2 items-center">

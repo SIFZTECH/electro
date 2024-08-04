@@ -37,6 +37,21 @@ export async function getAllSocialMediaAssets(page, query) {
   }
 }
 
+export async function getAllMediasForWithChilds() {
+  const token = localStorage.getItem("access-token");
+
+  const { data } = await axios.get(
+    `${BASE_URL}/get/all/social-media/folders`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return data;
+}
+
 export async function CreateNewSocialAssets(formData) {
   const token = localStorage.getItem("access-token");
 

@@ -16,6 +16,8 @@ import Spinner from "@/app/components/ui/Spinner";
 import useCheckPermission from "@/app/_hooks/usePermission";
 import NoPermission from "@/app/components/ui/NoPermission";
 import "moment/locale/en-gb";
+import Link from "next/link";
+import Image from "next/image";
 
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
@@ -36,6 +38,8 @@ export default function CalendarPage() {
   const [title, setTitle] = useState("null");
   const [description, setDescription] = useState("null");
   const [visible, setVisible] = useState(null);
+  const [social_media_folders, setSocial_media_folders] = useState(null);
+  const [resources_folders, setResources_folders] = useState(null);
   const [visibleAnyone, setVisibleAnyone] = useState(null);
 
   const handleSelect = ({ start }) => {
@@ -52,6 +56,8 @@ export default function CalendarPage() {
     setStartDate(e.start_date);
     setEndDate(e.end_date);
     setVisible(e.visible_to);
+    setSocial_media_folders(e.social_media_folders);
+    setResources_folders(e.resources_folders);
     setVisibleAnyone(e.visible_to_anyone);
     setColor(e.color);
   };
@@ -80,6 +86,8 @@ export default function CalendarPage() {
         end: new Date(event.end_date),
         color: event.color,
         visible_to: event.visible_to,
+        social_media_folders: event.social_media_folders,
+        resources_folders: event.resources_folders,
         visible_to_anyone: event.visible_to_anyone,
       }))
     : data?.data?.map((event) => ({
@@ -91,6 +99,8 @@ export default function CalendarPage() {
         end: new Date(event.end_date),
 
         color: event.color,
+        social_media_folders: event.social_media_folders,
+        resources_folders: event.resources_folders,
         visible_to: event.visible_to,
         visible_to_anyone: event.visible_to_anyone,
       }));
@@ -128,6 +138,58 @@ export default function CalendarPage() {
             <DialogContent>
               <h1 className="font-serif font-semibold text-xl">{title}</h1>
               <p>{description}</p>
+              <hr />
+              {resources_folders && resources_folders.length !== 0 && (
+                <div className="flex flex-col gap-1">
+                  <h2 className="font-medium">Resources:</h2>
+                  <ul className="flex gap-2 gap-y-5 flex-wrap">
+                    {resources_folders?.map((folder) => {
+                      return (
+                        <li key={folder.id}>
+                          <Link
+                            className="flex items-center gap-1"
+                            href={`/dashboard/dealer-resources/${folder.id}`}
+                          >
+                            <Image
+                              src="/icons8-folder.svg"
+                              height={20}
+                              width={20}
+                              alt=""
+                            />{" "}
+                            <span>{folder.name}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+              {social_media_folders && social_media_folders.length !== 0 && (
+                <div className="flex flex-col gap-1 mt-3">
+                  <h2 className="font-medium">Social Media Assests:</h2>
+
+                  <ul className="flex gap-3 gap-y-5 flex-wrap">
+                    {social_media_folders?.map((folder) => {
+                      return (
+                        <li key={folder.id}>
+                          <Link
+                            className="flex items-center gap-1"
+                            href={`/dashboard/social-media-assets/${folder.id}`}
+                          >
+                            <Image
+                              src="/icons8-folder.svg"
+                              height={20}
+                              width={20}
+                              alt=""
+                            />{" "}
+                            <span>{folder.name}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
             </DialogContent>
           </Dialog>
         )}
@@ -154,6 +216,8 @@ export default function CalendarPage() {
             description={description}
             visible_to={visible}
             visible_to_anyone={visibleAnyone}
+            social_media_folders={social_media_folders}
+            resources_folders={resources_folders}
             color={color}
             setColor={setColor}
             setOpen={setOpen2}

@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 const EditWarrantyStatusForBulk = ({ warranty_ids }) => {
-  console.log(warranty_ids);
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 

@@ -21,6 +21,8 @@ const UpdateEventTab = ({
   visible_to_anyone,
   color,
   setColor,
+  social_media_folders,
+  resources_folders,
   setOpen,
 }) => {
   const [color2, setColor2] = useState(color);
@@ -37,8 +39,16 @@ const UpdateEventTab = ({
       title: title,
       description: description,
       visible_to: visible_to,
-      social_media_asests: [],
-      dealer_resources: [],
+      social_media_folders: social_media_folders
+        ? social_media_folders?.map((folder) => {
+            return { label: folder.name, value: folder.id };
+          })
+        : [],
+      resources_folders: resources_folders
+        ? resources_folders?.map((folder) => {
+            return { label: folder.name, value: folder.id };
+          })
+        : [],
       visible_to_anyone: visible_to_anyone === 1 ? true : false,
 
       value: color,
@@ -54,6 +64,8 @@ const UpdateEventTab = ({
     description,
     visible_to,
     visible_to_anyone,
+    social_media_folders,
+    resources_folders,
     start_date,
     end_date,
   }) {
@@ -69,12 +81,24 @@ const UpdateEventTab = ({
     const formattedStartDate = moment(start_date).format("MM/DD/YYYY");
     const formattedEndDate = moment(end_date).format("MM/DD/YYYY");
 
+    const formattedResources_folders = resources_folders?.map((folder) => {
+      return { id: folder.value, name: folder.label };
+    });
+
+    const formattedSocial_media_folders = social_media_folders?.map(
+      (folder) => {
+        return { id: folder.value, name: folder.label };
+      }
+    );
+
     try {
       const res = await updateEvent(id, {
         title,
         description,
         visible_to,
         visible_to_anyone,
+        social_media_folders: formattedSocial_media_folders,
+        resources_folders: formattedResources_folders,
         color: color2,
         date: formattedDate,
         start_date: formattedStartDate,
