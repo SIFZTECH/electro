@@ -247,7 +247,6 @@ export async function resendPhoneOtp() {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    
   });
 
   return data;
@@ -338,17 +337,18 @@ export async function updateUser(user_id, formData) {
   const token = localStorage.getItem("access-token");
 
   if (!token) return null;
+  console.log(formData);
 
-  const { data } = await axios({
-    url: `${BASE_URL}/admin/update-user/${user_id}`,
-    method: "put",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: formData,
-  });
+  // const { data } = await axios({
+  //   url: `${BASE_URL}/admin/update-user/${user_id}`,
+  //   method: "put",
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  //   data: formData,
+  // });
 
-  return data;
+  // return data;
 }
 
 export async function getAllRoles() {
