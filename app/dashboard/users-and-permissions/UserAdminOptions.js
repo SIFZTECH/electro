@@ -68,8 +68,8 @@ export function UserAdminOptions({ user, setValue: setValue2 }) {
                     >
                       <Image
                         src={
-                          user.profile
-                            ? ` ${BASE_URL_IMAGE}${user.profile}`
+                          user?.image
+                            ? ` ${BASE_URL_IMAGE}${user.image}`
                             : "/default.jpg"
                         }
                         height={30}
