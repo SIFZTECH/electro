@@ -13,6 +13,8 @@ import ImageUploader from "./SelectImages";
 import SelectBrand from "./SelectBrand";
 import SelectKeyFeatures from "./SelectKeyFeatures";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
+import SelectProductVariants from "./SelectProductVariants";
+import SelectProduct from "./SelectProduct";
 
 const ProductForm = () => {
   const queryClient = useQueryClient();
@@ -29,6 +31,7 @@ const ProductForm = () => {
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
+      product_ids: [], // Default values
       key_features: [{ key_feature_id: null, value: "" }],
     },
   });
@@ -46,6 +49,7 @@ const ProductForm = () => {
     sku,
     key_features,
     variants,
+    product_ids,
     specification,
     images,
     misc13,
@@ -64,6 +68,8 @@ const ProductForm = () => {
         };
       });
 
+      const fotmattedProductIds = product_ids.map((product) => product.value);
+
       const res = await createProduct({
         name,
         model_name,
@@ -76,6 +82,7 @@ const ProductForm = () => {
         status,
         sku,
         variants,
+        product_ids: fotmattedProductIds,
         key_features: fotmattedFeatures,
         images,
         misc13: misc13 === true ? 1 : 0,
@@ -234,9 +241,6 @@ const ProductForm = () => {
               className="block w-full rounded-md border bg-gray-100 border-gray-300 py-1.5 px-3 text-gray-900 shadow-sm px-3placeholder:text-gray-400 sm:text-sm sm:leading-6"
               {...register("status")}
             >
-              [Active,Inactive,Out of
-              Stock,Discontinued,Pending,Draft,Pre-order,Backorder,On
-              Hold,Featured,Custom]
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
               <option value="Pending">Pending</option>
@@ -254,6 +258,14 @@ const ProductForm = () => {
         <SelectKeyFeatures control={control} />
 
         <SelectAttribute control={control} errors={errors} />
+        {/* <SelectProductVariants control={control} errors={errors} /> */}
+
+        <div className="col-span-2">
+          <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+            Product Variants
+          </label>
+          <SelectProduct control={control} />
+        </div>
         <ImageUploader
           register={register}
           errors={errors}
