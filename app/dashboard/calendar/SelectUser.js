@@ -1,7 +1,6 @@
 import { useAllUsers } from "@/app/_features/users/useUsers";
 import MultipleSelector from "@/app/components/ui/multi-selector";
-import Spinner from "@/app/components/ui/Spinner";
-import { BASE_URL, BASE_URL_IMAGE } from "@/app/lib/utils";
+import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import React from "react";
 import { Controller } from "react-hook-form";
 
