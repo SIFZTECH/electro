@@ -10,7 +10,11 @@ import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import Image from "next/image";
 
 const ProductSpecifications = ({ specification }) => {
+  console.log(specification);
   const allFeatures = specification.flatMap((feature) => feature.key_features);
+  const uniqueFeatures = Array.from(new Set(allFeatures.map((f) => f.id))).map(
+    (id) => allFeatures.find((f) => f.id === id)
+  );
 
   return (
     <Table className="overflow-x-auto">
@@ -23,7 +27,7 @@ const ProductSpecifications = ({ specification }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {allFeatures.map((feature, i) => {
+        {uniqueFeatures.map((feature, i) => {
           return (
             <TableRow key={i}>
               <TableCell className="font-serif font-semibold flex flex-col text-center gap-2 items-center">
