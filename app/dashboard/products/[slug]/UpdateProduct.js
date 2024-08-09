@@ -50,7 +50,7 @@ const EditProduct = ({ product }) => {
           })
         : [],
       variants: product ? product?.variants : [],
-      child_products: product ? product?.productIds : [],
+      child_products: product ? product?.child_products : [],
       images: product ? product?.images : [],
       misc13: product?.misc13 === 1 ? true : false,
     },

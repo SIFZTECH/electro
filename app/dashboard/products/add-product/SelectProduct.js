@@ -4,7 +4,7 @@ import { BASE_URL_IMAGE } from "@/app/lib/utils";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-const SelectProduct = ({ control, existingProducts }) => {
+const SelectProduct = ({ control }) => {
   const { products, isLoading, isError } = useProductsForStocks();
 
   const productOptions =
