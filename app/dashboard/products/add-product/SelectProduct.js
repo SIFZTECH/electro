@@ -25,7 +25,7 @@ const SelectProduct = ({ control, existingProducts }) => {
 
   return (
     <Controller
-      name="product_ids"
+      name="child_products"
       control={control}
       render={({ field }) => (
         <MultipleSelector

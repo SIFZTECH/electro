@@ -31,7 +31,7 @@ const ProductForm = () => {
   } = useForm({
     defaultValues: {
       variants: [{ attribute_value_id: "", price: 0 }], // Default values
-      product_ids: [], // Default values
+      child_products: [], // Default values
       key_features: [{ key_feature_id: null, value: "" }],
     },
   });
@@ -49,7 +49,7 @@ const ProductForm = () => {
     sku,
     key_features,
     variants,
-    product_ids,
+    child_products,
     specification,
     images,
     misc13,
@@ -68,7 +68,9 @@ const ProductForm = () => {
         };
       });
 
-      const fotmattedProductIds = product_ids.map((product) => product.value);
+      const fotmattedProductIds = child_products.map(
+        (product) => product.value
+      );
 
       const res = await createProduct({
         name,
@@ -82,7 +84,7 @@ const ProductForm = () => {
         status,
         sku,
         variants,
-        product_ids: fotmattedProductIds,
+        child_products: fotmattedProductIds,
         key_features: fotmattedFeatures,
         images,
         misc13: misc13 === true ? 1 : 0,

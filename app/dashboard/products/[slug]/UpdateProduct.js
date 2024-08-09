@@ -19,6 +19,7 @@ import SelectKeyFeatures from "../add-product/SelectKeyFeatures";
 import { handleValidationError } from "@/app/_hooks/useHandleValidationError";
 import UpdateAttribute from "./UpdateAttribute";
 import ManageImage from "./ManageImage";
+import SelectProduct from "../add-product/SelectProduct";
 
 const EditProduct = ({ product }) => {
   const [open, setOpen] = useState(false);
@@ -45,11 +46,11 @@ const EditProduct = ({ product }) => {
       sku: product?.sku,
       key_features: product
         ? product?.key_features.map((feature) => {
-         
             return { key_feature_id: feature.id, value: feature?.pivot?.value };
           })
         : [],
       variants: product ? product?.variants : [],
+      child_products: product ? product?.productIds : [],
       images: product ? product?.images : [],
       misc13: product?.misc13 === 1 ? true : false,
     },
@@ -68,6 +69,7 @@ const EditProduct = ({ product }) => {
     sku,
     key_features,
     variants,
+    child_products,
     images,
     misc13,
   }) {
@@ -91,6 +93,8 @@ const EditProduct = ({ product }) => {
       };
     });
 
+    const fotmattedProductIds = child_products.map((product) => product.value);
+
     try {
       const res = await updateProduct(product.id, {
         name,
@@ -105,6 +109,7 @@ const EditProduct = ({ product }) => {
         brand_id,
         variants: formattedVariants,
         key_features: fotmattedFeatures,
+        child_products: fotmattedProductIds,
         images,
         misc13: misc13 === true ? 1 : 0,
       });
@@ -297,6 +302,12 @@ const EditProduct = ({ product }) => {
               control={control}
               productId={product?.id}
             />
+            <div className="col-span-2">
+              <label className="block text-sm font-semibold font-serif leading-6 text-gray-900">
+                Product Variants
+              </label>
+              <SelectProduct control={control} />
+            </div>
             <ManageImage images={product?.images} slug={product?.slug} />
             <UpdateImageUploader
               register={register}
